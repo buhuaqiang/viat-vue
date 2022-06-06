@@ -15,7 +15,7 @@ let viewgird = [
     name: 'permission',
     component:  () => import('@/views/system/Permission.vue' )
   },
-  
+
   {
     path: '/Sys_Dictionary',
     name: 'Sys_Dictionary',
@@ -106,14 +106,18 @@ let viewgird = [
         path: '/FormCollectionObject',
         name: 'FormCollectionObject',
         component: () => import('@/views/system/form/FormCollectionObject.vue')
-    }    ,{
+    }     ,{
+        path: '/Viat_com_cust',
+        name: 'Viat_com_cust',
+        component: () => import('@/views/basic/cust/Viat_com_cust.vue')
+    }          ,{
         path: '/Viat_com_prod',
         name: 'Viat_com_prod',
         component: () => import('@/views/basic/prod/Viat_com_prod.vue')
     }    ,{
-        path: '/Viat_com_cust',
-        name: 'Viat_com_cust',
-        component: () => import('@/views/basic/cust/Viat_com_cust.vue')
+        path: '/View_com_prod',
+        name: 'View_com_prod',
+        component: () => import('@/views/basic/prod/View_com_prod.vue')
     }]
 
 export default viewgird

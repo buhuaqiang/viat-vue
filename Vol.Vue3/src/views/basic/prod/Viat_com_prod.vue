@@ -22,35 +22,29 @@
     export default defineComponent({
         setup() {
             const table = ref({
-                key: 'dbid',
+                key: 'prod_dbid',
                 footer: "Foots",
-                cnName: '產品設置',
+                cnName: '產品基本資料',
                 name: 'prod/Viat_com_prod',
                 url: "/Viat_com_prod/",
-                sortName: "dbid"
+                sortName: "created_date"
             });
-            const editFormFields = ref({"entity":"","division":"","prod_id":"","prod_ename":"","prod_cname":"","unit_stock":"","unit_sale":"","nhi_id":"","prod_type":""});
-            const editFormOptions = ref([[{"dataKey":"city","data":[],"title":"公司別","field":"entity","type":"select"},
-                               {"title":"所屬事業單位","field":"division"}],
-                              [{"title":"產品id","required":true,"field":"prod_id"}],
-                              [{"title":"英文名稱","field":"prod_ename"},
-                               {"title":"中文名稱","field":"prod_cname"}],
-                              [{"dataKey":"prod_unit","data":[],"title":"最小庫存單位","field":"unit_stock","type":"select"},
-                               {"dataKey":"prod_unit","data":[],"title":"最小銷售單位","field":"unit_sale","type":"select"}],
-                              [{"title":"產品保健代碼","field":"nhi_id"},
-                               {"title":"產品類別","field":"prod_type"}]]);
+            const editFormFields = ref({});
+            const editFormOptions = ref([]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([]);
-            const columns = ref([{field:'dbid',title:'ID',type:'int',width:110,hidden:true,readonly:true,require:true,align:'left'},
-                       {field:'entity',title:'公司別',type:'string',bind:{ key:'city',data:[]},width:110,align:'left',sort:true},
+            const columns = ref([{field:'prod_dbid',title:'PKID',type:'guid',width:110,require:true,align:'left',sort:true},
+                       {field:'dbid',title:'ID',type:'int',width:110,hidden:true,require:true,align:'left'},
+                       {field:'entity',title:'公司別',type:'string',width:110,align:'left'},
+                       {field:'localmpg_dbid',title:'本地產品組DBID',type:'guid',width:110,align:'left'},
                        {field:'division',title:'所屬事業單位',type:'string',width:110,align:'left'},
-                       {field:'prod_id',title:'產品id',type:'string',width:110,require:true,align:'left'},
+                       {field:'prod_id',title:'產品id',type:'string',width:110,align:'left'},
                        {field:'prod_ename',title:'英文名稱',type:'string',width:110,align:'left'},
                        {field:'prod_cname',title:'中文名稱',type:'string',width:110,align:'left'},
                        {field:'prod_sname',title:'中文名稱',type:'string',width:110,align:'left'},
                        {field:'std_cost',title:'標準成本',type:'decimal',width:110,align:'left'},
-                       {field:'unit_stock',title:'最小庫存單位',type:'string',bind:{ key:'prod_unit',data:[]},width:110,align:'left'},
-                       {field:'unit_sale',title:'最小銷售單位',type:'string',bind:{ key:'prod_unit',data:[]},width:110,align:'left'},
+                       {field:'unit_stock',title:'最小庫存單位',type:'string',width:110,align:'left'},
+                       {field:'unit_sale',title:'最小銷售單位',type:'string',width:110,align:'left'},
                        {field:'global_mpg',title:'全球產品群組',type:'string',width:110,align:'left'},
                        {field:'nhi_id',title:'產品保健代碼',type:'string',width:110,align:'left'},
                        {field:'prod_type',title:'產品類別',type:'string',width:110,align:'left'},
@@ -58,7 +52,7 @@
                        {field:'pack_size',title:'盒裝數',type:'decimal',width:110,align:'left'},
                        {field:'pack_size_pri',title:'包裝係數',type:'decimal',width:110,align:'left'},
                        {field:'new_prod_id',title:'新產品代碼',type:'string',width:110,align:'left'},
-                       {field:'is_ctrl_drug',title:'是否為管制藥品',type:'bool',width:110,align:'left'},
+                       {field:'is_ctrl_drug',title:'是否為管制藥品',type:'string',width:110,align:'left'},
                        {field:'nhi_price',title:'健保價',type:'decimal',width:110,align:'left'},
                        {field:'license_no',title:'許可證字號',type:'string',width:110,align:'left'},
                        {field:'license_name',title:'許可證名稱',type:'string',width:110,align:'left'},
@@ -76,11 +70,12 @@
                        {field:'prod_form',title:'產品屬性-產品劑型(膠囊/針劑/藥丸)',type:'string',width:110,align:'left'},
                        {field:'prod_strength',title:'產品屬性-產品劑量',type:'string',width:110,align:'left'},
                        {field:'prod_packed',title:'產品屬性-劑量單位',type:'string',width:110,align:'left'},
-                       {field:'Modifier',title:'最後修改人',type:'string',width:130,align:'left'},
-                       {field:'ModifyDate',title:'修改時間',type:'datetime',width:110,align:'left',sort:true},
-                       {field:'ModifyID',title:'最後修改人id',type:'int',width:80,hidden:true,align:'left'},
-                       {field:'Modifier_client',title:'最後修改者的委託人',type:'string',width:110,align:'left'},
-                       {field:'ModifyClientID',title:'最後修改者的委託人ID',type:'int',width:110,align:'left'}]);
+                       {field:'modified_client',title:'最後修改者的委託人',type:'int',width:80,align:'left'},
+                       {field:'modified_user',title:'最後修改用戶',type:'int',width:80,align:'left'},
+                       {field:'created_date',title:'建立時間',type:'datetime',width:150,align:'left',sort:true},
+                       {field:'created_client',title:'建立者的委託人',type:'int',width:80,align:'left'},
+                       {field:'created_user',title:'建立用戶',type:'int',width:80,align:'left'},
+                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:150,align:'left',sort:true}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
