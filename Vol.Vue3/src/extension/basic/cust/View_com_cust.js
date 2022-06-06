@@ -41,6 +41,26 @@ let extension = {
       })
       return row;
     },
+    //根據城市名稱獲取區域列表
+    getCityZoneData(cityName){
+      debugger
+      var data=[];
+      let params= {
+        "page": 1,
+        "rows": 30,
+        "sort": "dbid",
+        "order": "desc",
+        "wheres": "[]"
+      }
+      let url="api/Viat_com_zip_city/getPageData";
+      params.wheres ="[{\"name\":\"city_name\",\"value\":\""+cityName+"\",\"displayType\":\"=\"}]" ;
+      this.http.post(url,params, true).then((result) => {
+        result.rows.forEach(d=>{
+          data.push({"key":d.zip_id,"value":d.zip_id+" "+d.zip_name})
+        })
+      });
+      return data;
+    },
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
         //示例：在按钮的最前面添加一个按钮
@@ -57,40 +77,20 @@ let extension = {
         // this.boxOptions.labelWidth = 150;
       this.boxOptions.labelWidth=180;
 
-      let params= {
-        "page": 1,
-        "rows": 30,
-        "sort": "dbid",
-        "order": "desc",
-        "wheres": "[]"
-      }
-      let comCity=this.getOption("com_city_name");
+
+      let comCity=this.getOption("cust_city_name");
       let invoiceCity=this.getOption("invoice_city_name");
-      let comZipId=this.getOption("zip_id");
-      let invoiceZipId=this.getOption("bmp_zip_id");
+      let comZipId=this.getOption("cust_zip_id");
+      let invoiceZipId=this.getOption("invoice_zip_id");
       comCity.onChange = (val, option) => {
         this.editFormFields.zip_id = '';//清除原來選擇的數據
-        comZipId.data=[];
-        let url="api/Viat_com_zip_city/getPageData";
-        params.wheres ="[{\"name\":\"city_name\",\"value\":\""+val+"\",\"displayType\":\"=\"}]" ;
-        this.http.post(url,params, true).then((result) => {
-          result.rows.forEach(d=>{
-            comZipId.data.push({"key":d.zip_id,"value":d.zip_id+" "+d.zip_name})
-          })
-        });
+
+        comZipId.data=this.getCityZoneData(val);
       }
 
       invoiceCity.onChange = (val, option) => {
-
         this.editFormFields.bmp_zip_id = '';
-        invoiceZipId.data=[];
-        let url="api/Viat_com_zip_city/getPageData";
-        params.wheres ="[{\"name\":\"city_name\",\"value\":\""+val+"\",\"displayType\":\"=\"}]" ;
-        this.http.post(url,params , true).then((result) => {
-          result.rows.forEach(d=>{
-            invoiceZipId.data.push({"key":d.zip_id,"value":d.zip_id+" "+d.zip_name})
-          })
-        });
+        invoiceZipId.data=this.getCityZoneData(val);
       }
 
       let ownHospital=this.getOption("own_hospitalname");
@@ -125,8 +125,12 @@ let extension = {
 
       let detailCityName=this.getDetailColumns("city_name");
       detailCityName.onChange = function (options, row, _columns, status) {
+        debugger
         //在此处可以将数据提到后台处理
-        this.$Message.info(status);
+        let val=options['city_name'];
+        //var data1=this.getCityZoneData(val);
+        //options['zip_id'].bind={ key: "zip_id", data: data1 };
+
       }
 
     },

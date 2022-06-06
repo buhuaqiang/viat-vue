@@ -29,14 +29,12 @@
                 url: "/Viat_com_cust/",
                 sortName: "CreateDate"
             });
-            const editFormFields = ref({"cust_id":"","cust_name":"","cust_address":"","zip_id":"","invoice_name":"","invoice_address":"","bmp_zip_id":"","owner":"","tax_id":"","contact":"","tel_no":"","fax_no":"","email":"","territory_id":"","doh_institute_no":"","ctrl_drug_no":"","ctrl_drug_contact":"","margin_type":"","is_contract":"","doh_type":"","is_private":"","own_by_hospital":"","own_hospital":"","inactive_date":"","status":"","med_group":"","delv_group":"","new_cust_id":"","remarks":""});
+            const editFormFields = ref({"cust_id":"","cust_name":"","cust_address":"","invoice_name":"","invoice_address":"","owner":"","tax_id":"","contact":"","tel_no":"","fax_no":"","email":"","territory_id":"","doh_institute_no":"","ctrl_drug_no":"","ctrl_drug_contact":"","margin_type":"","is_contract":"","doh_type":"","is_private":"","own_by_hospital":"","own_hospital":"","inactive_date":"","status":"","med_group":"","delv_group":"","new_cust_id":"","remarks":""});
             const editFormOptions = ref([[{"title":"客戶編號","required":true,"field":"cust_id"}],
                               [{"title":"客戶名稱","field":"cust_name","type":"text"}],
-                              [{"dataKey":"viat_city_zone","data":[],"title":"客戶地址郵區代碼","field":"zip_id","type":"select"},
-                               {"title":"客戶地址","field":"cust_address","colSize":6,"type":"text"}],
+                              [{"title":"客戶地址","field":"cust_address","colSize":6,"type":"text"}],
                               [{"title":"發票抬頭","field":"invoice_name","type":"text"}],
-                              [{"dataKey":"viat_city_zone","data":[],"title":"郵寄郵區代碼","field":"bmp_zip_id","type":"select"},
-                               {"title":"發票地址","field":"invoice_address","colSize":6}],
+                              [{"title":"發票地址","field":"invoice_address","colSize":6}],
                               [{"title":"負責人","field":"owner"},
                                {"title":"統一編號","field":"tax_id"}],
                               [{"title":"聯絡人","field":"contact"},
@@ -90,15 +88,16 @@
                        {field:'source',title:'資料來源',type:'string',width:110,hidden:true,align:'left'},
                        {field:'accnt_code',title:'accnt_code',type:'string',width:110,hidden:true,align:'left'},
                        {field:'doh_type',title:'健保類別',type:'string',bind:{ key:'doh_type',data:[]},width:110,align:'left'},
-                       {field:'zip_id',title:'客戶地址郵區代碼',type:'string',bind:{ key:'viat_city_zone',data:[]},width:110,align:'left'},
-                       {field:'bmp_zip_id',title:'郵寄郵區代碼',type:'string',bind:{ key:'viat_city_zone',data:[]},width:110,align:'left'},
                        {field:'modified_date',title:'最後修改時間',type:'datetime',width:150,align:'left',sort:true},
                        {field:'modified_client',title:'最後修改者的委託人',type:'int',width:80,align:'left'},
                        {field:'modified_user',title:'最後修改用戶',type:'int',width:80,align:'left'},
                        {field:'created_date',title:'建立時間',type:'datetime',width:150,align:'left',sort:true},
                        {field:'created_client',title:'建立者的委託人',type:'int',width:80,align:'left'},
                        {field:'created_user',title:'建立用戶',type:'int',width:80,align:'left'},
-                       {field:'cust_dbid',title:'主鍵',type:'guid',width:110,hidden:true,require:true,align:'left'}]);
+                       {field:'cust_dbid',title:'主鍵',type:'guid',width:110,hidden:true,require:true,align:'left'},
+                       {field:'cust_zip_id',title:'客戶地址郵區代碼',type:'string',width:110,align:'left'},
+                       {field:'invoice_zip_id',title:'發票地址郵區代碼',type:'string',width:110,align:'left'},
+                       {field:'last_deal_date',title:'last_deal_date',type:'datetime',width:150,align:'left',sort:true}]);
             const detail = ref({
                 cnName: "客戶送貨資訊",
                 table: "Viat_com_cust_delivery",
