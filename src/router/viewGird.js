@@ -126,6 +126,30 @@ let viewgird = [
         path: '/Viat_app_power_contract_cust',
         name: 'Viat_app_power_contract_cust',
         component: () => import('@/views/contract/contract/Viat_app_power_contract_cust.vue')
+    }    ,{
+        path: '/Viat_com_zip_city',
+        name: 'Viat_com_zip_city',
+        component: () => import('@/views/basic/city/Viat_com_zip_city.vue')
+    }    ,{
+        path: '/Viat_com_system_value',
+        name: 'Viat_com_system_value',
+        component: () => import('@/views/basic/sysvalue/Viat_com_system_value.vue')
+    }    ,{
+        path: '/Viat_com_doh_type',
+        name: 'Viat_com_doh_type',
+        component: () => import('@/views/basic/dohtype/Viat_com_doh_type.vue')
+    }    ,{
+        path: '/Viat_com_cust_delivery',
+        name: 'Viat_com_cust_delivery',
+        component: () => import('@/views/basic/delivery/Viat_com_cust_delivery.vue')
+    }    ,{
+        path: '/View_com_prod',
+        name: 'View_com_prod',
+        component: () => import('@/views/basic/prod/View_com_prod.vue')
+    }    ,{
+        path: '/View_com_cust',
+        name: 'View_com_cust',
+        component: () => import('@/views/basic/cust/View_com_cust.vue')
     }]
 
 export default viewgird
