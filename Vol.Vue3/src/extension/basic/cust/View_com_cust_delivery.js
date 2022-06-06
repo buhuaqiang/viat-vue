@@ -6,7 +6,7 @@
 **后台操作见：http://v2.volcore.xyz/document/netCoreDev
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
-import Viat_com_custModelBody from "./Viat_com_custModelBody";
+
 let extension = {
   components: {
     //查询界面扩展组件
@@ -15,32 +15,12 @@ let extension = {
     gridFooter: '',
     //新建、编辑弹出框扩展组件
     modelHeader: '',
-    modelBody: Viat_com_custModelBody,
+    modelBody: '',
     modelFooter: ''
   },
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
   methods: {
-    getOption(field) {
-      let option;
-      this.editFormOptions.forEach(x => {
-        x.forEach(item => {
-          if (item.field == field) {
-            option = item;
-          }
-        })
-      })
-      return option;
-    },
-    getDetailColumns(field) {
-      let row;
-      this.detail.columns.forEach(x => {
-        if (x.field == field) {
-          row = x;
-        }
-      })
-      return row;
-    },
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
         //示例：在按钮的最前面添加一个按钮
@@ -55,80 +35,6 @@ let extension = {
 
         //示例：设置修改新建、编辑弹出框字段标签的长度
         // this.boxOptions.labelWidth = 150;
-      this.boxOptions.labelWidth=180;
-
-      let params= {
-        "page": 1,
-        "rows": 30,
-        "sort": "dbid",
-        "order": "desc",
-        "wheres": "[]"
-      }
-      let comCity=this.getOption("com_city_name");
-      let invoiceCity=this.getOption("invoice_city_name");
-      let comZipId=this.getOption("zip_id");
-      let invoiceZipId=this.getOption("bmp_zip_id");
-      comCity.onChange = (val, option) => {
-        this.editFormFields.zip_id = '';//清除原來選擇的數據
-        comZipId.data=[];
-        let url="api/Viat_com_zip_city/getPageData";
-        params.wheres ="[{\"name\":\"city_name\",\"value\":\""+val+"\",\"displayType\":\"=\"}]" ;
-        this.http.post(url,params, true).then((result) => {
-          result.rows.forEach(d=>{
-            comZipId.data.push({"key":d.zip_id,"value":d.zip_id+" "+d.zip_name})
-          })
-        });
-      }
-
-      invoiceCity.onChange = (val, option) => {
-
-        this.editFormFields.bmp_zip_id = '';
-        invoiceZipId.data=[];
-        let url="api/Viat_com_zip_city/getPageData";
-        params.wheres ="[{\"name\":\"city_name\",\"value\":\""+val+"\",\"displayType\":\"=\"}]" ;
-        this.http.post(url,params , true).then((result) => {
-          result.rows.forEach(d=>{
-            invoiceZipId.data.push({"key":d.zip_id,"value":d.zip_id+" "+d.zip_name})
-          })
-        });
-      }
-
-      let ownHospital=this.getOption("own_hospitalname");
-      ownHospital.extra = {
-        icon: "el-icon-zoom-out",
-        text: "选择隸屬醫院",
-        style: "color:red;font-size: 12px;cursor: pointer;",
-        click: item => {
-          this.$refs.modelBody.openDemo("own_hospital");
-        }
-      }
-
-      let med_group=this.getOption("med_groupname");
-      med_group.extra = {
-        icon: "el-icon-zoom-out",
-        text: "选择主院代碼",
-        style: "color:red;font-size: 12px;cursor: pointer;",
-        click: item => {
-          this.$refs.modelBody.openDemo("med_group");
-        }
-      }
-
-      let delv_group=this.getOption("delv_groupname");
-      delv_group.extra = {
-        icon: "el-icon-zoom-out",
-        text: "选择数据",
-        style: "color:red;font-size: 12px;cursor: pointer;",
-        click: item => {
-          this.$refs.modelBody.openDemo("delv_group");
-        }
-      }
-
-      let detailCityName=this.getDetailColumns("city_name");
-      detailCityName.onChange = function (options, row, _columns, status) {
-        //在此处可以将数据提到后台处理
-        this.$Message.info(status);
-      }
-
     },
     onInited() {
       //框架初始化配置后

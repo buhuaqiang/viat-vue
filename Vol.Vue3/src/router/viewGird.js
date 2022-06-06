@@ -150,6 +150,10 @@ let viewgird = [
         path: '/View_com_cust',
         name: 'View_com_cust',
         component: () => import('@/views/basic/cust/View_com_cust.vue')
+    }    ,{
+        path: '/View_com_cust_delivery',
+        name: 'View_com_cust_delivery',
+        component: () => import('@/views/basic/cust/View_com_cust_delivery.vue')
     }]
 
 export default viewgird
