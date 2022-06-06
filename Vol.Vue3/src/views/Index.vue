@@ -14,8 +14,11 @@
     </div>
     <div class="vol-container" :style="{ left: menuWidth - 1 + 'px' }">
       <div class="vol-header">
-        <div class="project-name">VOL开发框架Vue3.x版本</div>
+
+
+        <div class="project-name"></div>
         <div class="header-text">
+          <!--
           <div class="h-link">
             <a href="javascript:void(0)" @click="to(item)" v-for="(item, index) in links.filter((c) => {
               return !c.icon;
@@ -24,7 +27,9 @@
               <i v-else :class="item.icon"></i>
             </a>
           </div>
+          -->
         </div>
+
         <div class="header-info">
           <div class="h-link">
             <a href="javascript:void(0)" @click="to(item)" v-for="(item, index) in links.filter((c) => {
@@ -59,21 +64,21 @@
             <span style="display:none;">{{ navIndex }}</span>
           </el-tab-pane>
         </el-tabs>
-        <!-- 右键菜单 -->
+        <!-- 右鍵菜單 -->
         <div v-show="contextMenuVisible">
           <ul :style="{ left: menuLeft + 'px', top: menuTop + 'px' }" class="contextMenu">
             <li v-show="visibleItem.all">
               <el-button type="text" icon="el-icon-close" @click="closeTabs()" size="mini">
-                {{ navigation.length == 2 ? '关闭菜单' : '关闭所有' }}</el-button>
+                {{ navigation.length == 2 ? '關閉菜單' : '關閉所有' }}</el-button>
             </li>
             <li v-show="visibleItem.left">
-              <el-button type="text" icon="el-icon-back" @click="closeTabs('left')" size="mini">关闭左边</el-button>
+              <el-button type="text" icon="el-icon-back" @click="closeTabs('left')" size="mini">關閉左邊</el-button>
             </li>
             <li v-show="visibleItem.right">
-              <el-button type="text" icon="el-icon-right" @click="closeTabs('right')" size="mini">关闭右边</el-button>
+              <el-button type="text" icon="el-icon-right" @click="closeTabs('right')" size="mini">關閉右邊</el-button>
             </li>
             <li v-show="visibleItem.other">
-              <el-button type="text" icon="el-icon-bottom-right" @click="closeTabs('other')" size="mini">关闭其他
+              <el-button type="text" icon="el-icon-bottom-right" @click="closeTabs('other')" size="mini">關閉其他
               </el-button>
             </li>
           </ul>
@@ -94,7 +99,7 @@
         </el-scrollbar>
       </div>
     </div>
-    <el-drawer title="选择主题" v-model="drawer_model" direction="rtl" destroy-on-close>
+    <el-drawer title="選擇主題" v-model="drawer_model" direction="rtl" destroy-on-close>
       <div class="theme-selector">
         <div @click="changeTheme(item.name)" class="item" v-for="(item, index) in theme_color" :key="index"
           :style="{ background: item.color }">
@@ -148,14 +153,14 @@ export default defineComponent({
       otherTabs: true,
       menuLeft: 0,
       menuTop: 0,
-      //  contextMenuVisible: false, // 右键关闭显/隐
+      //  contextMenuVisible: false, // 右鍵關閉顯/隱
     };
   },
   setup(props, context) {
-    // 获取全局属性和方法
+    // 獲取全局屬性和方法
     const { proxy } = getCurrentInstance();
 
-    // 菜单导航默认宽度
+    // 菜單導航默認寬度
     const menuWidth = ref(200);
     const contextMenuVisible = ref(false);
     const isCollapse = ref(false);
@@ -175,17 +180,17 @@ export default defineComponent({
     ]);
     const links = ref([
       {
-        text: "框架视频",
+        text: "框架視頻",
         path: "https://www.cctalk.com/m/group/90268531",
         id: -3,
       },
-      { text: "大屏数据", path: "/bigdata", id: -3 },
+      { text: "大屏數據", path: "/bigdata", id: -3 },
       {
-        text: "框架文档",
+        text: "框架文檔",
         path: "http://v2.volcore.xyz/document/guide",
         id: -2,
       },
-      { text: "个人中心", path: "/UserInfo", id: -1, icon: "el-icon-s-custom" },
+      { text: "個人中心", path: "/UserInfo", id: -1, icon: "el-icon-s-custom" },
       {
         text: "安全退出",
         path: "/login",
@@ -197,13 +202,13 @@ export default defineComponent({
       'this.src="' + require("@/assets/imgs/error-img.png") + '"'
     );
     const selectId = ref('1');
-    // 【首页】标签序号(当前右键选中的菜单)
+    // 【首頁】標簽序號(當前右鍵選中的菜單)
     const selectMenuIndex = ref('0');
     const userName = ref("--");
     const userInfo = ref({});
     const visibleItem = reactive({ left: false, right: false, all: false, other: false });
     const userImg = ref("");
-    const navigation = reactive([{ orderNo: '0', id: '1', name: "首页", path: "/home" }]);
+    const navigation = reactive([{ orderNo: '0', id: '1', name: "首頁", path: "/home" }]);
     const logo = ref(imgUrl);
     const theme = ref("blue2");
     const menuOptions = ref([]);
@@ -215,7 +220,7 @@ export default defineComponent({
       isCollapse.value = !isCollapse.value;
       menuWidth.value = isCollapse.value ? 63 : 200;
     };
-    //2021.08.28开放手动折叠菜单方法
+    //2021.08.28開放手動折疊菜單方法
     _config.menu = {
       show() {
         toggleLeft();
@@ -231,7 +236,7 @@ export default defineComponent({
       localStorage.setItem("vol3_theme", name);
     };
     const to = (item) => {
-      /* 2020.07.31增加手动打开tabs*/
+      /* 2020.07.31增加手動打開tabs*/
       if (item.path == "#") {
         window.open("https://github.com/cq-panda/Vue.NetCore");
         return;
@@ -253,55 +258,55 @@ export default defineComponent({
       open(item);
     };
     const open = (item, useRoute) => {
-      /* 2020.07.31增加手动打开tabs*/
+      /* 2020.07.31增加手動打開tabs*/
       let _index = navigation.findIndex((x) => {
         return x.path == item.path;
       });
       if (_index == -1) {
         navigation.push(
           {
-          //  orderNo: String(navigation.length),// 序号
+          //  orderNo: String(navigation.length),// 序號
             id: item.id+'',
-            name: item.name || item.text || "无标题",
+            name: item.name || item.text || "無標題",
             path: item.path,
-            query: item.query, //2021.03.20修复自定义二次打开$tabs时参数丢失的问题
+            query: item.query, //2021.03.20修復自定義二次打開$tabs時參數丟失的問題
           });
-        //新打开的tab移至最后一个选项
+        //新打開的tab移至最后一個選項
           selectId.value = navigation.length - 1 + '';
       } else {
          selectId.value = _index + '';
       }
       if (useRoute === undefined) {
-        //非标准菜单，记录最后一次跳转的页面，用于刷新
+        //非標準菜單，記錄最后一次跳轉的頁面，用于刷新
         setItem(item);
         router.push(item);
         // this.$router.push(item);
       }
 
-      // tab菜单绑定右键事件
+      // tab菜單綁定右鍵事件
       proxy.$nextTick(function (e) {
         proxy.bindRightClickMenu(true);
       });
     };
     const close = (path) => {
-      /* 2020.07.31增加手动打开tabs*/
+      /* 2020.07.31增加手動打開tabs*/
       let index = navigation.findIndex((x) => {
         return x.path == path;
       });
       if (index == -1) {
-        return _config.$Message.error("未找到菜单");
+        return _config.$Message.error("未找到菜單");
       }
       removeNav(index);
     };
     const setItem = (item) => {
-      /* 2020.07.31增加手动打开tabs*/
+      /* 2020.07.31增加手動打開tabs*/
       localStorage.setItem(
         window.location.origin + "_tabs",
         JSON.stringify(item)
       );
     };
     const getItem = () => {
-      /* 2020.07.31增加手动打开tabs*/
+      /* 2020.07.31增加手動打開tabs*/
       let nav = localStorage.getItem(window.location.origin + "_tabs");
       return nav ? JSON.parse(nav) : null;
     };
@@ -315,7 +320,7 @@ export default defineComponent({
 
     const removeNav = (_index) => {
       return new Promise(() => {
-        //关闭的当前项,跳转到前一个页面
+        //關閉的當前項,跳轉到前一個頁面
         if (selectId.value == _index + "") {
          console.log( navigation[_index - 1])
           setItem(navigation[_index - 1]);
@@ -339,29 +344,29 @@ export default defineComponent({
       });
     };
     const onSelect = (treeId) => {
-      /* 2020.07.31增加手动打开tabs*/
+      /* 2020.07.31增加手動打開tabs*/
       var item = getSelectMenuName(treeId);
       open(item, false);
     };
 
     /**
-     * 显示右键菜单
-     * @param {*} e 事件对象
+     * 顯示右鍵菜單
+     * @param {*} e 事件對象
      */
     const openTabsMenu = function (e) {
 
-      e.preventDefault(); // 防止默认菜单弹出
+      e.preventDefault(); // 防止默認菜單彈出
       let tabId = e.target.id.split('-')[1] * 1;
 
 
-      //记录当前选中的菜单index
+      //記錄當前選中的菜單index
       selectMenuIndex.value = document.getElementById('pane-' + tabId).children[0].textContent * 1;
-      //只有首页时不显示
+      //只有首頁時不顯示
       if (navigation.length == 1) {
         return;
       }
 
-      //首页设置显示关闭右边菜单
+      //首頁設置顯示關閉右邊菜單
       if (!selectMenuIndex.value) {
         visibleItem.all = false;
         visibleItem.right = true;
@@ -369,21 +374,21 @@ export default defineComponent({
         visibleItem.other = false;
       } else {
         visibleItem.all = true;
-        //不是最后一个显示关闭右边菜单
+        //不是最后一個顯示關閉右邊菜單
         visibleItem.right = selectMenuIndex.value != navigation.length - 1;
-        //只有两个菜单时不显示关闭左边
+        //只有兩個菜單時不顯示關閉左邊
         visibleItem.left = navigation.length != 2;
-        //只有两个菜单时不显示关闭其他
+        //只有兩個菜單時不顯示關閉其他
         visibleItem.other = navigation.length != 2;
       }
       contextMenuVisible.value = true;
-      // 设置右键菜单显示的位置
+      // 設置右鍵菜單顯示的位置
       proxy.menuLeft = e.target.getBoundingClientRect().left - (isCollapse.value ? 63 : 198);//-e.target.clientWidth
       proxy.menuTop = 36;
     };
 
     /**
-        * 关闭右键菜单
+        * 關閉右鍵菜單
         */
     const closeTabsMenu = () => {
       contextMenuVisible.value = false;
@@ -395,35 +400,35 @@ export default defineComponent({
       })
     }
     /**
-     * 关闭其它标签页
-     * @param {*} par 关闭类型(left,right,other)
+     * 關閉其它標簽頁
+     * @param {*} par 關閉類型(left,right,other)
      */
     const closeTabs = (value) => {
       let _menuId= navigation[selectId.value *1].id;
       let currnetIndex =selectId.value *1;// navigation.findIndex(c => { return c.id == selectId.value });
       switch (value) {
-        case "left": { // 删除左侧tab标签
-          navigation.splice(1, currnetIndex - 1);// 删除左侧tab标签
+        case "left": { // 刪除左側tab標簽
+          navigation.splice(1, currnetIndex - 1);// 刪除左側tab標簽
           break;
         }
-        case "right": { // 删除右侧tab标签        
+        case "right": { // 刪除右側tab標簽
           if (selectMenuIndex.value == 0) {
-            navigation.splice(currnetIndex);// 删除右侧tab标签
+            navigation.splice(currnetIndex);// 刪除右側tab標簽
             toHome();
           } else {
-            navigation.splice(currnetIndex + 1);// 删除右侧tab标签
+            navigation.splice(currnetIndex + 1);// 刪除右側tab標簽
             if (selectMenuIndex.value < currnetIndex) {
               navigation.splice(selectMenuIndex.value, currnetIndex-selectMenuIndex.value);
             }
           }
           break;
         }
-        case "other": { // 删除其他所有tab标签
-          navigation.splice(currnetIndex + 1);// 删除右侧tab标签(这里必须按照右→左顺序删除)
-          navigation.splice(1, currnetIndex - 1);// 删除左侧tab标签          
+        case "other": { // 刪除其他所有tab標簽
+          navigation.splice(currnetIndex + 1);// 刪除右側tab標簽(這里必須按照右→左順序刪除)
+          navigation.splice(1, currnetIndex - 1);// 刪除左側tab標簽
           break;
         }
-        default: { //关闭所有
+        default: { //關閉所有
           navigation.splice(1, navigation.length);
           toHome();
           break;
@@ -436,7 +441,7 @@ export default defineComponent({
     watch(
       () => contextMenuVisible.value,
       (newVal, oldVal) => {
-        // 监视
+        // 監視
         if (newVal) {
           document.body.addEventListener("click", closeTabsMenu);
         } else {
@@ -446,7 +451,7 @@ export default defineComponent({
     );
 
     /**
-     * 系统创建开始
+     * 系統創建開始
      */
     const created = () => {
       let _theme = localStorage.getItem("vol3_theme");
@@ -464,7 +469,7 @@ export default defineComponent({
       Object.assign(_config.$tabs, { open: open, close: close });
 
       http.get("api/menu/getTreeMenu", {}, true).then((data) => {
-        data.push({ id: '1', name: "首页", url: "/home" });// 为了获取选中id使用
+        data.push({ id: '1', name: "首頁", url: "/home" });// 為了獲取選中id使用
         data.forEach((d) => {
           d.path = (d.url || "").replace("/Manager", "");
           d.to = (d.url || "").replace("/Manager", "");
@@ -476,7 +481,7 @@ export default defineComponent({
         menuOptions.value = data;
         permissionInited.value = true;
 
-        //开启消息推送（main.js中设置是否开启signalR）2022.05.05
+        //開啟消息推送（main.js中設置是否開啟signalR）2022.05.05
         if (_config.$global.signalR) {
           MessageConfig(http, (result) => {
             messageList.unshift(result);
@@ -484,18 +489,18 @@ export default defineComponent({
           });
         }
 
-        //当前刷新是不是首页
+        //當前刷新是不是首頁
         if (router.currentRoute.value.path != navigation[0].path) {
-          //查找系统菜单
+          //查找系統菜單
           let item = menuOptions.value.find((x) => {
             return x.path == router.currentRoute.value.path; //this.$route.path;
           });
           if (item) return onSelect(item.id);
-          //查找顶部快捷连接
+          //查找頂部快捷連接
           item = links.value.find((x) => {
             return x.path == router.currentRoute.value.path; //this.$route.path;
           });
-          //查找最后一次跳转的页面
+          //查找最后一次跳轉的頁面
           if (!item) {
             item = getItem();
           }
@@ -541,7 +546,7 @@ export default defineComponent({
     };
   },
   /**
-   * 挂载钩子函数
+   * 掛載鉤子函數
    */
   mounted() {
     let _date = showTime();
@@ -556,15 +561,15 @@ export default defineComponent({
 
   methods: {
     /**
-     * 绑定右键事件
-     * @param {*} enable 是否启用右键事件[true:启用;false:禁用;]
+     * 綁定右鍵事件
+     * @param {*} enable 是否啟用右鍵事件[true:啟用;false:禁用;]
      * @param {*} $event 事件
      */
     bindRightClickMenu(enable) {
       if (!enable)
         return;
       let that = this;
-      // 使用原生js 为单个dom绑定鼠标右击事件
+      // 使用原生js 為單個dom綁定鼠標右擊事件
       that.$nextTick(() => {
         let tab_top_dom = document.getElementsByClassName("el-tabs__item is-top");
         tab_top_dom.forEach((item, index) => {
@@ -575,7 +580,7 @@ export default defineComponent({
   },
 
   /**
-   * 销毁钩子函数
+   * 銷毀鉤子函數
    */
   destroyed() {
     $this = null;
@@ -605,7 +610,7 @@ function showTime() {
     "." +
     (month < 10 ? "0" + month : month) +
     "." +
-    (day < 10 ? "0" + day : day) + //202.08.08修复日期天数小于10时添加0
+    (day < 10 ? "0" + day : day) + //202.08.08修復日期天數小于10時添加0
     "" +
     " " +
     (hour < 10 ? "0" + hour : hour) +
@@ -613,7 +618,7 @@ function showTime() {
     (minutes < 10 ? "0" + minutes : minutes) +
     ":" +
     (second < 10 ? "0" + second : second) +
-    " " + //2020.08.30修复首页日期星期天不显示的问题
+    " " + //2020.08.30修復首頁日期星期天不顯示的問題
     (week[date.getDay() - 1] || week[6])
   );
 }

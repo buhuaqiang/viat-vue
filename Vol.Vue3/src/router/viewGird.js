@@ -118,6 +118,14 @@ let viewgird = [
         path: '/View_com_prod',
         name: 'View_com_prod',
         component: () => import('@/views/basic/prod/View_com_prod.vue')
+    }    ,{
+        path: '/View_app_power_contract_main',
+        name: 'View_app_power_contract_main',
+        component: () => import('@/views/contract/contract/View_app_power_contract_main.vue')
+    }    ,{
+        path: '/Viat_app_power_contract_cust',
+        name: 'Viat_app_power_contract_cust',
+        component: () => import('@/views/contract/contract/Viat_app_power_contract_cust.vue')
     }]
 
 export default viewgird

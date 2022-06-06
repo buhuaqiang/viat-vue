@@ -63,7 +63,7 @@
           :pagination-hide="false"
           :height="230"
           :url="table1Url"
-          :index="true"
+        :index="true"
           :defaultLoadPage="false"
           @loadBefore="loadTableBefore1"
           @loadAfter="loadTableAfter1"
