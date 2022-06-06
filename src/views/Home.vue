@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="h-top-right task-table">
-        <h3 class="h3">#框架Vue3.x版本变更说明</h3>
+        <h3 class="h3">通知公告</h3>
         <table border="0" cellspacing="0" cellpadding="0">
           <tr v-for="(row, index) in list" :key="index">
             <td>{{ index + 1 }}</td>
@@ -75,34 +75,34 @@ export default {
     return {
       center: [
         {
-          title: "GitHub",
+          title: "待辦列表",
           icon: "el-icon-set-up",
-          url: "https://github.com/cq-panda/Vue.NetCore",
+          url: "https://github.com/",
         },
         {
-          title: "Gitee",
+          title: "XXX1",
           icon: "el-icon-turn-off",
-          url: "https://gitee.com/x_discoverer/Vue.NetCore",
+          url: "https://gitee.com/",
         },
         {
-          title: "框架Vue2版本",
+          title: "XXX2",
           icon: "el-icon-reading",
-          url: "http://v2.volcore.xyz",
+          url: "https://gitee.com/",
         },
 
         {
-          title: "框架视频",
+          title: "XXX33",
           icon: "el-icon-document",
-          url: "https://www.cctalk.com/m/group/90268531"
+          url: "https://gitee.com/"
         },
 
         {
-          title: "小程序/app/h5",
+          title: "XXX4",
           icon: "el-icon-chat-line-round",
-          url: "http://v2.volcore.xyz/app/guide",
+          url: "https://gitee.com/",
         },
         {
-          title: "QQ群45221949",
+          title: "XXX5",
           icon: "el-icon-chat-dot-round",
           url: "",
         },
@@ -110,58 +110,50 @@ export default {
       n: 90,
       value1: "1",
       applicants: {
-        //报名信息
+        //報名信息
         day: 20, //本日
         week: 150, //本周
         month: 1200, //本月
         totalBoy: 800,
         totalGirl: 890,
         taotal: 1690,
-      }, //报名信息
+      }, //報名信息
       list: [
-        { desc: "框架2.x版本不支持直接升级Vue3版本(代码生成器已修改)" },
-        { desc: "框架使用的Element Plus组件，移除了Iview组件的依赖" },
-        { desc: "框架内部组件全部重新优化,相比2.x版本首屏大小减少60%" },
-        { desc: "框架Vue2版本会继续维护,并与Vue3版本同步更新,请放心使用" },
-        { desc: "框架Vue2、Vue3版本开发文档一致(差异部分文档会备注说明)" },
-        //{ desc: "若正在使用Vue2框架版本继续使用即可;其他建议使用Vue3版本" },
-        {
-          desc: "vue2、vue3文档相同,开文档大部分文档仍然使用的vue2语法",
-        },
-        {
-          desc: "自定义部分既可以使用vue3语法与可以使用vue3语法",
-        },
-        //(框架内部组件vue2/3语法都在使用),你也可以使用vue3语法
+        { desc: "通知公告1111" },
+        { desc: "通知公告1111" },
+        { desc: "通知公告1111" },
+        { desc: "通知公告1111" },
+        //(框架內部組件vue2/3語法都在使用),你也可以使用vue3語法
       ],
       grid: [
         {
-          name: "用户管理",
-          desc: "系统用户管理,注册用户3000000人。",
+          name: "用戶管理",
+          desc: "系統用戶管理。",
           icon: "el-icon-user",
         },
         {
-          name: "站内消息",
-          desc: "您有一条新的消息,请及时处理。",
+          name: "站內消息",
+          desc: "您有一條新的消息,請及時處理。",
           icon: "el-icon-chat-dot-round",
         },
         {
-          name: "系统管理",
-          desc: "这里放点什么,还没想好。",
+          name: "系統管理",
+          desc: "這里放點什么,還沒想好。",
           icon: "el-icon-setting",
         },
         {
-          name: "还没想好",
-          desc: "这里不知道应该放点什么或者写点什么。",
+          name: "還沒想好",
+          desc: "這里不知道應該放點什么或者寫點什么。",
           icon: "el-icon-document",
         },
         {
-          name: "语音导航",
-          desc: "高德地图林志玲为您语音导航。",
+          name: "語音導航",
+          desc: "高德地圖林志玲為您語音導航。",
           icon: "el-icon-microphone",
         },
         {
           name: "垃圾回收",
-          desc: "删除过的数据在此处找回。。。。",
+          desc: "刪除過的數據在此處找回。。。。",
           icon: "el-icon-delete",
         },
       ],
@@ -388,4 +380,4 @@ var $chart, $chart2, $chart3;
   width: 400px;
 }
 </style>
- 
+

@@ -1,6 +1,6 @@
 var chart1 = {
     title: {
-        text: "框架集成及开发环境",
+        text: "框架集成及開發環境",
         left: 'center',
         padding: 15,
     },
@@ -9,11 +9,11 @@ var chart1 = {
     },
     legend: {
         top: 'bottom',
-        icon: "circle",   //  这个字段控制形状  类型包括 circle，rect ，roundRect，triangle，diamond，pin，arrow，none
-        itemWidth: 10,  // 设置宽度
-        itemHeight: 10, // 设置高度
-        itemGap: 7,// 设置间距
-        padding: [0, 0, 15, 0] //图例距离
+        icon: "circle",   //  這個字段控制形狀  類型包括 circle，rect ，roundRect，triangle，diamond，pin，arrow，none
+        itemWidth: 10,  // 設置寬度
+        itemHeight: 10, // 設置高度
+        itemGap: 7,// 設置間距
+        padding: [0, 0, 15, 0] //圖例距離
     },
     series: [
         {
@@ -43,7 +43,7 @@ var chart1 = {
             data: [
                 { value: 1048, name: '.NetCore' },
                 { value: 735, name: 'Dapper' },
-             
+
                 { value: 735, name: 'EntityFramework' },
                 // { value: 735, name: 'JWT' },
                 { value: 735, name: 'Redis' },
@@ -57,17 +57,17 @@ var chart1 = {
 
 var chart2 = {
     title: {
-        text: '这里是首页'
+        text: '產品統計1'
     },
     tooltip: {
         trigger: 'axis',
-        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        axisPointer: {            // 坐標軸指示器，坐標軸觸發有效
+            type: 'shadow'        // 默認為直線，可選為：'line' | 'shadow'
         }
     },
     legend: {
-        data: ['2.0下载量', '3.0下载量'],
-        padding: [0, 0, 15, 0] //图例距离
+        data: ['產品1', '產品2'],
+        padding: [0, 0, 15, 0] //圖例距離
     },
     grid: {
         left: '3%',
@@ -89,7 +89,7 @@ var chart2 = {
     ],
     series: [
         {
-            name: '2.0下载量',
+            name: '產品1',
             type: 'bar',
             showBackground: true,
             backgroundStyle: {
@@ -104,7 +104,7 @@ var chart2 = {
             data: [ 730, 620, 420, 932, 701, 834, 890]
         },
         {
-            name: '3.0下载量',
+            name: '產品2',
             type: 'bar',
 
             showBackground: true,
@@ -125,11 +125,11 @@ var chart3 = {
     },
     legend: {
         top: 'bottom',
-        icon: "circle",   //  这个字段控制形状  类型包括 circle，rect ，roundRect，triangle，diamond，pin，arrow，none
-        itemWidth: 10,  // 设置宽度
-        itemHeight: 10, // 设置高度
-        itemGap: 7,// 设置间距
-        padding: [0, 0, 10, 0] //图例距离
+        icon: "circle",   //  這個字段控制形狀  類型包括 circle，rect ，roundRect，triangle，diamond，pin，arrow，none
+        itemWidth: 10,  // 設置寬度
+        itemHeight: 10, // 設置高度
+        itemGap: 7,// 設置間距
+        padding: [0, 0, 10, 0] //圖例距離
     },
     series: [
         {
@@ -138,12 +138,12 @@ var chart3 = {
             type: 'pie',
             radius: '55%',
             data: [
-                { value: 748, name: '多租户' },
+                { value: 748, name: '多租戶' },
                 { value: 435, name: '多角色' },
-                { value: 580, name: '多数据库' },
-                { value: 280, name: '主从分库' },
-                { value: 284, name: '国际化' },
-                { value: 300, name: 'App/H5开发' },
+                { value: 580, name: '多數據庫' },
+                { value: 280, name: '主從分庫' },
+                { value: 284, name: '國際化' },
+                { value: 300, name: 'App/H5開發' },
                 { value: 200, name: 'Redis' },
                 { value: 600, name: 'Sqlserver' },
                 { value: 400, name: 'Mysql' },
