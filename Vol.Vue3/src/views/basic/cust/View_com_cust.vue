@@ -29,15 +29,16 @@
                 url: "/View_com_cust/",
                 sortName: "dbid"
             });
-            const editFormFields = ref({"cust_id":"","cust_name":"","cust_address":"","invoice_name":"","invoice_address":"","invoice_city_name":"","cust_zip_id":"","cust_city_name":"","owner":"","tax_id":"","contact":"","tel_no":"","fax_no":"","email":"","territory_id":"","doh_institute_no":"","ctrl_drug_no":"","ctrl_drug_contact":"","doh_type":"","margin_type":"","is_contract":"","is_private":"","own_by_hospital":"","own_hospitalname":"","med_groupname":"","delv_groupname":"","new_cust_id":"","inactive_date":"","status":"","remarks":""});
+            const editFormFields = ref({"cust_id":"","cust_name":"","cust_address":"","cust_city_name":"","cust_zip_id":"","invoice_name":"","invoice_address":"","invoice_city_name":"","invoice_zip_id":"","owner":"","tax_id":"","contact":"","tel_no":"","fax_no":"","email":"","territory_id":"","doh_institute_no":"","ctrl_drug_no":"","ctrl_drug_contact":"","doh_type":"","margin_type":"","is_contract":"","is_private":"","own_by_hospital":"","own_hospitalname":"","med_groupname":"","delv_groupname":"","new_cust_id":"","inactive_date":"","status":"","remarks":""});
             const editFormOptions = ref([[{"title":"列名cust_id","required":true,"field":"cust_id"}],
-                              [{"title":"列名cust_name","field":"cust_name"}],
-                              [{"title":"列名cust_address","field":"cust_address"}],
-                              [{"title":"列名invoice_name","field":"invoice_name"}],
-                              [{"dataKey":"viat_city","data":[],"title":"列名invoice_city_name","field":"invoice_city_name","type":"select"},
-                               {"dataKey":"viat_city","data":[],"title":"客戶城市","field":"cust_city_name","type":"select"},
+                              [{"title":"列名cust_name","required":true,"field":"cust_name"}],
+                              [{"dataKey":"viat_city","data":[],"title":"客戶城市","field":"cust_city_name","type":"select"},
                                {"dataKey":"viat_city_zone","data":[],"title":"客戶地區","field":"cust_zip_id","type":"select"},
-                               {"title":"列名invoice_address","field":"invoice_address"}],
+                               {"title":"列名cust_address","required":true,"field":"cust_address"}],
+                              [{"title":"列名invoice_name","required":true,"field":"invoice_name"}],
+                              [{"dataKey":"viat_city","data":[],"title":"列名invoice_city_name","field":"invoice_city_name","type":"select"},
+                               {"dataKey":"viat_city_zone","data":[],"title":"列名invoice_zip_id","field":"invoice_zip_id","type":"select"},
+                               {"title":"列名invoice_address","required":true,"field":"invoice_address"}],
                               [{"title":"列名owner","field":"owner"},
                                {"title":"列名tax_id","field":"tax_id"}],
                               [{"title":"列名contact","field":"contact"},
@@ -53,20 +54,20 @@
                               [{"dataKey":"Status_YN","data":[],"title":"列名is_contract","field":"is_contract","type":"select"}],
                               [{"dataKey":"Status_YN","data":[],"title":"列名is_private","field":"is_private","type":"select"}],
                               [{"dataKey":"Status_YN","data":[],"title":"列名own_by_hospital","field":"own_by_hospital","type":"select"},
-                               {"title":"列名own_hospitalname","required":true,"field":"own_hospitalname"}],
-                              [{"title":"列名med_groupname","required":true,"field":"med_groupname"},
-                               {"title":"列名delv_groupname","required":true,"field":"delv_groupname"}],
+                               {"title":"列名own_hospitalname","field":"own_hospitalname"}],
+                              [{"title":"列名med_groupname","field":"med_groupname"},
+                               {"title":"列名delv_groupname","field":"delv_groupname"}],
                               [{"title":"列名new_cust_id","field":"new_cust_id"},
                                {"title":"列名inactive_date","field":"inactive_date","type":"date"}],
                               [{"dataKey":"Status2","data":[],"title":"列名status","field":"status","type":"select"}],
                               [{"title":"列名remarks","field":"remarks","colSize":8,"type":"textarea"}]]);
-            const searchFormFields = ref({});
-            const searchFormOptions = ref([]);
+            const searchFormFields = ref({"cust_id":"","cust_name":"","owner":"","contact":""});
+            const searchFormOptions = ref([[{"title":"列名cust_id","field":"cust_id","type":"like"},{"title":"列名owner","field":"owner","type":"like"}],[{"title":"列名cust_name","field":"cust_name","type":"like"},{"title":"列名contact","field":"contact"}]]);
             const columns = ref([{field:'cust_id',title:'列名cust_id',type:'string',width:110,require:true,align:'left',sort:true},
-                       {field:'cust_name',title:'列名cust_name',type:'string',link:true,width:120,align:'left'},
-                       {field:'cust_address',title:'列名cust_address',type:'string',width:180,align:'left'},
-                       {field:'invoice_name',title:'列名invoice_name',type:'string',width:120,align:'left'},
-                       {field:'invoice_address',title:'列名invoice_address',type:'string',width:180,hidden:true,align:'left'},
+                       {field:'cust_name',title:'列名cust_name',type:'string',link:true,width:120,require:true,align:'left'},
+                       {field:'cust_address',title:'列名cust_address',type:'string',width:180,require:true,align:'left'},
+                       {field:'invoice_name',title:'列名invoice_name',type:'string',width:120,require:true,align:'left'},
+                       {field:'invoice_address',title:'列名invoice_address',type:'string',width:180,hidden:true,require:true,align:'left'},
                        {field:'owner',title:'列名owner',type:'string',width:120,hidden:true,align:'left'},
                        {field:'tax_id',title:'列名tax_id',type:'string',width:110,hidden:true,align:'left'},
                        {field:'contact',title:'列名contact',type:'string',width:120,hidden:true,align:'left'},
@@ -94,7 +95,10 @@
                        {field:'invoice_type',title:'列名invoice_type',type:'string',width:110,hidden:true,align:'left'},
                        {field:'invoice_zip_name',title:'列名invoice_zip_name',type:'string',width:110,hidden:true,align:'left'},
                        {field:'invoice_city_name',title:'列名invoice_city_name',type:'string',bind:{ key:'viat_city',data:[]},width:110,hidden:true,align:'left'},
-                       {field:'invoice_zip_id',title:'列名invoice_zip_id',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'cust_city_name',title:'客戶城市',type:'string',bind:{ key:'viat_city',data:[]},width:120,align:'left'},
+                       {field:'cust_zip_id',title:'客戶地區',type:'string',bind:{ key:'viat_city_zone',data:[]},width:110,hidden:true,align:'left'},
+                       {field:'cust_zip_name',title:'cust_zip_name',type:'string',width:120,align:'left'},
+                       {field:'invoice_zip_id',title:'列名invoice_zip_id',type:'string',bind:{ key:'viat_city_zone',data:[]},width:110,hidden:true,align:'left'},
                        {field:'modified_date',title:'列名modified_date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
                        {field:'modified_client',title:'列名modified_client',type:'int',width:80,hidden:true,align:'left'},
                        {field:'modified_user',title:'列名modified_user',type:'int',width:80,hidden:true,align:'left'},
@@ -104,14 +108,11 @@
                        {field:'cust_dbid',title:'列名cust_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'created_username',title:'列名created_username',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_clientuser',title:'列名modified_clientuser',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'own_hospitalname',title:'列名own_hospitalname',type:'string',width:110,hidden:true,require:true,align:'left'},
-                       {field:'med_groupname',title:'列名med_groupname',type:'string',width:110,hidden:true,require:true,align:'left'},
-                       {field:'delv_groupname',title:'列名delv_groupname',type:'string',width:110,hidden:true,require:true,align:'left'},
+                       {field:'own_hospitalname',title:'列名own_hospitalname',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'med_groupname',title:'列名med_groupname',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'delv_groupname',title:'列名delv_groupname',type:'string',width:110,hidden:true,align:'left'},
                        {field:'C1',title:'列名C1',type:'string',width:180,hidden:true,require:true,align:'left'},
-                       {field:'cust_zip_id',title:'客戶地區',type:'string',bind:{ key:'viat_city_zone',data:[]},width:110,align:'left'},
-                       {field:'last_deal_date',title:'last_deal_date',type:'datetime',width:150,align:'left',sort:true},
-                       {field:'cust_city_name',title:'客戶城市',type:'string',bind:{ key:'viat_city',data:[]},width:120,align:'left'},
-                       {field:'cust_zip_name',title:'cust_zip_name',type:'string',width:120,align:'left'}]);
+                       {field:'last_deal_date',title:'last_deal_date',type:'datetime',width:150,align:'left',sort:true}]);
             const detail = ref({
                 cnName: "客戶送貨地址信息視圖",
                 table: "View_com_cust_delivery",
@@ -134,7 +135,7 @@
                        {field:'modified_client',title:'modified_client',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_date',title:'modified_date',type:'datetime',width:110,hidden:true,align:'left',sort:true},
                        {field:'zip_name',title:'zip_name',type:'string',width:110,hidden:true,align:'left'}],
-                sortName: "created_date",
+                sortName: "seq_no",
                 key: "delivery_dbid"
             });
             return {

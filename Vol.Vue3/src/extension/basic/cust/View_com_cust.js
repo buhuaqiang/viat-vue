@@ -20,6 +20,7 @@ let extension = {
   },
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
+
   methods: {
     getOption(field) {
       let option;
@@ -34,17 +35,18 @@ let extension = {
     },
     getDetailColumns(field) {
       let row;
-      this.detail.columns.forEach(x => {
+      this.detailOptions.columns.forEach(x => {
         if (x.field == field) {
           row = x;
         }
       })
       return row;
     },
+
     //根據城市名稱獲取區域列表
-    getCityZoneData(cityName){
+    async getCityZoneData(cityName,comZipId,extData){
       debugger
-      var data=[];
+      let data=[];
       let params= {
         "page": 1,
         "rows": 30,
@@ -54,11 +56,20 @@ let extension = {
       }
       let url="api/Viat_com_zip_city/getPageData";
       params.wheres ="[{\"name\":\"city_name\",\"value\":\""+cityName+"\",\"displayType\":\"=\"}]" ;
-      this.http.post(url,params, true).then((result) => {
-        result.rows.forEach(d=>{
-          data.push({"key":d.zip_id,"value":d.zip_id+" "+d.zip_name})
-        })
+      let _result = await this.http.post(url,params, true).then((result) => {
+        return result;
       });
+      _result.rows.forEach(d=>{
+        data.push({"key":d.zip_id,"value":d.zip_id+" "+d.zip_name})
+      })
+      debugger
+      if(extData!=undefined && extData.length>0){
+        extData.forEach(s=>{
+          data.push(s);
+        })
+
+      }
+      comZipId.data=data;
       return data;
     },
      //下面这些方法可以保留也可以删除
@@ -76,28 +87,38 @@ let extension = {
         //示例：设置修改新建、编辑弹出框字段标签的长度
         // this.boxOptions.labelWidth = 150;
       this.boxOptions.labelWidth=180;
+      //显示查询全部字段
+      this.setFiexdSearchForm(true);
+      //设置查询表单的标签文字宽度
+      this.labelWidth=180;
 
+      //let data = { Variety: '1', AvgPrice: 888 };
+      //this.$refs.myform.reset(data);
+
+      //是否自动绑定select/checkboxt等标签的数据源
+      //this.loadKey=true;
 
       let comCity=this.getOption("cust_city_name");
       let invoiceCity=this.getOption("invoice_city_name");
       let comZipId=this.getOption("cust_zip_id");
       let invoiceZipId=this.getOption("invoice_zip_id");
-      comCity.onChange = (val, option) => {
-        this.editFormFields.zip_id = '';//清除原來選擇的數據
 
-        comZipId.data=this.getCityZoneData(val);
+
+      comCity.onChange = (val, option) => {
+        this.editFormFields.cust_zip_id = '';//清除原來選擇的數據
+        this.getCityZoneData(val,comZipId);
       }
 
       invoiceCity.onChange = (val, option) => {
-        this.editFormFields.bmp_zip_id = '';
-        invoiceZipId.data=this.getCityZoneData(val);
+        this.editFormFields.invoice_zip_id = '';
+        this.getCityZoneData(val,invoiceZipId);
       }
 
       let ownHospital=this.getOption("own_hospitalname");
       ownHospital.extra = {
         icon: "el-icon-zoom-out",
         text: "选择隸屬醫院",
-        style: "color:red;font-size: 12px;cursor: pointer;",
+        style: "color:#409eff;font-size: 12px;cursor: pointer;",
         click: item => {
           this.$refs.modelBody.openDemo("own_hospital");
         }
@@ -107,7 +128,7 @@ let extension = {
       med_group.extra = {
         icon: "el-icon-zoom-out",
         text: "选择主院代碼",
-        style: "color:red;font-size: 12px;cursor: pointer;",
+        style: "color:#409eff;font-size: 12px;cursor: pointer;",
         click: item => {
           this.$refs.modelBody.openDemo("med_group");
         }
@@ -117,27 +138,45 @@ let extension = {
       delv_group.extra = {
         icon: "el-icon-zoom-out",
         text: "选择数据",
-        style: "color:red;font-size: 12px;cursor: pointer;",
+        style: "color:#409eff;font-size: 12px;cursor: pointer;",
         click: item => {
           this.$refs.modelBody.openDemo("delv_group");
         }
       }
 
-      let detailCityName=this.getDetailColumns("city_name");
-      detailCityName.onChange = function (options, row, _columns, status) {
-        debugger
-        //在此处可以将数据提到后台处理
-        let val=options['city_name'];
-        //var data1=this.getCityZoneData(val);
-        //options['zip_id'].bind={ key: "zip_id", data: data1 };
 
-      }
 
     },
     onInited() {
+      this.height = this.height-120
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
+      let detailCityName=this.getDetailColumns("city_name");
+      let zip_id=this.getDetailColumns("zip_id");
+
+      let that = this;
+      detailCityName.onChange = function (options, row, _columns, status) {
+        debugger
+        let orgData=zip_id.bind.data;
+        let rowData=that.$refs.detail.rowData;
+        let fData=[];
+        rowData.forEach(r=>{
+          orgData.forEach(dd=>{
+            if(dd.key== r.zip_id){
+              dd.hidden=true;
+              fData.push(dd)
+            }
+          })
+        })
+
+        let val=options['city_name'];
+        let _index=options['elementIndex'];
+        options['zip_id']="";
+        that.getCityZoneData(val,zip_id.bind,fData);
+       // zip_id.bind.data.push(fData);
+      }
+
     },
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
@@ -154,6 +193,7 @@ let extension = {
     },
     updateBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
+
       return true;
     },
     rowClick({ row, column, event }) {
@@ -167,6 +207,29 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+      debugger
+      this.getOption("cust_id").disabled=this.currentAction=='update';
+      this.getOption("cust_id").hidden=this.currentAction=='Add';
+      this.getOption("cust_id").required=this.currentAction=='update';
+      this.getOption("cust_id").cust_id="C0000";
+      if(this.currentAction=='update'){
+         let comZipId=this.getOption("cust_zip_id");
+         let invoiceZipId=this.getOption("invoice_zip_id");
+        // let test=comZipId.data;
+        // let test1=invoiceZipId.data;
+        // this.comData=test.filter(t=>t.key==row.cust_zip_id)
+        // this.invoiceData=test1.filter(t=>t.key==row.invoice_zip_id)
+        let cityName1=this.editFormFields.cust_city_name;
+        let cityName2=this.editFormFields.invoice_city_name;
+        //初始化客户地址和发票地址的区域下拉选择
+        this.getCityZoneData(cityName1,comZipId);
+        this.getCityZoneData(cityName2,invoiceZipId);
+        /*this.http.post('/api/Sys_Dictionary/GetVueDictionary', ['viat_city_zone']).then((dic) => {
+          let data1=dic[0].data;
+          comZipId.data=data1;
+          invoiceZipId.data=data1;
+        });*/
+      }
     }
   }
 };
