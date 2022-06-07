@@ -6,7 +6,7 @@
 **后台操作见：http://v2.volcore.xyz/document/netCoreDev
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
-import testInfo from "./Test_info";
+
 import prodPop from "./View_com_prod_pop_query.vue";
 let extension = {
   components: {
