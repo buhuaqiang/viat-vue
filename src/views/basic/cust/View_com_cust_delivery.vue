@@ -27,7 +27,7 @@
                 cnName: '客戶送貨地址信息視圖',
                 name: 'cust/View_com_cust_delivery',
                 url: "/View_com_cust_delivery/",
-                sortName: "created_date"
+                sortName: "seq_no"
             });
             const editFormFields = ref({"delivery_name":"","city_name":"","zip_id":"","delivery_addr":"","delivery_contact":"","delivery_tel_no":"","seq_no":""});
             const editFormOptions = ref([[{"title":"","field":"delivery_name"}],
