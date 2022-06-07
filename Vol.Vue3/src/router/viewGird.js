@@ -154,6 +154,18 @@ let viewgird = [
         path: '/View_com_cust_delivery',
         name: 'View_com_cust_delivery',
         component: () => import('@/views/basic/cust/View_com_cust_delivery.vue')
+    }   /* ,{
+        path: '/Test_info',
+        name: 'Test_info',
+        component: () => import('@/views/basic/test/Test_info.vue')
+    }    ,{
+        path: '/Group_test',
+        name: 'Group_test',
+        component: () => import('@/views/basic/test/Group_test.vue')
+    }*/    ,{
+        path: '/View_com_prod_pop_query',
+        name: 'View_com_prod_pop_query',
+        component: () => import('@/views/basic/prod/View_com_prod_pop_query.vue')
     }]
 
 export default viewgird
