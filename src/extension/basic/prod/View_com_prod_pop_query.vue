@@ -4,28 +4,27 @@
             :lazy="true"
             title="产品pop框"
             :height="450"
-            :width="800"
+            :width="1000"
             :padding="15"
     >
         <!-- 设置查询条件 -->
         <div style="padding-bottom: 10px">
-            <span style="margin-right: 20px">请选择数据</span>
+            <span style="margin-right: 5px">ID:</span>
             <el-input
                     placeholder="ID"
-                    type="like"
-                    style="width: 200px"
+                    style="width: 180px"
                     v-model="prod_id"
             />
+            <span style="margin-right: 5px">&nbsp;&nbsp;&nbsp;&nbsp;EnglishName:</span>
             <el-input
                     placeholder="EnglishName"
-                    type="like"
-                    style="width: 200px"
+                    style="width: 180px"
                     v-model="prod_ename"
             />
+            <span style="margin-right: 5px">&nbsp;&nbsp;&nbsp;&nbsp; ChineseName:</span>
             <el-input
                     placeholder="ChineseName"
-                    type="like"
-                    style="width: 200px"
+                    style="width: 180px"
                     v-model="prod_sname"
             />
             <el-button
@@ -82,8 +81,10 @@
             return {
                 model: false,
                 defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
-                cust_name: "", //查询条件字段
-                fieldName:"",//編輯字段,用於回傳設置值
+                prod_id: "", //查询条件字段
+                prod_ename: "", //查询条件字段
+                prod_sname: "", //查询条件字段
+
                 url: "api/View_com_prod_pop_query/getPageData",//加载数据的接口
                 columns: [
                     {field:'mpg_id',title:'Mpg',type:'string',width:90,align:'left',sort:true},
@@ -120,6 +121,23 @@
                     this.model=false;
                 })
 
+            },
+            search() {
+                //点击搜索
+                this.$refs.prodPop.load();
+            },
+            loadTableBefore(params) {
+                //查询前，设置查询条件
+                if (this.prod_id) {
+                    params.wheres = [{ name: "prod_id", value: this.prod_id }];
+                }
+                if (this.prod_ename) {
+                    params.wheres = [{ name: "prod_ename", value: this.prod_ename }];
+                }
+                if (this.prod_sname) {
+                    params.wheres = [{ name: "prod_sname", value: this.prod_sname }];
+                }
+                return true;
             },
 
         },
