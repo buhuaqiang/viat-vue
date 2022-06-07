@@ -31,14 +31,14 @@
             });
             const editFormFields = ref({"cust_id":"","cust_name":"","cust_address":"","cust_city_name":"","cust_zip_id":"","invoice_name":"","invoice_address":"","invoice_city_name":"","invoice_zip_id":"","owner":"","tax_id":"","contact":"","tel_no":"","fax_no":"","email":"","territory_id":"","doh_institute_no":"","ctrl_drug_no":"","ctrl_drug_contact":"","doh_type":"","margin_type":"","is_contract":"","is_private":"","own_by_hospital":"","own_hospitalname":"","med_groupname":"","delv_groupname":"","new_cust_id":"","inactive_date":"","status":"","remarks":""});
             const editFormOptions = ref([[{"title":"列名cust_id","required":true,"field":"cust_id"}],
-                              [{"title":"列名cust_name","required":true,"field":"cust_name"}],
+                              [{"title":"列名cust_name","field":"cust_name"}],
                               [{"dataKey":"viat_city","data":[],"title":"客戶城市","field":"cust_city_name","type":"select"},
                                {"dataKey":"viat_city_zone","data":[],"title":"客戶地區","field":"cust_zip_id","type":"select"},
-                               {"title":"列名cust_address","required":true,"field":"cust_address"}],
-                              [{"title":"列名invoice_name","required":true,"field":"invoice_name"}],
+                               {"title":"列名cust_address","field":"cust_address"}],
+                              [{"title":"列名invoice_name","field":"invoice_name"}],
                               [{"dataKey":"viat_city","data":[],"title":"列名invoice_city_name","field":"invoice_city_name","type":"select"},
                                {"dataKey":"viat_city_zone","data":[],"title":"列名invoice_zip_id","field":"invoice_zip_id","type":"select"},
-                               {"title":"列名invoice_address","required":true,"field":"invoice_address"}],
+                               {"title":"列名invoice_address","field":"invoice_address"}],
                               [{"title":"列名owner","field":"owner"},
                                {"title":"列名tax_id","field":"tax_id"}],
                               [{"title":"列名contact","field":"contact"},
@@ -64,10 +64,10 @@
             const searchFormFields = ref({"cust_id":"","cust_name":"","owner":"","contact":""});
             const searchFormOptions = ref([[{"title":"列名cust_id","field":"cust_id","type":"like"},{"title":"列名owner","field":"owner","type":"like"}],[{"title":"列名cust_name","field":"cust_name","type":"like"},{"title":"列名contact","field":"contact"}]]);
             const columns = ref([{field:'cust_id',title:'列名cust_id',type:'string',width:110,require:true,align:'left',sort:true},
-                       {field:'cust_name',title:'列名cust_name',type:'string',link:true,width:120,require:true,align:'left'},
-                       {field:'cust_address',title:'列名cust_address',type:'string',width:180,require:true,align:'left'},
-                       {field:'invoice_name',title:'列名invoice_name',type:'string',width:120,require:true,align:'left'},
-                       {field:'invoice_address',title:'列名invoice_address',type:'string',width:180,hidden:true,require:true,align:'left'},
+                       {field:'cust_name',title:'列名cust_name',type:'string',link:true,width:120,align:'left'},
+                       {field:'cust_address',title:'列名cust_address',type:'string',width:180,align:'left'},
+                       {field:'invoice_name',title:'列名invoice_name',type:'string',width:120,align:'left'},
+                       {field:'invoice_address',title:'列名invoice_address',type:'string',width:180,hidden:true,align:'left'},
                        {field:'owner',title:'列名owner',type:'string',width:120,hidden:true,align:'left'},
                        {field:'tax_id',title:'列名tax_id',type:'string',width:110,hidden:true,align:'left'},
                        {field:'contact',title:'列名contact',type:'string',width:120,hidden:true,align:'left'},
@@ -107,12 +107,14 @@
                        {field:'created_user',title:'列名created_user',type:'int',width:80,hidden:true,align:'left'},
                        {field:'cust_dbid',title:'列名cust_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'created_username',title:'列名created_username',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'modified_clientuser',title:'列名modified_clientuser',type:'string',width:110,hidden:true,align:'left'},
                        {field:'own_hospitalname',title:'列名own_hospitalname',type:'string',width:110,hidden:true,align:'left'},
                        {field:'med_groupname',title:'列名med_groupname',type:'string',width:110,hidden:true,align:'left'},
                        {field:'delv_groupname',title:'列名delv_groupname',type:'string',width:110,hidden:true,align:'left'},
                        {field:'C1',title:'列名C1',type:'string',width:180,hidden:true,require:true,align:'left'},
-                       {field:'last_deal_date',title:'last_deal_date',type:'datetime',width:150,align:'left',sort:true}]);
+                       {field:'last_deal_date',title:'last_deal_date',type:'datetime',width:150,align:'left',sort:true},
+                       {field:'created_clientusername',title:'created_clientusername',type:'string',width:110,align:'left'},
+                       {field:'modified_username',title:'modified_username',type:'string',width:110,align:'left'},
+                       {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "客戶送貨地址信息視圖",
                 table: "View_com_cust_delivery",

@@ -29,7 +29,7 @@
                 url: "/Viat_com_cust/",
                 sortName: "CreateDate"
             });
-            const editFormFields = ref({"cust_id":"","cust_name":"","cust_address":"","invoice_name":"","invoice_address":"","owner":"","tax_id":"","contact":"","tel_no":"","fax_no":"","email":"","territory_id":"","doh_institute_no":"","ctrl_drug_no":"","ctrl_drug_contact":"","margin_type":"","is_contract":"","doh_type":"","is_private":"","own_by_hospital":"","own_hospital":"","inactive_date":"","status":"","med_group":"","delv_group":"","new_cust_id":"","remarks":""});
+            const editFormFields = ref({"cust_id":"","cust_name":"","cust_address":"","invoice_name":"","invoice_address":"","owner":"","tax_id":"","contact":"","tel_no":"","fax_no":"","email":"","territory_id":"","doh_institute_no":"","ctrl_drug_no":"","ctrl_drug_contact":"","margin_type":"","is_contract":"","doh_type":"","is_private":"","own_by_hospital":"","own_hospital":"","cust_zip_id":"","inactive_date":"","status":"","invoice_zip_id":"","med_group":"","delv_group":"","new_cust_id":"","remarks":""});
             const editFormOptions = ref([[{"title":"客戶編號","required":true,"field":"cust_id"}],
                               [{"title":"客戶名稱","field":"cust_name","type":"text"}],
                               [{"title":"客戶地址","field":"cust_address","colSize":6,"type":"text"}],
@@ -50,9 +50,11 @@
                                {"dataKey":"doh_type","data":[],"title":"健保類別","field":"doh_type","type":"select"}],
                               [{"dataKey":"Status_YN","data":[],"title":"是否為私立","field":"is_private","type":"select"},
                                {"dataKey":"Status_YN","data":[],"title":"是否為門前藥局/診所","field":"own_by_hospital","type":"select"},
-                               {"title":"隸屬醫院代碼","field":"own_hospital"}],
+                               {"title":"隸屬醫院代碼","field":"own_hospital"},
+                               {"title":"客戶地址郵區代碼","field":"cust_zip_id"}],
                               [{"title":"失效日期","field":"inactive_date","type":"date"},
-                               {"dataKey":"Status2","data":[],"title":"是否有效","field":"status","type":"select"}],
+                               {"dataKey":"Status2","data":[],"title":"是否有效","field":"status","type":"select"},
+                               {"title":"發票地址郵區代碼","field":"invoice_zip_id"}],
                               [{"title":"隸書體系主院代碼","field":"med_group"},
                                {"title":"統一寄送至醫院代碼","field":"delv_group"}],
                               [{"title":"新客戶代碼","field":"new_cust_id"}],
@@ -97,7 +99,11 @@
                        {field:'cust_dbid',title:'主鍵',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'cust_zip_id',title:'客戶地址郵區代碼',type:'string',width:110,align:'left'},
                        {field:'invoice_zip_id',title:'發票地址郵區代碼',type:'string',width:110,align:'left'},
-                       {field:'last_deal_date',title:'last_deal_date',type:'datetime',width:150,align:'left',sort:true}]);
+                       {field:'last_deal_date',title:'last_deal_date',type:'datetime',width:150,align:'left',sort:true},
+                       {field:'created_username',title:'created_username',type:'string',width:110,align:'left'},
+                       {field:'created_clientusername',title:'created_clientusername',type:'string',width:110,align:'left'},
+                       {field:'modified_username',title:'modified_username',type:'string',width:110,align:'left'},
+                       {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "客戶送貨資訊",
                 table: "Viat_com_cust_delivery",
@@ -114,7 +120,11 @@
                        {field:'created_date',title:'建立時間',type:'datetime',width:110,align:'left',sort:true},
                        {field:'modified_user',title:'最後修改用戶',type:'int',width:110,align:'left'},
                        {field:'modified_client',title:'最後修改者的委託人',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,align:'left',sort:true}],
+                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,align:'left',sort:true},
+                       {field:'created_username',title:'created_username',type:'string',width:110,align:'left'},
+                       {field:'created_clientusername',title:'created_clientusername',type:'string',width:110,align:'left'},
+                       {field:'modified_username',title:'modified_username',type:'string',width:110,align:'left'},
+                       {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,align:'left'}],
                 sortName: "created_date",
                 key: "delivery_dbid"
             });
