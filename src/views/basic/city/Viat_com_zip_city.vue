@@ -30,25 +30,29 @@
                 sortName: "city_id"
             });
             const editFormFields = ref({"city_id":"","city_name":"","zip_id":"","zip_name":"","status":""});
-            const editFormOptions = ref([[{"title":"城市代碼","required":true,"field":"city_id","type":"number"},
-                               {"title":"城市名稱","required":true,"field":"city_name"}],
-                              [{"title":"地區編碼","required":true,"field":"zip_id","type":"number"},
-                               {"title":"地區名稱","required":true,"field":"zip_name"}],
-                              [{"dataKey":"Status2","data":[],"title":"是否有效","required":true,"field":"status","type":"select"}]]);
+            const editFormOptions = ref([[{"title":"城市代碼","field":"city_id","type":"number"},
+                               {"title":"城市名稱","field":"city_name"}],
+                              [{"title":"地區編碼","field":"zip_id","type":"number"},
+                               {"title":"地區名稱","field":"zip_name"}],
+                              [{"dataKey":"Status2","data":[],"title":"是否有效","field":"status","type":"select"}]]);
             const searchFormFields = ref({"zip_name":"","city_name":""});
             const searchFormOptions = ref([[{"title":"地區名稱","field":"zip_name","type":"like"},{"title":"城市名稱","field":"city_name","type":"like"}]]);
-            const columns = ref([{field:'zip_id',title:'地區編碼',type:'string',width:110,hidden:true,require:true,align:'left'},
-                       {field:'zip_name',title:'地區名稱',type:'string',link:true,width:110,require:true,align:'left',sort:true},
-                       {field:'city_id',title:'城市代碼',type:'string',width:110,require:true,align:'left'},
-                       {field:'city_name',title:'城市名稱',type:'string',width:110,require:true,align:'left'},
-                       {field:'status',title:'是否有效',type:'bool',bind:{ key:'Status2',data:[]},width:110,require:true,align:'left'},
+            const columns = ref([{field:'zip_id',title:'地區編碼',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'zip_name',title:'地區名稱',type:'string',link:true,width:110,align:'left',sort:true},
+                       {field:'city_id',title:'城市代碼',type:'string',width:110,align:'left'},
+                       {field:'city_name',title:'城市名稱',type:'string',width:110,align:'left'},
+                       {field:'status',title:'是否有效',type:'string',bind:{ key:'Status2',data:[]},width:110,align:'left'},
                        {field:'created_user',title:'建立用戶',type:'int',width:80,align:'left'},
                        {field:'created_date',title:'建立時間',type:'datetime',width:150,align:'left',sort:true},
                        {field:'modified_user',title:'最後修改用戶',type:'int',width:80,align:'left'},
                        {field:'modified_date',title:'最後修改時間',type:'datetime',width:150,align:'left',sort:true},
                        {field:'modified_client',title:'最後修改者的委託人',type:'int',width:80,hidden:true,align:'left'},
                        {field:'created_client',title:'建立者的委託人',type:'int',width:80,hidden:true,align:'left'},
-                       {field:'zip_dbid',title:'郵區表DBID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'}]);
+                       {field:'zip_dbid',title:'郵區表DBID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
+                       {field:'created_username',title:'created_username',type:'string',width:110,align:'left'},
+                       {field:'created_clientusername',title:'created_clientusername',type:'string',width:110,align:'left'},
+                       {field:'modified_username',title:'modified_username',type:'string',width:110,align:'left'},
+                       {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

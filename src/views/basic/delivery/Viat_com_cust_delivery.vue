@@ -51,7 +51,11 @@
                        {field:'created_date',title:'建立時間',type:'datetime',width:110,align:'left',sort:true},
                        {field:'modified_user',title:'最後修改用戶',type:'int',width:110,align:'left'},
                        {field:'modified_client',title:'最後修改者的委託人',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,align:'left',sort:true}]);
+                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,align:'left',sort:true},
+                       {field:'created_username',title:'created_username',type:'string',width:110,align:'left'},
+                       {field:'created_clientusername',title:'created_clientusername',type:'string',width:110,align:'left'},
+                       {field:'modified_username',title:'modified_username',type:'string',width:110,align:'left'},
+                       {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
