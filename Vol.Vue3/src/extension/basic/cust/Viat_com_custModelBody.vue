@@ -72,7 +72,7 @@ export default {
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
       cust_name: "", //查询条件字段
       fieldName:"",//編輯字段,用於回傳設置值
-      url: "api/View_com_cust/getPageData",//加载数据的接口
+      url: "api/View_com_cust/GetPopPageData",//加载数据的接口
       columns: [
         {field:'cust_id',title:'客戶編號',type:'string',width:110,require:true,align:'left',sort:true},
         {field:'cust_name',title:'客戶名',type:'string',link:true,width:120,align:'left'},
