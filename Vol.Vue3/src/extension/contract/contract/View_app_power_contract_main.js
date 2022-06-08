@@ -1,5 +1,6 @@
-import modelBody from "../../appmanager/App_ReportPrice/App_ReportPriceModelBody";
-import form3 from "../../../views/forms/form3";
+import Viat_app_power_contract_ModelBody from "./Viat_app_power_contract_ModelBody";
+
+
 
 /*****************************************************************************************
 **  Author:jxx 2022
@@ -18,12 +19,12 @@ let extension = {
     gridFooter: '',
     //新建、编辑弹出框扩展组件
     modelHeader: '',
-    modelBody: modelBody,
+    modelBody: Viat_app_power_contract_ModelBody,
     modelFooter: '',
-    form3:form3
   },
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
+
   methods: {
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
@@ -38,23 +39,56 @@ let extension = {
         //   });
 
         //示例：设置修改新建、编辑弹出框字段标签的长度
-        // this.boxOptions.labelWidth = 150;
-      //开启固定显示查询功能，true=页面加载时查询表单也显示出来，false=点击查询时才会显示表单
+      this.labelWidth=180;
+      //设置编辑表单标签文字宽度
+      this.boxOptions.labelWidth=150;      //开启固定显示查询功能，true=页面加载时查询表单也显示出来，false=点击查询时才会显示表单
+      // this.boxOptions.height=10000;
+      // this.boxOptions.width=10000;
+
       this.setFiexdSearchForm(true);
 
-         this.buttons.unshift({  //也可以用push或者splice方法来修改buttons数组
-           name: '按钮', //按钮名称
-           icon: 'el-icon-document', //按钮图标vue2版本见iview文档icon，vue3版本见element ui文档icon(注意不是element puls文档)
-           type: 'primary', //按钮样式vue2版本见iview文档button，vue3版本见element ui文档button
-          onClick: function () {
-            // this.$Message.success('点击了按钮');
-            this.$nextTick(() => {
-              //这里没有给弹出框中的表格传参，如果需要参数可以通过 this.$emit("parentCall", 获取页面的参数
-              //具体见自定义页面App_ReportPriceModelBody.vue中的modelOpen方法的使用 this.$emit("parentCall", ($this) => {
-              this.$refs.form3.modelBody.mo
-            })
-           }
-         });
+      var cust_name = this.getFormOption("cust_name");
+      var group_name = this.getFormOption("group_name");
+      cust_name.hidden = false;
+      group_name.hidden = false;
+      //获取订单类型select配置，当前订单类型select改变值时，动态设置Remark,SellNo两个字段是否显示
+      var isgroup = this.getFormOption("isgroup");
+      isgroup.onChange = (val) => {
+
+        if(val=='0'){
+          cust_name.hidden=false;
+          group_name.hidden = true;
+        }else if(val=='1'){
+          cust_name.hidden=true;
+          group_name.hidden = false;
+        }
+
+      }
+
+
+      cust_name.extra = {
+        icon: "el-icon-zoom-out",
+        text: "选择",
+        style: "color:red;font-size: 12px;cursor: pointer;",
+        click: item => {
+          this.$refs.modelBody.openCustmModelBody("cust_name");
+        }
+      }
+
+
+
+    },
+
+    getFormOption (field) {
+      let option;
+      this.editFormOptions.forEach(x => {
+        x.forEach(item => {
+          if (item.field == field) {
+            option = item;
+          }
+        })
+      })
+      return option;
     },
     onInited() {
       //框架初始化配置后
@@ -71,11 +105,41 @@ let extension = {
       return true;
     },
     addBefore(formData) {
+
       //新建保存前formData为对象，包括明细表，可以给给表单设置值，自己输出看formData的值
       return true;
     },
     updateBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
+      //選擇客戶List table1
+      let table1RowData = this.$refs.modelBody.table1RowData;
+
+      //table2數據回填到 formData
+      let table2RowData = this.$refs.modelBody.table2RowData;
+
+      //table3數據回填到 formData 贈送產品
+      let table3RowData = this.$refs.modelBody.table3RowData;
+
+      //vue2方法,  不使用,可以直接賦值
+      //this.$set(this.detailData, "table1RowData", table1RowData)
+      // this.$set(this.detailData, "table1RowData", table1RowData)
+     // this.$set(this.detailData, "table1RowData", table1RowData)
+      let detailData = [
+        {
+          key: "table1RowData",
+          value: table1RowData,
+        },
+        {
+          key: "table2RowData",
+          value: table2RowData,
+        },
+        {
+          key: "table3RowData",
+          value: table3RowData,
+        },
+      ]
+
+      formData.detailData = detailData;
       return true;
     },
     rowClick({ row, column, event }) {
@@ -89,6 +153,25 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+      var cust_name = this.getFormOption("cust_name");
+      var group_name = this.getFormOption("group_name");
+      //var isgroup = this.getFormOption("isgroup").valueOf();
+
+      var isgroup  = this.editFormFields.isgroup;
+      if(isgroup=='0'){
+        cust_name.hidden=false;
+        group_name.hidden = true;
+      }else if(isgroup=='1'){
+        cust_name.hidden=true;
+        group_name.hidden = false;
+      }else{
+        cust_name.hidden=true;
+        group_name.hidden = true;
+      }
+
+      this.$refs.modelBody.modelOpen();
+
+
     }
   }
 };
