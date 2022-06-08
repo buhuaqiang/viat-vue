@@ -42,17 +42,17 @@
                        {field:'city_id',title:'城市代碼',type:'string',width:110,align:'left'},
                        {field:'city_name',title:'城市名稱',type:'string',width:110,align:'left'},
                        {field:'status',title:'是否有效',type:'string',bind:{ key:'Status2',data:[]},width:110,align:'left'},
-                       {field:'created_user',title:'建立用戶',type:'int',width:80,align:'left'},
+                       {field:'created_user',title:'建立用戶',type:'int',width:80,hidden:true,align:'left'},
+                       {field:'created_username',title:'created_username',type:'string',width:110,align:'left'},
                        {field:'created_date',title:'建立時間',type:'datetime',width:150,align:'left',sort:true},
-                       {field:'modified_user',title:'最後修改用戶',type:'int',width:80,align:'left'},
+                       {field:'modified_user',title:'最後修改用戶',type:'int',width:80,hidden:true,align:'left'},
+                       {field:'modified_username',title:'modified_username',type:'string',width:110,align:'left'},
                        {field:'modified_date',title:'最後修改時間',type:'datetime',width:150,align:'left',sort:true},
                        {field:'modified_client',title:'最後修改者的委託人',type:'int',width:80,hidden:true,align:'left'},
                        {field:'created_client',title:'建立者的委託人',type:'int',width:80,hidden:true,align:'left'},
                        {field:'zip_dbid',title:'郵區表DBID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
-                       {field:'created_username',title:'created_username',type:'string',width:110,align:'left'},
-                       {field:'created_clientusername',title:'created_clientusername',type:'string',width:110,align:'left'},
-                       {field:'modified_username',title:'modified_username',type:'string',width:110,align:'left'},
-                       {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,align:'left'}]);
+                       {field:'created_clientusername',title:'created_clientusername',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
