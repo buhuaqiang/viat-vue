@@ -114,8 +114,9 @@
 <script>
 //开发一对多从表需要参照voltable与viewgrid组件api
 import VolTable from "@/components/basic/VolTable.vue";
+import custmModelBody from './Viat_com_custModelBody'
 export default {
-  components: { VolTable },
+  components: { VolTable ,custmModelBody},
   data() {
     return {
       //从表1
@@ -248,6 +249,10 @@ export default {
       return true;
     },
 
+    openCustmModelBody(fieldName){
+      debugger;
+      this.$refs.custmModelBody.openDemo(fieldName);
+    },
 
     del() {
       let rows = this.$refs.table1.getSelected();

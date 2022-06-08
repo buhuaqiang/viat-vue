@@ -47,7 +47,7 @@
                 :max-height="380"
                 :url="url"
                 :index="true"
-                :single="true"
+                :single=single
                 :defaultLoadPage="defaultLoadPage"
                 @loadBefore="loadTableBefore"
                 @loadAfter="loadTableAfter"
@@ -79,8 +79,10 @@
         },
         data() {
             return {
+                single:true,
                 model: false,
                 defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
+                fieldName:"", // 自定義邏輯字段
                 prod_id: "", //查询条件字段
                 prod_ename: "", //查询条件字段
                 prod_sname: "", //查询条件字段
@@ -101,9 +103,9 @@
             };
         },
         methods: {
-            open() {
+            open(fieldName) {
                 this.model = true;
-
+                this.fieldName = fieldName
                 //打开弹出框时，加载table数据
                 this.$nextTick(() => {
                     this.$refs.prodPop.load();
@@ -111,15 +113,32 @@
             },
 
             addRow() {
-                let selectrow = this.$refs.prod.$refs.grid.getSelectRows();
+                debugger;
+                let selectrow = this.$refs.prodPop.getSelected();
                 if(!selectrow.length){
                     return this.$message.error("请选择数据")
                 }
-                //将选取的数据赋值到父页面
-                this.$emit('parentCall', $parent => {
-                    $parent.editFormFields.prod_sname = selectrow[0].prod_sname;
-                    this.model=false;
-                })
+                // //将选取的数据赋值到父页面
+                // this.$emit('parentCall', $parent => {
+                //     $parent.editFormFields.prod_sname = selectrow[0].prod_sname;
+                //     this.model=false;
+                // })
+
+
+
+                if (!selectrow || selectrow.length == 0) {
+                    return this.$message.error("请选择行数据");
+                }
+                let path =this.$route.path;
+                if(path=='/View_app_power_contract_main'){//多導則調用
+                    this.$emit("onSelect",this.fieldName,selectrow)
+                }else{
+                    this.$emit("parentCall", ($parent) => {
+                        //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
+                        $parent.editFormFields[this.fieldName] = selectrow[0].cust_id;
+                    });
+                }
+                this.model=false;
 
             },
             search() {
