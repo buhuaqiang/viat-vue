@@ -60,9 +60,9 @@
             const searchFormFields = ref({"entity":"","division":"","lmpg_mpg_id":"","global_mpg":"","prod_id":"","prod_sname":"","prod_ename":"","inv_type":"","state":""});
             const searchFormOptions = ref([[{"dataKey":"entity","data":[],"title":"Entity","field":"entity","type":"select"},{"dataKey":"division","data":[],"title":"Division","field":"division","type":"select"}],[{"title":"Item Description(Chinese)","field":"prod_sname","type":"like"},{"title":"Item Description(English)","field":"prod_ename","type":"like"}],[{"title":"Item Code","field":"prod_id","type":"like"},{"dataKey":"prod_status","data":[],"title":"Status","field":"state","type":"select"}],[{"dataKey":"sales_mpg","data":[],"title":"Sales MPG","field":"lmpg_mpg_id","type":"select"},{"dataKey":"finance_mpg","data":[],"title":"Finance MPG","field":"global_mpg","type":"select"}],[{"dataKey":"inv_type","data":[],"title":"Inv Type","field":"inv_type","type":"select"}]]);
             const columns = ref([{field:'dbid',title:'列名dbid',type:'int',width:110,hidden:true,require:true,align:'left'},
-                       {field:'entity',title:'Entity',type:'string', link:true, bind:{ key:'entity',data:[]},width:80,readonly:true,align:'left',sort:true},
+                       {field:'entity',title:'Entity',type:'string',bind:{ key:'entity',data:[]},link:true,width:80,readonly:true,align:'left',sort:true},
                        {field:'division',title:'Division',type:'string',bind:{ key:'division',data:[]},width:80,readonly:true,align:'left'},
-                       //{field:'lmpg_mpg_id',title:'Sales MPG',type:'string',bind:{ key:'sales_mpg',data:[]},width:80,readonly:true,require:true,align:'left'},
+                       {field:'lmpg_mpg_id',title:'Sales MPG',type:'string',bind:{ key:'sales_mpg',data:[]},width:80,readonly:true,require:true,align:'left'},
                        {field:'global_mpg',title:'Global MPG',type:'string',bind:{ key:'finance_mpg',data:[]},width:80,readonly:true,align:'left'},
                        {field:'prod_id',title:'Item Code',type:'string',width:90,readonly:true,require:true,align:'left'},
                        {field:'prod_sname',title:'Item Description(Chinese)',type:'string',width:130,readonly:true,align:'left'},

@@ -29,8 +29,17 @@
                 url: "/Viat_com_prod/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({});
-            const editFormOptions = ref([]);
+            const editFormFields = ref({"prod_id":"","license_no":"","license_name":"","safty_stock":"","state":"","status_sample":"","status_bid":"","status_stock_pfizer":"","status_stock_dist":"","default_dist_id":""});
+            const editFormOptions = ref([[{"title":"產品id","required":true,"field":"prod_id"},
+                               {"title":"許可證字號","field":"license_no"},
+                               {"title":"許可證名稱","field":"license_name"},
+                               {"title":"安全庫存量","field":"safty_stock","type":"number"},
+                               {"title":"狀態","field":"state"},
+                               {"title":"是否可申請樣品","field":"status_sample"},
+                               {"title":"是否可申請議價決標單","field":"status_bid"},
+                               {"title":"輝瑞庫存狀態","field":"status_stock_pfizer"},
+                               {"title":"經銷商庫存狀態","field":"status_stock_dist"},
+                               {"title":"預設所屬經銷商","field":"default_dist_id"}]]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([]);
             const columns = ref([{field:'prod_dbid',title:'PKID',type:'guid',width:110,require:true,align:'left',sort:true},
@@ -38,7 +47,7 @@
                        {field:'entity',title:'公司別',type:'string',width:110,align:'left'},
                        {field:'localmpg_dbid',title:'本地產品組DBID',type:'guid',width:110,align:'left'},
                        {field:'division',title:'所屬事業單位',type:'string',width:110,align:'left'},
-                       {field:'prod_id',title:'產品id',type:'string',width:110,align:'left'},
+                       {field:'prod_id',title:'產品id',type:'string',width:110,require:true,align:'left'},
                        {field:'prod_ename',title:'英文名稱',type:'string',width:110,align:'left'},
                        {field:'prod_cname',title:'中文名稱',type:'string',width:110,align:'left'},
                        {field:'prod_sname',title:'中文名稱',type:'string',width:110,align:'left'},
@@ -75,7 +84,11 @@
                        {field:'created_date',title:'建立時間',type:'datetime',width:150,align:'left',sort:true},
                        {field:'created_client',title:'建立者的委託人',type:'int',width:80,align:'left'},
                        {field:'created_user',title:'建立用戶',type:'int',width:80,align:'left'},
-                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:150,align:'left',sort:true}]);
+                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:150,align:'left',sort:true},
+                       {field:'created_username',title:'建立用戶賬號',type:'string',width:110,align:'left'},
+                       {field:'created_clientusername',title:'建立者的委託人賬號',type:'string',width:110,align:'left'},
+                       {field:'modified_username',title:'最後修改用戶賬號',type:'string',width:110,align:'left'},
+                       {field:'modified_clientusername',title:'最後修改的委託人賬號',type:'string',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
