@@ -1,4 +1,5 @@
 import Viat_app_power_contract_ModelBody from "./Viat_app_power_contract_ModelBody";
+import {useRouter} from "vue-router";
 
 
 
@@ -76,6 +77,34 @@ let extension = {
       }
 
 
+      //在第二个按钮后添加一个新的按钮
+      this.buttons.splice(2, 0, {
+        name: "Edit Shipping Data",
+        icon: 'el-icon-edit-outline',
+        type: 'primary',
+        onClick: function () {
+            this.openEditShippingData()
+        }
+      })
+
+      //表格设置为单选
+      this.single=true;
+
+
+
+    },
+
+    //打開發票維護Tab
+    openEditShippingData(){
+      let url='/Viat_com_system_value'
+      let _rows =  this.getSelectRows();
+      let contract_no=_rows[0].contract_no
+      alert(contract_no);
+      this.$tabs.open({
+        text: "發票維護",
+        path: url,
+        query: {sys_key:contract_no},
+      });
 
     },
 

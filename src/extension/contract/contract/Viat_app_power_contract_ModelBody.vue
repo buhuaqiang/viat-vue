@@ -79,10 +79,10 @@
         <!-- 从表2配置 ,双击可以开启编辑-->
         <div style="padding-bottom: 10px">
           <el-button
-            type="primary"
+            type="success"
+            icon="el-icon-plus"
             size="mini"
             ghost
-            icon="el-icon-plus"
             @click="addProdListForpurchase"
             >添加產品</el-button
           >
@@ -95,13 +95,26 @@
           >删除行</el-button
           >
           <el-button
-            icon="el-icon-close"
+                  icon="el-icon-refresh"
+                  size="mini"
+                  type="warning"
+                  ghost
+                  @click="doInitial">initial
+          </el-button>
+          <el-button
+                  icon="el-icon-c-scale-to-original"
+                  size="mini"
+                  type="warning"
+                  ghost
+                  @click="doCalculate">Calculate
+          </el-button>
+          <el-button
+            icon="el-icon-refresh"
             size="mini"
-            type="success"
+            type="info"
             ghost
-            @click="$refs.table2.load()"
-            >刷新</el-button
-          >
+            @click="$refs.table2.load()">刷新
+          </el-button>
         </div>
         <vol-table
           ref="table2"
@@ -115,6 +128,15 @@
           @loadBefore="loadTableBefore2"
           :index="true"
         ></vol-table>
+        <el-form :inline="true" label-position="left" label-width="200px" :model="calcuateResult">
+          <el-form-item label="Sales Amount(Tax):">
+            <el-input v-model="calcuateResult.salesAmount" readonly></el-input>
+          </el-form-item>
+          <el-form-item label="Total FG Amount/Qty:" >
+            <el-input v-model="calcuateResult.Qty" readonly></el-input>
+          </el-form-item>
+        </el-form>
+
       </el-tab-pane>
       <!-- 从表3 -->
       <el-tab-pane :lazy="false" label="合約贈送產品List">
@@ -124,10 +146,10 @@
         <!-- 从表3配置 ,双击可以开启编辑-->
         <div style="padding-bottom: 10px">
           <el-button
-                  type="primary"
+                  type="success"
+                  icon="el-icon-plus"
                   size="mini"
                   ghost
-                  icon="el-icon-plus"
                   @click="addProdListForFree"
           >添加產品</el-button
           >
@@ -140,9 +162,9 @@
           >删除行</el-button
           >
           <el-button
-                  icon="el-icon-close"
+                  icon="el-icon-refresh"
                   size="mini"
-                  type="success"
+                  type="info"
                   ghost
                   @click="$refs.table3.load()"
           >刷新</el-button
@@ -181,6 +203,7 @@ export default {
       table1RowData:"",
       table2RowData:"",
       table3RowData:"",
+      calcuateResult:"",
       //从表1 this.$parent.editFormFields.powercont_dbid
       table1Url: "api/Viat_app_power_contract_cust/getPageData?powercont_dbid=" , //table1获取数据的接口
       table2Url: "api/Viat_app_power_contract_cust/getPageData?powercont_dbid=" , //table1获取数据的接口 待補充
@@ -198,7 +221,7 @@ export default {
          // sortable: true,
           //edit: { type: "text" }, //keep:true始终开启编辑，false双击才能编辑
         },
-        { field: "cust_dbid", title: "cust_dbid", type: "string", hidde:true },
+        { field: "cust_dbid", title: "cust_dbid", type: "string", hidden:true },
         { field: "cust_id", title: "cust code", type: "string", width: 170 },
         {
           field: "cust_name",
@@ -334,6 +357,15 @@ export default {
           $parent.editFormFields['cust_dbid'] = row.cust_dbid;
         });
       }
+    },
+
+    //合約產品計算
+    doCalculate(){
+      this.$Message.info("doCalculate");
+    },
+   //合約產品initial
+    doInitial(){
+      this.$Message.info("doInitial");
     },
 
     // 從表選擇 合約產品 回調處理
