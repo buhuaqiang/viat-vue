@@ -188,14 +188,20 @@ let viewgird = [
         path: '/View_sys_deputy_pop',
         name: 'View_sys_deputy_pop',
         component: () => import('@/views/basic/deputy/View_sys_deputy_pop.vue')
+    }      ,{
+        path: '/Viat_app_power_contract_ship_data',
+        name: 'Viat_app_power_contract_ship_data',
+        component: () => import('@/views/contract/contract/Viat_app_power_contract_ship_data.vue')
     }    ,{
-        path: '/Viat_sys_deputy',
-        name: 'Viat_sys_deputy',
-        component: () => import('@/views/basic/deputy/Viat_sys_deputy.vue')
+        path: '/View_app_power_contract_ship_data_prod_list',
+        name: 'View_app_power_contract_ship_data_prod_list',
+        component: () => import('@/views/contract/contract/View_app_power_contract_ship_data_prod_list.vue')
+
     }    ,{
         path: '/view_dist_margin',
         name: 'view_dist_margin',
         component: () => import('@/views/basic/distroub/view_dist_margin.vue')
+
     }]
 
 export default viewgird
