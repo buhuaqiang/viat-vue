@@ -201,6 +201,10 @@ let viewgird = [
         path: '/Viat_sys_deputy',
         name: 'Viat_sys_deputy',
         component: () => import('@/views/basic/deputy/Viat_sys_deputy.vue')
+    }    ,{
+        path: '/view_dist_margin',
+        name: 'view_dist_margin',
+        component: () => import('@/views/basic/distroub/view_dist_margin.vue')
     }]
 
 export default viewgird
