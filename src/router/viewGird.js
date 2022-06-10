@@ -154,18 +154,24 @@ let viewgird = [
         path: '/View_com_cust_delivery',
         name: 'View_com_cust_delivery',
         component: () => import('@/views/basic/cust/View_com_cust_delivery.vue')
-    }   /* ,{
-        path: '/Test_info',
-        name: 'Test_info',
-        component: () => import('@/views/basic/test/Test_info.vue')
-    }    ,{
-        path: '/Group_test',
-        name: 'Group_test',
-        component: () => import('@/views/basic/test/Group_test.vue')
-    }*/    ,{
+    }      ,{
         path: '/View_com_prod_pop_query',
         name: 'View_com_prod_pop_query',
         component: () => import('@/views/basic/prod/View_com_prod_pop_query.vue')
+
+    }    ,{
+        path: '/Viat_com_global_mpg',
+        name: 'Viat_com_global_mpg',
+        component: () => import('@/views/basic/mpg/Viat_com_global_mpg.vue')
+    }    ,{
+        path: '/View_com_local_mpg',
+        name: 'View_com_local_mpg',
+        component: () => import('@/views/basic/mpg/View_com_local_mpg.vue')
+    }    ,{
+        path: '/Viat_com_local_mpg',
+        name: 'Viat_com_local_mpg',
+        component: () => import('@/views/basic/mpg/Viat_com_local_mpg.vue')
+
     }    ,{
         path: '/View_com_dist',
         name: 'View_com_dist',
@@ -174,6 +180,7 @@ let viewgird = [
         path: '/Viat_com_dist',
         name: 'Viat_com_dist',
         component: () => import('@/views/basic/dist/Viat_com_dist.vue')
+
     }]
 
 export default viewgird

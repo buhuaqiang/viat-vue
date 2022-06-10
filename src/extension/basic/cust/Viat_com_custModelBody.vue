@@ -101,12 +101,10 @@ export default {
       this.$refs.mytable.load();
     },
     addRow() {
-      debugger
       var rows = this.$refs.mytable.getSelected();
       if (!rows || rows.length == 0) {
         return this.$message.error("请选择行数据");
       }
-
       //回写数据到表单
       this.$emit("parentCall", ($parent) => {
         //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
