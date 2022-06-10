@@ -96,14 +96,18 @@ let extension = {
 
     //打開發票維護Tab
     openEditShippingData(){
-      let url='/Viat_com_system_value'
+      let url='/Viat_app_power_contract_ship_data'
+      //let url='/Viat_com_system_value'
       let _rows =  this.getSelectRows();
+      if (!_rows || _rows.length != 1) {
+        return this.$message.error("請選擇一條數據");
+      }
       let contract_no=_rows[0].contract_no
-      alert(contract_no);
+
       this.$tabs.open({
         text: "發票維護",
         path: url,
-        query: {sys_key:contract_no},
+        query: {"powercont_dbid":_rows[0].powercont_dbid,"contract_no":contract_no},
       });
 
     },
