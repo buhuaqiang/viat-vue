@@ -181,15 +181,6 @@ let viewgird = [
         component: () => import('@/views/basic/mpg/Viat_com_local_mpg.vue')
 
     }    ,{
-        path: '/View_com_dist',
-        name: 'View_com_dist',
-        component: () => import('@/views/basic/dist/View_com_dist.vue')
-    }        ,{
-        path: '/Viat_com_dist',
-        name: 'Viat_com_dist',
-        component: () => import('@/views/basic/dist/Viat_com_dist.vue')
-
-    }    ,{
         path: '/View_sys_deputy',
         name: 'View_sys_deputy',
         component: () => import('@/views/basic/deputy/View_sys_deputy.vue')
