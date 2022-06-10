@@ -154,7 +154,15 @@ let viewgird = [
         path: '/View_com_cust_delivery',
         name: 'View_com_cust_delivery',
         component: () => import('@/views/basic/cust/View_com_cust_delivery.vue')
-    }      ,{
+    }   /* ,{
+        path: '/Test_info',
+        name: 'Test_info',
+        component: () => import('@/views/basic/test/Test_info.vue')
+    }    ,{
+        path: '/Group_test',
+        name: 'Group_test',
+        component: () => import('@/views/basic/test/Group_test.vue')
+    }*/    ,{
         path: '/View_com_prod_pop_query',
         name: 'View_com_prod_pop_query',
         component: () => import('@/views/basic/prod/View_com_prod_pop_query.vue')
@@ -181,6 +189,18 @@ let viewgird = [
         name: 'Viat_com_dist',
         component: () => import('@/views/basic/dist/Viat_com_dist.vue')
 
+    }    ,{
+        path: '/View_sys_deputy',
+        name: 'View_sys_deputy',
+        component: () => import('@/views/basic/deputy/View_sys_deputy.vue')
+    }    ,{
+        path: '/View_sys_deputy_pop',
+        name: 'View_sys_deputy_pop',
+        component: () => import('@/views/basic/deputy/View_sys_deputy_pop.vue')
+    }    ,{
+        path: '/Viat_sys_deputy',
+        name: 'Viat_sys_deputy',
+        component: () => import('@/views/basic/deputy/Viat_sys_deputy.vue')
     }]
 
 export default viewgird
