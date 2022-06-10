@@ -80,8 +80,8 @@ export default defineComponent({
           field: "isgroup",
           type: "radio",
         },
-        { title: "pricegroup", field: "group_name" ,disabled: true},
-        { title: "custname", field: "cust_name", disabled: true },
+        { title: "pricegroup", field: "group_name" ,disabled: true,colSize:6, align: "left"},
+        { title: "custname", field: "cust_name", disabled: true ,colSize:6, align: "left"},
       ],
       [
 

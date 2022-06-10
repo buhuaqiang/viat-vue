@@ -42,9 +42,12 @@ let extension = {
       //this.detailOptions.columns.forEach(column=>{ });
     },
     searchBefore(param) {
+      debugger
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
-      return true;
+      // let sys_key  = this.$route.query.sys_key;
+      // param.wheres.push({name:'sys_key',value:sys_key})
+       return true;
     },
     searchAfter(result) {
       //查询后，result返回的查询数据,可以在显示到表格前处理表格的值
