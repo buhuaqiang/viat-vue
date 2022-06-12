@@ -202,6 +202,14 @@ let viewgird = [
         name: 'view_dist_margin',
         component: () => import('@/views/basic/distroub/view_dist_margin.vue')
 
+    }    ,{
+        path: '/Viat_com_notify_template',
+        name: 'Viat_com_notify_template',
+        component: () => import('@/views/basic/notify/Viat_com_notify_template.vue')
+    }    ,{
+        path: '/View_com_notify_template',
+        name: 'View_com_notify_template',
+        component: () => import('@/views/basic/notify/View_com_notify_template.vue')
     }]
 
 export default viewgird
