@@ -11,11 +11,10 @@
             :list="menuOptions"></VolMenu>
         </el-scrollbar>
       </div>
+      <deputyInfoSelectPop ref="deputyInfo"></deputyInfoSelectPop>
     </div>
     <div class="vol-container" :style="{ left: menuWidth - 1 + 'px' }">
       <div class="vol-header">
-
-
         <div class="project-name"></div>
         <div class="header-text">
           <!--
@@ -29,7 +28,9 @@
           </div>
           -->
         </div>
-
+        <div>
+          <el-button size="10" @click="deputySelect()">切换用户</el-button>
+        </div>
         <div class="header-info">
           <div class="h-link">
             <a href="javascript:void(0)" @click="to(item)" v-for="(item, index) in links.filter((c) => {
@@ -46,6 +47,7 @@
           <div>
             <img class="user-header" :src="userImg" :onerror="errorImg" />
           </div>
+
           <div class="user">
             <span>{{ userName }}</span>
             <br />
@@ -122,6 +124,7 @@
 import loading from "@/components/basic/RouterLoading";
 import VolMenu from "@/components/basic/VolElementMenu.vue";
 import Message from "./index/Message.vue";
+import deputyInfoSelectPop from "@/extension/basic/deputy/deputyInfoSelect";
 import MessageConfig from "./index/MessageConfig.js";
 var imgUrl = require("@/assets/imgs/logo.png");
 var $this;
@@ -133,7 +136,7 @@ import {
   ref,
   watch,
   onMounted,
-  getCurrentInstance,
+  getCurrentInstance, defineAsyncComponent,
 } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import store from "../store/index";
@@ -143,6 +146,7 @@ export default defineComponent({
     VolMenu,
     loading,
     Message,
+    deputyInfoSelectPop
   },
 
   data() {
@@ -201,6 +205,7 @@ export default defineComponent({
     const errorImg = ref(
       'this.src="' + require("@/assets/imgs/error-img.png") + '"'
     );
+    const deputyUserId = ref('');
     const selectId = ref('1');
     // 【首頁】標簽序號(當前右鍵選中的菜單)
     const selectMenuIndex = ref('0');
@@ -348,6 +353,29 @@ export default defineComponent({
       var item = getSelectMenuName(treeId);
       open(item, false);
     };
+
+    const  SelectedUserNew = (data) =>
+    {
+      //根据选择被代理人，重新获得被代理人信息
+      http.post("/api/user/getChangeUserImformation?sChangeUserNo="+data, "","正在切换....").then((result) => {
+        //获得信息后，进行模拟登录
+        http.post("/api/user/login?bverificationCode=false", result.data, "正在切换....").then((result) => {
+          //登录成功后，重新写入用户信息
+          store.commit("setUserInfo", result.data);
+          //关闭所有页签
+          navigation.splice(1, navigation.length);
+          //重新加载菜单等信息
+          created();
+
+        }).catch((err)=>{
+          _config.$Message.error("模拟登录失败："+err);
+        });
+      }).catch((err)=>{
+        _config.$Message.error("查询被代理人信息时失败："+err);
+      });
+    };
+
+
 
     /**
      * 顯示右鍵菜單
@@ -513,6 +541,7 @@ export default defineComponent({
     };
     created();
     return {
+      deputyUserId,
       menuWidth,
       isCollapse,
       drawer_model,
@@ -531,6 +560,7 @@ export default defineComponent({
       getSelectMenuName,
       removeNav,
       logo,
+      SelectedUserNew,
       theme,
       menuOptions,
       permissionInited,
@@ -560,6 +590,19 @@ export default defineComponent({
   },
 
   methods: {
+    deputySelect()
+    {
+      var sClient="";
+
+      //弹出代理人信息界面
+      this.$nextTick(()=>{
+        this.model=true;
+        //传递给弹窗页面的值
+         this.$refs.deputyInfo.open("");
+      })
+
+    },
+
     /**
      * 綁定右鍵事件
      * @param {*} enable 是否啟用右鍵事件[true:啟用;false:禁用;]
@@ -587,6 +630,8 @@ export default defineComponent({
     clearInterval($interval);
   },
 });
+
+
 const week = new Array(
   "星期一",
   "星期二",
