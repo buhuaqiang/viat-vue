@@ -8,7 +8,7 @@
             :padding="15"
     >
         <!-- 设置查询条件 -->
-        <div style="padding-bottom: 10px">
+        <div style="padding-bottom: 10px" hidden="true">
             <span style="margin-right: 5px">UserName:</span>
             <el-input
                     placeholder="UserName"
@@ -117,7 +117,7 @@
                 user_name2: "", //查询条件字段
                 UserTrueName: "", //查询条件字段
 
-                url: "api/View_sys_deputy/GetPageData",//加载数据的接口
+                url: "api/View_sys_deputy/GetPageDataByDeputy",//加载数据的接口
                 columns: [
                     {
                         field: 'user_id',
