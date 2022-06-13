@@ -7,7 +7,6 @@
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
 
-import prodPop from "./View_com_prod_pop_query.vue";
 let extension = {
   components: {
     //查询界面扩展组件
@@ -45,6 +44,8 @@ let extension = {
       //设置编辑表单标签文字宽度
       this.boxOptions.labelWidth=180;
 
+      this.single=true;//设置单选
+
       /*this.editFormOptions.forEach((option)=>{
         option.forEach((item)=>{
           if(item.title=='NHI Price'){
@@ -67,6 +68,8 @@ let extension = {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
+
+
     },
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
@@ -87,7 +90,7 @@ let extension = {
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
-      // this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
+       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
