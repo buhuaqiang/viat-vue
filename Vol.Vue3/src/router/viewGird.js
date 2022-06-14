@@ -166,7 +166,6 @@ let viewgird = [
         path: '/View_com_prod_pop_query',
         name: 'View_com_prod_pop_query',
         component: () => import('@/views/basic/prod/View_com_prod_pop_query.vue')
-
     }    ,{
         path: '/Viat_com_global_mpg',
         name: 'Viat_com_global_mpg',
@@ -179,7 +178,6 @@ let viewgird = [
         path: '/Viat_com_local_mpg',
         name: 'Viat_com_local_mpg',
         component: () => import('@/views/basic/mpg/Viat_com_local_mpg.vue')
-
     }    ,{
         path: '/View_sys_deputy',
         name: 'View_sys_deputy',
@@ -196,12 +194,26 @@ let viewgird = [
         path: '/View_app_power_contract_ship_data_prod_list',
         name: 'View_app_power_contract_ship_data_prod_list',
         component: () => import('@/views/contract/contract/View_app_power_contract_ship_data_prod_list.vue')
-
     }    ,{
         path: '/view_dist_margin',
         name: 'view_dist_margin',
         component: () => import('@/views/basic/distroub/view_dist_margin.vue')
-
+    }    ,{
+        path: '/View_com_dist',
+        name: 'View_com_dist',
+        component: () => import('@/views/basic/distroub/View_com_dist.vue')
+    }    ,{
+        path: '/Viat_com_dist',
+        name: 'Viat_com_dist',
+        component: () => import('@/views/basic/distroub/Viat_com_dist.vue')
+    }    ,{
+        path: '/Viat_com_close_period',
+        name: 'Viat_com_close_period',
+        component: () => import('@/views/basic/period/Viat_com_close_period.vue')
+    }    ,{
+        path: '/View_com_close_period_margin',
+        name: 'View_com_close_period_margin',
+        component: () => import('@/views/basic/period/View_com_close_period_margin.vue')
     }    ,{
         path: '/Viat_com_notify_template',
         name: 'Viat_com_notify_template',
@@ -218,6 +230,6 @@ let viewgird = [
         path: '/View_cust_custgroup_pricegroup',
         name: 'View_cust_custgroup_pricegroup',
         component: () => import('@/views/price/price/View_cust_custgroup_pricegroup.vue')
-    }]
+ }]
 
 export default viewgird
