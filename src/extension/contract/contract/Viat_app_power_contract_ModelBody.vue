@@ -29,17 +29,17 @@
                 icon="el-icon-close"
                 size="mini"
                 ghost
-                @click="del"
+                @click="delTable1"
         >删除行</el-button
         >
-          <el-button
+    <!--      <el-button
             type="warning"
             icon="el-icon-check"
             size="mini"
             ghost
             @click="getRows"
             >获取选中的行</el-button
-          >
+          >-->
           <el-button
             type="info"
             icon="el-icon-refresh"
@@ -91,7 +91,7 @@
                   icon="el-icon-close"
                   size="mini"
                   ghost
-                  @click="del"
+                  @click="delTable2"
           >删除行</el-button
           >
           <el-button
@@ -158,7 +158,7 @@
                   icon="el-icon-close"
                   size="mini"
                   ghost
-                  @click="del"
+                  @click="delTable3"
           >删除行</el-button
           >
           <el-button
@@ -446,12 +446,28 @@ export default {
       this.$refs.PriceGroupModelBody.openDemo(fieldName);
       this.$refs.PriceGroupModelBody.signal = true;
     },
-    del() {
+    delTable1() {
       let rows = this.$refs.table1.getSelected();
       if (rows.length == 0) {
         return this.$Message.error("请先选中行");
       }
       this.$refs.table1.delRow();
+      //可以this.http.post调用后台实际执行查询
+    },
+    delTable2() {
+      let rows = this.$refs.table2.getSelected();
+      if (rows.length == 0) {
+        return this.$Message.error("请先选中行");
+      }
+      this.$refs.table2.delRow();
+      //可以this.http.post调用后台实际执行查询
+    },
+    delTable3() {
+      let rows = this.$refs.table3.getSelected();
+      if (rows.length == 0) {
+        return this.$Message.error("请先选中行");
+      }
+      this.$refs.table3.delRow();
       //可以this.http.post调用后台实际执行查询
     },
     clear() {
