@@ -51,6 +51,7 @@
                 :defaultLoadPage="defaultLoadPage"
                 @loadBefore="loadTableBefore"
                 @loadAfter="loadTableAfter"
+                @rowClick = "rowClick"
         ></vol-table>
         <!-- 设置弹出框的操作按钮 -->
         <template #footer>
@@ -86,6 +87,7 @@
                 user_name: "", //查询条件字段
                 emp_ename: "", //查询条件字段
                 emp_cname: "", //查询条件字段
+                framePath: "",//弹框路径
 
                 url: "api/View_sys_deputy_pop/GetPageData",//加载数据的接口
                 columns: [
@@ -98,7 +100,21 @@
             };
         },
         methods: {
-            open(fieldName) {
+            open(fieldName) {//代理人弹框
+                //代理人弹框
+                this.framePath = "deputy"
+                this.single = true;
+                this.model = true;
+                this.fieldName = fieldName
+                //打开弹出框时，加载table数据
+                this.$nextTick(() => {
+                    this.$refs.deputyPop.load();
+                });
+            },
+            openBulletin(fieldName){//消息发送弹框
+                //代理人弹框
+                this.framePath = "bullentin"
+                this.single = false;//多选
                 this.model = true;
                 this.fieldName = fieldName
                 //打开弹出框时，加载table数据
@@ -108,18 +124,47 @@
             },
 
             addRow() {
-                debugger;
                 let selectrow = this.$refs.deputyPop.getSelected();
                 if(!selectrow.length){
                     return this.$message.error("请选择数据")
                 }
+
                 // //将选取的数据赋值到父页面
-                 this.$emit('parentCall', $parent => {
-                     $parent.editFormFields.emp_ename = selectrow[0].emp_ename;
-                     $parent.editFormFields.emp_cname = selectrow[0].emp_cname;
-                     $parent.editFormFields.deputy_user_id = selectrow[0].user_id;
-                     this.model=false;
-                 })
+                if(this.framePath =="deputy"){//代理人弹框赋值
+                    this.$emit('parentCall', $parent => {
+                        $parent.editFormFields.emp_ename = selectrow[0].emp_ename;
+                        $parent.editFormFields.emp_cname = selectrow[0].emp_cname;
+                        $parent.editFormFields.deputy_user_id = selectrow[0].user_id;
+                        this.model=false;
+                    })
+                }
+                if(this.framePath =="bullentin"){//消息发送弹框赋值
+                    let selectrows = [];//将勾选值设置成数组
+                    let selectusers = [];//存储勾选的用户
+                    let users = "";
+                    let userValue = "";
+                    selectrow.forEach(row=>{
+                        selectrows.push({"key":row.user_id,"value":row.emp_ename});
+                        selectusers.push(row.emp_ename);
+                        users = users+row.emp_ename+','
+                        userValue = userValue+row.user_id+','+row.emp_ename+";"
+                    })
+                    this.$emit('parentCall', $parent => {
+
+                        if($parent.editFormOptions.field=="users"){
+                            $parent.editFormOptions.data = selected
+                        }
+
+                         let selects = JSON.stringify(selectrows)
+                        $parent.editFormFields.users = selectusers;
+                        $parent.editFormFields.SelectUsers = selects;
+
+                        //$parent.editFormFields.emp_cname = selectrow[0].emp_cname;
+                        //$parent.editFormFields.deputy_user_id = selectrow[0].user_id;
+                        this.model=false;
+                    })
+                }
+
 
 
 
@@ -141,6 +186,10 @@
             search() {
                 //点击搜索
                 this.$refs.deputyPop.load();
+            },
+            rowClick({ row, column, event }) {
+                //查询界面点击行事件
+                this.$refs.deputyPop.$refs.table.toggleRowSelection(row);//单击行时选中当前行;
             },
             loadTableBefore(params) {
                 //查询前，设置查询条件
