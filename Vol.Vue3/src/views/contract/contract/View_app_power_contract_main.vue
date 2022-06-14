@@ -142,8 +142,10 @@ export default defineComponent({
         },
       ],
       [
-        { title: "列cust_id", field: "cust_id" },
-        { title: "列名pricegroup_dbid", field: "pricegroup_dbid" },
+        { title: "列cust_id", field: "cust_idname" ,readonly:true},
+        { title: "", field: "cust_id",hidden:true },
+        { title: "列名pricegroup_dbid", field: "pricegroup_dbidname" ,readonly:true},
+        { title: "", field: "pricegroup_dbid",hidden: true },
       ],
     ]);
     const columns = ref([
@@ -278,6 +280,13 @@ export default defineComponent({
         width: 110,
         align: "left",
         sort: true,
+        // formatter: (row) => {
+        //   //对单元格的数据格式化处理
+        //   if (!row.FormatString) {
+        //     return;
+        //   }
+        //   return row.FormatString.replace(/-/g, "-");
+        // },
       },
       {
         field: "close_date2",
