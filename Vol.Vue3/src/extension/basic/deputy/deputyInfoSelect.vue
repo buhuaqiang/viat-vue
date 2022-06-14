@@ -146,6 +146,22 @@
                         width: 220,
                         readonly: true,
                         align: 'left'
+                    },
+                    {
+                        field: 'emp_ename',
+                        title: 'emp_ename',
+                        type: 'string',
+                        width: 220,
+                        readonly: true,
+                        align: 'left'
+                    },
+                    {
+                        field: 'emp_cname',
+                        title: 'emp_cname',
+                        type: 'string',
+                        width: 220,
+                        readonly: true,
+                        align: 'left'
                     }],
             };
         },
