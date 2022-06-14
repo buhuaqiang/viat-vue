@@ -230,6 +230,18 @@ let viewgird = [
         path: '/View_cust_custgroup_pricegroup',
         name: 'View_cust_custgroup_pricegroup',
         component: () => import('@/views/price/price/View_cust_custgroup_pricegroup.vue')
- }]
+    }    ,{
+        path: '/Viat_app_bulletin',
+        name: 'Viat_app_bulletin',
+        component: () => import('@/views/basic/bulletin/Viat_app_bulletin.vue')
+    }    ,{
+        path: '/Viat_app_bulletin_receiver',
+        name: 'Viat_app_bulletin_receiver',
+        component: () => import('@/views/basic/bulletin/Viat_app_bulletin_receiver.vue')
+    }    ,{
+        path: '/View_com_bulletin',
+        name: 'View_com_bulletin',
+        component: () => import('@/views/basic/bulletin/View_com_bulletin.vue')
+    }]
 
 export default viewgird
