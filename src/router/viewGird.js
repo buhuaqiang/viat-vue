@@ -210,6 +210,14 @@ let viewgird = [
         path: '/View_com_notify_template',
         name: 'View_com_notify_template',
         component: () => import('@/views/basic/notify/View_com_notify_template.vue')
+    }    ,{
+        path: '/Viat_app_cust_price_group',
+        name: 'Viat_app_cust_price_group',
+        component: () => import('@/views/price/price/Viat_app_cust_price_group.vue')
+    }    ,{
+        path: '/View_cust_custgroup_pricegroup',
+        name: 'View_cust_custgroup_pricegroup',
+        component: () => import('@/views/price/price/View_cust_custgroup_pricegroup.vue')
     }]
 
 export default viewgird

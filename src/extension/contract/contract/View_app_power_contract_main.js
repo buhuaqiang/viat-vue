@@ -75,6 +75,14 @@ let extension = {
           this.$refs.modelBody.openCustmModelBody("cust_name");
         }
       }
+      group_name.extra = {
+        icon: "el-icon-zoom-out",
+        text: "选择",
+        style: "color:red;font-size: 12px;cursor: pointer;",
+        click: item => {
+          this.$refs.modelBody.openPriceGroupModelBody("group_name");
+        }
+      }
 
 
       //在第二个按钮后添加一个新的按钮

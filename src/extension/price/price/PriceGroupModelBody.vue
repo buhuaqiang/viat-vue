@@ -2,23 +2,23 @@
   <VolBox
     v-model="model"
     :lazy="true"
-    title="選擇客戶數據"
+    title="選擇價格群組數據"
     :height="600"
     :width="1150"
     :padding="15"
   >
     <!-- 设置查询条件 -->
     <div style="padding-bottom: 10px">
-      <span style="margin-right: 20px">请选择数据</span>
+      <span style="margin-right: 20px">請選擇數據</span>
       <el-input
-              placeholder="客戶編號"
+              placeholder="群組代碼"
               style="width: 200px"
-              v-model="cust_id"
+              v-model="group_id"
       />
       <el-input
-        placeholder="客戶名稱"
-        style="width: 200px;padding-left: 5px;"
-        v-model="cust_name"
+        placeholder="群組名稱"
+        style="width: 200px;padding-left: 5px"
+        v-model="group_name"
       />
       <el-button
         type="primary"
@@ -74,20 +74,13 @@ export default {
     return {
       model: false,
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
-      cust_name: "", //查询条件字段
-      cust_id:"",
+      group_name: "", //查询条件字段
+      group_id:"",
       fieldName:"",//編輯字段,用於回傳設置值
-      url: "api/View_com_cust/GetPopPageData",//加载数据的接口
+      url: "api/Viat_app_cust_price_group/GetPopPageData",//加载数据的接口
       columns: [
-        {field:'cust_id',title:'客戶編號',type:'string',width:110,require:true,align:'left',sort:true},
-        {field:'cust_name',title:'客戶名',type:'string',link:true,width:120,align:'left'},
-        {field:'cust_address',title:'客戶地址',type:'string',width:180,align:'left'},
-        {field:'tel_no',title:'聯繫電話',type:'string',width:110,align:'left'},
-        {field:'territory_id',title:'默認區域',type:'string',width:110,hidden:true,align:'left'},
-        {field:'doh_type',title:'健保類別',type:'string',bind:{ key:'doh_type',data:[]},width:110,align:'left'},
-        {field:'margin_type',title:'毛利類別',type:'string',bind:{ key:'doh_type',data:[]},width:110,align:'left'},
-         {field:'status',title:'status',type:'string',bind:{ key:'Status2',data:[]},width:110,align:'left'},
-        {field:'modified_date',title:'最后修改时间',type:'datetime',width:150,align:'left',sort:true}
+        {field:'group_id',title:'群組代碼',type:'string',link:true,width:110,require:true,align:'left',sort:true},
+        {field:'group_name',title:'群組名稱',type:'string',width:120,align:'left'}
         ],
       pagination: {}, //分页配置，见voltable组件api
     };
@@ -110,12 +103,18 @@ export default {
       if (!rows || rows.length == 0) {
         return this.$message.error("請選擇數據");
       }
-      //回写数据到表单
-      this.$emit("parentCall", ($parent) => {
-        //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
-        $parent.editFormFields[this.fieldName] = rows[0].cust_dbid;
-        $parent.editFormFields[this.fieldName+'name'] = rows[0].cust_id+" "+rows[0].cust_name;
-      });
+      let path =this.$route.path;
+      if(path=='/View_app_power_contract_main'){//多層級調用
+        this.$emit("onSelect",this.fieldName,rows)
+      }else{
+        //回写数据到表单
+        this.$emit("parentCall", ($parent) => {
+          //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
+          $parent.editFormFields[this.fieldName] = rows[0].pricegroup_dbid;
+          $parent.editFormFields[this.fieldName+'name'] = rows[0].group_id+" "+rows[0].group_name;
+        });
+      }
+
       //关闭当前窗口
       this.model = false;
     },
@@ -126,10 +125,17 @@ export default {
       //     this.da
       // });
     },
+    rowClick({ row, column, event }) {
+      //查询界面点击行事件
+      this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
+    },
     loadTableBefore(params) {
       //查询前，设置查询条件
-      if (this.cust_name) {
-        params.wheres = [{ name: "cust_name", value: this.cust_name },{ name: "cust_id", value: this.cust_id }];
+      if (this.group_name ) {
+        params.wheres.push({ name: "group_name", value: this.group_name,displayType:'like' });
+      }
+      if(this.group_id){
+        params.wheres.push({ name: "group_id", value: this.group_id });
       }
       return true;
     },
