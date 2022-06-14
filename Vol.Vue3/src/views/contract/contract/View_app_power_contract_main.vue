@@ -142,8 +142,8 @@ export default defineComponent({
         },
       ],
       [
-        { title: "列cust_id", field: "cust_idname" ,readonly:true},
-        { title: "", field: "cust_id",hidden:true },
+        { title: "列cust_id", field: "cust_dbidname" ,readonly:true},
+        { title: "", field: "cust_dbid",hidden:true },
         { title: "列名pricegroup_dbid", field: "pricegroup_dbidname" ,readonly:true},
         { title: "", field: "pricegroup_dbid",hidden: true },
       ],

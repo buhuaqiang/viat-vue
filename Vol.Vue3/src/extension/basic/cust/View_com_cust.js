@@ -11,7 +11,7 @@ let extension = {
   components: {
     //查询界面扩展组件
     gridHeader: '',
-    gridBody: '',
+    gridBody: Viat_com_custModelBody,
     gridFooter: '',
     //新建、编辑弹出框扩展组件
     modelHeader: '',
@@ -72,6 +72,82 @@ let extension = {
       comZipId.data=data;
       return data;
     },
+    /**
+     *
+     * @param fieldName綁定欄位
+     * @param formType 表單類型f-form表單,s-查詢表單
+     * @returns {function(*, {row: *, column: *, index: *}): *}
+     */
+    getFormRender(fieldName,formType) {//
+      return (h, { row, column, index }) => {
+        return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
+                onClick: (e) => {
+                  this.$refs.modelBody.openDemo(fieldName,formType)
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "選擇"
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+                onClick: (e) => {
+                  this.$refs.modelBody.clearData(fieldName,formType);
+                }
+              },
+              [h("i",{class:"el-icon-zoom-out"})],
+              "清除"
+          ),
+
+        ]);
+      };
+    },
+    /**
+     *
+     * @param fieldName綁定欄位
+     * @param formType 表單類型f-form表單,s-查詢表單
+     * @param pageType c-cust,pg-pricegroup
+     * @returns {function(*, {row: *, column: *, index: *}): *}
+     */
+    getSearchRender(fieldName,formType) {//
+      return (h, { row, column, index }) => {
+        return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
+                onClick: (e) => {
+                  this.$refs.gridBody.openDemo(fieldName,formType);
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "選擇"
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+                onClick: (e) => {
+                  this.$refs.gridBody.clearData(fieldName,formType);
+                }
+              },
+              [h("i",{class:"el-icon-zoom-out"})],
+              "清除"
+          ),
+
+        ]);
+      };
+    },
+
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
         //示例：在按钮的最前面添加一个按钮
@@ -116,32 +192,18 @@ let extension = {
 
       let ownHospital=this.getOption("own_hospitalname");
       ownHospital.extra = {
-        icon: "el-icon-zoom-out",
-        text: "选择隸屬醫院",
-        style: "color:#409eff;font-size: 12px;cursor: pointer;",
-        click: item => {
-          this.$refs.modelBody.openDemo("own_hospital");
-        }
+        render:this.getFormRender("own_hospital",'f')
       }
 
       let med_group=this.getOption("med_groupname");
       med_group.extra = {
-        icon: "el-icon-zoom-out",
-        text: "选择主院代碼",
-        style: "color:#409eff;font-size: 12px;cursor: pointer;",
-        click: item => {
-          this.$refs.modelBody.openDemo("med_group");
-        }
+        render:this.getFormRender("med_group",'f')
+
       }
 
       let delv_group=this.getOption("delv_groupname");
       delv_group.extra = {
-        icon: "el-icon-zoom-out",
-        text: "选择数据",
-        style: "color:#409eff;font-size: 12px;cursor: pointer;",
-        click: item => {
-          this.$refs.modelBody.openDemo("delv_group");
-        }
+        render:this.getFormRender("delv_group",'f')
       }
 
 
