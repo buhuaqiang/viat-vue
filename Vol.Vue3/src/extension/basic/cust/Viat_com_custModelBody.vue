@@ -40,7 +40,7 @@
       :max-height="420"
       :url="url"
       :index="true"
-      :single="true"
+      :single=single
       :defaultLoadPage="defaultLoadPage"
       @loadBefore="loadTableBefore"
       @loadAfter="loadTableAfter"
@@ -73,6 +73,7 @@ export default {
   data() {
     return {
       model: false,
+      single:true,
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
       cust_name: "", //查询条件字段
       cust_id:"",
@@ -110,12 +111,21 @@ export default {
       if (!rows || rows.length == 0) {
         return this.$message.error("請選擇數據");
       }
-      //回写数据到表单
-      this.$emit("parentCall", ($parent) => {
-        //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
-        $parent.editFormFields[this.fieldName] = rows[0].cust_dbid;
-        $parent.editFormFields[this.fieldName+'name'] = rows[0].cust_id+" "+rows[0].cust_name;
-      });
+
+
+      let path =this.$route.path;
+      if(path=='/View_app_power_contract_main'){//多層級調用
+        this.$emit("onSelect",this.fieldName,rows)
+      }else{
+        //回写数据到表单
+        this.$emit("parentCall", ($parent) => {
+          //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
+          $parent.editFormFields[this.fieldName] = rows[0].cust_dbid;
+          $parent.editFormFields[this.fieldName+'name'] = rows[0].cust_id+" "+rows[0].cust_name;
+        });
+      }
+
+
       //关闭当前窗口
       this.model = false;
     },
