@@ -89,9 +89,9 @@ let extension = {
 
       //表格设置为单选
       this.single=true;
-      let searchCust_Id=this.getSearchOption("cust_idname");
+      let searchCust_Id=this.getSearchOption("cust_dbidname");
       searchCust_Id.extra={
-        render:this.getSearchRender("cust_id","s","c")
+        render:this.getSearchRender("cust_dbid","s","c")
       }
 
 
