@@ -193,7 +193,7 @@
 <script>
 //开发一对多从表需要参照voltable与viewgrid组件api
 import VolTable from "@/components/basic/VolTable.vue";
-import custmModelBody from "./Viat_com_custModelBody";// '@/extension/basic/cust/Viat_com_custModelBody'
+import custmModelBody from  '../../basic/cust/Viat_com_custModelBody.vue'; //'@/extension/basic/cust/Viat_com_custModelBody'
 import prodModelBody from   "../../basic/prod/View_com_prod_pop_query.vue";
 import PriceGroupModelBody from "../../price/price/PriceGroupModelBody";
 export default {
