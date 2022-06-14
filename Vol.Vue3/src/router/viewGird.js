@@ -235,7 +235,7 @@ let viewgird = [
         path: '/Viat_app_hp_contract',
         name: 'Viat_app_hp_contract',
         component: () => import('@/views/contract/hpcontract/Viat_app_hp_contract.vue')
-    },  ,{
+    }   /* ,{
         path: '/Viat_app_bulletin',
         name: 'Viat_app_bulletin',
         component: () => import('@/views/basic/bulletin/Viat_app_bulletin.vue')
@@ -247,7 +247,7 @@ let viewgird = [
         path: '/View_com_bulletin',
         name: 'View_com_bulletin',
         component: () => import('@/views/basic/bulletin/View_com_bulletin.vue')
-    }]
-
+    }*/
+    ]
 
 export default viewgird
