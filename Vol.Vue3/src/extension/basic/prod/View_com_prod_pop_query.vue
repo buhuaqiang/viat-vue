@@ -83,6 +83,7 @@
                 model: false,
                 defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
                 fieldName:"", // 自定義邏輯字段
+                formType:"",
                 prod_id: "", //查询条件字段
                 prod_ename: "", //查询条件字段
                 prod_sname: "", //查询条件字段
@@ -103,9 +104,10 @@
             };
         },
         methods: {
-            open(fieldName) {
+            open(fieldName,formType) {
                 this.model = true;
                 this.fieldName = fieldName
+                this.formType = formType
                 //打开弹出框时，加载table数据
                 this.$nextTick(() => {
                     this.$refs.prodPop.load();
@@ -133,9 +135,17 @@
                 if(path=='/View_app_power_contract_main'){//多導則調用
                     this.$emit("onSelect",this.fieldName,selectrow)
                 }else{
+                    //回写数据到表单
                     this.$emit("parentCall", ($parent) => {
                         //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
-                        $parent.editFormFields[this.fieldName] = selectrow[0].cust_id;
+                        if(this.formType=='f'){
+                            $parent.editFormFields[this.fieldName] = rows[0].cust_dbid;
+                            $parent.editFormFields[this.fieldName+'name'] = rows[0].cust_id+" "+rows[0].cust_name;
+                        }else if(this.formType=='s'){
+                            $parent.searchFormFields[this.fieldName] =  rows[0].cust_dbid;
+                            $parent.searchFormFields[this.fieldName+'name'] = rows[0].cust_id+" "+rows[0].cust_name;
+                        }
+
                     });
                 }
                 this.model=false;
