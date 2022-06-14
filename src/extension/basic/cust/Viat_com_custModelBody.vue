@@ -106,13 +106,15 @@ export default {
       });
     },
     clearData(fieldName,formType) {
+
       this.$emit("parentCall", ($parent) => {
+        debugger
         if(this.formType=='f'){
-          $parent.editFormFields[this.fieldName] = '';
-          $parent.editFormFields[this.fieldName+'name'] = '';
+          $parent.editFormFields[fieldName] = '';
+          $parent.editFormFields[fieldName+'name'] = '';
         }else if(this.formType=='s'){
-          $parent.searchFormFields[this.fieldName] = '';
-          $parent.searchFormFields[this.fieldName+'name'] ='';
+          $parent.searchFormFields[fieldName] = '';
+          $parent.searchFormFields[fieldName+'name'] ='';
         }
       })
     },
