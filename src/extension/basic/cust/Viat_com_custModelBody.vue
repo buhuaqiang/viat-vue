@@ -78,6 +78,7 @@ export default {
       cust_name: "", //查询条件字段
       cust_id:"",
       fieldName:"",//編輯字段,用於回傳設置值
+      formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields
       url: "api/View_com_cust/GetPopPageData",//加载数据的接口
       columns: [
         {field:'cust_id',title:'客戶編號',type:'string',width:110,require:true,align:'left',sort:true},
@@ -94,13 +95,26 @@ export default {
     };
   },
   methods: {
-    openDemo(fieldName) {
+    openDemo(fieldName,formType) {
       this.model = true;
       this.fieldName=fieldName;
+      if(formType)this.formType=formType;
+
       //打开弹出框时，加载table数据
       this.$nextTick(() => {
         this.$refs.mytable.load();
       });
+    },
+    clearData(fieldName,formType) {
+      this.$emit("parentCall", ($parent) => {
+        if(this.formType=='f'){
+          $parent.editFormFields[this.fieldName] = '';
+          $parent.editFormFields[this.fieldName+'name'] = '';
+        }else if(this.formType=='s'){
+          $parent.searchFormFields[this.fieldName] = '';
+          $parent.searchFormFields[this.fieldName+'name'] ='';
+        }
+      })
     },
     search() {
       //点击搜索
@@ -112,16 +126,21 @@ export default {
         return this.$message.error("請選擇數據");
       }
 
-
       let path =this.$route.path;
-      if(path=='/View_app_power_contract_main'){//多層級調用
+      if(path=='/View_app_power_contract_main' && this.formType=='f'){//多層級調用
         this.$emit("onSelect",this.fieldName,rows)
       }else{
         //回写数据到表单
         this.$emit("parentCall", ($parent) => {
           //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
-          $parent.editFormFields[this.fieldName] = rows[0].cust_dbid;
-          $parent.editFormFields[this.fieldName+'name'] = rows[0].cust_id+" "+rows[0].cust_name;
+          if(this.formType=='f'){
+            $parent.editFormFields[this.fieldName] = rows[0].cust_dbid;
+            $parent.editFormFields[this.fieldName+'name'] = rows[0].cust_id+" "+rows[0].cust_name;
+          }else if(this.formType=='s'){
+            $parent.searchFormFields[this.fieldName] =  rows[0].cust_dbid;
+            $parent.searchFormFields[this.fieldName+'name'] = rows[0].cust_id+" "+rows[0].cust_name;
+          }
+
         });
       }
 

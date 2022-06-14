@@ -185,16 +185,16 @@ let methods = {
           onClick() {
             this.save();
           }
-        },
-        {
-          name: '重 置',
+        }
+        /*,{
+          name: '重 置1',
           icon: 'el-icon-refresh-right',
           type: 'primary',
           disabled: false,
           onClick() {
             this.resetEdit();
           }
-        }
+        }*/
       ]
     );
     //从表表格操作按钮

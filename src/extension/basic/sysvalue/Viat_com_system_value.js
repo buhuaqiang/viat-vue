@@ -35,6 +35,11 @@ let extension = {
 
         //示例：设置修改新建、编辑弹出框字段标签的长度
         // this.boxOptions.labelWidth = 150;
+      this.labelWidth=180;
+      //设置编辑表单标签文字宽度
+      this.boxOptions.labelWidth=150;      //开启固定显示查询功能，true=页面加载时查询表单也显示出来，false=点击查询时才会显示表单
+
+      this.setFiexdSearchForm(true);
     },
     onInited() {
       //框架初始化配置后
@@ -63,7 +68,7 @@ let extension = {
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
-      // this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
+      this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据

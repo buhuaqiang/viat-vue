@@ -1,6 +1,8 @@
 import Viat_app_power_contract_ModelBody from "./Viat_app_power_contract_ModelBody";
 import {useRouter} from "vue-router";
 
+import PriceGroupModelBody from "../../price/price/PriceGroupModelBody";
+import Viat_com_custModelBody from "../../basic/cust/Viat_com_custModelBody";
 
 
 /*****************************************************************************************
@@ -16,8 +18,8 @@ let extension = {
   components: {
     //查询界面扩展组件
     gridHeader: '',
-    gridBody: '',
-    gridFooter: '',
+    gridBody: PriceGroupModelBody,//
+    gridFooter: Viat_com_custModelBody,
     //新建、编辑弹出框扩展组件
     modelHeader: '',
     modelBody: Viat_app_power_contract_ModelBody,
@@ -66,22 +68,12 @@ let extension = {
 
       }
 
-
       cust_name.extra = {
-        icon: "el-icon-zoom-out",
-        text: "选择",
-        style: "color:red;font-size: 12px;cursor: pointer;",
-        click: item => {
-          this.$refs.modelBody.openCustmModelBody("cust_name");
-        }
+        render:this.getFormRender("cust_name",'f','c')
       }
-      group_name.extra = {
-        icon: "el-icon-zoom-out",
-        text: "选择",
-        style: "color:red;font-size: 12px;cursor: pointer;",
-        click: item => {
-          this.$refs.modelBody.openPriceGroupModelBody("group_name");
-        }
+
+      group_name.extra={
+        render:this.getFormRender("group_name",'f','pg')
       }
 
 
@@ -97,11 +89,120 @@ let extension = {
 
       //表格设置为单选
       this.single=true;
+      let searchCust_Id=this.getSearchOption("cust_idname");
+      searchCust_Id.extra={
+        render:this.getSearchRender("cust_id","s","c")
+      }
 
 
+
+      let searchPricegroup_dbid=this.getSearchOption("pricegroup_dbidname");
+      searchPricegroup_dbid.extra = {
+        render:this.getSearchRender("pricegroup_dbid","s","pg")
+      }
+
+
+      //格式化 formatter
+      let close_date=this.getColumnsOption("close_date");
+      close_date.formatter = (row) => {
+        //对单元格的数据格式化处理
+        if (!row.close_date) {
+          return;
+        }
+       return row.close_date.substr(0,10);
+      }
 
     },
+    /**
+     *
+     * @param fieldName綁定欄位
+     * @param formType 表單類型f-form表單,s-查詢表單
+     * @param pageType c-cust,pg-pricegroup
+     * @returns {function(*, {row: *, column: *, index: *}): *}
+     */
+    getFormRender(fieldName,formType,pageType) {//
+      return (h, { row, column, index }) => {
+        return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
+                onClick: (e) => {
+                  if(pageType=='c'){
+                    this.$refs.modelBody.openCustmModelBody(fieldName)
+                  }
+                  if(pageType=='pg'){
+                    this.$refs.modelBody.openPriceGroupModelBody(fieldName);
+                  }
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "選擇"
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+                onClick: (e) => {
+                  this.$refs.modelBody.clearData(fieldName,pageType);
+                }
+              },
+              [h("i",{class:"el-icon-zoom-out"})],
+              "清除"
+          ),
 
+        ]);
+      };
+    },
+    /**
+     *
+     * @param fieldName綁定欄位
+     * @param formType 表單類型f-form表單,s-查詢表單
+     * @param pageType c-cust,pg-pricegroup
+     * @returns {function(*, {row: *, column: *, index: *}): *}
+     */
+    getSearchRender(fieldName,formType,pageType) {//
+      return (h, { row, column, index }) => {
+        return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
+                onClick: (e) => {
+                  if(pageType=='c'){
+                    this.$refs.gridFooter.openDemo(fieldName,formType);
+                  }
+                  if(pageType=='pg'){
+                    this.$refs.gridBody.openDemo(fieldName,formType);
+                  }
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "選擇"
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+                onClick: (e) => {
+                  if(pageType=='c'){
+                    this.$refs.gridFooter.clearData(fieldName,formType);
+                  }if(pageType=='pg'){
+                    this.$refs.gridBody.clearData(fieldName,formType);
+                  }
+                }
+              },
+              [h("i",{class:"el-icon-zoom-out"})],
+              "清除"
+          ),
+
+        ]);
+      };
+    },
     //打開發票維護Tab
     openEditShippingData(){
       let url='/Viat_app_power_contract_ship_data'
@@ -120,6 +221,18 @@ let extension = {
 
     },
 
+    getSearchOption(field){
+      let option;
+      this.searchFormOptions.forEach(x=>{
+        x.forEach(item => {
+          if (item.field == field) {
+            option = item;
+          }
+        })
+      })
+      return option;
+    },
+
     getFormOption (field) {
       let option;
       this.editFormOptions.forEach(x => {
@@ -131,10 +244,21 @@ let extension = {
       })
       return option;
     },
+    getColumnsOption (field) {
+      let option;
+      this.columns.forEach(x => {
+        if (x.field == field) {
+          option = x;
+        }
+      })
+      return option;
+    },
     onInited() {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
+
+
     },
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数

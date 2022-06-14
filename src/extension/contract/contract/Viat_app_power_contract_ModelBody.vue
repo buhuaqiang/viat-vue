@@ -355,7 +355,7 @@ export default {
         this.$emit("parentCall", ($parent) => {
           //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
           let row = rows[0];
-          $parent.editFormFields[fieldName] = row.cust_id + "," + row.cust_name;
+          $parent.editFormFields[fieldName] = row.cust_id + " " + row.cust_name;
           $parent.editFormFields['cust_dbid'] = row.cust_dbid;
         });
       }
@@ -365,7 +365,7 @@ export default {
       this.$emit("parentCall", ($parent) => {
         //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
         let row = rows[0];
-        $parent.editFormFields[fieldName] = row.group_id + "," + row.group_name;
+        $parent.editFormFields[fieldName] = row.group_id + " " + row.group_name;
         $parent.editFormFields['pricegroup_dbid'] = row.pricegroup_dbid;
       });
     },
@@ -413,7 +413,7 @@ export default {
         this.$emit("parentCall", ($parent) => {
           //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
           let row = rows[0];
-          $parent.editFormFields[fieldName] = row.cust_id + "," + row.cust_name;
+          $parent.editFormFields[fieldName] = row.cust_id + " " + row.cust_name;
           $parent.editFormFields['cust_dbid'] = row.cust_dbid;
         });
       }
@@ -424,7 +424,24 @@ export default {
       this.$refs.custmModelBody.openDemo(fieldName);
       this.$refs.custmModelBody.signal = true;
     },
-
+    /**
+     *
+     * @param fieldName
+     * @param formType 表單類型f-form表單,s-查詢表單
+     * @param pageType c-cust,pg-pricegroup
+     */
+    clearData(fieldName,pageType){
+      this.$emit("parentCall", ($parent) => {
+        //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
+        $parent.editFormFields[fieldName] = '';
+        if(pageType=='c'){
+          $parent.editFormFields['cust_dbid'] = '';
+        }
+        if(pageType=='pg'){
+          $parent.editFormFields['pricegroup_dbid'] = '';
+        }
+      });
+    },
     openPriceGroupModelBody(fieldName){
       this.$refs.PriceGroupModelBody.openDemo(fieldName);
       this.$refs.PriceGroupModelBody.signal = true;
