@@ -45,6 +45,7 @@
                 :defaultLoadPage="defaultLoadPage"
                 @loadBefore="loadTableBefore"
                 @loadAfter="loadTableAfter"
+                @rowClick="rowClick"
         ></vol-table>
         <!-- 设置弹出框的操作按钮 -->
         <template #footer>
@@ -133,6 +134,10 @@
             search() {
                 //点击搜索
                 this.$refs.userPop.load();
+            },
+            rowClick({ row, column, event }) {
+                //查询界面点击行事件
+                this.$refs.userPop.$refs.table.toggleRowSelection(row);//单击行时选中当前行;
             },
             loadTableBefore(params) {
                 //查询前，设置查询条件
