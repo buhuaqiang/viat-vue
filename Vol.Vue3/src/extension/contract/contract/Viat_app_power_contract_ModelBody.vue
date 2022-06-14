@@ -188,14 +188,16 @@
   </div>
   <custmModelBody @onSelect="onSelectByCust" ref="custmModelBody"></custmModelBody>
   <prodModelBody  @onSelect="onSelectByProd_purchase" ref="prodModelBody"></prodModelBody>
+  <price-group-model-body @onSelect="onSelectByPriceGroup" ref="PriceGroupModelBody"></price-group-model-body>
 </template>
 <script>
 //开发一对多从表需要参照voltable与viewgrid组件api
 import VolTable from "@/components/basic/VolTable.vue";
 import custmModelBody from "./Viat_com_custModelBody";// '@/extension/basic/cust/Viat_com_custModelBody'
 import prodModelBody from   "../../basic/prod/View_com_prod_pop_query.vue";
+import PriceGroupModelBody from "../../price/price/PriceGroupModelBody";
 export default {
-  components: { VolTable ,custmModelBody,prodModelBody},
+  components: {PriceGroupModelBody, VolTable ,custmModelBody,prodModelBody},
   data() {
     return {
       powercont_dbid:"",
@@ -359,6 +361,14 @@ export default {
       }
     },
 
+    onSelectByPriceGroup(fieldName,rows){
+      this.$emit("parentCall", ($parent) => {
+        //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
+        let row = rows[0];
+        $parent.editFormFields[fieldName] = row.group_id + "," + row.group_name;
+        $parent.editFormFields['pricegroup_dbid'] = row.pricegroup_dbid;
+      });
+    },
     //合約產品計算
     doCalculate(){
       this.$Message.info("doCalculate");
@@ -415,6 +425,10 @@ export default {
       this.$refs.custmModelBody.signal = true;
     },
 
+    openPriceGroupModelBody(fieldName){
+      this.$refs.PriceGroupModelBody.openDemo(fieldName);
+      this.$refs.PriceGroupModelBody.signal = true;
+    },
     del() {
       let rows = this.$refs.table1.getSelected();
       if (rows.length == 0) {
