@@ -25,6 +25,7 @@ let extension = {
     return {
       deputyDate: "", //查询条件字段
       startDate:"",//输入的开始时间
+      endDate:"",//輸入結束時間
     };
   },
   methods: {
@@ -68,7 +69,7 @@ let extension = {
       }
 
       //不同查询条件下修改输入框
-      let deputyDate=this.getDeputy("deputyDate");
+      /*let deputyDate=this.getDeputy("deputyDate");
       deputyDate.onChange = (val, option) => {
       //return this.$message.error(val)
         this.deputyDate = val;
@@ -81,6 +82,14 @@ let extension = {
       let startDates=this.getDeputy("start_date");
       startDates.onChange = (val, option) => {
       this.startDate = val;
+      }*/
+      let startDates=this.getDeputy("start_date");
+      startDates.onChange = (val, option) => {
+        this.startDate = val;
+      }
+      let endDates=this.getDeputy("end_date");
+      endDates.onChange = (val, option) => {
+        this.endDate = val;
       }
 
     },
@@ -134,10 +143,14 @@ let extension = {
     },
 
     searchBefore(param) {
+      param.wheres = [
+          { name: "start_date", value: this.startDate, displayType: "thanorequal" },//>=
+        { name: "end_date", value: this.endDate, displayType: "lessorequal" },//<=
+        ];
+
 
       //查询前，设置查询条件
-     // alert( this.startDate)
-      if (this.deputyDate==3) {//less equal
+     /* if (this.deputyDate==3) {//less equal
          param.wheres = [ { name: "start_date", value: this.startDate, displayType: "LessOrequal" }];
       }
       if (this.deputyDate==4) {//greater equal
@@ -151,7 +164,7 @@ let extension = {
       }
       if (this.deputyDate==7) {//greater than
         param.wheres = [ { name: "start_date", value: this.startDate, displayType: "GT" }];
-      }
+      }*/
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
       return true;

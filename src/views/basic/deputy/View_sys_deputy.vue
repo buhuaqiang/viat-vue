@@ -40,9 +40,10 @@
                                {"title":"User Id","required":true,"field":"user_id2",hidden:true,"type":"number"}],
                               [{"dataKey":"duputy_status","data":[],"required":true,"title":"status","field":"status","type":"radio"}]]);
             const searchFormFields = ref({"start_date":"","end_date":""});
-            const searchFormOptions = ref([[{"dataKey":"deputyDate","data":[],"title":"Deputy Date","field":"deputyDate","type":"select"},
-                {"title":"","field":"start_date","type":"datetime"},
-                {"title":"","field":"end_date","type":"datetime"}]]);
+            const searchFormOptions = ref([[
+                //{"dataKey":"deputyDate","data":[],"title":"Deputy Date","field":"deputyDate","type":"select"},
+                {"title":"Start Date","field":"start_date","type":"datetime"},
+                {"title":"End Date","field":"end_date","type":"datetime"}]]);
             const columns = ref([{field:'deputy_dbid',title:'deputy_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'start_date',title:'Start Date',type:'datetime',link:true,width:130,require:true,align:'left',sort:true},
                        {field:'end_date',title:'End Date',type:'datetime',width:130,require:true,align:'left',sort:true},
