@@ -52,11 +52,14 @@ let extension = {
       this.setFiexdSearchForm(true);
       //设置查询表单的标签文字宽度
       this.labelWidth=180;
+      //表格设置为单选
+      this.single=true;
     },
     onInited() {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
+
     },
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数

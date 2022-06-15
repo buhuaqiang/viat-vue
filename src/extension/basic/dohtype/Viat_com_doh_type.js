@@ -40,6 +40,8 @@ let extension = {
       this.boxOptions.labelWidth=150;      //开启固定显示查询功能，true=页面加载时查询表单也显示出来，false=点击查询时才会显示表单
 
       this.setFiexdSearchForm(true);
+      //表格设置为单选
+      this.single=true;
     },
     onInited() {
       //框架初始化配置后
