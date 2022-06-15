@@ -44,6 +44,7 @@
       :defaultLoadPage="defaultLoadPage"
       @loadBefore="loadTableBefore"
       @loadAfter="loadTableAfter"
+      @rowClick = "rowClick"
     ></vol-table>
     <!-- 设置弹出框的操作按钮 -->
     <template #footer>
@@ -149,6 +150,10 @@ export default {
 
       //关闭当前窗口
       this.model = false;
+    },
+    rowClick({ row, column, event }) {
+      //查询界面点击行事件
+      this.$refs.mytable.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
     //这里是从api查询后返回数据的方法
     loadTableAfter(row) {
