@@ -90,7 +90,7 @@
                 framePath: "",//弹框路径
                 formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields
 
-                url: "api/View_sys_deputy_pop/GetPageData",//加载数据的接口
+                url: "api/View_sys_deputy_pop/GetDeputyPopPageData",//加载数据的接口
                 columns: [
                     {field:'user_id',title:'user_id',type:'int',width:110,hidden:true,readonly:true,require:true,align:'left'},
                     {field:'user_name',title:'UserName',type:'string',width:110,readonly:true,require:true,align:'left',sort:true},
