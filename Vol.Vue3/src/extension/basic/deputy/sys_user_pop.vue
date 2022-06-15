@@ -80,6 +80,7 @@
                 fieldName:"", // 自定義邏輯字段
                 UserName: "", //查询条件字段
                 UserTrueName: "", //查询条件字段
+                formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields
 
                 url: "api/Sys_User/GetPageData",//加载数据的接口
                 columns: [
@@ -92,13 +93,27 @@
             };
         },
         methods: {
-            open(fieldName) {
+            open(fieldName,formType) {
                 this.model = true;
-                this.fieldName = fieldName
+                //this.fieldName = fieldName
+                this.fieldName=fieldName;
+                if(formType)this.formType=formType;
                 //打开弹出框时，加载table数据
                 this.$nextTick(() => {
                     this.$refs.userPop.load();
                 });
+            },
+            clearData(fieldName,formType) {
+
+                this.$emit("parentCall", ($parent) => {
+                    if(this.formType=='f'){
+                        $parent.editFormFields[fieldName] = '';
+                        $parent.editFormFields[fieldName+'name'] = '';
+                    }else if(this.formType=='s'){
+                        $parent.searchFormFields[fieldName] = '';
+                        $parent.searchFormFields[fieldName+'name'] ='';
+                    }
+                })
             },
 
             addRow() {
@@ -107,27 +122,24 @@
                     return this.$message.error("请选择数据")
                 }
                 // //将选取的数据赋值到父页面
-                 this.$emit('parentCall', $parent => {
-                     $parent.editFormFields.user_name2 = selectrow[0].UserName;
+                /* this.$emit('parentCall', $parent => {
+                     $parent.editFormFields.user_name2 = selectrow[0].UserName+;
                      $parent.editFormFields.UserTrueName = selectrow[0].UserTrueName;
                      $parent.editFormFields.user_id = selectrow[0].User_Id;
                      this.model=false;
-                 })
+                 })*/
 
+                //回写数据到表单
+                this.$emit("parentCall", ($parent) => {
+                    //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
+                    if(this.formType=='f'){
+                        $parent.editFormFields[this.fieldName] = selectrow[0].UserName;
+                        $parent.editFormFields[this.fieldName+'name'] = selectrow[0].UserName+" "+selectrow[0].UserTrueName;
+                        $parent.editFormFields.user_id = selectrow[0].User_Id;
+                        $parent.editFormFields.UserTrueName = selectrow[0].UserTrueName;
+                    }
 
-
-                /*  if (!selectrow || selectrow.length == 0) {
-                      return this.$message.error("请选择行数据");
-                  }
-                  let path =this.$route.path;
-                  if(path=='/View_app_power_contract_main'){//多導則調用
-                      this.$emit("onSelect",this.fieldName,selectrow)
-                  }else{
-                      this.$emit("parentCall", ($parent) => {
-                          //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
-                          $parent.editFormFields[this.fieldName] = selectrow[0].cust_id;
-                      });
-                  }*/
+                });
                 this.model=false;
 
             },

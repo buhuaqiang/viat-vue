@@ -29,11 +29,13 @@
                 url: "/View_sys_deputy/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"user_name2":"","UserTrueName":"","emp_ename":"","emp_cname":"","start_date":"","end_date":"","deputy_user_id":"","user_id2":"","status":""});
-            const editFormOptions = ref([[{"title":"Login User","required":true,"field":"user_name2"},
-                               {"title":"","required":true,"field":"UserTrueName"}],
-                              [{"title":"Deputy User","field":"emp_ename"},
-                               {"title":"","field":"emp_cname"}],
+            const editFormFields = ref({"user_name2":"","user_name2name":"","UserTrueName":"","emp_ename":"","emp_enamename":"","emp_cname":"","start_date":"","end_date":"","deputy_user_id":"","user_id2":"","status":""});
+            const editFormOptions = ref([[{"title":"user_name2","required":true,"field":"user_name2",hidden:true},
+                               {"title":"Login User","required":true,"field":"user_name2name"},
+                               {"title":"","required":true,"field":"UserTrueName",hidden:true}],
+                              [{"title":"emp_ename","field":"emp_ename",hidden:true},
+                               {"title":"Deputy User","required":true,"field":"emp_enamename"},
+                               {"title":"emp_cname","field":"emp_cname",hidden:true}],
                               [{"title":"Start Date","required":true,"field":"start_date","type":"datetime"}],
                               [{"title":"End Date","required":true,"field":"end_date","type":"datetime"}],
                               [{"title":"Deputy Id","required":true,"field":"deputy_user_id",hidden:true,"type":"number"},
@@ -45,12 +47,12 @@
                 {"title":"Start Date","field":"start_date","type":"datetime"},
                 {"title":"End Date","field":"end_date","type":"datetime"}]]);
             const columns = ref([{field:'deputy_dbid',title:'deputy_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
-                       {field:'start_date',title:'Start Date',type:'datetime',link:true,width:130,require:true,align:'left',sort:true},
-                       {field:'end_date',title:'End Date',type:'datetime',width:130,require:true,align:'left',sort:true},
-                       {field:'deputy_user_id',title:'Deputy Id',type:'int',width:90,require:true,align:'left'},
+                       {field:'deputy_user_id',title:'Deputy Id',type:'int',link:true,width:90,require:true,align:'left'},
                        {field:'emp_ename',title:'Deputy Name',type:'string',width:90,align:'left'},
                        {field:'user_id2',title:'User Id',type:'int',width:90,require:true,align:'left'},
                        {field:'user_name2',title:'User Name',type:'string',width:110,require:true,align:'left'},
+                       {field:'start_date',title:'Start Date',type:'datetime',width:130,require:true,align:'left',sort:true},
+                       {field:'end_date',title:'End Date',type:'datetime',width:130,require:true,align:'left',sort:true},
                        {field:'user_id',title:'列userid',type:'int',width:90,hidden:true,require:true,align:'left'},
                        {field:'created_date',title:'created_date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
                        {field:'dept_name',title:'dept_name',type:'string',width:120,hidden:true,align:'left'},
