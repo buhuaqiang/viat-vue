@@ -113,6 +113,27 @@ let extension = {
        return row.close_date.substr(0,10);
       }
 
+      //日期格式化 formatter
+      let start_date=this.getColumnsOption("start_date");
+      start_date.formatter = (row) => {
+        //对单元格的数据格式化处理
+        if (!row.start_date) {
+          return;
+        }
+        return row.start_date.substr(0,10);
+      }
+
+      //日期格式化 formatter
+      let end_date=this.getColumnsOption("end_date");
+      end_date.formatter = (row) => {
+        //对单元格的数据格式化处理
+        if (!row.end_date) {
+          return;
+        }
+        return row.end_date.substr(0,10);
+      }
+
+
     },
     /**
      *

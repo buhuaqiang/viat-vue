@@ -246,6 +246,8 @@ export default {
         { field: "powercontpurprod_dbid", title: "主键ID", type: "guid", width: 80, hidden: true },
         { field: "powercont_dbid", title: "外鍵ID", type: "guid", width: 80, hidden: true },
         {
+          field: "prod_dbid",title: "prod_dbid",  width: 120,hidden: true},
+        {
           field: "prod_id",
           title: "prod_id",
           width: 120,
@@ -320,10 +322,10 @@ export default {
         return callBack(false);
       }
       //获取当前编辑主键id值
-      let id = $parent.currentRow.Id;
+      let powercont_dbid = $parent.currentRow.powercont_dbid;
       //添加从表的查询参数(条件)
       //将当前选中的行主键传到后台用于查询(后台在GetTable2Data(PageDataOptions loadData)会接收到此参数)
-      param.wheres.push({ name: "Id", value: id });
+      param.wheres.push({ name: "powercont_dbid", value: powercont_dbid });
       callBack(true);
     },
     //从表2加载数据数前(操作与上面一样的,增加查询条件)
@@ -349,7 +351,20 @@ export default {
           }
         })
 
-        this.$refs.table1.rowData.push(..._rows);
+        //this.$refs.table1.rowData.push(..._rows);
+        //push的时候去除已经选择的客户
+        _rows.forEach(x => {
+         let idx =  this.$refs.table1.rowData.some(item => {
+            // 判断项应为获取的变量
+            if(item.cust_dbid == x.cust_dbid) {
+              return true;
+            }
+          })
+          if(!idx){
+             this.$refs.table1.rowData.push(x);
+           }
+        })
+
         this.table1RowData = this.$refs.table1.rowData;
       }else {
         this.$emit("parentCall", ($parent) => {
@@ -387,19 +402,32 @@ export default {
           return{
             powercont_dbid:this.powercont_dbid,
             prod_id:row.prod_id,
+            prod_dbid:row.prod_dbid,
             prod_ename:row.prod_ename,
             qty:row.qty,
             amt:row.amt
           }
         })
 
-        this.$refs.table2.rowData.push(..._rows);
+        //push的时候去除已经选择的产品   this.$refs.table2.rowData.push(..._rows);
+        _rows.forEach(x => {
+          let idx =  this.$refs.table2.rowData.some(item => {
+            // 判断项应为获取的变量
+            if(item.prod_dbid == x.prod_dbid) {
+              return true;
+            }
+          })
+          if(!idx){
+            this.$refs.table2.rowData.push(x);
+          }
+        })
         this.table2RowData = this.$refs.table2.rowData;
       }else if(fieldName =='table3'){
         //返回指定字段  prod_id,prod_ename,qty,amt
         let _rows = rows.map((row)=>{
           return{
             powercont_dbid:this.powercont_dbid,
+            prod_dbid:row.prod_dbid,
             prod_id:row.prod_id,
             prod_ename:row.prod_ename,
             qty:row.qty,
@@ -407,7 +435,18 @@ export default {
           }
         })
 
-        this.$refs.table3.rowData.push(..._rows);
+        //push的时候去除已经选择的产品   this.$refs.table3.rowData.push(..._rows);
+        _rows.forEach(x => {
+          let idx =  this.$refs.table3.rowData.some(item => {
+            // 判断项应为获取的变量
+            if(item.prod_dbid == x.prod_dbid) {
+              return true;
+            }
+          })
+          if(!idx){
+            this.$refs.table3.rowData.push(x);
+          }
+        })
         this.table3RowData = this.$refs.table3.rowData;
       }else {
         this.$emit("parentCall", ($parent) => {

@@ -57,10 +57,11 @@ export default defineComponent({
           disabled: true,
 
         },
-        { title: "列accrue_amt", field: "accrue_amt", type: "decimal"},
-        { title: "列rate", field: "rate", type: "decimal" },
+        { title: "列accrue_amt", required: true,field: "accrue_amt", type: "decimal"},
+        { title: "列rate", required: true,field: "rate", type: "decimal" },
         {
           dataKey: "GPDS_Contract_Type",
+          required: true,
           data: [],
           title: "列contract_type",
           field: "contract_type",
@@ -68,9 +69,10 @@ export default defineComponent({
         },
       ],
       [
-        { title: "列start_date", field: "start_date", type: "date" },
-        { title: "列end_date", field: "end_date", type: "date" },
-        { title: "列close_date", field: "close_date", type: "date" },
+        { title: "列start_date",required: true, field: "start_date", type: "date" },
+
+        { title: "列end_date", required: true,field: "end_date", type: "date" },
+        { title: "列close_date" , field: "close_date", type: "date" },
       ],
       [
         {
@@ -87,6 +89,7 @@ export default defineComponent({
 
         {
           dataKey: "FullAllwType",
+          required: true,
           data: [],
           title: "列allw_type",
           field: "allw_type",
@@ -94,6 +97,7 @@ export default defineComponent({
         },
         {
           dataKey: "Contract_State",
+          required: true,
           data: [],
           title: "列Contract_State",
           field: "state",
@@ -175,6 +179,14 @@ export default defineComponent({
         align: "left",
       },
       {
+        field: "C1",
+        title: "Achieve",
+        type: "string",
+        width: 110,
+        require: true,
+        align: "left",
+      },
+      {
         field: "contract_no",
         title: "列contract_no",
         type: "string",
@@ -185,19 +197,10 @@ export default defineComponent({
         sort: true,
       },
       {
-        field: "contract_type",
-        title: "列contract_type",
-        type: "string",
-        bind: { key: "GPDS_Contract_Type", data: [] },
-        width: 110,
-        align: "left",
-      },
-      {
         field: "start_date",
         title: "列start_date",
         type: "datetime",
         width: 110,
-        hidden: true,
         align: "left",
         sort: true,
       },
@@ -206,7 +209,6 @@ export default defineComponent({
         title: "列end_date",
         type: "datetime",
         width: 110,
-        hidden: true,
         align: "left",
         sort: true,
       },
@@ -215,13 +217,27 @@ export default defineComponent({
         title: "列cust_id",
         type: "string",
         width: 110,
-        hidden: true,
+        align: "left",
+      },
+      {
+        field: "cust_name",
+        title: "列cust_name",
+        type: "string",
+        width: 120,
         align: "left",
       },
       {
         field: "territory_id",
         title: "列territory_id",
         type: "string",
+        width: 110,
+        align: "left",
+      },
+      {
+        field: "contract_type",
+        title: "列contract_type",
+        type: "string",
+        bind: { key: "GPDS_Contract_Type", data: [] },
         width: 110,
         align: "left",
       },
@@ -267,10 +283,10 @@ export default defineComponent({
       },
       {
         field: "state",
-        title: "列state",
+        title: "列Contract_State",
         type: "string",
-        width: 110,
-        hidden: true,
+        bind: { key: "Contract_State", data: [] },
+        width: 220,
         align: "left",
       },
       {
@@ -337,30 +353,6 @@ export default defineComponent({
         type: "string",
         width: 120,
         hidden: true,
-        align: "left",
-      },
-      {
-        field: "cust_name",
-        title: "列cust_name",
-        type: "string",
-        width: 120,
-        align: "left",
-      },
-      {
-        field: "state",
-        title: "列Contract_State",
-        type: "string",
-        bind: { key: "Contract_State", data: [] },
-        width: 220,
-        align: "left",
-      },
-      {
-        field: "C1",
-        title: "列C1",
-        type: "string",
-        width: 110,
-        hidden: true,
-        require: true,
         align: "left",
       },
       {
