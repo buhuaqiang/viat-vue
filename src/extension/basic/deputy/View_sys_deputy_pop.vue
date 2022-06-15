@@ -88,6 +88,7 @@
                 emp_ename: "", //查询条件字段
                 emp_cname: "", //查询条件字段
                 framePath: "",//弹框路径
+                formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields
 
                 url: "api/View_sys_deputy_pop/GetPageData",//加载数据的接口
                 columns: [
@@ -100,16 +101,29 @@
             };
         },
         methods: {
-            open(fieldName) {//代理人弹框
+            open(fieldName,formType) {//代理人弹框
                 //代理人弹框
                 this.framePath = "deputy"
                 this.single = true;
                 this.model = true;
-                this.fieldName = fieldName
+                this.fieldName = fieldName;
+                if(formType)this.formType=formType;
                 //打开弹出框时，加载table数据
                 this.$nextTick(() => {
                     this.$refs.deputyPop.load();
                 });
+            },
+            clearData(fieldName,formType) {
+
+                this.$emit("parentCall", ($parent) => {
+                    if(this.formType=='f'){
+                        $parent.editFormFields[fieldName] = '';
+                        $parent.editFormFields[fieldName+'name'] = '';
+                    }else if(this.formType=='s'){
+                        $parent.searchFormFields[fieldName] = '';
+                        $parent.searchFormFields[fieldName+'name'] ='';
+                    }
+                })
             },
             openBulletin(fieldName){//消息发送弹框
                 //代理人弹框
@@ -131,12 +145,24 @@
 
                 // //将选取的数据赋值到父页面
                 if(this.framePath =="deputy"){//代理人弹框赋值
-                    this.$emit('parentCall', $parent => {
+                   /* this.$emit('parentCall', $parent => {
                         $parent.editFormFields.emp_ename = selectrow[0].emp_ename;
                         $parent.editFormFields.emp_cname = selectrow[0].emp_cname;
                         $parent.editFormFields.deputy_user_id = selectrow[0].user_id;
                         this.model=false;
-                    })
+                    })*/
+                    //回写数据到表单
+                    this.$emit("parentCall", ($parent) => {
+                        //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
+                        if(this.formType=='f'){
+                            $parent.editFormFields[this.fieldName] = selectrow[0].emp_ename;
+                            $parent.editFormFields[this.fieldName+'name'] = selectrow[0].emp_ename+" "+selectrow[0].emp_cname;
+                            $parent.editFormFields.deputy_user_id = selectrow[0].user_id;
+                        }
+
+                    });
+
+
                 }
                 if(this.framePath =="bullentin"){//消息发送弹框赋值
                     let selectrows = [];//将勾选值设置成数组

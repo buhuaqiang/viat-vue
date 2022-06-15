@@ -47,6 +47,18 @@ let extension = {
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
     },
+    //获取编辑页面字段
+    getOption(field) {
+      let option;
+      this.editFormOptions.forEach(x => {
+        x.forEach(item => {
+          if (item.field == field) {
+            option = item;
+          }
+        })
+      })
+      return option;
+    },
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
@@ -75,6 +87,15 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+
+      //新增時不顯示
+      if(this.currentAction=='Add'){
+        this.getOption("emp_ename").hidden=true;
+        this.getOption("modified_date").hidden=true;
+      }else{//編輯時顯示
+        this.getOption("emp_ename").hidden=false;
+        this.getOption("modified_date").hidden=false;
+      }
     }
   }
 };

@@ -48,7 +48,7 @@ let extension = {
       //显示查询全部字段
       this.setFiexdSearchForm(true);
       //選擇代理人
-      let empcname=this.getOption("emp_cname");
+     /* let empcname=this.getOption("emp_ename");
       empcname.extra = {
         icon: "el-icon-zoom-out",
         text: "選擇",
@@ -56,9 +56,13 @@ let extension = {
         click: item => {
           this.$refs.modelHeader.open();
         }
+      }*/
+      let enamename=this.getOption("emp_enamename");
+      enamename.extra = {
+        render:this.getFormRender("emp_ename","f")
       }
       //選擇登錄人
-      let UserTrueName=this.getOption("UserTrueName");
+     /* let UserTrueName=this.getOption("user_name2");
       UserTrueName.extra = {
         icon: "el-icon-zoom-out",
         text: "選擇",
@@ -66,6 +70,11 @@ let extension = {
         click: item => {
           this.$refs.modelBody.open();
         }
+      }*/
+
+      let userName=this.getOption("user_name2name");
+      userName.extra = {
+        render:this.getFormRender("user_name2","f")
       }
 
       //不同查询条件下修改输入框
@@ -92,6 +101,7 @@ let extension = {
         this.endDate = val;
       }
 
+
     },
     onInited() {
       //框架初始化配置后
@@ -116,6 +126,56 @@ let extension = {
       })
 
 
+    },
+
+    /**
+     *
+     * @param fieldName綁定欄位
+     * @param formType 表單類型f-form表單,s-查詢表單
+     * @returns {function(*, {row: *, column: *, index: *}): *}
+     */
+    getFormRender(fieldName,formType) {//
+      return (h, { row, column, index }) => {
+        return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
+                onClick: (e) => {
+                  if(fieldName=="user_name2"){
+                    this.$refs.modelBody.open(fieldName,formType)
+                  }
+                  if(fieldName=="emp_ename"){
+                    this.$refs.modelHeader.open(fieldName,formType)
+                  }
+
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "選擇"
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+                onClick: (e) => {
+                  if(fieldName=="user_name2"){
+                    this.$refs.modelBody.clearData(fieldName,formType)
+                  }
+                  if(fieldName=="emp_ename"){
+                    this.$refs.modelHeader.clearData(fieldName,formType)
+                  }
+                  //this.$refs.modelBody.clearData(fieldName,formType);
+                }
+              },
+              [h("i",{class:"el-icon-zoom-out"})],
+              "清除"
+          ),
+
+        ]);
+      };
     },
     //获取编辑页面字段
     getOption(field) {
@@ -192,6 +252,11 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+
+
+      this.editFormFields.user_name2name = this.editFormFields.user_name2+" "+this.editFormFields.UserTrueName;
+      this.editFormFields.emp_enamename = this.editFormFields.emp_ename+" "+this.editFormFields.emp_cname;
+
     }
   }
 };
