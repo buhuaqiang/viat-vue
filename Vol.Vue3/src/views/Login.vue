@@ -215,7 +215,7 @@ export default defineComponent({
         return $message.error("請輸入驗證碼");
       }
       loading.value = true;
-      http.post("/api/user/login?bverificationCode=false", userInfo, "正在登錄....").then((result) => {
+      http.post("/api/user/login?bverificationCode=true", userInfo, "正在登錄....").then((result) => {
         if (!result.status) {
           loading.value = false;
           getVierificationCode();
