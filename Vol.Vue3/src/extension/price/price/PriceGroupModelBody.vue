@@ -156,7 +156,7 @@ export default {
         params.wheres.push({ name: "group_name", value: this.group_name,displayType:'like' });
       }
       if(this.group_id){
-        params.wheres.push({ name: "group_id", value: this.group_id });
+        params.wheres.push({ name: "group_id", value: this.group_id ,displayType:'like'});
       }
       return true;
     },
