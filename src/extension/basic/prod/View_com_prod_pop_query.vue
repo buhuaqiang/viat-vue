@@ -139,11 +139,11 @@
                     this.$emit("parentCall", ($parent) => {
                         //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
                         if(this.formType=='f'){
-                            $parent.editFormFields[this.fieldName] = rows[0].cust_dbid;
-                            $parent.editFormFields[this.fieldName+'name'] = rows[0].cust_id+" "+rows[0].cust_name;
+                            $parent.editFormFields[this.fieldName] = rows[0].prod_dbid;
+                            $parent.editFormFields[this.fieldName+'name'] = rows[0].prod_dbid+" "+rows[0].prod_ename;
                         }else if(this.formType=='s'){
-                            $parent.searchFormFields[this.fieldName] =  rows[0].cust_dbid;
-                            $parent.searchFormFields[this.fieldName+'name'] = rows[0].cust_id+" "+rows[0].cust_name;
+                            $parent.searchFormFields[this.fieldName] =  rows[0].prod_dbid;
+                            $parent.searchFormFields[this.fieldName+'name'] = rows[0].prod_dbid+" "+rows[0].prod_ename;
                         }
 
                     });
