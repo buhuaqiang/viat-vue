@@ -81,9 +81,12 @@ export default defineComponent({
           title: "列名isgroup",
           field: "isgroup",
           type: "radio",
+          required: true
         },
-        { title: "pricegroup", field: "group_name" ,disabled: true,colSize:6, align: "left"},
-        { title: "custname", field: "cust_name", disabled: true ,colSize:6, align: "left"},
+        { title: "pricegroup_dbid", field: "pricegroup_dbid" , align: "left",hidden: true},
+        { title: "pricegroup", field: "group_name",readonly:true ,colSize:6, align: "left",required: true},
+        { title: "cust_dbid", field: "cust_dbid" , align: "left",hidden: true},
+        { title: "custname", field: "cust_name", readonly:true,colSize:6,align: "left",required: true},
       ],
       [
 
@@ -103,7 +106,7 @@ export default defineComponent({
           field: "state",
           type: "select",
         },
-        { title: "列contract_term", field: "contract_term", type: "textarea" },
+        { title: "列contract_term", field: "contract_term", type: "textarea", colSize:6 },
       ],
     ]);
     const searchFormFields = ref({
