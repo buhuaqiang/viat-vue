@@ -28,10 +28,13 @@
           </div>
           -->
         </div>
-        <div>
-          <el-button size="10" @click="deputySelect()">切换用户</el-button>
-        </div>
+
         <div class="header-info">
+
+          <!--消息管理-->
+          <div class="h-link" @click="deputySelect">
+            <a>Agent<i class="el-icon-user-solid"></i></a>
+          </div>
           <div class="h-link">
             <a href="javascript:void(0)" @click="to(item)" v-for="(item, index) in links.filter((c) => {
               return c.icon;

@@ -52,21 +52,26 @@ let extension = {
 
       var cust_name = this.getFormOption("cust_name");
       var group_name = this.getFormOption("group_name");
-      cust_name.hidden = false;
-      group_name.hidden = false;
+      cust_name.hidden = true;
+      group_name.hidden = true;
       //获取订单类型select配置，当前订单类型select改变值时，动态设置Remark,SellNo两个字段是否显示
       var isgroup = this.getFormOption("isgroup");
       isgroup.onChange = (val) => {
 
         if(val=='0'){
           cust_name.hidden=false;
+          cust_name.required = true
           group_name.hidden = true;
+          group_name.required = false
         }else if(val=='1'){
           cust_name.hidden=true;
+          cust_name.required = false
           group_name.hidden = false;
+          group_name.required = true
         }
 
       }
+
 
       cust_name.extra = {
         render:this.getFormRender("cust_name",'f','c')
@@ -340,21 +345,24 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
-      var cust_name = this.getFormOption("cust_name");
+     /* var cust_name = this.getFormOption("cust_name");
       var group_name = this.getFormOption("group_name");
-      //var isgroup = this.getFormOption("isgroup").valueOf();
 
       var isgroup  = this.editFormFields.isgroup;
       if(isgroup=='0'){
         cust_name.hidden=false;
+        cust_name.required = true
         group_name.hidden = true;
+        group_name.required = false
       }else if(isgroup=='1'){
         cust_name.hidden=true;
+        cust_name.required = false
         group_name.hidden = false;
+        group_name.required = true
       }else{
         cust_name.hidden=true;
         group_name.hidden = true;
-      }
+      }*/
 
       this.$refs.modelBody.modelOpen();
 
