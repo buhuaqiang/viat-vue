@@ -995,9 +995,11 @@ export default defineComponent({
           validator: (ruleObj, value, callback) => {
             if (!ruleObj.min && !ruleObj.max) {
               if (ruleObj.required) {
-                if (value == '') {
-                  formFields[rule.field] = 0;
-                  return callback();
+                if (value === '' || value === undefined) {
+                  //formFields[rule.field] = 0;
+                  // return callback();
+                  ruleObj.message ='請輸入'+ ruleObj.title ;
+                  return callback(new Error(ruleObj.message));
                 }
               }
               if (value === '' || value === undefined) return callback();

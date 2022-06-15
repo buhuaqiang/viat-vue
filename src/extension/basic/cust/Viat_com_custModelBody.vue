@@ -160,7 +160,10 @@ export default {
     loadTableBefore(params) {
       //查询前，设置查询条件
       if (this.cust_name) {
-        params.wheres = [{ name: "cust_name", value: this.cust_name },{ name: "cust_id", value: this.cust_id }];
+        params.wheres.push ({ name: "cust_name", value: this.cust_name ,displayType:'like'});
+      }
+      if(this.cust_id){
+        params.wheres.push({ name: "cust_id", value: this.cust_id,displayType:'like' })
       }
       return true;
     },
