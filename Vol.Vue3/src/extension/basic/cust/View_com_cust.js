@@ -72,6 +72,7 @@ let extension = {
       comZipId.data=data;
       return data;
     },
+
     /**
      *
      * @param fieldName綁定欄位
@@ -147,7 +148,17 @@ let extension = {
         ]);
       };
     },
-
+    getSearchOption(field){
+      let option;
+      this.searchFormOptions.forEach(x=>{
+        x.forEach(item => {
+          if (item.field == field) {
+            option = item;
+          }
+        })
+      })
+      return option;
+    },
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
         //示例：在按钮的最前面添加一个按钮
@@ -164,7 +175,7 @@ let extension = {
         // this.boxOptions.labelWidth = 150;
       this.boxOptions.labelWidth=180;
       //显示查询全部字段
-      this.setFiexdSearchForm(true);
+      //this.setFiexdSearchForm(true);
       //设置查询表单的标签文字宽度
       this.labelWidth=180;
 
@@ -207,10 +218,33 @@ let extension = {
       }
 
 
+      let searchdelv_groupname=this.getSearchOption("delv_groupname");
+      let searchdelv_group=this.getSearchOption("delv_group");
+      searchdelv_group.hidden=true
+      searchdelv_groupname.readonly=true
+      searchdelv_groupname.extra={
+        render:this.getSearchRender("delv_group","s","c")
+      }
+
+      let searchown_hospitalname=this.getSearchOption("own_hospitalname");
+      let searchown_hospital=this.getSearchOption("own_hospital");
+      searchown_hospital.hidden=true
+      searchown_hospitalname.readonly=true
+      searchown_hospitalname.extra={
+        render:this.getSearchRender("own_hospital","s","c")
+      }
+
+      let searchmed_groupname=this.getSearchOption("med_groupname");
+      let searchmed_group=this.getSearchOption("med_group");
+      searchmed_groupname.readonly=true
+      searchmed_group.hidden=true
+      searchmed_groupname.extra={
+        render:this.getSearchRender("med_group","s","c")
+      }
 
     },
     onInited() {
-      this.height = this.height-120
+      //this.height = this.height-60
       //框架初始化配置后
       //隐藏不需要的按钮
       this.detailOptions.buttons.forEach(but=>{
