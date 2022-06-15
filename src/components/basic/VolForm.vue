@@ -956,10 +956,10 @@ export default defineComponent({
       if (['img', 'excel', 'file'].indexOf(item.type) != -1) {
         return {
           validator: (rule, val, callback) => {
-            //2021.09.05移除文件上传默认必填
+            //2021.09.05移除文件上传默认必填   !this.isReadonly(item) &&
             if (
               item.required &&
-              !this.isReadonly(item) &&
+
               (!val || !val.length)
             ) {
               return callback(
@@ -1004,7 +1004,7 @@ export default defineComponent({
               }
               if (value === '' || value === undefined) return callback();
             }
-            if (this.isReadonly(item)) return callback();
+            //if (this.isReadonly(item)) return callback();
             if (ruleObj.type == 'number') {
               if (!rule.number.test(value)) {
                 ruleObj.message = ruleObj.title + '只能是整数';
@@ -1062,8 +1062,9 @@ export default defineComponent({
           trigger: 'blur',
           type: type,
           validator: (ruleObj, value, callback) => {
+            // !this.isReadonly(item) &&
             if (
-              !this.isReadonly(item) &&
+
               (value === '' || value === undefined || value === null)
             ) {
               return callback(new Error(ruleObj.message));
@@ -1119,7 +1120,7 @@ export default defineComponent({
           trigger: 'change',
           type: item.range ? 'array' : 'string',
           validator: (rule, val, callback) => {
-            if (this.isReadonly(item)) return callback();
+            //if (this.isReadonly(item)) return callback();
             // 用户自定义的方法，如果返回了值，直接显示返回的值，验证不通过
             if (!val || (item.range && !val.length)) {
               return callback(new Error('请选择日期'));
@@ -1137,7 +1138,7 @@ export default defineComponent({
           // message: "请选择" + item.title,
           trigger: 'change',
           validator: (rule, val, callback) => {
-            if (this.isReadonly(item)) return callback();
+            //if (this.isReadonly(item)) return callback();
             // 用户自定义的方法，如果返回了值，直接显示返回的值，验证不通过
             let _arr = this.formFields[item.field];
             if (!_arr || !_arr.length) {
@@ -1159,7 +1160,7 @@ export default defineComponent({
           message: '请选择' + item.title,
           trigger: 'change',
           validator: (rule, value, callback) => {
-            if (this.isReadonly(item)) return callback();
+            //if (this.isReadonly(item)) return callback();
             //2021.11.27修复多选没有提示的问题
             if (value == undefined || value === '') {
               return callback(new Error(rule.message));
