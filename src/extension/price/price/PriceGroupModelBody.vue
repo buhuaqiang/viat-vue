@@ -44,6 +44,7 @@
       :defaultLoadPage="defaultLoadPage"
       @loadBefore="loadTableBefore"
       @loadAfter="loadTableAfter"
+      @rowClick = "rowClick"
     ></vol-table>
     <!-- 设置弹出框的操作按钮 -->
     <template #footer>
