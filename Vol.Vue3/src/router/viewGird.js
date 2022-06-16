@@ -252,6 +252,11 @@ let viewgird = [
         path: '/Viat_com_employee',
         name: 'Viat_com_employee',
         component: () => import('@/views/basic/employee/Viat_com_employee.vue')
-    }]
+    },{
+        path: '/View_com_prod_maintenance',
+        name: 'View_com_prod_maintenance',
+        component: () => import('@/views/basic/prod/View_com_prod_maintenance.vue')
+    }
+]
 
 export default viewgird
