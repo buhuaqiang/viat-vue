@@ -30,12 +30,12 @@
                 sortName: "dist_id"
             });
             const editFormFields = ref({"entity":"","dist_id":"","cust_dbid":"","status":""});
-            const editFormOptions = ref([[{"title":"Dist ID","required":true,"field":"dist_id"},
+            const editFormOptions = ref([[{"dataKey":"distributor_Drop","data":[],"title":"Dist ID","required":true,"field":"dist_id","type":"select"},
                                {"title":"Entity","required":true,"field":"entity","type":"text"}],
-                              [{"title":"Viatris CustID","required":true,"field":"cust_dbid","colSize":12,"type":"text"}],
+                              [{"title":"Viatris CustID","required":true,"field":"cust_dbid","type":"text"}],
                               [{"dataKey":"狀態測試","data":[],"title":"Status","required":true,"field":"status","type":"radio"}]]);
-            const searchFormFields = ref({"status":"","cust_dbid":""});
-            const searchFormOptions = ref([[{"title":"Distributor","field":"sys_value","type":"text"}],[{"dataKey":"狀態測試","data":[],"title":"Status","field":"status"}],[{"title":"Viatris CustID","field":"cust_dbid"}]]);
+            const searchFormFields = ref({});
+            const searchFormOptions = ref([[{"title":"Distributor","field":"sys_value","type":"text"}]]);
             const columns = ref([{field:'dist_dbid',title:'dist_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'CreateID',title:'CreateID',type:'int',width:80,hidden:true,align:'left'},
                        {field:'CreateClient',title:'CreateClient',type:'int',width:110,hidden:true,align:'left'},
@@ -45,7 +45,7 @@
                        {field:'ModifyDate',title:'ModifyDate',type:'datetime',width:110,hidden:true,align:'left',sort:true},
                        {field:'entity',title:'Entity',type:'string',width:110,require:true,align:'left',sort:true},
                        {field:'division',title:'division',type:'string',width:110,align:'left'},
-                       {field:'dist_id',title:'Dist ID',type:'string',width:110,hidden:true,require:true,align:'left'},
+                       {field:'dist_id',title:'Dist ID',type:'string',bind:{ key:'distributor_Drop',data:[]},width:110,hidden:true,require:true,align:'left'},
                        {field:'sys_value',title:'Distributor',type:'string',width:220,align:'left'},
                        {field:'status',title:'Status',type:'string',bind:{ key:'狀態測試',data:[]},width:110,hidden:true,require:true,align:'left'},
                        {field:'cust_dbid',title:'Viatris CustID',type:'string',width:220,require:true,align:'left'},

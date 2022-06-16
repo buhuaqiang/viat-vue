@@ -32,10 +32,40 @@ let extension = {
         //       this.$Message.success('点击了按钮');
         //     }
         //   });
-
+      this.setFiexdSearchForm(true);
         //示例：设置修改新建、编辑弹出框字段标签的长度
-        // this.boxOptions.labelWidth = 150;
+      this.boxOptions.labelWidth = 180;
+
+      //日期格式化 formatter
+      let m_start_date=this.getColumnsOption("m_start_date");
+      m_start_date.formatter = (row) => {
+        //对单元格的数据格式化处理
+        if (!row.m_start_date) {
+          return;
+        }
+        return row.m_start_date.substr(0,10);
+      }
+      let m_end_date=this.getColumnsOption("m_end_date");
+      m_end_date.formatter = (row) => {
+        //对单元格的数据格式化处理
+        if (!row.m_end_date) {
+          return;
+        }
+        return row.m_end_date.substr(0,10);
+      }
+
     },
+
+    getColumnsOption (field) {
+      let option;
+      this.columns.forEach(x => {
+        if (x.field == field) {
+          option = x;
+        }
+      })
+      return option;
+    },
+
     onInited() {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
