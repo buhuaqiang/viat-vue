@@ -31,7 +31,7 @@
             });
             const editFormFields = ref({"group_id":"","group_name":"","status":"","remarks":"","group_type":""});
             const editFormOptions = ref([[{"title":"群組代碼","required":true,"field":"group_id"}],
-                              [{"title":"群組名稱","field":"group_name"}],
+                              [{"title":"群組名稱","required":true,"field":"group_name"}],
                               [{"dataKey":"Status_YN","data":[],"title":"是否有效","field":"status","type":"select"}],
                               [{"title":"備註","field":"remarks","type":"textarea"}],
                               [{"dataKey":"doh_type","data":[],"title":"群組類別","field":"group_type","type":"select"}]]);
@@ -41,7 +41,7 @@
                        {field:'entity',title:'公司別,舊版SUN_DB',type:'string',width:110,hidden:true,align:'left'},
                        {field:'division',title:'所屬事業單位,01:PH;03:AH;05:CH;06:NU',type:'string',width:110,hidden:true,align:'left'},
                        {field:'group_id',title:'群組代碼',type:'string',link:true,width:110,require:true,align:'left',sort:true},
-                       {field:'group_name',title:'群組名稱',type:'string',width:120,align:'left'},
+                       {field:'group_name',title:'群組名稱',type:'string',width:120,require:true,align:'left'},
                        {field:'group_type',title:'群組類別',type:'string',bind:{ key:'doh_type',data:[]},width:110,align:'left'},
                        {field:'status',title:'是否有效',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'},
                        {field:'created_user',title:'建立用戶',type:'int',width:110,hidden:true,align:'left'},
