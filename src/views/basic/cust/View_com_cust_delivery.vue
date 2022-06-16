@@ -24,7 +24,7 @@
             const table = ref({
                 key: 'delivery_dbid',
                 footer: "Foots",
-                cnName: '客戶送貨地址信息視圖',
+                cnName: '客戶送貨地址信息',
                 name: 'cust/View_com_cust_delivery',
                 url: "/View_com_cust_delivery/",
                 sortName: "seq_no"
