@@ -248,6 +248,10 @@ let viewgird = [
         name: 'View_com_bulletin',
         component: () => import('@/views/basic/bulletin/View_com_bulletin.vue')
     }
-    ]
+        ,{
+        path: '/Viat_com_employee',
+        name: 'Viat_com_employee',
+        component: () => import('@/views/basic/employee/Viat_com_employee.vue')
+    }]
 
 export default viewgird
