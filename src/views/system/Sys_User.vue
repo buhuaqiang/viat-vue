@@ -29,15 +29,17 @@
                 url: "/Sys_User/",
                 sortName: "User_Id"
             });
-            const editFormFields = ref({"UserName":"","UserTrueName":"","Role_Id":"","IsRegregisterPhone":"","Gender":"","Enable":"","CreateDate":"","Creator":"","Remark":"","HeadImageUrl":""});
+            const editFormFields = ref({"UserName":"","UserTrueName":"","Role_Id":"","IsRegregisterPhone":"","Gender":"","Enable":"","CreateDate":"","Creator":"","Remark":"","HeadImageUrl":"","emp_dbidname":"","emp_dbid":""});
             const editFormOptions = ref([[{"title":"帐号","required":true,"field":"UserName","disabled":true},
-                               {"title":"真实姓名","required":true,"field":"UserTrueName","type":"text"}],
+                               {"title":"真实姓名","required":true,"field":"UserTrueName","type":"text","disabled":true}],
                               [{"dataKey":"roles","data":[],"title":"角色","required":true,"field":"Role_Id","type":"select"},
                                {"dataKey":"isphone","data":[],"title":"手机用户","required":true,"field":"IsRegregisterPhone","type":"select"}],
                               [{"dataKey":"gender","data":[],"title":"性别","field":"Gender","type":"select"},
                                {"dataKey":"enable","data":[],"title":"是否可用","required":true,"field":"Enable","type":"select"}],
                               [{"title":"注册时间","field":"CreateDate","disabled":true},
                                {"title":"创建人","field":"Creator","disabled":true}],
+                              [{"title":"選著用戶","field":"emp_dbidname"}],
+                              [{"title":"用戶識別碼","field":"emp_dbid",hidden:true}],
                               [{"title":"备注","field":"Remark","colSize":12,"type":"textarea"}],
                               [{"title":"头像","required":true,"field":"HeadImageUrl","type":"img"}]]);
             const searchFormFields = ref({"UserName":"","Gender":"","DeptName":"","Role_Id":"","Token":"","AppType":[],"UserTrueName":"","CreateDate":"","IsRegregisterPhone":"","PhoneNo":"","Enable":"","LastLoginDate":"","Address":"","Email":""});
@@ -71,6 +73,7 @@
                        {field:'Address',title:'地址',type:'string',width:190,hidden:true,align:'left'},
                        {field:'Mobile',title:'电话',type:'string',width:140,hidden:true,align:'left'},
                        {field:'Email',title:'Email',type:'string',width:140,hidden:true,align:'left'},
+                      {field:'emp_dbid',title:'員工識別碼',type:'guid',width:180,hidden:true,align:'left'},
                        {field:'Remark',title:'备注',type:'string',width:180,hidden:true,align:'left'},
                        {field:'OrderNo',title:'排序号',type:'int',width:90,hidden:true,align:'left'}]);
             const detail = ref({
