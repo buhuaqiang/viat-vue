@@ -46,6 +46,7 @@ let extension = {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
+      this.height = this.height-60
     },
     //获取编辑页面字段
     getOption(field) {
