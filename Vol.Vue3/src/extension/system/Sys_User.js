@@ -1,4 +1,5 @@
 import {  defineAsyncComponent } from "vue";
+import employPop from "./Sys_User/sys_employ_pop.vue";
 let extension = {
     components: { //动态扩充组件或组件路径
         //表单header、content、footer对应位置扩充的组件
@@ -8,7 +9,7 @@ let extension = {
         gridFooter: '',
         //弹出框(修改、编辑、查看)header、content、footer对应位置扩充的组件
         modelHeader: '',
-        modelBody: '',
+        modelBody: employPop,
         modelFooter: ''
     },
     text: "只能看到当前角色下的所有帐号",
@@ -47,8 +48,45 @@ let extension = {
                     ])
                 }
             })
+
+            let emp_dbidname=this.getOption("emp_dbidname");
+            emp_dbidname.extra = {
+                render:this.getFormRender("emp_dbid","f")
+            }
         },
         onInited() { },
+
+        getFormRender(fieldName,formType) {//
+            return (h, { row, column, index }) => {
+                return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
+                    h(
+                        "a",
+                        {
+                            props: {},
+                            style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
+                            onClick: (e) => {
+                                    this.$refs.modelBody.open(fieldName,formType)
+                            }
+                        },
+                        [h("i",{class:"el-icon-zoom-in"})],
+                        "選擇"
+                    ),
+                    h(
+                        "a",
+                        {
+                            props: {},
+                            style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+                            onClick: (e) => {
+                                    this.$refs.modelBody.clearData(fieldName,formType)
+                            }
+                        },
+                        [h("i",{class:"el-icon-zoom-out"})],
+                        "清除"
+                    ),
+
+                ]);
+            };
+        },
         addAfter(result) { //用户新建后，显示随机生成的密码
             if (!result.status) {
                 return true;
@@ -65,6 +103,18 @@ let extension = {
             this.refresh();
             return false;
         },
+        //获取编辑页面字段
+        getOption(field) {
+            let option;
+            this.editFormOptions.forEach(x => {
+                x.forEach(item => {
+                    if (item.field == field) {
+                        option = item;
+                    }
+                })
+            })
+            return option;
+        },
         modelOpenAfter() {
             //点击弹出框后，如果是编辑状态，禁止编辑用户名，如果新建状态，将用户名字段设置为可编辑
             let isEDIT = this.currentAction == this.const.EDIT;
@@ -79,6 +129,8 @@ let extension = {
                     this.editFormFields.Gender = "0";
                 }
             })
+
+            this.editFormFields.emp_dbidname =this.editFormFields.UserTrueName;
         }
 
     }
