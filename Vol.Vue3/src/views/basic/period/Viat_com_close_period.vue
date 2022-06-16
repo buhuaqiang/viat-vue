@@ -29,13 +29,13 @@
                 url: "/Viat_com_close_period/",
                 sortName: "year"
             });
-            const editFormFields = ref({"year":"","period":"","start_date":"","end_date":"","m_start_date":"","m_end_date":""});
+            const editFormFields = ref({"year":"","period":"","start_date":"","end_date":"","sales_start_date":"","sales_end_date":""});
             const editFormOptions = ref([[{"title":"年度","required":true,"field":"year","type":"number"},
                                {"dataKey":"Period","data":[],"title":"期間","required":true,"field":"period","type":"select"}],
                               [{"title":"會計帳起始日期","field":"start_date","type":"date"},
                                {"title":"會計帳結束日期","field":"end_date","type":"date"}],
-                              [{"title":"Margin起始日期","field":"m_start_date","type":"date"},
-                               {"title":"Margin結束日期","field":"m_end_date","type":"date"}]]);
+                              [{"title":"Sales 會計帳起始日期","field":"sales_start_date","type":"date"},
+                               {"title":"Sales 會計帳結束日期","field":"sales_end_date","type":"date"}]]);
             const searchFormFields = ref({"year":"","period":""});
             const searchFormOptions = ref([[{"title":"年度","field":"year","type":"text"}],[{"dataKey":"Period","data":[],"title":"期間","field":"period","type":"select"}]]);
             const columns = ref([{field:'period_dbid',title:'PKID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},

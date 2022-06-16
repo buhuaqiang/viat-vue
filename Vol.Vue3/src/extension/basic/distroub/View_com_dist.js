@@ -1,3 +1,6 @@
+//import Viat_com_custModelBody from "../../basic/cust/Viat_com_custModelBody";
+import Viat_com_dist_ModelBody from "../../basic/distroub/Viat_com_dist_ModelBody";
+
 /*****************************************************************************************
 **  Author:jxx 2022
 **  QQ:283591387
@@ -12,10 +15,10 @@ let extension = {
     //查询界面扩展组件
     gridHeader: '',
     gridBody: '',
-    gridFooter: '',
+    gridFooter: '' ,
     //新建、编辑弹出框扩展组件
     modelHeader: '',
-    modelBody: '',
+    modelBody: Viat_com_dist_ModelBody,
     modelFooter: ''
   },
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
@@ -32,10 +35,68 @@ let extension = {
         //       this.$Message.success('点击了按钮');
         //     }
         //   });
-
+      this.labelWidth = 180;
         //示例：设置修改新建、编辑弹出框字段标签的长度
-        // this.boxOptions.labelWidth = 150;
+      this.boxOptions.labelWidth = 120;
+      this.setFiexdSearchForm(true);
+
+      //表格设置为单选
+      this.single=true;
+
+      var cust_dbid = this.getFormOption("cust_dbid");
+      cust_dbid.extra = {
+        render:this.getFormRender("cust_dbid",'f')
+      }
     },
+    /**
+     *
+     * @param fieldName綁定欄位
+     * @param formType 表單類型f-form表單,s-查詢表單
+     * @param pageType c-cust,pg-pricegroup
+     * @returns {function(*, {row: *, column: *, index: *}): *}
+     */
+    getFormRender(fieldName,formType) {//
+      return (h, { row, column, index }) => {
+        return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
+                onClick: (e) => {
+                    this.$refs.modelBody.openDemo(fieldName,formType)
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "選擇"
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+                onClick: (e) => {
+                  this.$refs.modelBody.clearData(fieldName,formType);
+                }
+              },
+              [h("i",{class:"el-icon-zoom-out"})],
+              "清除"
+          ),
+        ]);
+      };
+    },
+    getFormOption (field) {
+      let option;
+      this.editFormOptions.forEach(x => {
+        x.forEach(item => {
+          if (item.field == field) {
+            option = item;
+          }
+        })
+      })
+      return option;
+    },
+
     onInited() {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
