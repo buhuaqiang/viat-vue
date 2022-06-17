@@ -29,37 +29,42 @@
                 url: "/View_com_notify_template/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"notify_id":"","sender":"","subject":"","recipient":"","cc":"","bcc":"","content":"","remarks":"","emp_ename":"","modified_date":""});
-            const editFormOptions = ref([[{"title":"Notify ID","required":true,"field":"notify_id"},
-                               {"title":"Sender Nickname","required":true,"field":"sender"}],
+            const editFormFields = ref({"notify_id":"","sender":"","subject":"","cc":"","bcc":"","content":"","remarks":"","emp_ename":"","modified_date":""});
+            const editFormOptions = ref([[{"title":"Notify Id","required":true,"field":"notify_id"},
+                               {"title":"Sender","required":true,"field":"sender"}],
                               [{"title":"Subject","required":true,"field":"subject"}],
                               [{"title":"Recipient","field":"recipient"}],
                               [{"title":"Cc","field":"cc"}],
                               [{"title":"Bcc","field":"bcc"}],
                               [{"title":"Content","field":"content","type":"textarea"}],
                               [{"title":"Remarks","field":"remarks"}],
-                              [{"title":"Modified User","field":"emp_ename","disabled":true},
+                              [{"title":"Last Modified","field":"emp_ename","disabled":true},
                                {"title":"Modified Date","field":"modified_date","disabled":true}]]);
             const searchFormFields = ref({"notify_id":"","subject":""});
-            const searchFormOptions = ref([[{"title":"Notify ID","field":"notify_id","type":"like"},{"title":"Subject","field":"subject","type":"like"}]]);
+            const searchFormOptions = ref([[{"title":"Notify Id","field":"notify_id","type":"like"},{"title":"Subject","field":"subject","type":"like"}]]);
             const columns = ref([{field:'notifytemp_dbid',title:'列名notifytemp_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'created_date',title:'列名created_date',type:'datetime',width:110,hidden:true,align:'left',sort:true},
                        {field:'modified_user',title:'列名modified_user',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'notify_id',title:'Notify ID',type:'string',link:true,width:110,require:true,align:'left',sort:true},
-                       {field:'sender',title:'Sender',type:'string',width:110,align:'left'},
+                       {field:'notify_id',title:'Notify Id',type:'string',link:true,width:110,require:true,align:'left',sort:true},
+                       {field:'sender',title:'Sender',type:'string',width:180,align:'left'},
                        {field:'subject',title:'Subject',type:'string',width:180,align:'left'},
                        {field:'entity',title:'列名entity',type:'string',width:110,hidden:true,align:'left'},
                        {field:'recipient',title:'Recipient',type:'string',width:180,align:'left'},
-                       {field:'cc',title:'Cc',type:'string',width:110,align:'left'},
-                       {field:'bcc',title:'Bcc',type:'string',width:110,align:'left'},
-                       {field:'remarks',title:'Remarks',type:'string',width:110,align:'left'},
-                       {field:'modified_username',title:'列名modified_username',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'cc',title:'Cc',type:'string',width:180,align:'left'},
+                       {field:'bcc',title:'Bcc',type:'string',width:180,align:'left'},
+                       {field:'remarks',title:'Remarks',type:'string',width:220,align:'left'},
                        {field:'emp_ename',title:'Last Modified',type:'string',width:110,readonly:true,align:'left'},
+                       {field:'modified_username',title:'列名modified_username',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:110,readonly:true,align:'left',sort:true},
-                       {field:'function_id',title:'列名function_id',type:'string',width:110,hidden:true,require:true,align:'left'},
+                       {field:'function_id',title:'列名function_id',type:'string',width:110,hidden:true,align:'left'},
                        {field:'content',title:'列名content',type:'string',width:220,hidden:true,align:'left'},
                        {field:'emp_cname',title:'列名emp_cname',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'row_number',title:'列名row_number',type:'long',width:110,hidden:true,align:'left'}]);
+                       {field:'created_user',title:'列名created_user',type:'int',width:80,align:'left'},
+                       {field:'created_username',title:'列名created_username',type:'string',width:110,align:'left'},
+                       {field:'created_client',title:'列名created_client',type:'int',width:80,align:'left'},
+                       {field:'created_clientusername',title:'列名created_clientusername',type:'string',width:110,align:'left'},
+                       {field:'modified_client',title:'列名modified_client',type:'int',width:80,align:'left'},
+                       {field:'modified_clientusername',title:'列名modified_clientusername',type:'string',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
