@@ -522,7 +522,7 @@ export default {
 
     //添加合約產品
     addProdListForpurchase(){
-      this.$refs.prodModelBody.open("table2");
+      this.$refs.prodModelBody.openDemo("table2");
       this.$refs.prodModelBody.single = false;
     },
 
