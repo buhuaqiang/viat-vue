@@ -37,7 +37,7 @@
                               [{"title":"Sales 會計帳起始日期","field":"sales_start_date","type":"date"},
                                {"title":"Sales 會計帳結束日期","field":"sales_end_date","type":"date"}]]);
             const searchFormFields = ref({"year":"","period":""});
-            const searchFormOptions = ref([[{"title":"年度","field":"year","type":"text"}],[{"dataKey":"Period","data":[],"title":"期間","field":"period","type":"select"}]]);
+            const searchFormOptions = ref([[{"title":"年度","field":"year","type":"text"},{"dataKey":"Period","data":[],"title":"期間","field":"period","type":"select"}]]);
             const columns = ref([{field:'period_dbid',title:'PKID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
                        {field:'dbid',title:'識別碼, PK, Identity',type:'int',width:110,hidden:true,require:true,align:'left'},
                        {field:'entity',title:'公司別,舊版SUN_DB',type:'string',width:110,hidden:true,align:'left'},

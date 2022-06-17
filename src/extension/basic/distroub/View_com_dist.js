@@ -1,5 +1,4 @@
-//import Viat_com_custModelBody from "../../basic/cust/Viat_com_custModelBody";
-import Viat_com_dist_ModelBody from "../../basic/distroub/Viat_com_dist_ModelBody";
+import Viat_com_custModelBody from "../../basic/cust/Viat_com_custModelBody";
 
 /*****************************************************************************************
 **  Author:jxx 2022
@@ -18,13 +17,24 @@ let extension = {
     gridFooter: '' ,
     //新建、编辑弹出框扩展组件
     modelHeader: '',
-    modelBody: Viat_com_dist_ModelBody,
+    modelBody: Viat_com_custModelBody,
     modelFooter: ''
   },
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
   methods: {
      //下面这些方法可以保留也可以删除
+    getSearchOption(field){
+      let option;
+      this.searchFormOptions.forEach(x=>{
+        x.forEach(item => {
+          if (item.field == field) {
+            option = item;
+          }
+        })
+      })
+      return option;
+    },
     onInit() {  //框架初始化配置前，
         //示例：在按钮的最前面添加一个按钮
         //   this.buttons.unshift({  //也可以用push或者splice方法来修改buttons数组
@@ -37,15 +47,17 @@ let extension = {
         //   });
       this.labelWidth = 180;
         //示例：设置修改新建、编辑弹出框字段标签的长度
-      this.boxOptions.labelWidth = 120;
+      this.boxOptions.labelWidth = 180;
       this.setFiexdSearchForm(true);
 
       //表格设置为单选
       this.single=true;
-
-      var cust_dbid = this.getFormOption("cust_dbid");
-      cust_dbid.extra = {
-        render:this.getFormRender("cust_dbid",'f')
+      let cust_dbid=this.getFormOption("cust_id");
+      cust_dbid.readonly=true
+      //cust_dbid.hidden=true
+      var cust_dbid2 = this.getFormOption("cust_id");
+      cust_dbid2.extra = {
+        render:this.getFormRender("cust_id",'f')
       }
     },
     /**

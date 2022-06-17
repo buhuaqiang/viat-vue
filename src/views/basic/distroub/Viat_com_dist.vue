@@ -30,8 +30,8 @@
                 sortName: "CreateDate"
             });
             const editFormFields = ref({"entity":"","cust_dbid":"","status":"","dist_id":""});
-            const editFormOptions = ref([[{"title":"公司別,舊版SUN_DB","required":true,"field":"entity","type":"text"}],
-                              [{"title":"Viatris Customer dbid","required":true,"field":"cust_dbid","type":"text"}],
+            const editFormOptions = ref([[{"title":"公司別,舊版SUN_DB","field":"entity","type":"text"}],
+                              [{"title":"Viatris Customer dbid","required":true,"field":"cust_dbid"}],
                               [{"dataKey":"狀態測試","data":[],"title":"是否有效,Y: 是 ; N:否","required":true,"field":"status","type":"radio"}],
                               [{"title":"經銷商代碼","required":true,"field":"dist_id","type":"text"}]]);
             const searchFormFields = ref({"dist_id":""});
@@ -40,7 +40,7 @@
                        {field:'dbid',title:'識別碼',type:'int',width:110,require:true,align:'left',sort:true},
                        {field:'division',title:'所屬事業單位,01:PH;03:AH;05:CH;06:NU',type:'string',width:110,align:'left'},
                        {field:'status',title:'是否有效,Y: 是 ; N:否',type:'string',bind:{ key:'狀態測試',data:[]},width:110,require:true,align:'left'},
-                       {field:'entity',title:'公司別,舊版SUN_DB',type:'string',width:110,require:true,align:'left'},
+                       {field:'entity',title:'公司別,舊版SUN_DB',type:'string',width:110,align:'left'},
                        {field:'dist_dbid',title:'主鍵',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
                        {field:'modified_date',title:'最後修改時間',type:'datetime',width:150,align:'left',sort:true},
                        {field:'modified_client',title:'最後修改者的委託人',type:'int',width:80,align:'left'},
@@ -52,7 +52,7 @@
                        {field:'created_username',title:'created_username',type:'string',width:110,align:'left'},
                        {field:'created_user',title:'建立用戶',type:'int',width:80,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,align:'left'},
-                       {field:'cust_dbid',title:'Viatris Customer dbid',type:'string',width:110,require:true,align:'left'}]);
+                       {field:'cust_dbid',title:'Viatris Customer dbid',type:'guid',width:110,hidden:true,require:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

@@ -34,8 +34,8 @@
                                {"title":"期間","required":true,"field":"period","disabled":true,"type":"text"}],
                               [{"title":"Margin起始日期","field":"m_start_date","type":"date"},
                                {"title":"Margin結束日期","field":"m_end_date","type":"date"}]]);
-            const searchFormFields = ref({"year":""});
-            const searchFormOptions = ref([[{"title":"期間","field":"period","type":"text"}],[{"title":"年度","field":"year","type":"text"}]]);
+            const searchFormFields = ref({"year":"","period":""});
+            const searchFormOptions = ref([[{"title":"期間","field":"period","type":"text"},{"title":"年度","field":"year","type":"text"}]]);
             const columns = ref([{field:'year',title:'年度',type:'int',sort:true,width:80,readonly:true,require:true,align:'left',sort:true},
                        {field:'period',title:'期間',type:'int',width:80,readonly:true,require:true,align:'left'},
                        {field:'m_start_date',title:'Margin起始日期',type:'datetime',width:150,align:'left',sort:true},
