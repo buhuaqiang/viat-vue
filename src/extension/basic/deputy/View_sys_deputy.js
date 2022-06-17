@@ -57,9 +57,9 @@ let extension = {
           this.$refs.modelHeader.open();
         }
       }*/
-      let enamename=this.getOption("emp_enamename");
+      let enamename=this.getOption("emp_ename2name");
       enamename.extra = {
-        render:this.getFormRender("emp_ename","f")
+        render:this.getFormRender("emp_ename2","f")
       }
       //選擇登錄人
      /* let UserTrueName=this.getOption("user_name2");
@@ -72,9 +72,9 @@ let extension = {
         }
       }*/
 
-      let userName=this.getOption("user_name2name");
+      let userName=this.getOption("UserName1name");
       userName.extra = {
-        render:this.getFormRender("user_name2","f")
+        render:this.getFormRender("UserName1","f")
       }
 
       //不同查询条件下修改输入框
@@ -144,10 +144,10 @@ let extension = {
                 props: {},
                 style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
                 onClick: (e) => {
-                  if(fieldName=="user_name2"){
+                  if(fieldName=="UserName1"){
                     this.$refs.modelBody.open(fieldName,formType)
                   }
-                  if(fieldName=="emp_ename"){
+                  if(fieldName=="emp_ename2"){
                     this.$refs.modelHeader.open(fieldName,formType)
                   }
 
@@ -162,10 +162,10 @@ let extension = {
                 props: {},
                 style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
                 onClick: (e) => {
-                  if(fieldName=="user_name2"){
+                  if(fieldName=="UserName1"){
                     this.$refs.modelBody.clearData(fieldName,formType)
                   }
-                  if(fieldName=="emp_ename"){
+                  if(fieldName=="emp_ename2"){
                     this.$refs.modelHeader.clearData(fieldName,formType)
                   }
                   //this.$refs.modelBody.clearData(fieldName,formType);
@@ -255,8 +255,8 @@ let extension = {
       //看不懂就把输出看：console.log(this.editFormOptions)
 
 
-      this.editFormFields.user_name2name = this.editFormFields.user_name2+" "+this.editFormFields.UserTrueName;
-      this.editFormFields.emp_enamename = this.editFormFields.emp_ename+" "+this.editFormFields.emp_cname;
+      this.editFormFields.UserName1name = this.editFormFields.UserName1+" "+this.editFormFields.UserTrueName1;
+      this.editFormFields.emp_ename2name = this.editFormFields.emp_ename2+" "+this.editFormFields.emp_cname2;
 
     }
   }

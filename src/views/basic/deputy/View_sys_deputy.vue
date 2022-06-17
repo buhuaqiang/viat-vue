@@ -29,36 +29,44 @@
                 url: "/View_sys_deputy/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"user_name2":"","user_name2name":"","UserTrueName":"","emp_ename":"","emp_enamename":"","emp_cname":"","start_date":"","end_date":"","deputy_user_id":"","user_id2":"","status":""});
-            const editFormOptions = ref([[{"title":"user_name2","required":true,"field":"user_name2",hidden:true},
-                               {"title":"Login User","required":true,"field":"user_name2name"},
-                               {"title":"","required":true,"field":"UserTrueName",hidden:true}],
-                              [{"title":"emp_ename","field":"emp_ename",hidden:true},
-                               {"title":"Deputy User","required":true,"field":"emp_enamename"},
-                               {"title":"emp_cname","field":"emp_cname",hidden:true}],
+            const editFormFields = ref({"userid1":"","UserName1":"","UserTrueName1":"","UserName1name":"","emp_ename2":"","emp_ename2name":"","emp_cname2":"","start_date":"","end_date":"","deputy_user_id":"","status":""});
+            const editFormOptions = ref([[{"title":"User Id","required":true,"field":"userid1",hidden:true,"type":"number"},
+                               {"title":"User Name",hidden:true,"field":"UserName1"},
+                                {"title":"Login User","required":true,"field":"UserName1name"},
+                               {"title":"UserTrueName1",hidden:true,"field":"UserTrueName1"}],
+                              [{"title":"Deputy Name","field":"emp_ename2",hidden:true},
+                               {"title":"Deputy User","required":true,"field":"emp_ename2name"},
+                               {"title":"emp_cname2","field":"emp_cname2",hidden:true}],
                               [{"title":"Start Date","required":true,"field":"start_date","type":"datetime"}],
                               [{"title":"End Date","required":true,"field":"end_date","type":"datetime"}],
-                              [{"title":"Deputy Id","required":true,"field":"deputy_user_id",hidden:true,"type":"number"},
-                               {"title":"User Id","required":true,"field":"user_id2",hidden:true,"type":"number"}],
-                              [{"dataKey":"duputy_status","data":[],"required":true,"title":"status","field":"status","type":"radio"}]]);
+                              [{"title":"Deputy Id","field":"deputy_user_id","type":"number",hidden:true}],
+                              [{"dataKey":"duputy_status","data":[],"required":true,"title":"status","field":"status","type":"radio"}]
+            ]);
             const searchFormFields = ref({"start_date":"","end_date":""});
-            const searchFormOptions = ref([[
-                //{"dataKey":"deputyDate","data":[],"title":"Deputy Date","field":"deputyDate","type":"select"},
-                {"title":"Start Date","field":"start_date","type":"datetime"},
-                {"title":"End Date","field":"end_date","type":"datetime"}]]);
-            const columns = ref([{field:'deputy_dbid',title:'deputy_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
-                       {field:'deputy_user_id',title:'Deputy Id',type:'int',link:true,width:90,require:true,align:'left'},
-                       {field:'emp_ename',title:'Deputy Name',type:'string',width:90,align:'left'},
-                       {field:'user_id2',title:'User Id',type:'int',width:90,require:true,align:'left'},
-                       {field:'user_name2',title:'User Name',type:'string',width:110,require:true,align:'left'},
+            const searchFormOptions = ref([[{"title":"Start Date","field":"start_date","type":"datetime"},{"title":"End Date","field":"end_date","type":"datetime"}]]);
+            const columns = ref([{field:'deputy_dbid',title:'列名deputy_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
+                       {field:'deputy_user_id',title:'Deputy Id',link:true,type:'int',width:90,align:'left'},
+                       {field:'emp_ename2',title:'Deputy Name',type:'string',width:110,align:'left'},
+                       {field:'userid1',title:'User Id',type:'int',width:80,align:'left'},
+                       {field:'UserName1',title:'User Name',type:'string',width:110,require:true,align:'left'},
                        {field:'start_date',title:'Start Date',type:'datetime',width:130,require:true,align:'left',sort:true},
-                       {field:'end_date',title:'End Date',type:'datetime',width:130,require:true,align:'left',sort:true},
-                       {field:'user_id',title:'列userid',type:'int',width:90,hidden:true,require:true,align:'left'},
+                       {field:'end_date',title:'End Date',type:'datetime',width:130,align:'left',sort:true},
+                       {field:'user_id',title:'列userid',type:'int',width:90,hidden:true,align:'left'},
                        {field:'created_date',title:'created_date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
-                       {field:'dept_name',title:'dept_name',type:'string',width:120,hidden:true,align:'left'},
-                       {field:'emp_cname',title:'emp_cname',type:'string',width:120,hidden:true,align:'left'},
-                       {field:'UserTrueName',title:'UserTrueName',type:'string',width:110,hidden:true,require:true,align:'left'},
-                       {field:'status',title:'status',type:'string',width:110,hidden:true,require:true,align:'left'}]);
+                       {field:'status',title:'status',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'emp_cname2',title:'emp_cname2',type:'string',width:120,hidden:true,align:'left'},
+                       {field:'UserTrueName1',title:'UserTrueName1',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'modified_date',title:'列名modified_date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
+                       {field:'modified_client',title:'列名modified_client',type:'int',width:80,hidden:true,align:'left'},
+                       {field:'modified_username',title:'列名modified_username',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'modified_user',title:'列名modified_user',type:'int',width:80,hidden:true,align:'left'},
+                       {field:'created_clientusername',title:'列名created_clientusername',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'created_client',title:'列名created_client',type:'int',width:80,hidden:true,align:'left'},
+                       {field:'created_username',title:'列名created_username',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'created_user',title:'列名created_user',type:'int',width:80,hidden:true,align:'left'},
+                       {field:'division',title:'列名division',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'entity',title:'列名entity',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'modified_clientusername',title:'列名modified_clientusername',type:'string',width:110,hidden:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
