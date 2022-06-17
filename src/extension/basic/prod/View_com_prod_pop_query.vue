@@ -105,7 +105,7 @@
             };
         },
         methods: {
-            open(fieldName,formType) {
+            openDemo(fieldName,formType) {
                 this.model = true;
                 this.fieldName = fieldName
                 this.formType = formType
@@ -113,6 +113,19 @@
                 this.$nextTick(() => {
                     this.$refs.prodPop.load();
                 });
+            },
+            clearData(fieldName,formType) {
+
+                this.$emit("parentCall", ($parent) => {
+                    debugger
+                    if(this.formType=='f'){
+                        $parent.editFormFields[fieldName] = '';
+                        $parent.editFormFields[fieldName+'name'] = '';
+                    }else if(this.formType=='s'){
+                        $parent.searchFormFields[fieldName] = '';
+                        $parent.searchFormFields[fieldName+'name'] ='';
+                    }
+                })
             },
 
             addRow() {
@@ -139,19 +152,30 @@
                     //回写数据到表单
                     this.$emit("parentCall", ($parent) => {
                         //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
+
+
+
+                        // $parent.editFormFields[this.fieldName] = selectrow[0].cust_id;
+
                         if(this.formType=='f'){
-                            $parent.editFormFields[this.fieldName] = rows[0].prod_dbid;
-                            $parent.editFormFields[this.fieldName+'name'] = rows[0].prod_dbid+" "+rows[0].prod_ename;
+                            if (selectrow[0].prod_dbid) {
+                                $parent.editFormFields[this.fieldName] = selectrow[0].prod_dbid;
+                                $parent.editFormFields[this.fieldName + 'name'] = selectrow[0].prod_id + " " + selectrow[0].prod_ename;
+                            }
                         }else if(this.formType=='s'){
-                            $parent.searchFormFields[this.fieldName] =  rows[0].prod_dbid;
-                            $parent.searchFormFields[this.fieldName+'name'] = rows[0].prod_dbid+" "+rows[0].prod_ename;
+                            if (selectrow[0].prod_dbid){
+                                $parent.searchFormFields[this.fieldName] =  selectrow[0].prod_dbid;
+                                $parent.searchFormFields[this.fieldName+'name'] = selectrow[0].prod_id+" "+selectrow[0].prod_ename;
+                            }
                         }
+
 
                     });
                 }
                 this.model=false;
 
             },
+
             search() {
                 //点击搜索
                 this.$refs.prodPop.load();

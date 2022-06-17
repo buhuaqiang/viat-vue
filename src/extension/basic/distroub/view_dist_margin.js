@@ -6,21 +6,26 @@
 **后台操作见：http://v2.volcore.xyz/document/netCoreDev
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
+import View_com_prod_pop_query from "../prod/View_com_prod_pop_query.vue";
+import custmModelBody from "../../contract/contract/Viat_com_custModelBody";
 
 let extension = {
   components: {
     //查询界面扩展组件
-    gridHeader: '',
-    gridBody: '',
+    gridHeader: custmModelBody,
+    gridBody: View_com_prod_pop_query,
     gridFooter: '',
     //新建、编辑弹出框扩展组件
-    modelHeader: '',
-    modelBody: '',
+    modelHeader: custmModelBody,
+    modelBody: View_com_prod_pop_query,
     modelFooter: ''
   },
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
   methods: {
+
+
+
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
         //示例：在按钮的最前面添加一个按钮
@@ -32,15 +37,216 @@ let extension = {
         //       this.$Message.success('点击了按钮');
         //     }
         //   });
-
+        // this.single=true;//设置单选
         //示例：设置修改新建、编辑弹出框字段标签的长度
         // this.boxOptions.labelWidth = 150;
+        this.boxOptions.labelWidth=180;
+        //显示查询全部字段
+        this.setFiexdSearchForm(true);
+        //设置查询表单的标签文字宽度
+        this.labelWidth=180;
+        //搜尋彈窗 選擇產品
+        let proddbidname=this.getSearchOption('prod_dbidname');
+        let prodbid=this.getSearchOption('prod_dbid');
+        prodbid.hidden = true
+        proddbidname.extra = {
+            render:this.getSearchRender('prod_dbid', 's' )
+       }
+        let custdbidname = this.getSearchOption('cust_dbidname');
+        let custdbid= this.getSearchOption('cust_dbid');
+        custdbid.hidden = true
+        custdbidname.extra = {
+            render:this.getSearchRender2('cust_dbid', 's' )
+        }
+        //編輯彈窗
+        let proddbidEditname=this.getEditOption('prod_dbidname');
+        // let proddbidEdit=this.getEditOption('prod_dbid');
+        // proddbidEdit.hidden=true;
+        proddbidEditname.extra = {
+            render:this.getFormRender('prod_dbid', 'f' )
+        }
+        let custdbidEditname = this.getEditOption('cust_dbidname');
+        // let custdbidEdit=this.getEditOption('cust_dbid');
+        // custdbidEdit.hidden=true;
+        custdbidEditname.extra = {
+            render:this.getFormRender2('cust_dbid', 'f' )
+        }
+
     },
+
     onInited() {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
     },
+      //获取编辑页面字段
+      getEditOption(field) {
+          let option;
+          this.editFormOptions.forEach(x => {
+              x.forEach(item => {
+                  if (item.field == field) {
+                      option = item;
+                  }
+              })
+          })
+          return option;
+      },
+
+      /**
+       *
+       * @param fieldName綁定欄位
+       * @param formType 表單類型f-form表單,s-查詢表單
+       * @returns {function(*, {row: *, column: *, index: *}): *}
+       */
+      getFormRender(fieldName,formType) {//
+          return (h, { row, column, index }) => {
+              return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
+                  h(
+                      "a",
+                      {
+                          props: {},
+                          style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
+                          onClick: (e) => {
+                              this.$refs.modelBody.openDemo(fieldName,formType)
+                          }
+                      },
+                      [h("i",{class:"el-icon-zoom-in"})],
+                      "選擇"
+                  ),
+                  h(
+                      "a",
+                      {
+                          props: {},
+                          style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+                          onClick: (e) => {
+                              this.$refs.modelBody.clearData(fieldName,formType);
+                          }
+                      },
+                      [h("i",{class:"el-icon-zoom-out"})],
+                      "清除"
+                  ),
+
+              ]);
+          };
+      },
+      getFormRender2(fieldName,formType) {//
+          return (h, { row, column, index }) => {
+              return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
+                  h(
+                      "a",
+                      {
+                          props: {},
+                          style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
+                          onClick: (e) => {
+                              this.$refs.modelHeader.openDemo(fieldName,formType);
+                          }
+                      },
+                      [h("i",{class:"el-icon-zoom-in"})],
+                      "選擇"
+                  ),
+                  h(
+                      "a",
+                      {
+                          props: {},
+                          style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+                          onClick: (e) => {
+                              this.$refs.modelHeader.clearData(fieldName,formType);
+                          }
+                      },
+                      [h("i",{class:"el-icon-zoom-out"})],
+                      "清除"
+                  ),
+
+
+              ]);
+          };
+      },
+      /**
+       *
+       * @param fieldName綁定欄位
+       * @param formType 表單類型f-form表單,s-查詢表單
+       * @param pageType c-cust,pg-pricegroup
+       * @returns {function(*, {row: *, column: *, index: *}): *}
+       */
+      getSearchRender(fieldName,formType) {//
+          return (h, { row, column, index }) => {
+              return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
+                  h(
+                      "a",
+                      {
+                          props: {},
+                          style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
+                          onClick: (e) => {
+                              this.$refs.gridBody.openDemo(fieldName,formType);
+                          }
+                      },
+                      [h("i",{class:"el-icon-zoom-in"})],
+                      "選擇"
+                  ),
+                  h(
+                      "a",
+                      {
+                          props: {},
+                          style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+                          onClick: (e) => {
+                              this.$refs.gridBody.clearData(fieldName,formType);
+                          }
+                      },
+                      [h("i",{class:"el-icon-zoom-out"})],
+                      "清除"
+                  ),
+
+
+              ]);
+          };
+      },
+      getSearchRender2(fieldName,formType) {//
+          return (h, { row, column, index }) => {
+              return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
+                  h(
+                      "a",
+                      {
+                          props: {},
+                          style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
+                          onClick: (e) => {
+                              this.$refs.gridHeader.openDemo(fieldName,formType);
+                          }
+                      },
+                      [h("i",{class:"el-icon-zoom-in"})],
+                      "選擇"
+                  ),
+                  h(
+                      "a",
+                      {
+                          props: {},
+                          style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+                          onClick: (e) => {
+                              this.$refs.gridHeader.clearData(fieldName,formType);
+                          }
+                      },
+                      [h("i",{class:"el-icon-zoom-out"})],
+                      "清除"
+                  ),
+
+
+              ]);
+          };
+      },
+
+      //獲取搜尋頁面字段
+      getSearchOption(field) {
+          debugger
+          let option;
+          this.searchFormOptions.forEach(x => {
+              x.forEach(item => {
+                  if (item.field == field) {
+                      option = item;
+                  }
+              })
+          })
+          return option;
+      },
+
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
@@ -60,13 +266,25 @@ let extension = {
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
-      // this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
+       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
       //(1)判断是编辑还是新建操作： this.currentAction=='Add';
       //(2)给弹出框设置默认值
       //(3)this.editFormFields.字段='xxx';
+        debugger
+        let prodidEdit=this.getEditOption('prod_id');
+        prodidEdit.hidden=true;
+        let custidEdit=this.getEditOption('cust_id');
+        custidEdit.hidden=true;
+        let prodenameEdit=this.getEditOption('prod_ename');
+        prodenameEdit.hidden=true;
+        let custnameEdit=this.getEditOption('cust_name');
+        custnameEdit.hidden=true;
+
+        this.editFormFields.prod_dbidname= this.editFormFields.prod_id + ' ' + this.editFormFields.prod_ename;
+        this.editFormFields.cust_dbidname= this.editFormFields.cust_id + ' ' + this.editFormFields.cust_name;
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
     }
