@@ -7,16 +7,16 @@
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
 import View_com_prod_pop_query from "../prod/View_com_prod_pop_query.vue";
-import custmModelBody from "../../contract/contract/Viat_com_custModelBody";
+import Viat_com_custModelBody from "../../basic/cust/Viat_com_custModelBody";
 
 let extension = {
   components: {
     //查询界面扩展组件
-    gridHeader: custmModelBody,
+    gridHeader: Viat_com_custModelBody,
     gridBody: View_com_prod_pop_query,
     gridFooter: '',
     //新建、编辑弹出框扩展组件
-    modelHeader: custmModelBody,
+    modelHeader: Viat_com_custModelBody,
     modelBody: View_com_prod_pop_query,
     modelFooter: ''
   },
@@ -38,6 +38,31 @@ let extension = {
         //     }
         //   });
         // this.single=true;//设置单选
+        //日期格式化 formatter
+        let start_date=this.getColumnsOption("start_date");
+        start_date.formatter = (row) => {
+            //对单元格的数据格式化处理
+            if (!row.start_date) {
+                return;
+            }
+            return row.start_date.substr(0,10);
+        }
+        let end_date=this.getColumnsOption("end_date");
+        end_date.formatter = (row) => {
+            //对单元格的数据格式化处理
+            if (!row.end_date) {
+                return;
+            }
+            return row.end_date.substr(0,10);
+        }
+        let modified_date=this.getColumnsOption("modified_date");
+        modified_date.formatter = (row) => {
+            //对单元格的数据格式化处理
+            if (!row.end_date) {
+                return;
+            }
+            return row.end_date.substr(0,10);
+        }
         //示例：设置修改新建、编辑弹出框字段标签的长度
         // this.boxOptions.labelWidth = 150;
         this.boxOptions.labelWidth=180;
@@ -49,30 +74,39 @@ let extension = {
         let proddbidname=this.getSearchOption('prod_dbidname');
         let prodbid=this.getSearchOption('prod_dbid');
         prodbid.hidden = true
+        proddbidname.readonly = true
         proddbidname.extra = {
             render:this.getSearchRender('prod_dbid', 's' )
        }
         let custdbidname = this.getSearchOption('cust_dbidname');
         let custdbid= this.getSearchOption('cust_dbid');
         custdbid.hidden = true
+        custdbidname.readonly = true
         custdbidname.extra = {
             render:this.getSearchRender2('cust_dbid', 's' )
         }
         //編輯彈窗
         let proddbidEditname=this.getEditOption('prod_dbidname');
-        // let proddbidEdit=this.getEditOption('prod_dbid');
-        // proddbidEdit.hidden=true;
+        proddbidEditname.readonly = true
         proddbidEditname.extra = {
             render:this.getFormRender('prod_dbid', 'f' )
         }
         let custdbidEditname = this.getEditOption('cust_dbidname');
-        // let custdbidEdit=this.getEditOption('cust_dbid');
-        // custdbidEdit.hidden=true;
+        custdbidEditname.readonly = true
         custdbidEditname.extra = {
             render:this.getFormRender2('cust_dbid', 'f' )
         }
 
     },
+      getColumnsOption (field) {
+          let option;
+          this.columns.forEach(x => {
+              if (x.field == field) {
+                  option = x;
+              }
+          })
+          return option;
+      },
 
     onInited() {
       //框架初始化配置后

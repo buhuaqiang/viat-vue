@@ -20,6 +20,12 @@
         style="width: 200px;padding-left: 5px;"
         v-model="cust_name"
       />
+      <el-input
+
+              placeholder="郵區代碼"
+              style="width: 200px"
+              v-model="zip_id"
+      />
       <el-button
         type="primary"
         style="margin-left:10px"
@@ -78,6 +84,7 @@ export default {
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
       cust_name: "", //查询条件字段
       cust_id:"",
+      zip_id: "",
       fieldName:"",//編輯字段,用於回傳設置值
       formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields
       url: "api/View_com_cust/GetPopPageData",//加载数据的接口
@@ -85,6 +92,7 @@ export default {
         {field:'cust_id',title:'客戶編號',type:'string',width:110,require:true,align:'left',sort:true},
         {field:'cust_name',title:'客戶名',type:'string',link:true,width:120,align:'left'},
         {field:'cust_address',title:'客戶地址',type:'string',width:180,align:'left'},
+        {field:'zip_id',title:'郵區代碼',type:'string',width:110,align:'left',sort:true},
         {field:'tel_no',title:'聯繫電話',type:'string',width:110,align:'left'},
         {field:'territory_id',title:'默認區域',type:'string',width:110,hidden:true,align:'left'},
         {field:'doh_type',title:'健保類別',type:'string',bind:{ key:'doh_type',data:[]},width:110,align:'left'},
@@ -169,6 +177,9 @@ export default {
       }
       if(this.cust_id){
         params.wheres.push({ name: "cust_id", value: this.cust_id,displayType:'like' })
+      }
+      if (this.zip_id) {
+        params.wheres.push({ name: "zip_id", value: this.zip_id,displayType:'like' });
       }
       return true;
     },
