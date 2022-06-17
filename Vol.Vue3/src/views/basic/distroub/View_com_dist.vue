@@ -31,26 +31,31 @@
             });
             const editFormFields = ref({"entity":"","dist_id":"","cust_dbid":"","status":""});
             const editFormOptions = ref([[{"dataKey":"distributor_Drop","data":[],"title":"Dist ID","required":true,"field":"dist_id","type":"select"},
-                               {"title":"Entity","required":true,"field":"entity","type":"text"}],
+                               {"title":"Entity","field":"entity","type":"text"}],
                               [{"title":"Viatris CustID","required":true,"field":"cust_dbid","type":"text"}],
                               [{"dataKey":"狀態測試","data":[],"title":"Status","required":true,"field":"status","type":"radio"}]]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([[{"title":"Distributor","field":"sys_value","type":"text"}]]);
             const columns = ref([{field:'dist_dbid',title:'dist_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
-                       {field:'CreateID',title:'CreateID',type:'int',width:80,hidden:true,align:'left'},
-                       {field:'CreateClient',title:'CreateClient',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'CreateDate',title:'CreateDate',type:'datetime',width:110,hidden:true,align:'left',sort:true},
-                       {field:'ModifyID',title:'ModifyID',type:'int',width:80,hidden:true,align:'left'},
-                       {field:'ModifyClient',title:'ModifyClient',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'ModifyDate',title:'ModifyDate',type:'datetime',width:110,hidden:true,align:'left',sort:true},
-                       {field:'entity',title:'Entity',type:'string',width:110,require:true,align:'left',sort:true},
+                       {field:'entity',title:'Entity',type:'string',width:110,align:'left',sort:true},
                        {field:'division',title:'division',type:'string',width:110,align:'left'},
                        {field:'dist_id',title:'Dist ID',type:'string',bind:{ key:'distributor_Drop',data:[]},width:110,hidden:true,require:true,align:'left'},
                        {field:'sys_value',title:'Distributor',type:'string',width:220,align:'left'},
                        {field:'status',title:'Status',type:'string',bind:{ key:'狀態測試',data:[]},width:110,hidden:true,require:true,align:'left'},
                        {field:'cust_dbid',title:'Viatris CustID',type:'string',width:220,require:true,align:'left'},
                        {field:'cust_name',title:'Cust Name',type:'string',width:120,align:'left'},
-                       {field:'status1',title:'status1',type:'string',width:110,hidden:true,align:'left'}]);
+                       {field:'status2',title:'status2',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'modified_date',title:'modified_date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
+                       {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'modified_username',title:'modified_username',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'modified_user',title:'modified_user',type:'int',width:80,hidden:true,align:'left'},
+                       {field:'created_date',title:'created_date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
+                       {field:'created_clientusername',title:'created_clientusername',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'created_client',title:'created_client',type:'int',width:80,hidden:true,align:'left'},
+                       {field:'created_username',title:'created_username',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'created_user',title:'created_user',type:'int',width:80,hidden:true,align:'left'},
+                       {field:'modified_client',title:'modified_client',type:'int',width:80,hidden:true,align:'left'},
+                       {field:'dbid',title:'dbid',type:'int',width:80,hidden:true,require:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
