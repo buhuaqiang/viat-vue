@@ -145,12 +145,6 @@
 
                 // //将选取的数据赋值到父页面
                 if(this.framePath =="deputy"){//代理人弹框赋值
-                   /* this.$emit('parentCall', $parent => {
-                        $parent.editFormFields.emp_ename = selectrow[0].emp_ename;
-                        $parent.editFormFields.emp_cname = selectrow[0].emp_cname;
-                        $parent.editFormFields.deputy_user_id = selectrow[0].user_id;
-                        this.model=false;
-                    })*/
                     //回写数据到表单
                     this.$emit("parentCall", ($parent) => {
                         //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
@@ -172,18 +166,18 @@
                     selectrow.forEach(row=>{
                         selectrows.push({"key":row.User_Id,"value":row.emp_ename2});
                         selectusers.push(row.emp_ename2);
-                        users = users+row.emp_ename2+','
-                        userValue = userValue+row.User_Id+','+row.emp_ename2+";"
                     })
-                    this.$emit('parentCall', $parent => {
+                    this.$emit('parentCall', $parent => {//選擇數據後賦值
+                        $parent.editFormOptions.forEach(x => {
+                            x.forEach(item => {
+                                if (item.field == 'users') {//將選中的數據賦值到下拉框的數組中
+                                    item.data = selectrows;
+                                }
+                            })
+                        })
 
-                        if($parent.editFormOptions.field=="users"){
-                            $parent.editFormOptions.data = selected
-                        }
-
-                         let selects = JSON.stringify(selectrows)
                         $parent.editFormFields.users = selectusers;
-                        $parent.editFormFields.SelectUsers = selects;
+                        //$parent.editFormFields.SelectUsers = selects;
 
                         //$parent.editFormFields.emp_cname = selectrow[0].emp_cname;
                         //$parent.editFormFields.deputy_user_id = selectrow[0].user_id;

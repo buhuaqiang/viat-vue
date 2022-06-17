@@ -80,7 +80,24 @@ let extension = {
       endDates.onChange = (val, option) => {
         this.endDate = val;
       }
-
+      //日期格式化 formatter
+      let start_date=this.getColumnsOption("start_date");
+      start_date.formatter = (row) => {
+        //对单元格的数据格式化处理
+        if (!row.start_date) {
+          return;
+        }
+        return row.start_date.substr(0,10);
+      }
+      //日期格式化 formatter
+      let end_date=this.getColumnsOption("end_date");
+      end_date.formatter = (row) => {
+        //对单元格的数据格式化处理
+        if (!row.end_date) {
+          return;
+        }
+        return row.end_date.substr(0,10);
+      }
 
     },
     onInited() {
@@ -125,6 +142,16 @@ let extension = {
       })
 
 
+    },
+    //獲取顯示欄字段
+    getColumnsOption (field) {
+      let option;
+      this.columns.forEach(x => {
+        if (x.field == field) {
+          option = x;
+        }
+      })
+      return option;
     },
     //获取编辑页面字段
     getOption(field) {
@@ -185,6 +212,8 @@ let extension = {
       //下拉設置默認值
       //let users = this.userDatas;
       //this.editFormFields.users = [users[0].key,users[1].key];
+
+      this.getOption("users").data=[];
 
       //新增時不顯示
       if(this.currentAction=='Add'){
