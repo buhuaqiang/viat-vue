@@ -89,7 +89,7 @@
                 prod_ename: "", //查询条件字段
                 prod_sname: "", //查询条件字段
 
-                url: "api/View_com_prod_pop_query/getPageData",//加载数据的接口
+                url: "api/View_com_prod_pop_query/GetProdPageData",//加载数据的接口
                 columns: [
                     {field:'mpg_id',title:'Mpg',type:'string',width:90,align:'left',sort:true},
                     {field:'localmpg_dbid',title:'localmpg_dbid',type:'guid',width:110,hidden:true,align:'left'},
@@ -100,7 +100,7 @@
                     {field:'nhi_price',title:'NHI Price',type:'decimal',width:90,align:'left'},
                     {field:'pack_size',title:'Pack Size',type:'decimal',width:90,align:'left'},
                     {field:'globalmpg_dbid',title:'globalmpg_dbid',type:'guid',width:110,hidden:true,align:'left'},
-                    {field:'created_date1',title:'created_date1',type:'datetime',width:150,hidden:true,align:'left',sort:true},
+                    {field:'created_date',title:'created_date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
                     {field:'prod_dbid',title:'prod_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'}],
             };
         },
@@ -152,10 +152,6 @@
                     //回写数据到表单
                     this.$emit("parentCall", ($parent) => {
                         //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
-
-
-
-                        // $parent.editFormFields[this.fieldName] = selectrow[0].cust_id;
 
                         if(this.formType=='f'){
                             if (selectrow[0].prod_dbid) {
