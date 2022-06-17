@@ -36,15 +36,15 @@
                                {"title":"Margin Rate/Price","required":true,"field":"margin_value","type":"text"},
                                {"dataKey":"Margin_Type","data":[],"title":"Margin Type","required":true,"field":"margin_value_type","type":"select"}],
                               [{"title":"Product","field":"prod_dbidname","type":"text"},
-                               {"title":"Start Date","required":true,"field":"start_date","type":"datetime"}],
+                               {"title":"Start Date","required":true,"field":"start_date","type":"date"}],
                               [{"title":"Customer","field":"cust_dbidname","type":"text"},
-                               {"title":"End Date","required":true,"field":"end_date","type":"datetime"}],
+                               {"title":"End Date","required":true,"field":"end_date","type":"date"}],
                               [{"dataKey":"Channel-Distributor2","data":[],"title":"Channel","field":"channel","type":"select"}],
                               [{"title":"Cust ID","field":"cust_id","type":"text"},
-                               {"dataKey":"status-Dist2","data":[],"title":"Status","field":"status","type":"select"},
+                               {"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"},
                                {"title":"Cust Name","field":"cust_name","type":"text"}]]);
             const searchFormFields = ref({"dist_id":"","prod_dbid":"","prod_dbidname":"","cust_dbidname":"","channel":"","cust_dbid":"","margin_value_type":"","start_date":"","end_date":"","modified_date":"","status":""});
-            const searchFormOptions = ref([[{"dataKey":"distributor_Drop","data":[],"title":"Distributor","field":"dist_id","type":"select"},{"title":"","field":"prod_dbid","type":"text"},{"title":"","field":"cust_dbid","type":"text"},{"dataKey":"Margin_Type","data":[],"title":"Margin Type","field":"margin_value_type","type":"select"}],[{"title":"Product","field":"prod_dbidname","type":"text"},{"title":"Start Date","field":"start_date","type":"datetime"}],[{"title":"Customer","field":"cust_dbidname","type":"text"},{"title":"End Date","field":"end_date","type":"datetime"}],[{"dataKey":"Channel-Distributor2","data":[],"title":"Channel","field":"channel","type":"select"},{"title":"Modified Date","field":"modified_date","type":"datetime"}],[{"dataKey":"status-Dist2","data":[],"title":"Status","field":"status","type":"select"}]]);
+            const searchFormOptions = ref([[{"dataKey":"distributor_Drop","data":[],"title":"Distributor","field":"dist_id","type":"select"},{"title":"","field":"prod_dbid","type":"text"},{"title":"","field":"cust_dbid","type":"text"},{"dataKey":"Margin_Type","data":[],"title":"Margin Type","field":"margin_value_type","type":"select"}],[{"title":"Product","field":"prod_dbidname","type":"text"},{"title":"Start Date","field":"start_date","type":"date"}],[{"title":"Customer","field":"cust_dbidname","type":"text"},{"title":"End Date","field":"end_date","type":"date"}],[{"dataKey":"Channel-Distributor2","data":[],"title":"Channel","field":"channel","type":"select"},{"title":"Modified Date","field":"modified_date","type":"date"}],[{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}]]);
             const columns = ref([{field:'dist_id',title:'Distributor',type:'string',bind:{ key:'distributor_Drop',data:[]},width:90,require:true,align:'left',sort:true},
                        {field:'sys_value',title:'Dist Name',type:'string',width:60,align:'left'},
                        {field:'prod_dbid',title:'prod_dbid',type:'guid',width:40,align:'left'},
@@ -54,7 +54,7 @@
                        {field:'cust_dbidname',title:'Customer',type:'guid',width:110,hidden:true,align:'left'},
                        {field:'channel',title:'Channel',type:'string',bind:{ key:'Channel-Distributor2',data:[]},width:60,align:'left'},
                        {field:'doh_type_ename',title:'Channel Description',type:'string',width:100,align:'left'},
-                       {field:'cust_dbid',title:'cust_dbid',type:'guid',width:110,align:'left'},
+                       {field:'cust_dbid',title:'cust_dbid',type:'guid',width:110,hidden:true,align:'left'},
                        {field:'cust_id',title:'Cust ID',type:'string',width:80,align:'left'},
                        {field:'cust_name',title:'Cust Name',type:'string',width:60,align:'left'},
                        {field:'margin_value_type',title:'Margin Type',type:'int',bind:{ key:'Margin_Type',data:[]},width:70,require:true,align:'left'},
@@ -62,7 +62,7 @@
                        {field:'start_date',title:'Start Date',type:'datetime',width:110,require:true,align:'left',sort:true},
                        {field:'end_date',title:'End Date',type:'datetime',width:110,require:true,align:'left',sort:true},
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:110,align:'left',sort:true},
-                       {field:'status',title:'Status',type:'string',bind:{ key:'status-Dist2',data:[]},width:60,align:'left'},
+                       {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:60,align:'left'},
                        {field:'mpg_id',title:'mpg_id',type:'string',width:110,hidden:true,align:'left'},
                        {field:'mpg_name',title:'mpg_name',type:'string',width:110,hidden:true,align:'left'},
                        {field:'emp_ename',title:'emp_ename',type:'string',width:110,hidden:true,align:'left'},
