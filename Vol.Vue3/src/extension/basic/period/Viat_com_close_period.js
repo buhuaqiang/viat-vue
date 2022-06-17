@@ -35,7 +35,7 @@ let extension = {
       this.setFiexdSearchForm(true);
         //示例：设置修改新建、编辑弹出框字段标签的长度
       this.boxOptions.labelWidth = 180;
-
+      this.labelWidth = 180;
 
       //日期格式化 formatter
       let start_date=this.getColumnsOption("start_date");

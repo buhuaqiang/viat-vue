@@ -137,9 +137,17 @@ export default {
         return this.$message.error("請選擇數據");
       }
 
-      let path =this.$route.path;
-      if(path=='/View_app_power_contract_main' && this.formType=='f'){//多層級調用
-        this.$emit("onSelect",this.fieldName,rows)
+      let path = this.$route.path;
+      console.log("path:" + path + " this.formType:" + this.formType);
+      if (path == '/View_app_power_contract_main' && this.formType == 'f') {//多層級調用
+        this.$emit("onSelect", this.fieldName, rows)
+      }else if (path === '/view_com_dist' && this.formType === 'f'){
+        this.$emit("parentCall", ($parent) => {
+          if(this.formType=='f'){
+            $parent.editFormFields[this.fieldName] = rows[0].cust_id;
+            $parent.editFormFields['cust_dbid'] = rows[0].cust_dbid;
+          }
+        });
       }else{
         //回写数据到表单
         this.$emit("parentCall", ($parent) => {
