@@ -165,28 +165,25 @@
                     let userValue = "";
                     selectrow.forEach(row=>{
                         selectrows.push({"key":row.User_Id,"value":row.emp_ename2});
-                        selectusers.push(row.emp_ename2);
+                        //selectusers.push(row.emp_ename2);
                     })
                     this.$emit('parentCall', $parent => {//選擇數據後賦值
                         $parent.editFormOptions.forEach(x => {
                             x.forEach(item => {
-                                if (item.field == 'users') {//將選中的數據賦值到下拉框的數組中
-                                    item.data = selectrows;
+                                if (item.field == 'users') {
+                                    item.data = selectrows;//將選中的數據賦值到下拉框的數組中
+                                    item.data.forEach(a=>{//將值回顯到頁面，push(key)會將頁面顯示的值在多選框中標識出來，push(value)不會
+                                        $parent.editFormFields.users.push(a.key)
+                                    })
                                 }
                             })
                         })
-
-                        $parent.editFormFields.users = selectusers;
-                        //$parent.editFormFields.SelectUsers = selects;
-
+                       // $parent.editFormFields.users = selectusers;
                         //$parent.editFormFields.emp_cname = selectrow[0].emp_cname;
                         //$parent.editFormFields.deputy_user_id = selectrow[0].user_id;
                         this.model=false;
                     })
                 }
-
-
-
 
                 /*  if (!selectrow || selectrow.length == 0) {
                       return this.$message.error("请选择行数据");

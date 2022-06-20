@@ -528,7 +528,7 @@ export default {
 
     //添加 合約贈送產品
     addProdListForFree(){
-      this.$refs.prodModelBody.open("table3");
+      this.$refs.prodModelBody.openDemo("table3");
       this.$refs.prodModelBody.single = false;
     },
 
