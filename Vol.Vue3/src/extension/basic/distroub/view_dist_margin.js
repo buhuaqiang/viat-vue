@@ -37,7 +37,33 @@ let extension = {
         //       this.$Message.success('点击了按钮');
         //     }
         //   });
-        // this.single=true;//设置单选
+        this.single=true;//设置单选
+        //margin_value%格式化
+        this.columns.forEach(column => {
+            if (column.field == 'margin_value') {
+                column.formatter = (row) => {
+                        debugger
+                    if (!row.margin_value) {
+                        return;
+                    }
+                    return  row.margin_value + '%';
+                }
+            }
+        })
+        this.columns.forEach(x => {
+            if (x.field == 'dist_id'){
+                x.formatter = (row, column, event) => {
+                    return '<a>' + row.dist_id + '</a>'
+                }
+                x.click = (ow, column, event) => {
+                    this.$Message.info(row.dist_id);
+                }
+            }
+            }
+        )
+
+
+
         //日期格式化 formatter
         let start_date=this.getColumnsOption("start_date");
         start_date.formatter = (row) => {
