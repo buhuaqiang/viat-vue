@@ -5,6 +5,26 @@ module.exports = {
   lintOnSave: false,
   devServer: {
     port: 9990,
+    proxy: {
+      /* '/api': {
+         target: 'https://mock.ihx.me/mock/5baf3052f7da7e07e04a5116/antd-pro', //mock API接口系统
+         ws: false,
+         changeOrigin: true,
+         pathRewrite: {
+           '/yaude-boot': ''  //默认所有请求都加了yaude-boot前缀，需要去掉
+         }
+       },*/
+      '/viat-api': {
+        target: 'http://localhost:9991/', //请求本地 需要yaude-boot后台项目
+        ws: false,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/viat-api': '/'
+
+        }
+
+      },
+    },
     overlay: {
       warning: false,
       errors: false
