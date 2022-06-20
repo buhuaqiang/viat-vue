@@ -105,6 +105,10 @@
             };
         },
         methods: {
+            openMulity(fieldName, formType){
+                this.single=false;
+                this.openDemo(fieldName,formType);
+            },
             openDemo(fieldName,formType) {
                 this.model = true;
                 this.fieldName = fieldName
@@ -146,7 +150,26 @@
                     return this.$message.error("请选择行数据");
                 }
                 let path =this.$route.path;
-                if(path=='/View_app_power_contract_main'){//多導則調用
+                if(path =="/view_dist_margin"  && this.formType=='mf'){//
+                    let selectrows = [];//将勾选值设置成数组
+                    selectrow.forEach(row=>{
+                        selectrows.push({"key":row.prod_dbid,"value":row.prod_ename});
+                    })
+                    this.$emit('parentCall', $parent => {//選擇數據後賦值
+                        $parent.editFormOptions.forEach(x => {
+                            x.forEach(item => {
+                                if (item.field == 'prods') {
+                                    item.data = selectrows;//將選中的數據賦值到下拉框的數組中
+                                    item.data.forEach(a=>{//將值回顯到頁面，push(key)會將頁面顯示的值在多選框中標識出來，push(value)不會
+                                        $parent.editFormFields.prods.push(a.key)
+                                    })
+                                }
+                            })
+                        })
+                        this.model=false;
+                    })
+                }
+                else  if(path=='/View_app_power_contract_main'){//多導則調用
                     this.$emit("onSelect",this.fieldName,selectrow)
                 }else{
                     //回写数据到表单

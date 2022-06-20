@@ -39,28 +39,12 @@ let extension = {
         //   });
         this.single=true;//设置单选
         //margin_value%格式化
-        this.columns.forEach(column => {
-            if (column.field == 'margin_value') {
-                column.formatter = (row) => {
-                        debugger
-                    if (!row.margin_value) {
-                        return;
-                    }
-                    return  row.margin_value + '%';
-                }
+        this.getColumnsOption("margin_value").formatter = (row) => {
+            if (!row.margin_value) {
+                return;
             }
-        })
-        this.columns.forEach(x => {
-            if (x.field == 'dist_id'){
-                x.formatter = (row, column, event) => {
-                    return '<a>' + row.dist_id + '</a>'
-                }
-                x.click = (ow, column, event) => {
-                    this.$Message.info(row.dist_id);
-                }
-            }
-            }
-        )
+            return  row.margin_value + '%';
+        }
 
 
 
@@ -102,25 +86,44 @@ let extension = {
         prodbid.hidden = true
         proddbidname.readonly = true
         proddbidname.extra = {
-            render:this.getSearchRender('prod_dbid', 's' )
+            render:this.getRender('prod_dbid', 's' ,'p')
        }
         let custdbidname = this.getSearchOption('cust_dbidname');
         let custdbid= this.getSearchOption('cust_dbid');
         custdbid.hidden = true
         custdbidname.readonly = true
         custdbidname.extra = {
-            render:this.getSearchRender2('cust_dbid', 's' )
+            render:this.getRender('cust_dbid', 's' ,'c')
         }
         //編輯彈窗
         let proddbidEditname=this.getEditOption('prod_dbidname');
         proddbidEditname.readonly = true
         proddbidEditname.extra = {
-            render:this.getFormRender('prod_dbid', 'f' )
+            render:this.getRender('prod_dbid', 'f' ,'p')
         }
         let custdbidEditname = this.getEditOption('cust_dbidname');
         custdbidEditname.readonly = true
         custdbidEditname.extra = {
-            render:this.getFormRender2('cust_dbid', 'f' )
+            render:this.getRender('cust_dbid', 'f','c' )
+        }
+        //编辑弹窗 客户和产品多选绑定弹窗
+        let custs=this.getEditOption("custs");
+        custs.extra = {
+            icon: "el-icon-zoom-in",
+            text: "選擇",
+            style: "color:#409eff;font-size: 12px;cursor: pointer;",
+            click: item => {
+                this.$refs.modelHeader.openMulity("custs",'mf');
+            }
+        }
+        let prods=this.getEditOption("prods");
+        prods.extra = {
+            icon: "el-icon-zoom-in",
+            text: "選擇",
+            style: "color:#409eff;font-size: 12px;cursor: pointer;",
+            click: item => {
+                this.$refs.modelBody.openMulity("prods",'mf');
+            }
         }
 
     },
@@ -138,6 +141,8 @@ let extension = {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
+        //手动调度弹出框的高度
+        this.boxOptions.height = this.boxOptions.height- 550;
     },
       //获取编辑页面字段
       getEditOption(field) {
@@ -151,14 +156,14 @@ let extension = {
           })
           return option;
       },
-
       /**
        *
        * @param fieldName綁定欄位
        * @param formType 表單類型f-form表單,s-查詢表單
+       * @param pageType c-cust,pg-pricegroup,p-prod
        * @returns {function(*, {row: *, column: *, index: *}): *}
        */
-      getFormRender(fieldName,formType) {//
+      getRender(fieldName,formType,pageType) {//
           return (h, { row, column, index }) => {
               return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
                   h(
@@ -167,7 +172,25 @@ let extension = {
                           props: {},
                           style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
                           onClick: (e) => {
-                              this.$refs.modelBody.openDemo(fieldName,formType)
+                              if(formType=='s'){
+                                  if(pageType=='c'){
+                                      this.$refs.gridHeader.openDemo(fieldName,formType);
+                                  }
+                                  if(pageType=='p'){
+                                      this.$refs.gridBody.openDemo(fieldName,formType);
+                                  }
+
+                              }
+                              if(formType=='f'){
+                                  if(pageType=='c'){
+                                      this.$refs.modelHeader.openDemo(fieldName,formType);
+                                  }
+                                  if(pageType=='p'){
+                                      this.$refs.modelBody.openDemo(fieldName,formType);
+                                  }
+
+
+                              }
                           }
                       },
                       [h("i",{class:"el-icon-zoom-in"})],
@@ -179,38 +202,23 @@ let extension = {
                           props: {},
                           style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
                           onClick: (e) => {
-                              this.$refs.modelBody.clearData(fieldName,formType);
-                          }
-                      },
-                      [h("i",{class:"el-icon-zoom-out"})],
-                      "清除"
-                  ),
+                              if(formType=='s') {
+                                  if(pageType=='c'){
+                                      this.$refs.gridHeader.clearData(fieldName,formType);
+                                  }
+                                  if(pageType=='p'){
+                                      this.$refs.gridBody.clearData(fieldName,formType);
+                                  }
+                              }
+                              if(formType=='f'){
+                                  if(pageType=='c'){
+                                      this.$refs.modelHeader.clearData(fieldName,formType);
+                                  }
+                                  if(pageType=='p'){
+                                      this.$refs.modelBody.clearData(fieldName,formType);
+                                  }
 
-              ]);
-          };
-      },
-      getFormRender2(fieldName,formType) {//
-          return (h, { row, column, index }) => {
-              return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
-                  h(
-                      "a",
-                      {
-                          props: {},
-                          style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
-                          onClick: (e) => {
-                              this.$refs.modelHeader.openDemo(fieldName,formType);
-                          }
-                      },
-                      [h("i",{class:"el-icon-zoom-in"})],
-                      "選擇"
-                  ),
-                  h(
-                      "a",
-                      {
-                          props: {},
-                          style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
-                          onClick: (e) => {
-                              this.$refs.modelHeader.clearData(fieldName,formType);
+                              }
                           }
                       },
                       [h("i",{class:"el-icon-zoom-out"})],
@@ -221,81 +229,10 @@ let extension = {
               ]);
           };
       },
-      /**
-       *
-       * @param fieldName綁定欄位
-       * @param formType 表單類型f-form表單,s-查詢表單
-       * @param pageType c-cust,pg-pricegroup
-       * @returns {function(*, {row: *, column: *, index: *}): *}
-       */
-      getSearchRender(fieldName,formType) {//
-          return (h, { row, column, index }) => {
-              return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
-                  h(
-                      "a",
-                      {
-                          props: {},
-                          style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
-                          onClick: (e) => {
-                              this.$refs.gridBody.openDemo(fieldName,formType);
-                          }
-                      },
-                      [h("i",{class:"el-icon-zoom-in"})],
-                      "選擇"
-                  ),
-                  h(
-                      "a",
-                      {
-                          props: {},
-                          style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
-                          onClick: (e) => {
-                              this.$refs.gridBody.clearData(fieldName,formType);
-                          }
-                      },
-                      [h("i",{class:"el-icon-zoom-out"})],
-                      "清除"
-                  ),
 
-
-              ]);
-          };
-      },
-      getSearchRender2(fieldName,formType) {//
-          return (h, { row, column, index }) => {
-              return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
-                  h(
-                      "a",
-                      {
-                          props: {},
-                          style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
-                          onClick: (e) => {
-                              this.$refs.gridHeader.openDemo(fieldName,formType);
-                          }
-                      },
-                      [h("i",{class:"el-icon-zoom-in"})],
-                      "選擇"
-                  ),
-                  h(
-                      "a",
-                      {
-                          props: {},
-                          style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
-                          onClick: (e) => {
-                              this.$refs.gridHeader.clearData(fieldName,formType);
-                          }
-                      },
-                      [h("i",{class:"el-icon-zoom-out"})],
-                      "清除"
-                  ),
-
-
-              ]);
-          };
-      },
 
       //獲取搜尋頁面字段
       getSearchOption(field) {
-          debugger
           let option;
           this.searchFormOptions.forEach(x => {
               x.forEach(item => {
@@ -333,7 +270,6 @@ let extension = {
       //(1)判断是编辑还是新建操作： this.currentAction=='Add';
       //(2)给弹出框设置默认值
       //(3)this.editFormFields.字段='xxx';
-        debugger
         let prodidEdit=this.getEditOption('prod_id');
         prodidEdit.hidden=true;
         let custidEdit=this.getEditOption('cust_id');
@@ -347,6 +283,35 @@ let extension = {
         this.editFormFields.cust_dbidname= this.editFormFields.cust_id + ' ' + this.editFormFields.cust_name;
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+
+
+        //編輯彈窗
+        //判断是新增还是修改
+        let custs=this.getEditOption("custs");
+        let prods= this.getEditOption("prods");
+        custs.data=[];
+        prods.data=[];
+
+        let proddbidEditname=this.getEditOption('prod_dbidname');
+        let custdbidEditname = this.getEditOption('cust_dbidname');
+        if(this.currentAction==this.const.ADD){
+            proddbidEditname.hidden = true
+            custdbidEditname.hidden = true
+
+            custs.hidden=false
+            prods.hidden=false
+        }else if(this.currentAction==this.const.EDIT){
+            proddbidEditname.hidden = false
+            custdbidEditname.hidden = false
+
+            custs.hidden=true
+            prods.hidden=true
+
+
+        }
+
+
+
     }
   }
 };
