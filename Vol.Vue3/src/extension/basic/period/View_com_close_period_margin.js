@@ -91,7 +91,7 @@ let extension = {
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
-      // this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
+      this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
