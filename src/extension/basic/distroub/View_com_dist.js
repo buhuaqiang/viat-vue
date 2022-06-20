@@ -13,7 +13,7 @@ let extension = {
   components: {
     //查询界面扩展组件
     gridHeader: '',
-    gridBody: '',
+    gridBody: Viat_com_custModelBody,
     gridFooter: '' ,
     //新建、编辑弹出框扩展组件
     modelHeader: '',
@@ -52,13 +52,14 @@ let extension = {
 
       //表格设置为单选
       this.single=true;
-      let cust_dbid=this.getFormOption("cust_id");
-      cust_dbid.readonly=true
-      //cust_dbid.hidden=true
-      var cust_dbid2 = this.getFormOption("cust_id");
-      cust_dbid2.extra = {
+      let cust_id=this.getFormOption("cust_id");
+      cust_id.readonly=true
+      cust_id.extra = {
         render:this.getFormRender("cust_id",'f')
       }
+
+      let cust_dbid=this.getFormOption("cust_dbid");
+      cust_dbid.hidden=true;
     },
     /**
      *
@@ -108,7 +109,6 @@ let extension = {
       })
       return option;
     },
-
     onInited() {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
@@ -133,7 +133,7 @@ let extension = {
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
-      // this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
+      this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
