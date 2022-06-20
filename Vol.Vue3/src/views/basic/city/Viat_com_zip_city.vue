@@ -37,8 +37,8 @@
                               [{"dataKey":"Status2","data":[],"title":"是否有效","required":true,"field":"status","type":"select"}]]);
             const searchFormFields = ref({"zip_name":"","city_name":""});
             const searchFormOptions = ref([[{"title":"地區名稱","field":"zip_name","type":"like"},{"title":"城市名稱","field":"city_name","type":"like"}]]);
-            const columns = ref([{field:'zip_id',title:'地區編碼',type:'string',width:110,hidden:true,require:true,align:'left'},
-                       {field:'zip_name',title:'地區名稱',type:'string',link:true,width:110,require:true,align:'left',sort:true},
+            const columns = ref([{field:'zip_id',title:'地區編碼',type:'string',width:110,require:true,align:'left',sort:true},
+                       {field:'zip_name',title:'地區名稱',type:'string',link:true,width:110,require:true,align:'left'},
                        {field:'city_id',title:'城市代碼',type:'string',width:110,require:true,align:'left'},
                        {field:'city_name',title:'城市名稱',type:'string',width:110,require:true,align:'left'},
                        {field:'status',title:'是否有效',type:'string',bind:{ key:'Status2',data:[]},width:110,require:true,align:'left'},
