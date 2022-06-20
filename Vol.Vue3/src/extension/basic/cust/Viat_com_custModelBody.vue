@@ -163,10 +163,15 @@ export default {
     };
   },
   methods: {
+    openMulity(fieldName, formType){
+      this.single=false;
+      this.openDemo(fieldName,formType);
+    },
     openDemo(fieldName, formType) {
       this.model = true;
       this.fieldName = fieldName;
       if (formType) this.formType = formType;
+
 
       //打开弹出框时，加载table数据
       this.$nextTick(() => {
@@ -196,8 +201,26 @@ export default {
       }
 
       let path = this.$route.path;
-      console.log("path:" + path + " this.formType:" + this.formType);
-      if (path == '/View_app_power_contract_main' && this.formType == 'f') {//多層級調用
+      if(path =="/view_dist_margin"  && this.formType=='mf'){//
+        let selectrows = [];//将勾选值设置成数组
+        rows.forEach(row=>{
+          selectrows.push({"key":row.cust_dbid,"value":row.cust_name});
+        })
+        this.$emit('parentCall', $parent => {//選擇數據後賦值
+          $parent.editFormOptions.forEach(x => {
+            x.forEach(item => {
+              if (item.field == 'custs') {
+                item.data = selectrows;//將選中的數據賦值到下拉框的數組中
+                item.data.forEach(a=>{//將值回顯到頁面，push(key)會將頁面顯示的值在多選框中標識出來，push(value)不會
+                  $parent.editFormFields.custs.push(a.key)
+                })
+              }
+            })
+          })
+          this.model=false;
+        })
+      }
+      else if (path == '/View_app_power_contract_main' && this.formType == 'f') {//多層級調用
         this.$emit("onSelect", this.fieldName, rows)
       }else if (path === '/view_com_dist' && this.formType === 'f'){
         this.$emit("parentCall", ($parent) => {
