@@ -10,14 +10,10 @@
     <!-- 设置查询条件 -->
     <div style="padding-bottom: 10px">
       <span style="margin-right: 20px">请选择数据</span>
-      <el-input
-              placeholder="客戶編號"
-              style="width: 200px"
-              v-model="cust_id"
-      />
+      <el-input placeholder="客戶編號" style="width: 200px" v-model="cust_id" />
       <el-input
         placeholder="客戶名稱"
-        style="width: 200px;padding-left: 5px;"
+        style="width: 200px; padding-left: 5px"
         v-model="cust_name"
       />
       <el-input
@@ -28,7 +24,7 @@
       />
       <el-button
         type="primary"
-        style="margin-left:10px"
+        style="margin-left: 10px"
         size="medium"
         icon="el-icon-zoom-out"
         @click="search"
@@ -46,11 +42,11 @@
       :max-height="420"
       :url="url"
       :index="true"
-      :single=single
+      :single="single"
       :defaultLoadPage="defaultLoadPage"
       @loadBefore="loadTableBefore"
       @loadAfter="loadTableAfter"
-      @rowClick = "rowClick"
+      @rowClick="rowClick"
     ></vol-table>
     <!-- 设置弹出框的操作按钮 -->
     <template #footer>
@@ -80,7 +76,7 @@ export default {
   data() {
     return {
       model: false,
-      single:true,
+      single: true,
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
       cust_name: "", //查询条件字段
       cust_id:"",
@@ -89,43 +85,105 @@ export default {
       formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields
       url: "api/View_com_cust/GetPopPageData",//加载数据的接口
       columns: [
-        {field:'cust_id',title:'客戶編號',type:'string',width:110,require:true,align:'left',sort:true},
-        {field:'cust_name',title:'客戶名',type:'string',link:true,width:120,align:'left'},
-        {field:'cust_address',title:'客戶地址',type:'string',width:180,align:'left'},
+        {
+          field: "cust_id",
+          title: "客戶編號",
+          type: "string",
+          width: 110,
+          require: true,
+          align: "left",
+          sort: true,
+        },
+        {
+          field: "cust_name",
+          title: "客戶名",
+          type: "string",
+          link: true,
+          width: 120,
+          align: "left",
+        },
+        {
+          field: "cust_address",
+          title: "客戶地址",
+          type: "string",
+          width: 180,
+          align: "left",
+        },
+        {
+          field: "tel_no",
+          title: "聯繫電話",
+          type: "string",
+          width: 110,
+          align: "left",
+        },
         {field:'zip_id',title:'郵區代碼',type:'string',width:110,align:'left',sort:true},
-        {field:'tel_no',title:'聯繫電話',type:'string',width:110,align:'left'},
-        {field:'territory_id',title:'默認區域',type:'string',width:110,hidden:true,align:'left'},
-        {field:'doh_type',title:'健保類別',type:'string',bind:{ key:'doh_type',data:[]},width:110,align:'left'},
-        {field:'margin_type',title:'毛利類別',type:'string',bind:{ key:'doh_type',data:[]},width:110,align:'left'},
-         {field:'status',title:'status',type:'string',bind:{ key:'Status2',data:[]},width:110,align:'left'},
-        {field:'modified_date',title:'最后修改时间',type:'datetime',width:150,align:'left',sort:true}
-        ],
+        {
+          field: "territory_id",
+          title: "默認區域",
+          type: "string",
+          width: 110,
+          hidden: true,
+          align: "left",
+        },
+        {
+          field: "doh_type",
+          title: "健保類別",
+          type: "string",
+          bind: { key: "doh_type", data: [] },
+          width: 110,
+          align: "left",
+        },
+        {
+          field: "margin_type",
+          title: "毛利類別",
+          type: "string",
+          bind: { key: "doh_type", data: [] },
+          width: 110,
+          align: "left",
+        },
+        {
+          field: "status",
+          title: "status",
+          type: "string",
+          bind: { key: "Status2", data: [] },
+          width: 110,
+          align: "left",
+        },
+        {
+          field: "modified_date",
+          title: "最后修改时间",
+          type: "datetime",
+          width: 150,
+          align: "left",
+          sort: true,
+        },
+      ],
+
       pagination: {}, //分页配置，见voltable组件api
     };
   },
   methods: {
-    openDemo(fieldName,formType) {
+    openDemo(fieldName, formType) {
       this.model = true;
-      this.fieldName=fieldName;
-      if(formType)this.formType=formType;
+      this.fieldName = fieldName;
+      if (formType) this.formType = formType;
 
       //打开弹出框时，加载table数据
       this.$nextTick(() => {
         this.$refs.mytable.load();
       });
     },
-    clearData(fieldName,formType) {
-
+    clearData(fieldName, formType) {
       this.$emit("parentCall", ($parent) => {
-        debugger
-        if(formType=='f'){
-          $parent.editFormFields[fieldName] = '';
-          $parent.editFormFields[fieldName+'name'] = '';
-        }else if(formType=='s'){
-          $parent.searchFormFields[fieldName] = '';
-          $parent.searchFormFields[fieldName+'name'] ='';
+        debugger;
+        if (formType == "f") {
+          $parent.editFormFields[fieldName] = "";
+          $parent.editFormFields[fieldName + "name"] = "";
+        } else if (formType == "s") {
+          $parent.searchFormFields[fieldName] = "";
+          $parent.searchFormFields[fieldName + "name"] = "";
         }
-      })
+      });
     },
     search() {
       //点击搜索
@@ -152,17 +210,17 @@ export default {
         //回写数据到表单
         this.$emit("parentCall", ($parent) => {
           //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
-          if(this.formType=='f'){
+          if (this.formType == "f") {
             $parent.editFormFields[this.fieldName] = rows[0].cust_dbid;
-            $parent.editFormFields[this.fieldName+'name'] = rows[0].cust_id+" "+rows[0].cust_name;
-          }else if(this.formType=='s'){
-            $parent.searchFormFields[this.fieldName] =  rows[0].cust_dbid;
-            $parent.searchFormFields[this.fieldName+'name'] = rows[0].cust_id+" "+rows[0].cust_name;
+            $parent.editFormFields[this.fieldName + "name"] =
+              rows[0].cust_id + " " + rows[0].cust_name;
+          } else if (this.formType == "s") {
+            $parent.searchFormFields[this.fieldName] = rows[0].cust_dbid;
+            $parent.searchFormFields[this.fieldName + "name"] =
+              rows[0].cust_id + " " + rows[0].cust_name;
           }
-
         });
       }
-
 
       //关闭当前窗口
       this.model = false;
@@ -181,10 +239,18 @@ export default {
     loadTableBefore(params) {
       //查询前，设置查询条件
       if (this.cust_name) {
-        params.wheres.push ({ name: "cust_name", value: this.cust_name ,displayType:'like'});
+        params.wheres.push({
+          name: "cust_name",
+          value: this.cust_name,
+          displayType: "like",
+        });
       }
-      if(this.cust_id){
-        params.wheres.push({ name: "cust_id", value: this.cust_id,displayType:'like' })
+      if (this.cust_id) {
+        params.wheres.push({
+          name: "cust_id",
+          value: this.cust_id,
+          displayType: "like",
+        });
       }
       if (this.zip_id) {
         params.wheres.push({ name: "zip_id", value: this.zip_id,displayType:'like' });
