@@ -82,8 +82,8 @@
                        {field:'created_clientusername',title:'created_clientusername',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_username',title:'modified_username',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'custs',title:'Customers',type:'string',bind:{ key:'enable',data:[]},width:110,align:'left'},
-                       {field:'prods',title:'Products',type:'string',bind:{ key:'enable',data:[]},width:110,align:'left'}]);
+                       {field:'custs',title:'Customers',type:'string',bind:{ key:'enable',data:[]},width:110,hidden:true,align:'left'},
+                       {field:'prods',title:'Products',type:'string',bind:{ key:'enable',data:[]},width:110,hidden:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
