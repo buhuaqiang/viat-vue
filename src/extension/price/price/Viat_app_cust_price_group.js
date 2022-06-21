@@ -7,11 +7,26 @@
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
 import PriceGroupCustList from "./PriceGroupCustList";
+import {h, resolveComponent} from "vue";
 let extension = {
   components: {
     //查询界面扩展组件
     gridHeader: '',
-    gridBody: '',
+    gridBody: {
+      render() {
+        return [
+          h(resolveComponent('el-alert'), {
+            style: { 'margin-bottom': '12px' },
+            'show-icon': true, type: 'success',
+            closable: false, title: 'Note:\t1.Group 有效，Customer無效: Customer 自動脫離Group，不另增設一筆新價(健保價)\n' +
+                '2.Group 無效，Customer 有效: Group Price 自動無效(end date = modified date);\n' +
+                'Customer 自動脫離，自動增設一筆新價(健保價)\n' +
+                '3.Group 改回有效: Group Price 需重新申請, 先前已自動脫離之Customer，需重新Join Group\n' +
+                '4.Group type僅供藥價調整分類使用，與Customer type無關'
+          }, ''),
+        ]
+      }
+    },
     gridFooter: PriceGroupCustList,
     //新建、编辑弹出框扩展组件
     modelHeader: '',

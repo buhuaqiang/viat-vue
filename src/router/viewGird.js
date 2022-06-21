@@ -257,6 +257,10 @@ let viewgird = [
         name: 'View_com_prod_maintenance',
         component: () => import('@/views/basic/prod/View_com_prod_maintenance.vue')
     }
-]
+    ,{
+        path: '/Viat_app_cust_price',
+        name: 'Viat_app_cust_price',
+        component: () => import('@/views/price/price/Viat_app_cust_price.vue')
+    }]
 
 export default viewgird
