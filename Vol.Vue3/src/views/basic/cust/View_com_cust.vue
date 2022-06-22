@@ -29,40 +29,40 @@
                 url: "/View_com_cust/",
                 sortName: "cust_id"
             });
-            const editFormFields = ref({"cust_id":"","cust_name":"","cust_address":"","cust_city_name":"","cust_zip_id":"","invoice_name":"","invoice_address":"","invoice_city_name":"","invoice_zip_id":"","owner":"","tax_id":"","contact":"","tel_no":"","fax_no":"","email":"","territory_id":"","doh_institute_no":"","ctrl_drug_no":"","ctrl_drug_contact":"","doh_type":"","margin_type":"","is_contract":"","is_private":"","own_by_hospital":"","own_hospitalname":"","med_groupname":"","delv_groupname":"","new_cust_id":"","inactive_date":"","status":"","remarks":""});
-            const editFormOptions = ref([[{"title":"列名cust_id","required":true,"field":"cust_id"}],
-                              [{"title":"列名cust_name","required":true,"field":"cust_name"}],
+            const editFormFields = ref({"cust_id":"","cust_name":"","cust_address":"","cust_city_name":"","cust_zip_id":"","invoice_name":"","tax_id":"","invoice_address":"","invoice_city_name":"","invoice_zip_id":"","territory_id":"","owner":"","contact":"","tel_no":"","fax_no":"","email":"","doh_institute_no":"","ctrl_drug_no":"","doh_type":"","margin_type":"","ctrl_drug_contact":"","is_contract":"","is_private":"","status":"","own_by_hospital":"","own_hospitalname":"","med_groupname":"","delv_groupname":"","new_cust_id":"","inactive_date":"","remarks":""});
+            const editFormOptions = ref([[{"title":"列名cust_id","required":true,"field":"cust_id"},
+                               {"title":"列名cust_name","required":true,"field":"cust_name"}],
                               [{"dataKey":"viat_city","data":[],"title":"客戶城市","required":true,"field":"cust_city_name","type":"select"},
                                {"dataKey":"viat_city_zone","data":[],"title":"客戶地區","required":true,"field":"cust_zip_id","type":"select"},
                                {"title":"列名cust_address","required":true,"field":"cust_address"}],
-                              [{"title":"列名invoice_name","required":true,"field":"invoice_name"}],
+                              [{"title":"列名invoice_name","required":true,"field":"invoice_name"},
+                               {"title":"列名tax_id","field":"tax_id"}],
                               [{"dataKey":"viat_city","data":[],"title":"列名invoice_city_name","required":true,"field":"invoice_city_name","type":"select"},
                                {"dataKey":"viat_city_zone","data":[],"title":"列名invoice_zip_id","required":true,"field":"invoice_zip_id","type":"select"},
                                {"title":"列名invoice_address","required":true,"field":"invoice_address"}],
                               [{"title":"列名owner","required":true,"field":"owner"},
-                               {"title":"列名tax_id","field":"tax_id"}],
+                               {"title":"列名territory_id","required":true,"field":"territory_id"}],
                               [{"title":"列名contact","field":"contact"},
                                {"title":"列名tel_no","required":true,"field":"tel_no"}],
                               [{"title":"列名fax_no","field":"fax_no"},
                                {"title":"列名email","field":"email"}],
-                              [{"title":"列名territory_id","required":true,"field":"territory_id"}],
                               [{"title":"列名doh_institute_no","field":"doh_institute_no"},
                                {"title":"列名ctrl_drug_no","field":"ctrl_drug_no"}],
-                              [{"title":"列名ctrl_drug_contact","field":"ctrl_drug_contact"}],
                               [{"dataKey":"doh_type","data":[],"title":"列名doh_type","required":true,"field":"doh_type","type":"select"},
                                {"dataKey":"doh_type","data":[],"title":"列名margin_type","required":true,"field":"margin_type","type":"select"}],
-                              [{"dataKey":"Status_YN","data":[],"title":"列名is_contract","field":"is_contract","type":"select"}],
-                              [{"dataKey":"Status_YN","data":[],"title":"列名is_private","field":"is_private","type":"select"}],
+                              [{"title":"列名ctrl_drug_contact","field":"ctrl_drug_contact"},
+                               {"dataKey":"Status_YN","data":[],"title":"列名is_contract","field":"is_contract","type":"select"}],
+                              [{"dataKey":"Status_YN","data":[],"title":"列名is_private","field":"is_private","type":"select"},
+                               {"dataKey":"Status2","data":[],"title":"列名status","field":"status","type":"select"}],
                               [{"dataKey":"Status_YN","data":[],"title":"列名own_by_hospital","required":true,"field":"own_by_hospital","type":"select"},
                                {"title":"列名own_hospitalname","field":"own_hospitalname","disabled":true}],
                               [{"title":"列名med_groupname","field":"med_groupname","disabled":true},
                                {"title":"列名delv_groupname","field":"delv_groupname","disabled":true}],
                               [{"title":"列名new_cust_id","field":"new_cust_id"},
                                {"title":"列名inactive_date","field":"inactive_date","type":"date"}],
-                              [{"dataKey":"Status2","data":[],"title":"列名status","field":"status","type":"select"}],
                               [{"title":"列名remarks","field":"remarks","colSize":8,"type":"textarea"}]]);
-            const searchFormFields = ref({"cust_id":"","entity":"","division":"","cust_name":"","territory_id":"","owner":"","tax_id":"","contact":"","cust_address":"","tel_no":"","doh_institute_no":"","doh_type":"","own_hospital":"","med_group":"","delv_group":"","status":"","cust_zip_id":"","modified_date":"","own_hospitalname":"","med_groupname":"","delv_groupname":""});
-            const searchFormOptions = ref([[{"title":"列名cust_id","field":"cust_id","type":"like"},{"dataKey":"viat_city_zone","data":[],"title":"客戶地區","field":"cust_zip_id","type":"select"}],[{"title":"列名owner","field":"owner","type":"like"},{"title":"列名cust_name","field":"cust_name","type":"like"},{"title":"列名contact","field":"contact"},{"title":"列名tel_no","field":"tel_no"}],[{"title":"列名cust_address","field":"cust_address","type":"like"},{"title":"列名tax_id","field":"tax_id"},{"title":"列名territory_id","field":"territory_id"}],[{"title":"列名doh_institute_no","field":"doh_institute_no"},{"dataKey":"doh_type","data":[],"title":"列名doh_type","field":"doh_type","type":"select"},{"dataKey":"Status2","data":[],"title":"列名status","field":"status","type":"select"}],[{"title":"列名med_groupname","field":"med_groupname"},{"title":"列名delv_groupname","field":"delv_groupname"},{"title":"列名own_hospitalname","field":"own_hospitalname"}],[{"dataKey":"entity","data":[],"title":"列名entity","field":"entity","type":"select"},{"dataKey":"division","data":[],"title":"列名division","field":"division","type":"select"}],[{"title":"列名own_hospital","field":"own_hospital"},{"title":"列名med_group","field":"med_group"},{"title":"列名delv_group","field":"delv_group"}],[{"title":"列名modified_date","field":"modified_date","type":"date"}]]);
+            const searchFormFields = ref({"cust_id":"","entity":"","division":"","cust_name":"","territory_id":"","owner":"","tax_id":"","contact":"","cust_address":"","tel_no":"","doh_institute_no":"","doh_type":"","own_by_hospital":"","own_hospital":"","med_group":"","delv_group":"","status":"","cust_zip_id":"","modified_date":"","own_hospitalname":"","med_groupname":"","delv_groupname":""});
+            const searchFormOptions = ref([[{"title":"列名cust_id","field":"cust_id","type":"like"},{"dataKey":"entity","data":[],"title":"列名entity","field":"entity","type":"select"},{"dataKey":"viat_city_zone","data":[],"title":"客戶地區","field":"cust_zip_id","type":"select"},{"dataKey":"division","data":[],"title":"列名division","field":"division","type":"select"}],[{"title":"列名owner","field":"owner","type":"like"},{"title":"列名cust_name","field":"cust_name","type":"like"},{"title":"列名contact","field":"contact"},{"title":"列名tel_no","field":"tel_no"}],[{"title":"列名cust_address","field":"cust_address","type":"like"},{"title":"列名tax_id","field":"tax_id"},{"title":"列名territory_id","field":"territory_id"},{"title":"列名doh_institute_no","field":"doh_institute_no"}],[{"dataKey":"Status_YN","data":[],"title":"列名own_by_hospital","field":"own_by_hospital","type":"select"},{"title":"列名own_hospitalname","field":"own_hospitalname"},{"title":"列名med_groupname","field":"med_groupname"},{"title":"列名delv_groupname","field":"delv_groupname"}],[{"dataKey":"doh_type","data":[],"title":"列名doh_type","field":"doh_type","type":"select"},{"dataKey":"Status2","data":[],"title":"列名status","field":"status","type":"select"},{"title":"列名modified_date","field":"modified_date","type":"date"}],[{"title":"列名own_hospital","field":"own_hospital"},{"title":"列名med_group","field":"med_group"},{"title":"列名delv_group","field":"delv_group"}]]);
             const columns = ref([{field:'cust_id',title:'列名cust_id',type:'string',link:true,width:110,require:true,align:'left',sort:true},
                        {field:'cust_name',title:'列名cust_name',type:'string',width:120,require:true,align:'left'},
                        {field:'territory_id',title:'列名territory_id',type:'string',width:110,hidden:true,require:true,align:'left'},
