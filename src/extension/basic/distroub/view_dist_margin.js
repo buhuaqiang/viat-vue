@@ -37,6 +37,7 @@ let extension = {
         //       this.$Message.success('点击了按钮');
         //     }
         //   });
+
         this.single=true;//设置单选
         //margin_value%格式化
         this.getColumnsOption("margin_value").formatter = (row) => {
@@ -77,7 +78,7 @@ let extension = {
         // this.boxOptions.labelWidth = 150;
         this.boxOptions.labelWidth=180;
         //显示查询全部字段
-        this.setFiexdSearchForm(true);
+        //this.setFiexdSearchForm(true);
         //设置查询表单的标签文字宽度
         this.labelWidth=180;
         //搜尋彈窗 選擇產品
@@ -142,7 +143,7 @@ let extension = {
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
         //手动调度弹出框的高度
-        this.boxOptions.height = this.boxOptions.height- 550;
+        //this.boxOptions.height = this.boxOptions.height- 550;
     },
       //获取编辑页面字段
       getEditOption(field) {

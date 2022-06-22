@@ -105,6 +105,11 @@
             };
         },
         methods: {
+            /**
+             *
+             * @param fieldName
+             * @param formType  表單類型 f-form表單,s-查詢表單 ,mf-多选表单,ms-多选查询表单
+             */
             openMulity(fieldName, formType){
                 this.single=false;
                 this.openDemo(fieldName,formType);
@@ -150,7 +155,8 @@
                     return this.$message.error("请选择行数据");
                 }
                 let path =this.$route.path;
-                if(path =="/view_dist_margin"  && this.formType=='mf'){//
+                debugger
+                if(path =="/view_dist_margin"   && this.formType=='mf'){//
                     let selectrows = [];//将勾选值设置成数组
                     selectrow.forEach(row=>{
                         selectrows.push({"key":row.prod_dbid,"value":row.prod_ename});
@@ -162,6 +168,24 @@
                                     item.data = selectrows;//將選中的數據賦值到下拉框的數組中
                                     item.data.forEach(a=>{//將值回顯到頁面，push(key)會將頁面顯示的值在多選框中標識出來，push(value)不會
                                         $parent.editFormFields.prods.push(a.key)
+                                    })
+                                }
+                            })
+                        })
+                        this.model=false;
+                    })
+                }else if( path =="/View_cust_price" && this.formType=='ms'){//
+                    let selectrows = [];//将勾选值设置成数组
+                    selectrow.forEach(row=>{
+                        selectrows.push({"key":row.prod_dbid,"value":row.prod_ename});
+                    })
+                    this.$emit('parentCall', $parent => {//選擇數據後賦值
+                        $parent.searchFormOptions.forEach(x => {
+                            x.forEach(item => {
+                                if (item.field == 'prods') {
+                                    item.data = selectrows;//將選中的數據賦值到下拉框的數組中
+                                    item.data.forEach(a=>{//將值回顯到頁面，push(key)會將頁面顯示的值在多選框中標識出來，push(value)不會
+                                        $parent.searchFormFields.prods.push(a.key)
                                     })
                                 }
                             })
@@ -180,6 +204,10 @@
                             if (selectrow[0].prod_dbid) {
                                 $parent.editFormFields[this.fieldName] = selectrow[0].prod_dbid;
                                 $parent.editFormFields[this.fieldName + 'name'] = selectrow[0].prod_id + " " + selectrow[0].prod_ename;
+
+                                if (path =='/View_cust_price'){
+                                    $parent.editFormFields['nhi_price'] = selectrow[0].nhi_price;
+                                }
                             }
                         }else if(this.formType=='s'){
                             if (selectrow[0].prod_dbid){

@@ -4,7 +4,7 @@
     :lazy="true"
     title="選擇價格群組數據"
     :height="600"
-    :width="1150"
+    :width="1250"
     :padding="15"
   >
     <!-- 设置查询条件 -->
@@ -149,7 +149,7 @@ export default {
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
-      this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
+      this.$refs.mytable.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
     loadTableBefore(params) {
       //查询前，设置查询条件

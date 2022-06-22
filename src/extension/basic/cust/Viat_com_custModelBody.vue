@@ -4,7 +4,7 @@
     :lazy="true"
     title="選擇客戶數據"
     :height="600"
-    :width="1150"
+    :width="1252"
     :padding="15"
   >
     <!-- 设置查询条件 -->

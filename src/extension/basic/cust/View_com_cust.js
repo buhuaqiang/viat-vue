@@ -178,6 +178,8 @@ let extension = {
       //this.setFiexdSearchForm(true);
       //设置查询表单的标签文字宽度
       this.labelWidth = 180;
+      //表格设置为单选
+      this.single=true;
 
       //let data = { Variety: '1', AvgPrice: 888 };
       //this.$refs.myform.reset(data);
@@ -257,9 +259,7 @@ let extension = {
       let detailCityName = this.getDetailColumns("city_name");
       let zip_id = this.getDetailColumns("zip_id");
       let that = this;
-      zip_id.onClick = function (options, row, _columns, status) {
-        debugger
-      }
+
       detailCityName.onChange = function (options, row, _columns, status) {
         let orgData = zip_id.bind.data;
         let rowData = that.$refs.detail.rowData;
@@ -310,7 +310,6 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
-
       this.getOption("cust_id").disabled = this.currentAction == 'update';
       this.getOption("cust_id").hidden = this.currentAction == 'Add';
       this.getOption("cust_id").required = this.currentAction == 'update';
