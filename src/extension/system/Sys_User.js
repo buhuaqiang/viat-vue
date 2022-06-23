@@ -131,7 +131,20 @@ let extension = {
             })
 
             this.editFormFields.emp_dbidname =this.editFormFields.UserTrueName;
+            this.editFormFields.emp_dbidname1 =this.editFormFields.UserTrueName;
+            if(this.currentAction=='update'){
+                this.getOption("Gender").disabled=true;
+                this.getOption("emp_dbidname1").disabled=true;
+                this.getOption("emp_dbidname1").hidden=false;
+                this.getOption("emp_dbidname").hidden=true;
+            }else{
+                this.getOption("Gender").disabled=false;
+                //this.getOption("emp_dbidname").disabled=false;
+                this.getOption("emp_dbidname1").hidden=true;
+                this.getOption("emp_dbidname").hidden=false;
+            }
         }
+
 
     }
 };

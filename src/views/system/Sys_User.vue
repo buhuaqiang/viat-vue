@@ -29,16 +29,19 @@
                 url: "/Sys_User/",
                 sortName: "User_Id"
             });
-            const editFormFields = ref({"UserName":"","UserTrueName":"","Role_Id":"","IsRegregisterPhone":"","Gender":"","Enable":"","CreateDate":"","Creator":"","Remark":"","HeadImageUrl":"","emp_dbidname":"","emp_dbid":""});
+            const editFormFields = ref({"UserName":"","UserTrueName":"","Role_Id":"","IsRegregisterPhone":"","Gender":"","Enable":"","CreateDate":"","Creator":"","Remark":"","HeadImageUrl":"","emp_dbidname":"","emp_dbidname1":"","emp_dbid":""});
             const editFormOptions = ref([[{"title":"帐号","required":true,"field":"UserName","disabled":true},
                                {"title":"真实姓名","required":true,"field":"UserTrueName","type":"text","disabled":true}],
                               [{"dataKey":"roles","data":[],"title":"角色","required":true,"field":"Role_Id","type":"select"},
-                               {"dataKey":"isphone","data":[],"title":"手机用户","required":true,"field":"IsRegregisterPhone","type":"select"}],
-                              [{"dataKey":"gender","data":[],"title":"性别","field":"Gender","type":"select"},
-                               {"dataKey":"enable","data":[],"title":"是否可用","required":true,"field":"Enable","type":"select"}],
-                              [{"title":"注册时间","field":"CreateDate","disabled":true},
-                               {"title":"创建人","field":"Creator","disabled":true}],
-                              [{"title":"選著用戶","field":"emp_dbidname"}],
+                                  {"dataKey":"gender","data":[],"title":"性别","field":"Gender","type":"select"}
+                               //{"dataKey":"isphone","data":[],"title":"手机用户","required":true,"field":"IsRegregisterPhone","type":"select"}
+                               ],
+                              [
+                               {"dataKey":"enable","data":[],"title":"是否可用","required":true,"field":"Enable","type":"select"},
+                                  {"title":"員工","field":"emp_dbidname"},{"title":"員工","field":"emp_dbidname1","hidden":true}
+                                 ],
+                              /*[{"title":"注册时间","field":"CreateDate","disabled":true},
+                               {"title":"创建人","field":"Creator","disabled":true}],*/
                               [{"title":"用戶識別碼","field":"emp_dbid",hidden:true}],
                               [{"title":"备注","field":"Remark","colSize":12,"type":"textarea"}],
                               [{"title":"头像","required":true,"field":"HeadImageUrl","type":"img"}]]);
@@ -56,7 +59,7 @@
                        {field:'AppType',title:'登陆设备类型',type:'int',bind:{ key:'ut',data:[]},width:150,hidden:true,align:'left'},
                        {field:'UserTrueName',title:'真实姓名',type:'string',width:120,require:true,align:'left'},
                        {field:'CreateDate',title:'注册时间',type:'datetime',width:150,readonly:true,align:'left',sortable:true},
-                       {field:'IsRegregisterPhone',title:'手机用户',type:'int',bind:{ key:'isphone',data:[]},width:120,hidden:true,require:true,align:'left'},
+                       {field:'IsRegregisterPhone',title:'手机用户',type:'int',bind:{ key:'isphone',data:[]},width:120,hidden:true,align:'left'},
                        {field:'PhoneNo',title:'手机号',type:'string',width:150,hidden:true,require:true,align:'left'},
                        {field:'Tel',title:'Tel',type:'string',width:90,hidden:true,align:'left'},
                        {field:'CreateID',title:'CreateID',type:'int',width:90,hidden:true,align:'left'},
