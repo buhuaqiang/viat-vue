@@ -82,7 +82,7 @@ export default {
       cust_id:"",
       zip_id: "",
       fieldName:"",//編輯字段,用於回傳設置值
-      formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields
+      formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields,ext-自定義擴展
       url: "api/View_com_cust/GetPopPageData",//加载数据的接口
       columns: [
         {
@@ -220,7 +220,7 @@ export default {
           this.model=false;
         })
       }
-      else if (path == '/View_app_power_contract_main' && this.formType == 'f') {//多層級調用
+      else if ((path == '/View_app_power_contract_main' && this.formType == 'f') || this.formType=='ext'){//多層級調用
         this.$emit("onSelect", this.fieldName, rows)
       }else if (path === '/view_com_dist' && this.formType === 'f'){
         this.$emit("parentCall", ($parent) => {

@@ -38,8 +38,8 @@
                                {"title":"End Date","required":true,"field":"end_date","type":"date"}],
                               [{"title":"Product","field":"prod_dbidname","type":"text"},
                                {"title":"Customer","field":"cust_dbidname","type":"text"}],
-                              [{"dataKey":"enable","data":[],"title":"Products","field":"prods","type":"selectList"},
-                               {"dataKey":"enable","data":[],"title":"Customers","field":"custs","type":"selectList"}],
+                              [{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"},
+                               {"dataKey":"mul_select_for_pop","data":[],"title":"Customers","field":"custs","type":"selectList"}],
                               [{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}],
                               [{"title":"Prod ID","field":"prod_id","type":"text"}],
                               [{"title":"Prod Name","field":"prod_ename","type":"text"}],
@@ -82,8 +82,8 @@
                        {field:'created_clientusername',title:'created_clientusername',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_username',title:'modified_username',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'custs',title:'Customers',type:'string',bind:{ key:'enable',data:[]},width:110,hidden:true,align:'left'},
-                       {field:'prods',title:'Products',type:'string',bind:{ key:'enable',data:[]},width:110,hidden:true,align:'left'}]);
+                       {field:'custs',title:'Customers',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,align:'left'},
+                       {field:'prods',title:'Products',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

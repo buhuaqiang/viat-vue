@@ -84,7 +84,7 @@
                 model: false,
                 defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
                 fieldName:"", // 自定義邏輯字段
-                formType:"",
+                formType:"",//弹框打开的form类型,f-editFormFields  s-searchFormFields,ext-自定義擴展
                 prod_id: "", //查询条件字段
                 prod_ename: "", //查询条件字段
                 prod_sname: "", //查询条件字段
@@ -138,7 +138,6 @@
             },
 
             addRow() {
-                debugger;
                 let selectrow = this.$refs.prodPop.getSelected();
                 if(!selectrow.length){
                     return this.$message.error("请选择数据")
@@ -155,7 +154,6 @@
                     return this.$message.error("请选择行数据");
                 }
                 let path =this.$route.path;
-                debugger
                 if(path =="/view_dist_margin"   && this.formType=='mf'){//
                     let selectrows = [];//将勾选值设置成数组
                     selectrow.forEach(row=>{
@@ -193,7 +191,7 @@
                         this.model=false;
                     })
                 }
-                else  if(path=='/View_app_power_contract_main'){//多導則調用
+                else  if((path=='/View_app_power_contract_main') || this.formType=='ext'){//多導則調用
                     this.$emit("onSelect",this.fieldName,selectrow)
                 }else{
                     //回写数据到表单
