@@ -133,10 +133,10 @@
                 this.$emit("parentCall", ($parent) => {
                     //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
                     if(this.formType=='f'){
-                        $parent.editFormFields[this.fieldName] = selectrow[0].UserName;
+                        $parent.editFormFields[this.fieldName] = selectrow[0].User_Id;
                         $parent.editFormFields[this.fieldName+'name'] = selectrow[0].UserName+" "+selectrow[0].UserTrueName;
-                        $parent.editFormFields.user_id = selectrow[0].User_Id;
-                        $parent.editFormFields.UserTrueName = selectrow[0].UserTrueName;
+                        //$parent.editFormFields.user_id = selectrow[0].User_Id;
+                        //$parent.editFormFields.UserTrueName = selectrow[0].UserTrueName;
                     }
 
                 });

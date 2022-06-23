@@ -32,12 +32,12 @@
             const editFormFields = ref({"notify_id":"","sender":"","subject":"","cc":"","bcc":"","content":"","remarks":"","emp_ename":"","modified_date":""});
             const editFormOptions = ref([[{"title":"Notify Id","required":true,"field":"notify_id"},
                                {"title":"Sender","required":true,"field":"sender"}],
-                              [{"title":"Subject","required":true,"field":"subject","colSize":10}],
-                              [{"title":"Recipient","field":"recipient","colSize":10}],
-                              [{"title":"Cc","field":"cc","colSize":10}],
-                              [{"title":"Bcc","field":"bcc","colSize":10}],
-                              [{"title":"Content","field":"content","type":"textarea","colSize":10}],
-                              [{"title":"Remarks","field":"remarks","colSize":10}],
+                              [{"title":"Subject","required":true,"field":"subject"},{"title":"Recipient","field":"recipient"}],
+                              //[{"title":"Recipient","field":"recipient"}],
+                              [{"title":"Cc","field":"cc"},{"title":"Bcc","field":"bcc"}],
+                              //[{"title":"Bcc","field":"bcc"}],
+                              [{"title":"Content","field":"content","type":"textarea"},{"title":"Remarks","field":"remarks"}],
+                              //[{"title":"Remarks","field":"remarks"}],
                               [{"title":"Last Modified","field":"emp_ename","disabled":true},
                                {"title":"Modified Date","field":"modified_date","disabled":true}]]);
             const searchFormFields = ref({"notify_id":"","subject":""});

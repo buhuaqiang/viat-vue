@@ -15,7 +15,7 @@ let extension = {
     gridBody: '',
     gridFooter: '',
     //新建、编辑弹出框扩展组件
-    modelHeader: deputyPop,
+    modelHeader: '',
     modelBody: sysPop,
     modelFooter: ''
   },
@@ -57,9 +57,9 @@ let extension = {
           this.$refs.modelHeader.open();
         }
       }*/
-      let enamename=this.getOption("emp_ename2name");
-      enamename.extra = {
-        render:this.getFormRender("emp_ename2","f")
+      let user_idname=this.getOption("user_idname");
+      user_idname.extra = {
+        render:this.getFormRender("user_id","f")
       }
       //選擇登錄人
      /* let UserTrueName=this.getOption("user_name2");
@@ -72,9 +72,9 @@ let extension = {
         }
       }*/
 
-      let userName=this.getOption("UserName1name");
+      let userName=this.getOption("deputy_user_idname");
       userName.extra = {
-        render:this.getFormRender("UserName1","f")
+        render:this.getFormRender("deputy_user_id","f")
       }
 
       //不同查询条件下修改输入框
@@ -144,11 +144,11 @@ let extension = {
                 props: {},
                 style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
                 onClick: (e) => {
-                  if(fieldName=="UserName1"){
+                  if(fieldName=="user_id"){
                     this.$refs.modelBody.open(fieldName,formType)
                   }
-                  if(fieldName=="emp_ename2"){
-                    this.$refs.modelHeader.open(fieldName,formType)
+                  if(fieldName=="deputy_user_id"){
+                    this.$refs.modelBody.open(fieldName,formType)
                   }
 
                 }
@@ -162,11 +162,11 @@ let extension = {
                 props: {},
                 style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
                 onClick: (e) => {
-                  if(fieldName=="UserName1"){
+                  if(fieldName=="user_id"){
                     this.$refs.modelBody.clearData(fieldName,formType)
                   }
-                  if(fieldName=="emp_ename2"){
-                    this.$refs.modelHeader.clearData(fieldName,formType)
+                  if(fieldName=="deputy_user_id"){
+                    this.$refs.modelBody.clearData(fieldName,formType)
                   }
                   //this.$refs.modelBody.clearData(fieldName,formType);
                 }
@@ -255,8 +255,8 @@ let extension = {
       //看不懂就把输出看：console.log(this.editFormOptions)
 
 
-      this.editFormFields.UserName1name = this.editFormFields.UserName1+" "+this.editFormFields.UserTrueName1;
-      this.editFormFields.emp_ename2name = this.editFormFields.emp_ename2+" "+this.editFormFields.emp_cname2;
+      this.editFormFields.user_idname = this.editFormFields.UserName1+" "+this.editFormFields.UserTrueName1;
+      this.editFormFields.deputy_user_idname = this.editFormFields.UserName2+" "+this.editFormFields.UserTrueName2;
 
     }
   }
