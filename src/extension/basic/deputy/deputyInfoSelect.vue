@@ -120,7 +120,7 @@
                 url: "api/View_sys_deputy/GetPageDataByDeputy",//加载数据的接口
                 columns: [
                     {
-                        field: 'user_id',
+                        field: 'userid1',
                         title: 'user_id',
                         type: 'int',
                         width: 110,
@@ -130,7 +130,7 @@
                         align: 'left'
                     },
                     {
-                        field: 'user_name2',
+                        field: 'UserName2',
                         title: 'UserName',
                         type: 'string',
                         width: 110,
@@ -140,7 +140,7 @@
                         sort: true
                     },
                     {
-                        field: 'UserTrueName',
+                        field: 'UserTrueName2',
                         title: 'UserTrueName',
                         type: 'string',
                         width: 220,
@@ -148,7 +148,7 @@
                         align: 'left'
                     },
                     {
-                        field: 'emp_ename',
+                        field: 'emp_ename2',
                         title: 'emp_ename',
                         type: 'string',
                         width: 220,
@@ -156,7 +156,7 @@
                         align: 'left'
                     },
                     {
-                        field: 'emp_cname',
+                        field: 'emp_cname2',
                         title: 'emp_cname',
                         type: 'string',
                         width: 220,
