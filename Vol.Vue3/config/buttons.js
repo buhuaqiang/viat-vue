@@ -8,7 +8,7 @@ let buttons = [{
     onClick: function () {
         this.search();
     }
-}, 
+},
 {
     name: "新 建",
     icon: 'el-icon-plus',
@@ -69,7 +69,36 @@ let buttons = [{
     onClick: function () {
         this.export();
     }
-}
+},
+    {
+        name: "Edit Shipping Data",
+        icon: 'el-icon-document',
+        type: 'primary',
+        value:'editShip',
+        onClick: function () {
+            this.openEditShippingData()
+        }
+    },
+    {
+        name: "Product Detach",
+        icon: 'el-icon-scissors',
+        type:'warning',
+        plain:true,
+        value: 'ProductDetach',
+        onClick: function () {
+            this.detachSelectedData();
+        }
+    },
+    {
+        name: "Invalid",
+        icon: 'el-icon-turn-off',
+        type:'danger',
+        plain:true,
+        value: 'Invalid',
+        onClick: function () {
+            this.invalidData();
+        }
+    }
 // , {
 //     name: "数据结构",
 //     icon: 'ios-cog',

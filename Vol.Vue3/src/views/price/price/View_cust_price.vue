@@ -29,35 +29,36 @@
                 url: "/View_cust_price/",
                 sortName: "bid_no"
             });
-            const editFormFields = ref({"bid_no":"","pricegroup_dbidname":"","prod_dbidname":"","prod_dbid":"","pricegroup_dbid":"","start_date":"","end_date":"","nhi_price":"","invoice_price":"","net_price":"","min_qty":"","remarks":""});
-            const editFormOptions = ref([[{"title":"Bid NO","field":"bid_no"}],
+            const editFormFields = ref({"bid_no":"","status":"","pricegroup_dbidname":"","prod_dbidname":"","prod_dbid":"","pricegroup_dbid":"","start_date":"","end_date":"","nhi_price":"","invoice_price":"","net_price":"","min_qty":"","remarks":""});
+            const editFormOptions = ref([[{"title":"Bid NO","required":true,"field":"bid_no"},
+                               {"dataKey":"Status_YN","data":[],"title":"Status","required":true,"field":"status","type":"select"}],
                               [{"title":"Group","required":true,"field":"pricegroup_dbidname"},
                                {"title":"Product","required":true,"field":"prod_dbidname"}],
                               [{"title":"","field":"prod_dbid"},
                                {"title":"","field":"pricegroup_dbid"}],
                               [{"title":"Start Date","required":true,"field":"start_date","type":"date"},
                                {"title":"End Date","required":true,"field":"end_date","type":"date"}],
-                              [{"title":"NHI Price","field":"nhi_price","disabled":true,"type":"decimal"},
-                               {"title":"Invoice Price","field":"invoice_price","type":"decimal"}],
-                              [{"title":"Net Price","field":"net_price","type":"decimal"},
-                               {"title":"Min Qty","field":"min_qty","type":"number"}],
+                              [{"title":"NHI Price","required":true,"field":"nhi_price","disabled":true,"type":"decimal"},
+                               {"title":"Invoice Price","required":true,"field":"invoice_price","type":"decimal"}],
+                              [{"title":"Net Price","required":true,"field":"net_price","type":"decimal"},
+                               {"title":"Min Qty","required":true,"field":"min_qty","type":"number"}],
                               [{"title":"Remarks","field":"remarks","colSize":10,"type":"textarea"}]]);
             const searchFormFields = ref({"pricegroup_dbid":"","start_date":"","end_date":"","status":"","modified_date":"","pricegroup_dbidname":"","prods":[]});
-            const searchFormOptions = ref([[{"dataKey":"enable","data":[],"title":"Products","field":"prods","type":"selectList"},{"title":"Group","field":"pricegroup_dbidname"},{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"},{"title":"Modified Date","field":"modified_date","type":"date"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],[{"title":"","field":"pricegroup_dbid"}]]);
+            const searchFormOptions = ref([[{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"},{"title":"Group","field":"pricegroup_dbidname"},{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"},{"title":"Modified Date","field":"modified_date","type":"date"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],[{"title":"","field":"pricegroup_dbid"}]]);
             const columns = ref([{field:'group_id',title:'Group Id',type:'string',width:110,require:true,align:'left',sort:true},
                        {field:'group_name',title:'Group Name',type:'string',width:120,align:'left'},
                        {field:'prod_id',title:'Product Id',type:'string',width:110,require:true,align:'left'},
                        {field:'prod_ename',title:'Product Name',type:'string',width:110,align:'left'},
                        {field:'custprice_dbid',title:'custprice_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'division',title:'division',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'bid_no',title:'Bid NO',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'bid_no',title:'Bid NO',type:'string',width:110,hidden:true,require:true,align:'left'},
                        {field:'requestor',title:'requestor',type:'string',width:110,hidden:true,align:'left'},
                        {field:'prod_dbid',title:'prod_dbid',type:'guid',width:110,hidden:true,align:'left'},
                        {field:'pricegroup_dbid',title:'pricegroup_dbid',type:'guid',width:110,hidden:true,align:'left'},
-                       {field:'nhi_price',title:'NHI Price',type:'decimal',width:110,readonly:true,align:'left'},
-                       {field:'invoice_price',title:'Invoice Price',type:'decimal',width:110,align:'left'},
-                       {field:'net_price',title:'Net Price',type:'decimal',width:110,align:'left'},
-                       {field:'min_qty',title:'Min Qty',type:'int',width:110,align:'left'},
+                       {field:'nhi_price',title:'NHI Price',type:'decimal',width:110,readonly:true,require:true,align:'left'},
+                       {field:'invoice_price',title:'Invoice Price',type:'decimal',width:110,require:true,align:'left'},
+                       {field:'net_price',title:'Net Price',type:'decimal',width:110,require:true,align:'left'},
+                       {field:'min_qty',title:'Min Qty',type:'int',width:110,require:true,align:'left'},
                        {field:'start_date',title:'Start Date',type:'datetime',width:110,require:true,align:'left',sort:true},
                        {field:'end_date',title:'End Date',type:'datetime',width:110,require:true,align:'left',sort:true},
                        {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,require:true,align:'left'},
@@ -87,7 +88,7 @@
                        {field:'state',title:'state',type:'string',width:110,hidden:true,align:'left'},
                        {field:'C1',title:'C1',type:'string',width:110,hidden:true,align:'left'},
                        {field:'prod_dbidname',title:'Product',type:'string',width:120,hidden:true,require:true,align:'left'},
-                       {field:'prods',title:'Products',type:'string',bind:{ key:'enable',data:[]},width:110,hidden:true,require:true,align:'left'}]);
+                       {field:'prods',title:'Products',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,require:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

@@ -83,14 +83,15 @@ let extension = {
 
 
       //在第二个按钮后添加一个新的按钮
-      this.buttons.splice(2, 0, {
+      /*this.buttons.splice(2, 0, {
         name: "Edit Shipping Data",
         icon: 'el-icon-edit-outline',
         type: 'primary',
+        value:'editShip',
         onClick: function () {
             this.openEditShippingData()
         }
-      })
+      })*/
 
       //表格设置为单选
       this.single=true;

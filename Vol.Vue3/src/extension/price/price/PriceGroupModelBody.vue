@@ -78,7 +78,7 @@ export default {
       group_name: "", //查询条件字段
       group_id:"",
       fieldName:"",//編輯字段,用於回傳設置值
-      formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields
+      formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields,ext-自定義擴展
       url: "api/Viat_app_cust_price_group/GetPopPageData",//加载数据的接口
       columns: [
         {field:'group_id',title:'群組代碼',type:'string',link:true,width:110,require:true,align:'left',sort:true},
@@ -120,7 +120,7 @@ export default {
         return this.$message.error("請選擇數據");
       }
       let path =this.$route.path;
-      if(path=='/View_app_power_contract_main' && this.formType=='f'){//多層級調用
+       if((path=='/View_app_power_contract_main' && this.formType=='f') || this.formType=='ext'){//多層級調用
         this.$emit("onSelect",this.fieldName,rows)
       }else{
         //回写数据到表单
@@ -153,6 +153,7 @@ export default {
     },
     loadTableBefore(params) {
       //查询前，设置查询条件
+      params.wheres.push({ name: "status", value: 'Y' });
       if (this.group_name ) {
         params.wheres.push({ name: "group_name", value: this.group_name,displayType:'like' });
       }
