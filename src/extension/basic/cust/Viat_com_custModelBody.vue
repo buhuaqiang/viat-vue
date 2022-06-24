@@ -199,7 +199,6 @@ export default {
       if (!rows || rows.length == 0) {
         return this.$message.error("請選擇數據");
       }
-
       let path = this.$route.path;
       if(path =="/view_dist_margin"  && this.formType=='mf'){//
         let selectrows = [];//将勾选值设置成数组

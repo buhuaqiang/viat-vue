@@ -6,20 +6,17 @@
 **后台操作见：http://v2.volcore.xyz/document/netCoreDev
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
-   import PriceGroupModelBody from "./PriceGroupModelBody";
-    // import Viat_com_custModelBody from "../../basic/cust/Viat_com_custModelBody";
-  import View_com_prod_pop_query from "../../basic/prod/View_com_prod_pop_query.vue";
-  import InvalidDataPage from "./InvalidDataPage";
-
+import View_com_prod_pop_query from "../../basic/prod/View_com_prod_pop_query.vue";
+import Viat_com_custModelBody from "../../basic/cust/Viat_com_custModelBody";
 let extension = {
   components: {
     //查询界面扩展组件
     gridHeader: View_com_prod_pop_query,
-    gridBody: PriceGroupModelBody,
-    gridFooter: InvalidDataPage,
+    gridBody: Viat_com_custModelBody,
+    gridFooter: '',
     //新建、编辑弹出框扩展组件
     modelHeader: View_com_prod_pop_query,
-    modelBody: PriceGroupModelBody,
+    modelBody: Viat_com_custModelBody,
     modelFooter: ''
   },
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
@@ -76,7 +73,7 @@ let extension = {
                     if(pageType=='p'){
                       this.$refs.gridHeader.openDemo(fieldName,formType);
                     }
-                    if(pageType=='pg'){
+                    if(pageType=='c'){
                       this.$refs.gridBody.openDemo(fieldName,formType);
                     }
 
@@ -85,7 +82,7 @@ let extension = {
                     if(pageType=='p'){
                       this.$refs.modelHeader.openDemo(fieldName,formType);
                     }
-                    if(pageType=='pg'){
+                    if(pageType=='c'){
                       this.$refs.modelBody.openDemo(fieldName,formType);
                     }
 
@@ -106,7 +103,7 @@ let extension = {
                     if(pageType=='p'){
                       this.$refs.gridHeader.clearData(fieldName,formType);
                     }
-                    if(pageType=='pg'){
+                    if(pageType=='c'){
                       this.$refs.gridBody.clearData(fieldName,formType);
                     }
                   }
@@ -114,7 +111,7 @@ let extension = {
                     if(pageType=='p'){
                       this.$refs.modelHeader.clearData(fieldName,formType);
                     }
-                    if(pageType=='pg'){
+                    if(pageType=='c'){
                       this.$refs.modelBody.clearData(fieldName,formType);
                     }
 
@@ -128,28 +125,6 @@ let extension = {
 
         ]);
       };
-    },
-    //product detach
-    detachSelectedData(){
-      let _rows =  this.getSelectRows();
-      if (!_rows || _rows.length == 0) {
-        return this.$message.error("請選擇要detach的數據");
-      }
-      let ids=[];
-      _rows.forEach(r=>{
-        ids.push(r.custprice_dbid);
-      })
-      this.http.post("api/View_cust_price/detachProductFromGroup", { mainData: ids }, true)
-          .then((x) => {
-            if (!x.status) {
-              this.$Message.error(x.message);
-              return;
-            }
-          });
-    },
-    //
-    invalidData(){
-      this.$refs.gridFooter.openDemo();
     },
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
@@ -165,6 +140,7 @@ let extension = {
 
         //示例：设置修改新建、编辑弹出框字段标签的长度
         // this.boxOptions.labelWidth = 150;
+
       this.boxOptions.labelWidth = 180;
       //显示查询全部字段
       this.setFiexdSearchForm(true);
@@ -201,21 +177,15 @@ let extension = {
       }
       //-------------日期字段格式化 end--------------
       //-------------列表頁搜索框綁定彈窗 start-------------
-      let searchGroup=this.getSearchOption("pricegroup_dbidname");
-
-      let searchGroupDBID=this.getSearchOption("pricegroup_dbid");
+      let searchCust=this.getSearchOption("cust_dbidname");
+      searchCust.disabled=true
+      searchCust.extra = {
+        render: this.getRender("cust_dbid", 's','c')
+      }
+      let searchCustDBID=this.getSearchOption("cust_dbid");
+      searchCustDBID.hidden=true;
 
       let searchProdDBIDS=this.getSearchOption("prods");
-      searchGroupDBID.hidden=true;
-      searchGroup.disabled=true;
-
-      // let searchProd=this.getSearchOption("prod_dbidname");
-      // let searchProdDBID=this.getSearchOption("prod_dbid");
-      // searchProdDBID.hidden=true
-
-      searchGroup.extra = {
-        render: this.getRender("pricegroup_dbid", 's','pg')
-      }
       searchProdDBIDS.extra = {
         icon: "el-icon-zoom-in",
         text: "選擇",
@@ -227,40 +197,24 @@ let extension = {
 
       //-------------列表頁搜索框綁定彈窗 end-------------
       //-------------表單輸入框綁定彈窗 start-------------
-      let formGroup=this.getFormOption("pricegroup_dbidname");
+      let formCust=this.getFormOption("cust_dbidname");
       let formProd=this.getFormOption("prod_dbidname");
-      let formGroupDBID=this.getFormOption("pricegroup_dbid");
+      let formCustDBID=this.getFormOption("cust_dbid");
       let formProdDBID=this.getFormOption("prod_dbid");
-      formGroupDBID.hidden=true;
+      formCustDBID.hidden=true;
       formProdDBID.hidden=true;
-      formGroup.disabled=true;
-      formProd.disabled=true;
-
-      formGroup.extra = {
-        render: this.getRender("pricegroup_dbid", 'f','pg')
+      formCust.extra = {
+        render: this.getRender("cust_dbid", 'f','c')
       }
       formProd.extra = {
         render: this.getRender("prod_dbid", 'f','p')
       }
       //-------------表單輸入框綁定彈窗 end-------------
-
-      //在第二个按钮后添加一个新的按钮
-      // this.buttons.splice(3, 0, {
-      //   name: "View",
-      //   icon: 'el-icon-view',
-      //   type: 'warning',
-      //   onClick: function () {
-      //     this.view()
-      //   }
-      // })
-      //-------------end-------------
     },
-
     onInited() {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
-      this.height = this.height-120;//設置列表頁整體不出現滾動條
     },
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
@@ -273,7 +227,6 @@ let extension = {
     },
     addBefore(formData) {
       //新建保存前formData为对象，包括明细表，可以给给表单设置值，自己输出看formData的值
-      //Check： Nhi price > Invoice Price and Nhi price > Net Price else Show error message
       if(formData.mainData.nhi_price >= formData.mainData.invoice_price && formData.mainData.invoice_price >= formData.mainData.net_price ){
 
       }else{
@@ -284,13 +237,17 @@ let extension = {
     },
     updateBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
+      //source_type=2组内价格不允许编辑
+      if(formData.mainData.source_type==2){
+        this.$Message.error(" This group data can not edit.");
+        return false;
+      }
       if(formData.mainData.nhi_price >= formData.mainData.invoice_price && formData.mainData.invoice_price >= formData.mainData.net_price ){
 
       }else{
         this.$Message.error(" Nhi price > Invoice Price and Nhi price > Net Price");
         return false;
       }
-
       return true;
     },
     rowClick({ row, column, event }) {
@@ -304,7 +261,8 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
-      this.getFormOption("pricegroup_dbidname").disabled=true;
+
+      this.getFormOption("cust_dbidname").disabled=true;
       this.getFormOption("prod_dbidname").disabled=true;
       this.getFormOption("nhi_price").disabled=true;
       if(this.currentAction==this.const.ADD){
@@ -317,7 +275,7 @@ let extension = {
         this.getFormOption("invoice_price").disabled=false;
         this.getFormOption("net_price").disabled=false;
         this.getFormOption("min_qty").disabled=false;
-        this.getFormOption("pricegroup_dbidname").extra={render: this.getRender("pricegroup_dbid", 'f','pg')};
+        this.getFormOption("cust_dbidname").extra={render: this.getRender("cust_dbid", 'f','c')};
         this.getFormOption("prod_dbidname").extra={render: this.getRender("prod_dbid", 'f','p')};
 
       }else if (this.currentAction==this.const.EDIT){
@@ -325,7 +283,7 @@ let extension = {
         this.getFormOption("invoice_price").disabled=true;
         this.getFormOption("net_price").disabled=true;
         this.getFormOption("min_qty").disabled=true;
-        this.getFormOption("pricegroup_dbidname").extra={};
+        this.getFormOption("cust_dbidname").extra={};
         this.getFormOption("prod_dbidname").extra={};
 
       }else if (this.currentAction==this.const.VIEW){

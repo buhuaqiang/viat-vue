@@ -172,7 +172,7 @@
                         })
                         this.model=false;
                     })
-                }else if( path =="/View_cust_price" && this.formType=='ms'){//
+                }else if( (path =="/View_cust_price" || path =="/View_cust_price_detail") && this.formType=='ms'){//
                     let selectrows = [];//将勾选值设置成数组
                     selectrow.forEach(row=>{
                         selectrows.push({"key":row.prod_dbid,"value":row.prod_ename});
@@ -203,7 +203,7 @@
                                 $parent.editFormFields[this.fieldName] = selectrow[0].prod_dbid;
                                 $parent.editFormFields[this.fieldName + 'name'] = selectrow[0].prod_id + " " + selectrow[0].prod_ename;
 
-                                if (path =='/View_cust_price'){
+                                if (path =='/View_cust_price' || path =='/View_cust_price_detail'){
                                     $parent.editFormFields['nhi_price'] = selectrow[0].nhi_price;
                                 }
                             }
