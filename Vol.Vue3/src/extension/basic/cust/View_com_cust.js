@@ -310,10 +310,18 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
-      this.getOption("cust_id").disabled = this.currentAction == 'update';
-      this.getOption("cust_id").hidden = this.currentAction == 'Add';
-      this.getOption("cust_id").required = this.currentAction == 'update';
+      this.getOption("cust_id").disabled = this.currentAction == this.const.EDIT || this.currentAction==this.const.VIEW;
+      this.getOption("cust_id").hidden = this.currentAction == this.const.ADD;
+      this.getOption("cust_id").required = this.currentAction == this.const.EDIT;
       this.getOption("cust_id").cust_id = "C0000";
+
+      let ownHospital = this.getOption("own_hospitalname");
+      let med_group = this.getOption("med_groupname");
+      let delv_group = this.getOption("delv_groupname");
+      ownHospital.disabled=true;
+      med_group.disabled=true;
+      delv_group.disabled=true;
+
       if (this.currentAction == 'update') {
         let comZipId = this.getOption("cust_zip_id");
         let invoiceZipId = this.getOption("invoice_zip_id");

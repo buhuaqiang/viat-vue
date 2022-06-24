@@ -14,7 +14,7 @@ let methods = {
     if (this.currentReadonly) {
       return '';
     }
-    return '--' + (this.currentAction == this.const.ADD ? '新增' : '编辑');
+    return '--' + (this.currentAction == this.const.ADD ? '新增' : this.currentAction == this.const.EDIT?'编辑':'查看');
   },
   quickSearchKeyPress($event) {
     //查询字段为input时，按回车查询
@@ -55,7 +55,7 @@ let methods = {
     return btns;
   },
   extendBtn(btns, source) {
-    //btns权限按钮，source为扩展按钮
+    //btns，source为扩展按钮
     if (!btns || !(source && source instanceof Array)) {
       return;
     }
@@ -98,11 +98,11 @@ let methods = {
     if (!this.extend.buttons) {
       this.extend.buttons = {};
     }
+
     //查询界面扩展按钮(扩展按钮可自行通过设置按钮的Index属性显示到具体位置)
     if (this.extend.buttons.view) {
       this.extendBtn(this.buttons, this.extend.buttons.view);
     }
-
     //弹出框按钮
     let boxButtons = [];
 
@@ -113,6 +113,7 @@ let methods = {
           x.value.toLowerCase() == this.const.EDIT.toLowerCase())
       )
         return true;
+
     });
     this.currentReadonly = !saveBtn;
     //从表表格操作按钮
@@ -741,6 +742,8 @@ let methods = {
     });
   },
   async modelOpenBeforeAsync(row) {
+
+
     return true;
   },
   async initBox() {
@@ -777,7 +780,7 @@ let methods = {
     this.editFormFields[this.table.key] = row[this.table.key];
 
     this.resetEditForm(row);
-    this.currentAction = this.const.EDIT;
+    //this.currentAction = this.const.EDIT;
     this.boxModel = true;
   },
   async linkData(row, column) {
@@ -865,6 +868,31 @@ let methods = {
     this.modelOpenProcess(rows[0]);
     // this.modelOpenAfter(rows[0]);
   },
+  view(){
+    //查看
+    this.currentAction = this.const.VIEW;
+    let rows = this.$refs.table.getSelected();
+    if (rows.length == 0) {
+      return this.$error('请选择要查看的數據!');
+    }
+    if (rows.length != 1) {
+      return this.$error('只能选择一行数据进行查看!');
+    }
+    //记录当前编辑的行
+    this.currentRow = rows[0];
+    if (!( this.initBox())) return;
+    this.setContinueAdd(false);
+    //设置当前的数据到表单上
+    this.setEditForm(rows[0]);
+    //设置远程查询表单的默认key/value
+    this.getRemoteFormDefaultKeyValue();
+    //点击编辑按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
+    this.modelOpenProcess(rows[0]);
+
+    // this.modelOpenAfter(rows[0]);
+
+  },
+
   getRemoteFormDefaultKeyValue() {
     //设置表单远程数据源的默认key.value
     if (this.currentAction != this.const.EDIT || this.remoteKeys.length == 0)
@@ -890,9 +918,11 @@ let methods = {
     });
   },
   modelOpenProcess(row) {
+
     this.$nextTick(() => {
       this.modelOpenAfter(row);
     });
+
     return;
     // if (!this.$refs.form) {
     //     let timeOut = setTimeout(x => {

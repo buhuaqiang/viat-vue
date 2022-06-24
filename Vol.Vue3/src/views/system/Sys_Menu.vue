@@ -293,6 +293,7 @@ export default defineComponent({
       { text: "新建", value: "Add" },
       { text: "删除", value: "Delete" },
       { text: "编辑", value: "Update" },
+      { text: "查看", value: "view" },
       { text: "导入", value: "Import" },
       { text: "导出", value: "Export" },
       { text: "上传", value: "Upload" },
@@ -415,7 +416,7 @@ export default defineComponent({
             { key: 2, value: "启用不显示" },
             { key: 0, value: "禁用" },
           ],
-        },  
+        },
         {
           // 2022.03.26增移动端加菜单类型
           title: "菜单类型",
@@ -611,7 +612,7 @@ export default defineComponent({
   display: flex;
   label {
     display: inline-block;
-    width: 100px;
+    //width: 100px;
     text-align: right;
     color: #797979;
     font-size: 14px;
