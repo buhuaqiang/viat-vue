@@ -174,12 +174,12 @@
                 ref="table3"
                 :loadKey="true"
                 :clickEdit="true"
-                :columns="tableColumns2"
+                :columns="tableColumns3"
                 :pagination-hide="false"
                 :height="300"
                 :url=table3Url
                 :defaultLoadPage="false"
-                @loadBefore="loadTableBefore2"
+                @loadBefore="loadTableBefore3"
                 :index="true"
         ></vol-table>
       </el-tab-pane>
@@ -207,9 +207,10 @@ export default {
       table3RowData:"",
       calcuateResult:"",
       //从表1 this.$parent.editFormFields.powercont_dbid
-      table1Url: "api/Viat_app_power_contract_cust/getPageData?powercont_dbid=" , //table1获取数据的接口
-      table2Url: "api/Viat_app_power_contract_cust/getPageData?powercont_dbid=" , //table1获取数据的接口 待補充
-      table3Url: "api/Viat_app_power_contract_cust/getPageData?powercont_dbid=" , //table1获取数据的接口 待補充
+
+      table1Url: "api/Viat_app_power_contract_cust/GetPageData",//?powercont_dbid=" , //table1获取数据的接口
+      table2Url: "api/Viat_app_power_contract_purchase_prod/GetPageData",//?powercont_dbid=" , //table1获取数据的接口 待補充
+      table3Url: "api/Viat_app_power_contract_free_prod/GetPageData",//?powercont_dbid=" , //table1获取数据的接口 待補充
       //表配置的字段注意要与后台返回的查询字段大小写一致
       tableColumns1: [
         { field: "powercontcust_dbid", title: "主键ID", type: "guid", width: 80, hidden: true },
@@ -279,6 +280,42 @@ export default {
         },
 
       ],
+      tableColumns3: [
+        { field: "powercontfreeprod_dbid", title: "主键ID", type: "guid", width: 80, hidden: true },
+        { field: "powercont_dbid", title: "外鍵ID", type: "guid", width: 80, hidden: true },
+        {
+          field: "prod_dbid",title: "prod_dbid",  width: 120,hidden: true},
+        {
+          field: "prod_id",
+          title: "prod_id",
+          width: 120,
+        },
+        {
+          field: "prod_ename",
+          title: "prod ename",
+          width: 150,
+        },
+        {
+          field: "qty",
+          title: "Qty1",
+          edit: { type: "number" },
+          width: 150,
+        },
+        {
+          field: "amt",
+          title: "Amt",
+          edit: { type: "number" },
+          width: 150,
+        },
+
+        {
+          field: "createDate",
+          title: "创建时间",
+          type: "text",
+          readonly: true,
+          width: 150,
+        },
+      ]
     };
   },
   methods: {
@@ -291,8 +328,9 @@ export default {
       });
 
       this.powercont_dbid= $parent.editFormFields.powercont_dbid;
-      this.table1Url = this.table1Url+this.powercont_dbid;
-      this.table2Url = this.table2Url+this.powercont_dbid;
+      this.table1Url = this.table1Url;//+this.powercont_dbid;
+      this.table2Url = this.table2Url;//+this.powercont_dbid;
+      this.table3Url= this.table2Url;//+this.powercont_dbid;
       //当前如果是新建重置两个表格数据
       if ($parent.currentAction == "Add") {
         this.showFlag = false;
@@ -309,6 +347,7 @@ export default {
         this.clear();
         this.$refs.table1.load();
         this.$refs.table2.load();
+        this.$refs.table3.load();
       }
     },
     loadTableBefore1(param, callBack) {
@@ -330,6 +369,38 @@ export default {
     },
     //从表2加载数据数前(操作与上面一样的,增加查询条件)
     loadTableBefore2(param, callBack) {
+      let $parent = null;
+      //当前是子页面，获取查询viewgrid页面的对象()
+      this.$emit("parentCall", ($this) => {
+        $parent = $this;
+      });
+      //如果是新建功能，禁止刷新操作
+      if ($parent.currentAction == "Add") {
+        return callBack(false);
+      }
+      //获取当前编辑主键id值
+      let powercont_dbid = $parent.currentRow.powercont_dbid;
+      //添加从表的查询参数(条件)
+      //将当前选中的行主键传到后台用于查询(后台在GetTable2Data(PageDataOptions loadData)会接收到此参数)
+      param.wheres.push({ name: "powercont_dbid", value: powercont_dbid });
+      callBack(true);
+    },
+    //从表2加载数据数前(操作与上面一样的,增加查询条件)
+    loadTableBefore3(param, callBack) {
+      let $parent = null;
+      //当前是子页面，获取查询viewgrid页面的对象()
+      this.$emit("parentCall", ($this) => {
+        $parent = $this;
+      });
+      //如果是新建功能，禁止刷新操作
+      if ($parent.currentAction == "Add") {
+        return callBack(false);
+      }
+      //获取当前编辑主键id值
+      let powercont_dbid = $parent.currentRow.powercont_dbid;
+      //添加从表的查询参数(条件)
+      //将当前选中的行主键传到后台用于查询(后台在GetTable2Data(PageDataOptions loadData)会接收到此参数)
+      param.wheres.push({ name: "powercont_dbid", value: powercont_dbid });
       callBack(true);
     },
     //从后台加载从表1数据后
@@ -490,7 +561,10 @@ export default {
       if (rows.length == 0) {
         return this.$Message.error("请先选中行");
       }
+      //数据记录
+      this.table1RowData.add(rows);
       this.$refs.table1.delRow();
+
       //可以this.http.post调用后台实际执行查询
     },
     delTable2() {
