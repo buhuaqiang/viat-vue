@@ -71,6 +71,16 @@ let buttons = [{
     }
 },
     {
+        name: "查 看",
+        icon: 'el-icon-view',
+        type:'warning',
+        plain:true,
+        value: 'view',
+        onClick: function () {
+            this.view();
+        }
+    },
+    {
         name: "Edit Shipping Data",
         icon: 'el-icon-document',
         type: 'primary',

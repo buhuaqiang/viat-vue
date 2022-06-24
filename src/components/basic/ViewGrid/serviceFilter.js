@@ -73,6 +73,27 @@ let serviceFilter = {
     return true;
   },
   modelOpenBefore (row) { //点击编辑/新建按钮弹出框前，可以在此处写逻辑，如，从后台获取数据
+    this.editFormOptions.forEach(x => {
+      x.forEach(item => {
+        item.disabled=this.currentAction==this.const.VIEW;
+      })
+    })
+    if (this.hasDetail) {
+      this.detailOptions.columns.forEach(x=>{
+        x.edit=!this.currentAction==this.const.VIEW;
+      })
+      this.detailOptions.buttons.forEach(x=>{
+        x.hidden=this.currentAction==this.const.VIEW;
+      })
+    }
+    //隱藏保存按鈕
+    let saveBtn = this.boxButtons.find((x) => x.name == '保 存');
+    if(saveBtn){
+      saveBtn.hidden=this.currentAction==this.const.VIEW;
+    }
+
+
+
 
   },
   modelOpenAfter (row) {  //点击编辑/新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
@@ -97,7 +118,7 @@ let serviceFilter = {
   },
   onModelClose(iconClick){
     //iconClick=true为点击左中上角X触发的关闭事件
-    //如果返回 false不会关闭弹出框 
+    //如果返回 false不会关闭弹出框
     //return false;
     this.boxModel=false;
   }

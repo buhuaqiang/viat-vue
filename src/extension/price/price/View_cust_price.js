@@ -245,14 +245,14 @@ let extension = {
       //-------------表單輸入框綁定彈窗 end-------------
 
       //在第二个按钮后添加一个新的按钮
-      /*this.buttons.splice(3, 0, {
-        name: "Product Detach",
-        icon: 'el-icon-scissors',
-        type: 'warning',
-        onClick: function () {
-          this.detachSelectedData()
-        }
-      })*/
+      // this.buttons.splice(3, 0, {
+      //   name: "View",
+      //   icon: 'el-icon-view',
+      //   type: 'warning',
+      //   onClick: function () {
+      //     this.view()
+      //   }
+      // })
       //-------------end-------------
     },
 
@@ -305,6 +305,8 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+      this.getFormOption("pricegroup_dbidname").disabled=true;
+      this.getFormOption("prod_dbidname").disabled=true;
       if(this.currentAction==this.const.ADD){
         //設置Min Qty初始值為1
         this.editFormFields.min_qty=1;
@@ -326,7 +328,10 @@ let extension = {
         this.getFormOption("pricegroup_dbidname").extra={};
         this.getFormOption("prod_dbidname").extra={};
 
+      }else if (this.currentAction==this.const.VIEW){
+
       }
+
     }
   }
 };
