@@ -7,8 +7,6 @@
     :width="1500"
     :padding="15"
   >
-
-
     <div style="padding-bottom: 10px">
       <el-form :inline="true" label-position="left" label-width="100px" :model="invalidModel">
         <el-form-item label="Type:" style="width: 100%">
