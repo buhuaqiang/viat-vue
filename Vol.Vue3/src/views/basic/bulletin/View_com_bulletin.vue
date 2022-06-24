@@ -30,8 +30,8 @@
                 sortName: "created_date"
             });
             const editFormFields = ref({"subject":"","content":"","start_date":"","end_date":"","send":"","users":"","user":"","SelectUsers":"","modified_date":"","emp_ename":""});
-            const editFormOptions = ref([[{"title":"Subject","field":"subject","required":true,"colSize":10}],
-                              [{"title":"Content","field":"content","required":true,"colSize":10,"type":"textarea"}],
+            const editFormOptions = ref([[{"title":"Subject","field":"subject","required":true},{"title":"Content","field":"content","required":true,"type":"textarea"}],
+                              //[{"title":"Content","field":"content","required":true,"type":"textarea"}],
                               [{"title":"Publish Date","field":"start_date","type":"date","required":true},
                                {"title":"","field":"end_date","type":"date"}],
                               [{"dataKey":"SendTo","data":[],"title":"Send To","required":true,"field":"send","type":"radio"}],

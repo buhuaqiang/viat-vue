@@ -29,10 +29,10 @@
                 url: "/Viat_app_hp_contract/",
                 sortName: "contract_no"
             });
-            const editFormFields = ref({"entity":"","division":"","contract_no":"","pricegroup_id":"","start_date":"","end_date":"","allw_type":"","est_months":"","accrue_amt":"","contract_term":"","state":"","o_contract_no":""});
+            const editFormFields = ref({"entity":"","division":"","contract_no":"","pricegroup_dbid":"","start_date":"","end_date":"","allw_type":"","est_months":"","accrue_amt":"","contract_term":"","state":"","o_contract_no":""});
             const editFormOptions = ref([[{"title":"公司別,舊版SUN_DB","field":"entity"},
                                {"title":"所屬事業單位,01:PH;03:AH;05:CH;06:NU","field":"division"},
-                               {"title":"主鍵","field":"pricegroup_id"},
+                               {"title":"主鍵","field":"pricegroup_dbid"},
                                {"title":"生效日","field":"start_date"},
                                {"title":"結束日","field":"end_date"},
                                {"title":"折讓類別(1:By Amount;2:By Qty)","field":"allw_type","type":"number"},
@@ -48,7 +48,7 @@
                        {field:'entity',title:'公司別,舊版SUN_DB',type:'string',width:110,align:'left',sort:true},
                        {field:'division',title:'所屬事業單位,01:PH;03:AH;05:CH;06:NU',type:'string',width:110,align:'left'},
                        {field:'contract_no',title:'合約號碼(案號)',type:'string',width:110,require:true,align:'left'},
-                       {field:'pricegroup_id',title:'主鍵',type:'guid',width:110,align:'left'},
+                       {field:'pricegroup_dbid',title:'主鍵',type:'guid',width:110,align:'left'},
                        {field:'start_date',title:'生效日',type:'datetime',width:110,align:'left',sort:true},
                        {field:'end_date',title:'結束日',type:'datetime',width:110,align:'left',sort:true},
                        {field:'allw_type',title:'折讓類別(1:By Amount;2:By Qty)',type:'int',width:110,align:'left'},
