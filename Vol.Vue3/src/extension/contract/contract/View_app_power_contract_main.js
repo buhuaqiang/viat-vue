@@ -82,19 +82,10 @@ let extension = {
       }
 
 
-      //在第二个按钮后添加一个新的按钮
-      /*this.buttons.splice(2, 0, {
-        name: "Edit Shipping Data",
-        icon: 'el-icon-edit-outline',
-        type: 'primary',
-        value:'editShip',
-        onClick: function () {
-            this.openEditShippingData()
-        }
-      })*/
+      this.maxBtnLength = 8;
 
       //表格设置为单选
-      this.single=true;
+     // this.single=true;
 
       let searchCust_Id=this.getSearchOption("cust_dbidname");
       searchCust_Id.extra={
@@ -248,6 +239,25 @@ let extension = {
       });
 
     },
+    //關閉合約 buhuaqiang
+    closeContract(){
+      let _rows =  this.getSelectRows();
+      if (!_rows || _rows.length ==0) {
+        return this.$message.error("請至少選擇一條數據");
+      }
+
+      let ids=[];
+      _rows.forEach(r=>{
+        ids.push(r.powercont_dbid);
+      })
+
+      this.http.post("api/View_app_power_contract_main/close",{ids:ids},"Closeing",{ }).then(reslut=>{
+          this.$Message.success("Close success")
+          return;
+      })
+      this.$refs.table.load();
+
+    },
 
     getSearchOption(field){
       let option;
@@ -331,7 +341,6 @@ let extension = {
           value: table3RowData,
         },
       ]
-
       formData.detailData = detailData;
       return true;
     },
@@ -346,9 +355,9 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
-     /* var cust_name = this.getFormOption("cust_name");
+      var cust_name = this.getFormOption("cust_name");
       var group_name = this.getFormOption("group_name");
-
+      this.editFormFields.cust_name= this.editFormFields.cust_id+" "+this.editFormFields.cust_name
       var isgroup  = this.editFormFields.isgroup;
       if(isgroup=='0'){
         cust_name.hidden=false;
@@ -363,7 +372,7 @@ let extension = {
       }else{
         cust_name.hidden=true;
         group_name.hidden = true;
-      }*/
+      }
 
       this.$refs.modelBody.modelOpen();
 

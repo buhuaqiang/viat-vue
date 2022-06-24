@@ -90,6 +90,15 @@ let buttons = [{
         }
     },
     {
+        name: "Close",
+        icon: 'el-icon-circle-close',
+        type: 'primary',
+        value:'Close',
+        onClick: function () {
+            this.closeContract()
+        }
+    },
+    {
         name: "Product Detach",
         icon: 'el-icon-scissors',
         type:'warning',
