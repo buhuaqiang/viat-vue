@@ -64,7 +64,7 @@ let extension = {
 
     },
     onInited() {
-      this.height = this.height-300
+      this.height = this.height-180
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });

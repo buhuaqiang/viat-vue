@@ -273,6 +273,19 @@ let viewgird = [
         path: '/View_cust_price_detail',
         name: 'View_cust_price_detail',
         component: () => import('@/views/price/price/View_cust_price_detail.vue')
+    }
+        ,{
+        path: '/View_app_hp_contract',
+        name: 'View_app_hp_contract',
+        component: () => import('@/views/contract/hpcontract/View_app_hp_contract.vue')
+    }    ,{
+        path: '/View_app_hp_share_table',
+        name: 'View_app_hp_share_table',
+        component: () => import('@/views/contract/hpcontract/View_app_hp_share_table.vue')
+    }    ,{
+        path: '/Viat_app_hp_contract_share',
+        name: 'Viat_app_hp_contract_share',
+        component: () => import('@/views/contract/hpcontract/Viat_app_hp_contract_share.vue')
     }]
 
 export default viewgird

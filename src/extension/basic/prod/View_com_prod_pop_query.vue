@@ -193,7 +193,10 @@
                 }
                 else  if((path=='/View_app_power_contract_main') || this.formType=='ext'){//多導則調用
                     this.$emit("onSelect",this.fieldName,selectrow)
-                }else{
+                }else if(path=='/View_app_hp_contract'){//
+                    this.$emit("onSelect",this.fieldName,selectrow)
+                }
+                else{
                     //回写数据到表单
                     this.$emit("parentCall", ($parent) => {
                         //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)

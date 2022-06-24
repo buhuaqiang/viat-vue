@@ -122,6 +122,10 @@ export default {
       let path =this.$route.path;
        if((path=='/View_app_power_contract_main' && this.formType=='f') || this.formType=='ext'){//多層級調用
         this.$emit("onSelect",this.fieldName,rows)
+      }else if(path=='/View_app_hp_contract' && this.formType=='f'){
+        this.$emit("onSelect",this.fieldName,rows)
+      }else if(path=='/View_app_hp_contract' && this.formType=='s'){
+        this.$emit("onSelect",this.fieldName,rows)
       }else{
         //回写数据到表单
         this.$emit("parentCall", ($parent) => {
