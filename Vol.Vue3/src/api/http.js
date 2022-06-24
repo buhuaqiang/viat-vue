@@ -208,10 +208,12 @@ function redirect (responseText, message) {
 function toLogin () {
     //  const vueinstance=  getCurrentInstance();
     if (window.location.hash) {
-        window.location.href = window.location.origin + '/#/login'
+        window.location.href = window.location.origin + '/#/?loginOut=false'+"&r="+Math.random()
         return
     }
-    window.location.href = window.location.origin + '/login'
+
+    window.location.href = window.location.origin + '/?loginOut=false'+"&r="+Math.random()
+   // router.push({ path: "/" ,query: {loginOut: "true"} });
     //  router.push({ path: '/login', params: { r: Math.random() } });
 }
 //动态刷新token

@@ -163,6 +163,7 @@ export default defineComponent({
       //  contextMenuVisible: false, // 右鍵關閉顯/隱
     };
   },
+
   setup(props, context) {
     // 獲取全局屬性和方法
     const { proxy } = getCurrentInstance();
@@ -256,10 +257,8 @@ export default defineComponent({
       if (typeof item == "string" || item.path == "/login") {
         if (item == "/login" || item.path == "/login") {
           store.commit("clearUserInfo", "");
-          window.location.href = "/";
-          return;
         }
-        router.push({ path: item });
+        router.push({ path: "/" ,query: {loginOut: "true",r: Math.random()} });
         return;
       }
       if (item.path == "#") return;
