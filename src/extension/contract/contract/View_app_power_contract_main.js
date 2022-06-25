@@ -251,8 +251,6 @@ let extension = {
         ids.push(r.powercont_dbid);
       })
 
-      console.log("12345" + ids);
-
       this.http.post("api/View_app_power_contract_main/close", ids,"Closeing").then(reslut=>{
         this.$refs.table.load();
           this.$Message.success("Close success")
