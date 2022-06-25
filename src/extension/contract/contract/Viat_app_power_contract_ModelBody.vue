@@ -126,6 +126,7 @@
           :url=table2Url
           :defaultLoadPage="false"
           @loadBefore="loadTableBefore2"
+          @loadAfter="loadTableAfter2"
           :index="true"
         ></vol-table>
         <el-form :inline="true" label-position="left" label-width="200px" :model="calcuateResult">
@@ -180,6 +181,7 @@
                 :url=table3Url
                 :defaultLoadPage="false"
                 @loadBefore="loadTableBefore3"
+                @loadAfter="loadTableAfter3"
                 :index="true"
         ></vol-table>
       </el-tab-pane>
@@ -234,7 +236,7 @@ export default {
         },
 
         {
-          field: "create_date",
+          field: "created_date",
           title: "create date",
           type: "datetime",
           width: 150,
@@ -272,7 +274,7 @@ export default {
         },
 
         {
-          field: "createDate",
+          field: "created_date",
           title: "创建时间",
           type: "text",
           readonly: true,
@@ -309,7 +311,7 @@ export default {
         },
 
         {
-          field: "createDate",
+          field: "created_date",
           title: "创建时间",
           type: "text",
           readonly: true,
@@ -330,7 +332,7 @@ export default {
       this.powercont_dbid= $parent.editFormFields.powercont_dbid;
       this.table1Url = this.table1Url;//+this.powercont_dbid;
       this.table2Url = this.table2Url;//+this.powercont_dbid;
-      this.table3Url= this.table2Url;//+this.powercont_dbid;
+      this.table3Url= this.table3Url;//+this.powercont_dbid;
       //当前如果是新建重置两个表格数据
       if ($parent.currentAction == "Add") {
         this.showFlag = false;
@@ -405,8 +407,29 @@ export default {
     },
     //从后台加载从表1数据后
     loadTableAfter1(data, callBack) {
+
+      //数据加载后，赋给对像，用于编辑用
+      this.table1RowData = data;
+
       return true;
     },
+    //从后台加载从表1数据后
+    loadTableAfter2(data, callBack) {
+
+      //数据加载后，赋给对像，用于编辑用
+      this.table2RowData = data;
+
+      return true;
+    },
+    //从后台加载从表1数据后
+    loadTableAfter3(data, callBack) {
+
+      //数据加载后，赋给对像，用于编辑用
+      this.table3RowData = data;
+
+      return true;
+    },
+
     // 選擇客戶后的回調方法, table1 多選, 主表單選
     onSelectByCust(fieldName,rows){
       if(fieldName =='table1'){
