@@ -299,7 +299,7 @@ export default {
         },
         {
           field: "qty",
-          title: "Qty1",
+          title: "Qty",
           edit: { type: "number" },
           width: 150,
         },
