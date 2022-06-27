@@ -191,9 +191,7 @@
                         this.model=false;
                     })
                 }
-                else  if((path=='/View_app_power_contract_main') || this.formType=='ext'){//多導則調用
-                    this.$emit("onSelect",this.fieldName,selectrow)
-                }else if(path=='/View_app_hp_contract'){//
+                else  if((path=='/View_app_power_contract_main') || this.formType=='ext' ||(path=='/View_app_hp_contract')){//多導則調用
                     this.$emit("onSelect",this.fieldName,selectrow)
                 }
                 else{
