@@ -126,7 +126,7 @@ let viewgird = [
         path: '/Viat_app_power_contract_cust',
         name: 'Viat_app_power_contract_cust',
         component: () => import('@/views/contract/contract/Viat_app_power_contract_cust.vue')
-    }    ,{
+    }   ,{
         path: '/Viat_com_zip_city',
         name: 'Viat_com_zip_city',
         component: () => import('@/views/basic/city/Viat_com_zip_city.vue')
@@ -231,11 +231,11 @@ let viewgird = [
         name: 'View_cust_custgroup_pricegroup',
         component: () => import('@/views/price/price/View_cust_custgroup_pricegroup.vue')
 
-    }   /* ,{
+    }    ,{
         path: '/Viat_app_hp_contract',
         name: 'Viat_app_hp_contract',
         component: () => import('@/views/contract/hpcontract/Viat_app_hp_contract.vue')
-    } */   ,{
+    }    ,{
         path: '/Viat_app_bulletin',
         name: 'Viat_app_bulletin',
         component: () => import('@/views/basic/bulletin/Viat_app_bulletin.vue')
@@ -281,7 +281,10 @@ let viewgird = [
     }    ,{
         path: '/View_app_hp_share_table',
         name: 'View_app_hp_share_table',
-        component: () => import('@/views/contract/hpcontract/View_app_hp_share_table.vue')
+        component: () => import('@/views/contract/hpcontract/View_app_hp_share_table.vue'),
+        meta: {
+            keepAlive: false//禁用页面缓存
+        }
     }    ,{
         path: '/Viat_app_hp_contract_share',
         name: 'Viat_app_hp_contract_share',
