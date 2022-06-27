@@ -44,7 +44,7 @@
             type="info"
             icon="el-icon-refresh"
             size="mini"
-            @click="$refs.table1.load()"
+            @click="RefreshTable1()"
             >刷新</el-button
           >
         </div>
@@ -113,7 +113,7 @@
             size="mini"
             type="info"
             ghost
-            @click="$refs.table2.load()">刷新
+            @click="RefreshTable2()">刷新
           </el-button>
         </div>
         <vol-table
@@ -167,7 +167,7 @@
                   size="mini"
                   type="info"
                   ghost
-                  @click="$refs.table3.load()"
+                  @click="RefreshTable3()"
           >刷新</el-button
           >
         </div>
@@ -207,6 +207,9 @@ export default {
       table1RowData:"",
       table2RowData:"",
       table3RowData:"",
+      delTable1RowData:[],
+      delTable2RowData:[],
+      delTable3RowData:[],
       calcuateResult:"",
       //从表1 this.$parent.editFormFields.powercont_dbid
 
@@ -410,7 +413,7 @@ export default {
 
       //数据加载后，赋给对像，用于编辑用
       this.table1RowData = data;
-
+      this.delTable1RowData=[];
       return true;
     },
     //从后台加载从表1数据后
@@ -418,7 +421,7 @@ export default {
 
       //数据加载后，赋给对像，用于编辑用
       this.table2RowData = data;
-
+      this.delTable2RowData= [];
       return true;
     },
     //从后台加载从表1数据后
@@ -426,7 +429,7 @@ export default {
 
       //数据加载后，赋给对像，用于编辑用
       this.table3RowData = data;
-
+      this.delTable3RowData= [];
       return true;
     },
 
@@ -585,7 +588,9 @@ export default {
         return this.$Message.error("请先选中行");
       }
       //数据记录
-      this.table1RowData.add(rows);
+      rows.forEach(x=>{
+        this.delTable1RowData.push(x);
+      })
       this.$refs.table1.delRow();
 
       //可以this.http.post调用后台实际执行查询
@@ -595,6 +600,12 @@ export default {
       if (rows.length == 0) {
         return this.$Message.error("请先选中行");
       }
+      //数据记录
+      //数据记录
+      rows.forEach(x=>{
+        this.delTable2RowData.push(x);
+      })
+
       this.$refs.table2.delRow();
       //可以this.http.post调用后台实际执行查询
     },
@@ -603,8 +614,27 @@ export default {
       if (rows.length == 0) {
         return this.$Message.error("请先选中行");
       }
+      //数据记录
+      rows.forEach(x=>{
+        this.delTable3RowData.push(x);
+      })
       this.$refs.table3.delRow();
       //可以this.http.post调用后台实际执行查询
+    },
+    RefreshTable1()
+    {
+      $refs.table1.load();
+      $refs.delTable1Rowdata.reset();
+    },
+    RefreshTable2()
+    {
+      $refs.table2.load();
+      $refs.delTable2Rowdata.reset();
+    },
+    RefreshTable3()
+    {
+      $refs.table3.load();
+      $refs.delTable3Rowdata.reset();
     },
     clear() {
       this.$refs.table1.reset();
