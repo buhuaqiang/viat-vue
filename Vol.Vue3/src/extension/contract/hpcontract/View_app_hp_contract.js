@@ -23,6 +23,12 @@ let extension = {
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
   price_dbid:'',
+  data() {
+    return {
+      startDate:"",//输入的开始时间
+      endDate:"",//輸入結束時間
+    };
+  },
 
   methods: {
      //下面这些方法可以保留也可以删除
@@ -100,6 +106,15 @@ let extension = {
           return;
         }
         return row.end_date.substr(0,10);
+      }
+
+      let startDates=this.getSearch("start_date");
+      startDates.onChange = (val, option) => {
+        this.startDate = val;
+      }
+      let endDates=this.getSearch("end_date");
+      endDates.onChange = (val, option) => {
+        this.endDate = val;
       }
 
     //在第二个按钮后添加一个新的按钮
@@ -261,6 +276,18 @@ let extension = {
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
+
+      if(this.startDate!=null) {
+        for (var i = 0; i < param.wheres.length; i++) {
+          if (param.wheres[i].name == 'start_date') {
+            param.wheres[i].displayType = "thanorequal" //>=
+          }
+          if (param.wheres[i].name == 'end_date') {
+            param.wheres[i].displayType = "lessorequal" //<=
+          }
+        }
+      }
+
 
       return true;
     },
