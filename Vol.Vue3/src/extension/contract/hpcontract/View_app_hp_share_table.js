@@ -21,6 +21,7 @@ let extension = {
   },
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
+   Summary: '',
   methods: {
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
@@ -42,6 +43,20 @@ let extension = {
       //設置默認值
       let contract_no  = this.$route.query.contract_no;
       this.searchFormFields.contract_no = contract_no;
+      let sum_percent=this.getColumnsOption("sum_percent");
+        sum_percent.formatter = (row) => {
+        //对单元格的数据格式化处理
+        if (!row.sum_percent) {
+          return;
+        }
+          this.searchFormFields.Summary = row.sum_percent
+        return row.sum_percent;
+      }
+
+
+
+
+
 
       //查詢選擇
       let cust_dbidname=this.getSearchOption("cust_dbidname");
@@ -69,6 +84,15 @@ let extension = {
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
 
+    },
+    getColumnsOption (field) {
+      let option;
+      this.columns.forEach(x => {
+        if (x.field == field) {
+          option = x;
+        }
+      })
+      return option;
     },
     //獲取搜尋頁面字段
     getSearchOption(field) {
@@ -162,25 +186,21 @@ let extension = {
       };
     },
 
-    //根據城市名稱獲取區域列表
-    async getSumPercent() {
+    //计算总比值
+  /*  async getSumPercent() {
 
       let data = "";
       let params = {
-        "page": 1,
-        "rows": 30,
-        "sort": "dbid",
-        "order": "desc",
         "wheres": "[]"
       }
-      let url = "api/Viat_com_zip_city/getPageData";
-      params.wheres = "[{\"name\":\"city_name\",\"value\":\"" + cityName + "\",\"displayType\":\"=\"}]";
+      let url = "api/View_app_hp_share_table/GetSumPercent";
+      params.wheres = "[{\"name\":\"hpcont_dbid\",\"value\":\"" + this.$route.query.hpcont_dbid + "\",\"displayType\":\"=\"}]";
       let _result = await this.http.post(url, params, true).then((result) => {
         return result;
       });
-
+      console.log( JSON.stringify(_result))
       return data;
-    },
+    },*/
 
 
     searchBefore(param) {

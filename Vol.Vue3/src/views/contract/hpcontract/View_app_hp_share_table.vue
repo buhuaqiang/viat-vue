@@ -37,10 +37,11 @@
                             [{"title":"hpcont_dbid","field":"hpcont_dbid","hidden":true}],
                             [{"title":"Sharing %","field":"percent","type":"decimal"},
                                {"dataKey":"Status2","data":[],"title":"Status","field":"status","type":"select"}]]);
-            const searchFormFields = ref({"cust_dbidname":"","prod_dbidname":"","contract_no":"","summary":""});
+            const searchFormFields = ref({"cust_dbidname":"","prod_dbidname":"","contract_no":"","Summary":""});
             const searchFormOptions = ref([
                 [{"title":"Contract No","field":"contract_no","disabled":true},{"title":"Cust ID","field":"cust_dbidname"},{"title":"","field":"cust_dbid","hidden":true}],
-                [{"title":"Prod ID","field":"prod_dbidname"},{"title":"","field":"prod_dbid","hidden":true},{"title":"Summary","field":"summary"}]
+                [{"title":"Prod ID","field":"prod_dbidname"},{"title":"","field":"prod_dbid","hidden":true},{"title":"Summary","field":"Summary"}]
+
             ]);
             const columns = ref([{field:'hpcontshare_dbid',title:'列名hpcontshare_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'division',title:'列名division',type:'string',width:110,hidden:true,align:'left'},
@@ -56,6 +57,7 @@
                        {field:'status',title:'Status',type:'bool',bind:{ key:'Status2',data:[]},width:110,align:'left'},
                        {field:'modified_date',title:'Update Date',type:'datetime',width:110,align:'left',sort:true},
                        {field:'modified_user',title:'Update User',type:'int',width:110,align:'left'},
+                       {field:'sum_percent',title:'列名sum_percent',width:110,align:'left'},
                        {field:'o_contract_no',title:'列名o_contract_no',type:'int',width:110,hidden:true,align:'left'},
                        {field:'created_user',title:'列名created_user',type:'int',width:110,hidden:true,align:'left'},
                        {field:'created_username',title:'列名created_username',type:'string',width:110,hidden:true,align:'left'},
