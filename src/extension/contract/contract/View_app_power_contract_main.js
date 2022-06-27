@@ -331,6 +331,15 @@ let extension = {
       //table3數據回填到 formData 贈送產品
       let table3RowData = this.$refs.modelBody.table3RowData;
 
+      //删除数据回传
+      let delTable1RowData = this.$refs.modelBody.delTable1RowData;
+
+      //table2數據回填到 formData
+      let delTable2RowData = this.$refs.modelBody.delTable2RowData;
+
+      //table3數據回填到 formData 贈送產品
+      let delTable3RowData = this.$refs.modelBody.delTable3RowData;
+
       //vue2方法,  不使用,可以直接賦值
       //this.$set(this.detailData, "table1RowData", table1RowData)
       // this.$set(this.detailData, "table1RowData", table1RowData)
@@ -347,6 +356,18 @@ let extension = {
         {
           key: "table3RowData",
           value: table3RowData,
+        },
+        {
+          key: "delTable1RowData",
+          value: delTable1RowData,
+        },
+        {
+          key: "delTable2RowData",
+          value: delTable2RowData,
+        },
+        {
+          key: "delTable3RowData",
+          value: delTable3RowData,
         },
       ]
       formData.detailData = detailData;
