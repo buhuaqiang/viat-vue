@@ -65,7 +65,7 @@
           :height="320"
           :url="table1Url"
           :index="true"
-          :defaultLoadPage="false"
+          :defaultLoadPage="true"
           @loadBefore="loadTableBefore1"
           @loadAfter="loadTableAfter1"
         ></vol-table>
@@ -110,7 +110,7 @@
                 :pagination-hide="false"
                 :height="300"
                 :url=table2Url
-                :defaultLoadPage="false"
+                :defaultLoadPage="true"
                 @loadBefore="loadTableBefore2"
                 :index="true"
         ></vol-table>
@@ -138,7 +138,7 @@
                 :pagination-hide="false"
                 :height="300"
                 url="/api/View_app_hp_share_table/getPageData"
-                :defaultLoadPage="false"
+                :defaultLoadPage="true"
                 @loadBefore="loadTableBefore3"
                 :index="true"
         ></vol-table>

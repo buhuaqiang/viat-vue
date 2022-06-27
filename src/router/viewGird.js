@@ -189,7 +189,10 @@ let viewgird = [
     }      ,{
         path: '/Viat_app_power_contract_ship_data',
         name: 'Viat_app_power_contract_ship_data',
-        component: () => import('@/views/contract/contract/Viat_app_power_contract_ship_data.vue')
+        component: () => import('@/views/contract/contract/Viat_app_power_contract_ship_data.vue'),
+        meta: {
+            keepAlive: false//禁用页面缓存
+        }
     }    ,{
         path: '/View_app_power_contract_ship_data_prod_list',
         name: 'View_app_power_contract_ship_data_prod_list',
