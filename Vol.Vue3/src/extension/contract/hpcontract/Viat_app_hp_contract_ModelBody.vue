@@ -166,10 +166,9 @@ export default {
       table2RowData:"",
       table3RowData:"",
       calcuateResult:"",
-      //从表1 this.$parent.editFormFields.powercont_dbid
-      table1Url: "api/Viat_app_power_contract_cust/getPageData?powercont_dbid=" , //table1获取数据的接口
-      table2Url: "api/Viat_app_power_contract_cust/getPageData?powercont_dbid=" , //table1获取数据的接口 待補充
-      table3Url: "api/Viat_app_power_contract_cust/getPageData?powercont_dbid=" , //table1获取数据的接口 待補充
+      //从表1 this.$parent.editFormFields.hpcont_dbid
+      table1Url: "api/Viat_app_hp_contract_cust/GetPageData" , //table1获取数据的接口
+      table2Url: "api/Viat_app_hp_contract_free_prod/GetPageData" , //table2获取数据的接口 待補充
       //表配置的字段注意要与后台返回的查询字段大小写一致
       tableColumns1: [
         { field: "hpcontcust_dbid", title: "主键ID", type: "guid", width: 80, hidden: true },
