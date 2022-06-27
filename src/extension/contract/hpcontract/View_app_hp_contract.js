@@ -279,7 +279,7 @@ let extension = {
       let table1RowData = this.$refs.modelBody.table1RowData;
 
       //table3數據回填到 formData 贈送產品
-      let table3RowData = this.$refs.modelBody.table3RowData;
+      let table2RowData = this.$refs.modelBody.table2RowData;
 
       //vue2方法,  不使用,可以直接賦值
       //this.$set(this.detailData, "table1RowData", table1RowData)
@@ -292,8 +292,8 @@ let extension = {
         },
 
         {
-          key: "table3RowData",
-          value: table3RowData,
+          key: "table2RowData",
+          value: table2RowData,
         },
       ]
 
