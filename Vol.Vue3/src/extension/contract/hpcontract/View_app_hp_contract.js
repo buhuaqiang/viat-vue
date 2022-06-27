@@ -69,9 +69,9 @@ let extension = {
       search_pricegroup_dbidname.extra = {
         render:this.getFormRender("pricegroup_dbid","s")
       }
-      let cust_dbidname=this.getSearch("cust_dbidname");
+      let cust_dbidname=this.getSearch("cust_dbid2name");
       cust_dbidname.extra = {
-        render:this.getFormRender("cust_dbid","s")
+        render:this.getFormRender("cust_dbid2","s")
       }
       let pu_prod_dbidname=this.getSearch("pu_prod_dbidname");
       pu_prod_dbidname.extra = {
@@ -208,7 +208,7 @@ let extension = {
                     if(fieldName=="pricegroup_dbid"){
                       this.$refs.gridBody.openPriceGroupModelBody(fieldName)
                     }
-                    if(fieldName=="cust_dbid"){
+                    if(fieldName=="cust_dbid2"){
                       this.$refs.gridBody.CustomersModelBody(fieldName)
                     }
                     if(fieldName=="pu_prod_dbid"){
@@ -238,7 +238,7 @@ let extension = {
                     if(fieldName=="pricegroup_dbid"){
                       this.$refs.gridBody.clearData(fieldName,formType)
                     }
-                    if(fieldName=="cust_dbid"){
+                    if(fieldName=="cust_dbid2"){
                       this.$refs.gridBody.clearData(fieldName,formType)
                     }
                     if(fieldName=="pu_prod_dbid"){

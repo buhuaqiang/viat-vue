@@ -219,11 +219,7 @@ export default {
           this.model=false;
         })
       }
-      else if ((path == '/View_app_power_contract_main' && this.formType == 'f') || this.formType=='ext'){//多層級調用
-        this.$emit("onSelect", this.fieldName, rows)
-      }else if(path == '/View_app_hp_contract'&& this.formType == 'f'){
-        this.$emit("onSelect", this.fieldName, rows)
-      }else if(path == '/View_app_hp_contract'&& this.formType == 's'){
+      else if ((path == '/View_app_power_contract_main' && this.formType == 'f') || this.formType=='ext' || (path == '/View_app_hp_contract')){//多層級調用
         this.$emit("onSelect", this.fieldName, rows)
       }else if (path === '/view_com_dist' && this.formType === 'f'){
         this.$emit("parentCall", ($parent) => {
