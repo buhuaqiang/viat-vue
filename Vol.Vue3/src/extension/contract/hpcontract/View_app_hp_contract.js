@@ -323,6 +323,17 @@ let extension = {
         this.getOption("state").disabled=false;
         this.editFormFields.pricegroup_dbidname = this.editFormFields.group_id+" "+this.editFormFields.group_name;
       }
+
+      let pricegroup_dbidname =this.getOption("pricegroup_dbidname");
+      var costomer_type  = this.editFormFields.costomer_type;
+      if(costomer_type=='1'){
+        pricegroup_dbidname.hidden=true
+      }else if(costomer_type=='0'){
+        pricegroup_dbidname.hidden=false
+      }else{
+        pricegroup_dbidname.hidden=true
+      }
+
       this.$refs.modelBody.modelOpen();
     }
   }
