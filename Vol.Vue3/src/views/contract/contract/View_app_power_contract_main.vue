@@ -85,10 +85,10 @@ export default defineComponent({
           required: true
         },
         { title: "pricegroup_dbid", field: "pricegroup_dbid" , align: "left",hidden: true},
-        { title: "pricegroup", field: "group_name",readonly:true ,colSize:6, align: "left",required: true},
+        { title: "pricegroup", field: "group_name",colSize:6, align: "left",required: true},
         { title: "cust_dbid", field: "cust_dbid" , align: "left",hidden: true},
         { title: "cust_id", field: "cust_id" , align: "left",hidden: true},
-        { title: "custname", field: "cust_name", readonly:true,colSize:6,align: "left",required: true},
+        { title: "custname", field: "cust_name",colSize:6,align: "left",required: true},
       ],
       [
 

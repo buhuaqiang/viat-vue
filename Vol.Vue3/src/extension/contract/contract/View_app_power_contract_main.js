@@ -52,8 +52,7 @@ let extension = {
 
       var cust_name = this.getFormOption("cust_name");
       var group_name = this.getFormOption("group_name");
-      cust_name.hidden = true;
-      group_name.hidden = true;
+
       //获取订单类型select配置，当前订单类型select改变值时，动态设置Remark,SellNo两个字段是否显示
       var isgroup = this.getFormOption("isgroup");
       isgroup.onChange = (val) => {
@@ -80,6 +79,42 @@ let extension = {
       group_name.extra={
         render:this.getFormRender("group_name",'f','pg')
       }
+      //編輯框快捷回填customer和pricegroup
+      cust_name.onKeyPress=($event)=>{
+
+        if($event.keyCode == 13){
+
+          let  cust_id = this.editFormFields['cust_name']
+          if(cust_id) {
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
+              console.log(reslut)
+              debugger;
+              this.editFormFields['cust_dbid'] =reslut.cust_dbid;
+              this.editFormFields['cust_name'] =reslut.cust_id + " " + reslut.cust_name;
+              return;
+            })
+          }
+
+        }
+      }
+
+      group_name.onKeyPress=($event)=>{
+
+        if($event.keyCode == 13){
+
+          let  group_id = this.editFormFields['group_name']
+          if(group_id) {
+            this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
+              console.log(reslut)
+              debugger;
+              this.editFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
+              this.editFormFields['group_name'] =reslut.group_id + " " + reslut.group_name;
+              return;
+            })
+          }
+
+        }
+      }
 
 
       this.maxBtnLength = 8;
@@ -87,6 +122,8 @@ let extension = {
       //表格设置为单选
      // this.single=true;
 
+
+      //查詢條件快捷回填
       let searchCust_Id=this.getSearchOption("cust_dbidname");
       searchCust_Id.extra={
         render:this.getSearchRender("cust_dbid","s","c")
@@ -420,6 +457,7 @@ let extension = {
       var cust_name = this.getFormOption("cust_name");
       var group_name = this.getFormOption("group_name");
       this.editFormFields.cust_name= this.editFormFields.cust_id+" "+this.editFormFields.cust_name
+      this.editFormFields.group_name= this.editFormFields.group_id+" "+this.editFormFields.group_name
       var isgroup  = this.editFormFields.isgroup;
       if(isgroup=='0'){
         cust_name.hidden=false;
