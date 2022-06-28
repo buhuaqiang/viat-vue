@@ -291,6 +291,16 @@ let viewgird = [
         path: '/Viat_app_hp_contract_share',
         name: 'Viat_app_hp_contract_share',
         component: () => import('@/views/contract/hpcontract/Viat_app_hp_contract_share.vue')
+    }
+    ,{
+        path: '/View_price_distributor_mapping',
+        name: 'View_price_distributor_mapping',
+        component: () => import('@/views/price/price/View_price_distributor_mapping.vue')
+    }    ,{
+        path: '/Viat_app_dist_mapping',
+        name: 'Viat_app_dist_mapping',
+        component: () => import('@/views/price/price/Viat_app_dist_mapping.vue')
+    }]
     },{
         path: '/CustomerJoinGroup',
         name: 'CustomerJoinGroup',
