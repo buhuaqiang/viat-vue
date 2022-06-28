@@ -300,8 +300,8 @@ let viewgird = [
         path: '/Viat_app_dist_mapping',
         name: 'Viat_app_dist_mapping',
         component: () => import('@/views/price/price/Viat_app_dist_mapping.vue')
-    }]
-    },{
+    }
+    ,{
         path: '/CustomerJoinGroup',
         name: 'CustomerJoinGroup',
         component: () => import('@/extension/price/price/CustomerJoinGroup.vue')
@@ -321,6 +321,14 @@ let viewgird = [
         path: '/View_app_cust_delivery_transfer',
         name: 'View_app_cust_delivery_transfer',
         component: () => import('@/views/basic/cust/View_app_cust_delivery_transfer.vue')
-    } ]
+    }     ,{
+        path: '/View_prod_entity_period',
+        name: 'View_prod_entity_period',
+        component: () => import('@/views/basic/prod/View_prod_entity_period.vue')
+    }    ,{
+        path: '/Viat_com_prod_entity_period',
+        name: 'Viat_com_prod_entity_period',
+        component: () => import('@/views/basic/prod/Viat_com_prod_entity_period.vue')
+    }]
 
 export default viewgird
