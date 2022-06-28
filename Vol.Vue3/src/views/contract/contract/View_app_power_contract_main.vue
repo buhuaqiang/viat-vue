@@ -114,7 +114,7 @@ export default defineComponent({
     const searchFormFields = ref({
       contract_type: "",
       end_date: "",
-      cust_id: "",
+      cust_dbid: "",
       territory_id: "",
       allw_type: "",
       close_date: "",
@@ -151,9 +151,9 @@ export default defineComponent({
         },
       ],
       [
-        { title: "列cust_id", field: "cust_dbidname" ,readonly:true},
-        { title: "", field: "cust_dbid",hidden:true },
-        { title: "列名pricegroup_dbid", field: "pricegroup_dbidname" ,readonly:true},
+        { title: "列cust_id", field: "cust_dbidname"},
+        { title: "", field: "cust_dbid",hidden:true},
+        { title: "列名pricegroup_dbid", field: "pricegroup_dbidname" },
         { title: "", field: "pricegroup_dbid",hidden: true },
       ],
     ]);
