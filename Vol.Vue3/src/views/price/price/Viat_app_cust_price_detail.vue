@@ -47,7 +47,7 @@
                                {"title":"生效日","required":true,"field":"start_date"},
                                {"title":"結束日","required":true,"field":"end_date"},
                                {"title":"status","field":"status"},
-                               {"title":"作廢否,True:作廢;False:不作廢","required":true,"field":"is_used"}]]);
+                               {"title":"作廢否,True:作廢;False:不作廢","field":"is_used"}]]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([]);
             const columns = ref([{field:'pricedetail_dbid',title:'PKID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
@@ -63,7 +63,7 @@
                        {field:'start_date',title:'生效日',type:'datetime',width:110,require:true,align:'left',sort:true},
                        {field:'end_date',title:'結束日',type:'datetime',width:110,require:true,align:'left',sort:true},
                        {field:'status',title:'status',type:'string',width:110,align:'left'},
-                       {field:'is_used',title:'作廢否,True:作廢;False:不作廢',type:'string',width:110,require:true,align:'left'},
+                       {field:'is_used',title:'作廢否,True:作廢;False:不作廢',type:'string',width:110,align:'left'},
                        {field:'source',title:'資料來源,0:EBMS;1:Manual;2:Copy;3:Detach',type:'string',width:110,align:'left'},
                        {field:'remarks',title:'備註',type:'string',width:220,align:'left'},
                        {field:'sys_end_date',title:'系統結束日',type:'datetime',width:110,align:'left',sort:true},

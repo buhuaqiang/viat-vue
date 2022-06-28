@@ -292,6 +292,14 @@ let viewgird = [
         path: '/Viat_app_hp_contract_share',
         name: 'Viat_app_hp_contract_share',
         component: () => import('@/views/contract/hpcontract/Viat_app_hp_contract_share.vue')
+    },{
+        path: '/CustomerJoinGroup',
+        name: 'CustomerJoinGroup',
+        component: () => import('@/extension/price/price/CustomerJoinGroup.vue')
+    },{
+        path: '/CustomerDetachFromGroup',
+        name: 'CustomerDetachFromGroup',
+        component: () => import('@/extension/price/price/CustomerDetachFromGroup.vue')
     }]
 
 export default viewgird

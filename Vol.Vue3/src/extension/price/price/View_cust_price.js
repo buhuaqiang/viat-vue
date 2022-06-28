@@ -139,13 +139,59 @@ let extension = {
       _rows.forEach(r=>{
         ids.push(r.custprice_dbid);
       })
-      this.http.post("api/View_cust_price/detachProductFromGroup", { mainData: ids }, true)
-          .then((x) => {
-            if (!x.status) {
-              this.$Message.error(x.message);
-              return;
-            }
-          });
+      this.$confirm('Are you sure to detach the selected products ?', 'warning', {
+        confirmButtonText: 'sure',
+        cancelButtonText: 'cancel',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        this.http.post("api/View_cust_price/detachProductFromGroup", { mainData: ids }, true)
+            .then((x) => {
+              if (!x.status) {
+                this.$Message.error(x.message);
+                return;
+              }
+            });
+      });
+
+    },
+    // detach all
+    detachAll(){
+      let mainData={
+
+      }
+      //const searchFormFields = ref({"pricegroup_dbid":"","start_date":"","end_date":"","status":"","modified_date":"","pricegroup_dbidname":"","prods":[]});
+      if (this.searchFormFields.prods && this.searchFormFields.prods.length>0) {
+        mainData.prods=this.searchFormFields.prods
+      }
+      if(this.searchFormFields.pricegroup_dbid){
+        mainData.pricegroup_dbid=this.searchFormFields.pricegroup_dbid
+      }
+      if(this.searchFormFields.status){
+        mainData.status=this.searchFormFields.status
+      }
+      if(this.searchFormFields.start_date){
+        mainData.start_date=this.searchFormFields.start_date
+      }
+      if(this.searchFormFields.end_date){
+        mainData.end_date=this.searchFormFields.end_date
+      }
+
+      this.$confirm('Are you sure to detach all the products ?', 'warning', {
+        confirmButtonText: 'sure',
+        cancelButtonText: 'cancel',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        this.http.post("api/View_cust_price/detachAll", mainData, true)
+            .then((x) => {
+              if (!x.status) {
+                this.$Message.error(x.message);
+                return;
+              }
+            });
+      });
+
     },
     //
     invalidData(){
@@ -277,7 +323,7 @@ let extension = {
       if(formData.mainData.nhi_price >= formData.mainData.invoice_price && formData.mainData.invoice_price >= formData.mainData.net_price ){
 
       }else{
-        this.$Message.error(" Nhi price > Invoice Price and Nhi price > Net Price");
+        this.$Message.error(" NNhi price >= Invoice Price and Invoice Price >= Net Price");
         return false;
       }
       return true;
@@ -287,7 +333,7 @@ let extension = {
       if(formData.mainData.nhi_price >= formData.mainData.invoice_price && formData.mainData.invoice_price >= formData.mainData.net_price ){
 
       }else{
-        this.$Message.error(" Nhi price > Invoice Price and Nhi price > Net Price");
+        this.$Message.error(" Nhi price >= Invoice Price and Invoice Price >= Net Price");
         return false;
       }
 

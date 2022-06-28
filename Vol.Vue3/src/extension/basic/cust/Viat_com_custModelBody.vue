@@ -82,7 +82,7 @@ export default {
       cust_id:"",
       zip_id: "",
       fieldName:"",//編輯字段,用於回傳設置值
-      formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields,ext-自定義擴展
+      formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields,ext-自定義擴展(价格群组invalid调用页面)
       url: "api/View_com_cust/GetPopPageData",//加载数据的接口
       columns: [
         {
@@ -199,6 +199,7 @@ export default {
       if (!rows || rows.length == 0) {
         return this.$message.error("請選擇數據");
       }
+
       let path = this.$route.path;
       if(path =="/view_dist_margin"  && this.formType=='mf'){//
         let selectrows = [];//将勾选值设置成数组
@@ -236,12 +237,15 @@ export default {
             $parent.editFormFields[this.fieldName] = rows[0].cust_dbid;
             $parent.editFormFields[this.fieldName + "name"] =
               rows[0].cust_id + " " + rows[0].cust_name;
+            $parent.handleFormSelected(rows);//自定義回調方法處理,在調用頁面聲明
           } else if (this.formType == "s") {
             $parent.searchFormFields[this.fieldName] = rows[0].cust_dbid;
             $parent.searchFormFields[this.fieldName + "name"] =
               rows[0].cust_id + " " + rows[0].cust_name;
           }
+
         });
+        //this.$emit("handleSelected",rows);
       }
 
       //关闭当前窗口

@@ -84,7 +84,7 @@
                 model: false,
                 defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
                 fieldName:"", // 自定義邏輯字段
-                formType:"",//弹框打开的form类型,f-editFormFields  s-searchFormFields,ext-自定義擴展
+                formType:"",//弹框打开的form类型,f-editFormFields  s-searchFormFields,ext-自定義擴展ext-自定義擴展(价格群组invalid调用页面)
                 prod_id: "", //查询条件字段
                 prod_ename: "", //查询条件字段
                 prod_sname: "", //查询条件字段
