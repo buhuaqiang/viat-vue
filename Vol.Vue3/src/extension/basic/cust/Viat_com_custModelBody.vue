@@ -122,7 +122,6 @@ export default {
           title: "默認區域",
           type: "string",
           width: 110,
-          hidden: true,
           align: "left",
         },
         {
@@ -225,7 +224,7 @@ export default {
       }else if (path === '/view_com_dist' && this.formType === 'f'){
         this.$emit("parentCall", ($parent) => {
           if(this.formType=='f'){
-            $parent.editFormFields[this.fieldName] = rows[0].cust_id;
+            $parent.editFormFields['cust_id'] = rows[0].cust_id;
             $parent.editFormFields['cust_dbid'] = rows[0].cust_dbid;
           }
         });
