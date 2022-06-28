@@ -92,11 +92,41 @@ let extension = {
         render:this.getSearchRender("cust_dbid","s","c")
       }
 
+      searchCust_Id.onKeyPress=($event)=>{
+       if($event.keyCode == 13){
+         let  cust_id = this.searchFormFields['cust_dbidname']
+         if(cust_id) {
+           this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
+              console.log(reslut)
+             this.searchFormFields['cust_dbid'] =reslut.cust_dbid;
+             this.searchFormFields['cust_dbidname'] =reslut.cust_id + " " + reslut.cust_name;
+             return;
+           })
+         }
+
+       }
+      }
+
 
 
       let searchPricegroup_dbid=this.getSearchOption("pricegroup_dbidname");
       searchPricegroup_dbid.extra = {
         render:this.getSearchRender("pricegroup_dbid","s","pg")
+      }
+
+      searchPricegroup_dbid.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  group_id = this.searchFormFields['pricegroup_dbidname']
+          if(group_id) {
+            this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
+              console.log(reslut)
+              this.searchFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
+              this.searchFormFields['pricegroup_dbidname'] =reslut.group_id + " " + reslut.group_name;
+              return;
+            })
+          }
+
+        }
       }
 
 
@@ -130,8 +160,9 @@ let extension = {
         return row.end_date.substr(0,10);
       }
 
-
     },
+
+
     /**
      *
      * @param fieldName綁定欄位
@@ -222,6 +253,8 @@ let extension = {
         ]);
       };
     },
+
+
     //打開發票維護Tab
     openEditShippingData(){
       let url='/Viat_app_power_contract_ship_data'
