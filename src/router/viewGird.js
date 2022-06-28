@@ -299,6 +299,10 @@ let viewgird = [
         path: '/CustomerDetachFromGroup',
         name: 'CustomerDetachFromGroup',
         component: () => import('@/extension/price/price/CustomerDetachFromGroup.vue')
+    } ,{
+        path: '/CopyPriceList',
+        name: 'CopyPriceList',
+        component: () => import('@/extension/price/price/CopyPriceList.vue')
     }    ,{
         path: '/View_import_customer_maintain',
         name: 'View_import_customer_maintain',

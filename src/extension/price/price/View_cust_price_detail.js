@@ -178,7 +178,6 @@ let extension = {
       //-------------日期字段格式化 end--------------
       //-------------列表頁搜索框綁定彈窗 start-------------
       let searchCust=this.getSearchOption("cust_dbidname");
-      searchCust.disabled=true
       searchCust.extra = {
         render: this.getRender("cust_dbid", 's','c')
       }
@@ -210,7 +209,11 @@ let extension = {
         render: this.getRender("prod_dbid", 'f','p')
       }
       //-------------表單輸入框綁定彈窗 end-------------
+      searchCust.onKeyPress= ($event) => {
+        if($event.keyCode==13){
 
+        }
+      }
 
     },
     handleFormSelected(rows){
