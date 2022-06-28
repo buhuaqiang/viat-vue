@@ -297,7 +297,7 @@ export default defineComponent({
       { text: "导入", value: "Import" },
       { text: "导出", value: "Export" },
       { text: "上传", value: "Upload" },
-      { text: "审核", value: "Audit" },
+      { text: "审核", value: "Audit" }
     ]);
     const actions = ref([]);
     actionValues.value = action.value.map((x) => {

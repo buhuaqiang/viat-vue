@@ -147,7 +147,7 @@ let extension = {
       //设置查询表单的标签文字宽度
       this.labelWidth = 180;
       //表格设置为单选
-      // this.single=true;
+      this.single=true;
       //设置保存后继续添加 ，不关闭当前窗口
       this.continueAdd=true;
       this.continueAddName="Save And Continue";
@@ -210,6 +210,18 @@ let extension = {
         render: this.getRender("prod_dbid", 'f','p')
       }
       //-------------表單輸入框綁定彈窗 end-------------
+
+
+    },
+    handleFormSelected(rows){
+      alert("check the cust is Expfizer ");
+      //alert("cust_dbid:"+rows[0].cust_dbid)
+      if(rows[0].cust_id=='CD15590180'){
+        this.getFormOption("gross_price").hidden=false;
+      }else{
+        this.getFormOption("gross_price").hidden=true;
+      }
+
     },
     onInited() {
       //框架初始化配置后
@@ -230,7 +242,7 @@ let extension = {
       if(formData.mainData.nhi_price >= formData.mainData.invoice_price && formData.mainData.invoice_price >= formData.mainData.net_price ){
 
       }else{
-        this.$Message.error(" Nhi price > Invoice Price and Nhi price > Net Price");
+        this.$Message.error(" Nhi price >= Invoice Price and Invoice Price >= Net Price");
         return false;
       }
       return true;
@@ -238,14 +250,11 @@ let extension = {
     updateBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
       //source_type=2组内价格不允许编辑
-      if(formData.mainData.source_type==2){
-        this.$Message.error(" This group data can not edit.");
-        return false;
-      }
+
       if(formData.mainData.nhi_price >= formData.mainData.invoice_price && formData.mainData.invoice_price >= formData.mainData.net_price ){
 
       }else{
-        this.$Message.error(" Nhi price > Invoice Price and Nhi price > Net Price");
+        this.$Message.error(" Nhi price >= Invoice Price and Invoice Price >= Net Price");
         return false;
       }
       return true;
@@ -254,6 +263,34 @@ let extension = {
       //查询界面点击行事件
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
+    modelOpenBefore(row){
+      if (this.currentAction==this.const.EDIT){
+        if(row.source_type==2){
+          this.$Message.error(" This group data can not edit.");
+          return false;
+        }
+      }
+      //---------處理彈框字段顯示---------
+      this.editFormOptions.forEach(x => {
+        x.forEach(item => {
+          item.disabled=this.currentAction==this.const.VIEW;
+        })
+      })
+      if (this.hasDetail) {
+        this.detailOptions.columns.forEach(x=>{
+          x.edit=!this.currentAction==this.const.VIEW;
+        })
+        this.detailOptions.buttons.forEach(x=>{
+          x.hidden=this.currentAction==this.const.VIEW;
+        })
+      }
+      //隱藏保存按鈕
+      let saveBtn = this.boxButtons.find((x) => x.name == '保 存');
+      if(saveBtn){
+        saveBtn.hidden=this.currentAction==this.const.VIEW;
+      }
+
+    },
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
       //(1)判断是编辑还是新建操作： this.currentAction=='Add';
@@ -261,10 +298,12 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
-
       this.getFormOption("cust_dbidname").disabled=true;
       this.getFormOption("prod_dbidname").disabled=true;
       this.getFormOption("nhi_price").disabled=true;
+      //判斷Cust Id是否為Expfizer Cust Id
+      this.getFormOption("gross_price").hidden=true;
+
       if(this.currentAction==this.const.ADD){
         //設置Min Qty初始值為1
         this.editFormFields.min_qty=1;
@@ -279,6 +318,10 @@ let extension = {
         this.getFormOption("prod_dbidname").extra={render: this.getRender("prod_dbid", 'f','p')};
 
       }else if (this.currentAction==this.const.EDIT){
+
+        if(row.gross_price){
+          this.getFormOption("gross_price").hidden=false;
+        }
         this.getFormOption("bid_no").disabled=true;
         this.getFormOption("invoice_price").disabled=true;
         this.getFormOption("net_price").disabled=true;
@@ -287,7 +330,9 @@ let extension = {
         this.getFormOption("prod_dbidname").extra={};
 
       }else if (this.currentAction==this.const.VIEW){
-
+        if(row.gross_price){
+          this.getFormOption("gross_price").hidden=false;
+        }
       }
 
     }

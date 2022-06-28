@@ -882,6 +882,8 @@ let methods = {
     this.currentRow = rows[0];
     if (!( this.initBox())) return;
     this.setContinueAdd(false);
+    //重置表单
+    this.resetDetailTable();
     //设置当前的数据到表单上
     this.setEditForm(rows[0]);
     //设置远程查询表单的默认key/value

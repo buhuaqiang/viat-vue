@@ -14,6 +14,7 @@
             <el-radio :label="0" @change="hideType(0)">By Group</el-radio>
             <el-radio :label="1" @change="hideType(1)">By Customer</el-radio>
             <el-radio :label="2" @change="hideType(2)">By Product</el-radio>
+            <el-radio :label="3" @change="hideType(3)">By Channel</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item id="0" v-show="groupShowFlag" label="Group:" style="width: 35%">

@@ -117,6 +117,16 @@ let buttons = [{
         onClick: function () {
             this.invalidData();
         }
+    },
+    {
+        name: "Detach All",
+        icon: 'el-icon-turn-off',
+        type:'danger',
+        plain:true,
+        value: 'detachAll',
+        onClick: function () {
+            this.detachAll();
+        }
     }
 // , {
 //     name: "数据结构",

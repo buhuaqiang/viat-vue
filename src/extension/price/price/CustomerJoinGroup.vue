@@ -1,0 +1,386 @@
+<template>
+  <div  id="vol-main" >
+    <div style="padding:20px 2px;">
+      <el-form :inline="true"  label-width="100px" :model="formModel">
+
+        <el-form-item  label="Group:" style="width: 35%">
+          <el-input v-model="formModel.pricegroup_dbidname" style="width:150px;" ></el-input>
+          <a @click="openPriceGroup(0)" class="a-pop"><i class="el-icon-zoom-in"></i>選擇</a>&nbsp;<a class="a-clear" @click="clearPop(0)"><i class="el-icon-zoom-out"></i>清除</a>
+          <el-input v-model="formModel.pricegroup_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
+        </el-form-item>
+        <el-form-item label="Start Date:" style="width: 35%">
+          <el-date-picker
+                  suffix-icon="el-icon-date"
+                  v-model="formModel.start_date"
+                  type="date"
+                  placeholder="" >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item  label="Customer:" style="width: 35%;">
+          <el-input v-model="formModel.cust_dbidname" style="width:150px;" ></el-input>
+          <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>選擇</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>清除</a>
+          <el-input v-model="formModel.cust_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
+        </el-form-item>
+
+        <el-form-item label="End Date:" style="width: 35%">
+          <el-date-picker
+                  suffix-icon="el-icon-date"
+                  v-model="formModel.end_date"
+                  type="date"
+                  placeholder="" >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="Remark:" style="width: 60%">
+          <el-input type="textarea" v-model="formModel.remark" style="width:250px;"></el-input>
+        </el-form-item>
+      </el-form>
+      <el-button
+        type="primary"
+        style="margin-left:10px"
+        size="medium"
+        icon="el-icon-zoom-in"
+        @click="search"
+        >Inquire</el-button
+      >
+      <el-button
+              type="primary"
+              icon="el-icon-document-add"
+              @click="addRow()"
+      >Execute</el-button >
+      <el-button
+              type="primary"
+              icon="el-icon-refresh"
+              @click="resetForm"
+      >Clean</el-button >
+
+    </div>
+    <div  class="box">
+      <div class="left">
+        <div class="header">Group Price</div>
+        <vol-table
+                ref="mytable"
+                title="table1"
+                :loadKey="true"
+                :columns="columns"
+                :tableData="[]"
+                :pagination="pagination"
+                :pagination-hide="false"
+                :height="500"
+                :url="url"
+                :index="true"
+                :single="false"
+                :defaultLoadPage="false"
+                @loadBefore="loadTableBefore"
+                @loadAfter="loadTableAfter"
+                @rowClick = "rowClick"
+        ></vol-table>
+      </div>
+      <div class="main">
+        <p @click="allChoose()"> &gt;&gt; </p>
+        <p @click="selected()"> &gt; </p>
+        <p @click="cancelSelected()"> &lt; </p>
+        <p @click="cancelAll()"> &lt;&lt; </p>
+
+      </div>
+      <!--<div style="display:inline;width: 2%;">
+
+      </div>-->
+      <div class="right">
+          <div class="header">Add to Group Price</div>
+          <vol-table
+                  ref="table2"
+                  title="table2"
+                  :tableData="selectedData"
+                  :loadKey="true"
+                  :clickEdit="false"
+                  :columns="tableColumns2"
+                  :pagination-hide="false"
+                  :single="false"
+                  :height="500"
+                  :defaultLoadPage="false"
+                  @loadBefore="loadTableBefore2"
+                  :index="true"
+                  @rowClick = "rowClick1"
+          ></vol-table>
+      </div>
+    </div>
+    <!-- 设置弹出框的操作按钮 -->
+    <price-group-model-body ref="PriceGroupModelBody" @onSelect="onSelectPop"></price-group-model-body>
+    <viat_com_cust-model-body ref="Viat_com_custModelBody" @onSelect="onSelectPop"></viat_com_cust-model-body>
+  </div>
+</template>
+<script>
+import VolTable from "@/components/basic/VolTable.vue";
+import PriceGroupModelBody from "./PriceGroupModelBody";
+import Viat_com_custModelBody from "../../basic/cust/Viat_com_custModelBody";
+export default {
+  components: {
+    Viat_com_custModelBody,
+    PriceGroupModelBody,
+    VolTable: VolTable,
+  },
+  data() {
+    return {
+      model: false,
+      formModel:{
+        start_date:new Date(),
+        end_date:new Date('2099-12-31')
+      },
+      defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
+      selectedData:[],//被選中的數據
+      custprice_dbids:[],//被選中的價格群組商品custprice_dbid
+      fieldName:"",//編輯字段,用於回傳設置值
+      formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields
+      url: "api/View_cust_price/getPriceGroupProducts",//加载数据的接口(需要重新寫)
+      columns: [
+        {field:'prod_dbid',title:'Product ID',type:'string',width:90,require:true,align:'left', hidden: true},
+        {field:'prod_id',title:'Product ID',type:'string',width:90,require:true,align:'left'},
+        {field:'prod_ename',title:'Product Name',type:'string',width:130,align:'left'},
+        {field:'nhi_price',title:'NHI Price',type:'decimal',width:90,align:'left'},
+        {field:'invoice_price',title:'Invoice Price',type:'decimal',width:90,align:'left'},
+        {field:'net_price',title:'Net Price',type:'decimal',width:90,align:'left'},
+        {field:'min_qty',title:'Min Qty',type:'decimal',width:90,align:'left'},
+        {field:'state',title:'Status',type:'string',bind:{ key:'prod_status',data:[]},width:80,align:'left'},
+        ],
+      tableColumns2:[
+        {field:'prod_dbid',title:'Product ID',type:'string',width:90,require:true,align:'left', hidden: true},
+        {field:'prod_id',title:'Product ID',type:'string',width:90,require:true,align:'left'},
+        {field:'prod_ename',title:'Product Name',type:'string',width:130,align:'left'},
+        {field:'nhi_price',title:'NHI Price',type:'decimal',width:90,align:'left'},
+        {field:'invoice_price',title:'Invoice Price',type:'decimal',width:90,align:'left'},
+        {field:'net_price',title:'Net Price',type:'decimal',width:90,align:'left'},
+        {field:'min_qty',title:'Min Qty',type:'decimal',width:90,align:'left'},
+      ],
+      pagination: {}, //分页配置，见voltable组件api
+    };
+  },
+  created() {
+    //this.invalidModel.pricegroup_dbidname.render = this.getRender("pricegroup_dbid", 'pg')
+    //新打開的頁面把緩存數據清理掉
+    this.selectedData=[]
+    this.custprice_dbids=[]
+  },
+  methods: {
+    resetForm(){
+        this.formModel={
+          start_date:new Date(),
+          end_date:new Date('2099-12-31')
+        }
+      this.$refs.mytable.rowData=[];
+      this.selectedData=[];
+      this.custprice_dbids=[];
+
+    },
+    allChoose(){
+      let table1Data=this.$refs.mytable.rowData;
+      this.selectedData=[];//這一步是為了避免重複數據
+      this.custprice_dbids=[];
+      this.selectedData=table1Data;
+      table1Data.forEach(x=>{
+        this.custprice_dbids.push(x.custprice_dbid)
+      })
+      //重新加載查詢表的數據
+      this.search();
+    },
+    selected(){
+      let rows= this.$refs.mytable.getSelected()
+      if(rows.length==0){
+        return this.$message.error("請選擇數據");
+      }
+      rows.forEach(x=>{
+        let dbids = this.custprice_dbids.find((f) => f == x.custprice_dbid);
+        if(!dbids){
+          this.selectedData.push(x);
+          this.custprice_dbids.push(x.custprice_dbid)
+        }
+
+      })
+      //重新加載查詢表的數據
+      this.search();
+    },
+    cancelSelected(){
+      let rows= this.$refs.table2.getSelected()
+      if(rows.length==0){
+        return this.$message.error("請選擇數據");
+      }
+      rows.forEach(x=>{
+        let index=this.custprice_dbids.findIndex((f) => f == x.custprice_dbid);
+        let index2=this.selectedData.findIndex((f) => f.custprice_dbid == x.custprice_dbid);
+        this.selectedData.splice(index2,1);
+        this.custprice_dbids.splice(index,1)
+      })
+      //重新加載查詢表的數據
+      this.search();
+    },
+    cancelAll(){
+      this.selectedData=[];
+      this.custprice_dbids=[];
+      //重新加載查詢表的數據
+      this.search();
+    },
+    openPriceGroup(val){
+      if(val==0){
+        this.$refs.PriceGroupModelBody.openDemo("pricegroup_dbid","ext")
+      }else if(val==1){
+        this.$refs.Viat_com_custModelBody.openDemo("cust_dbid","ext")
+      }
+
+    },
+
+    openDemo() {
+      this.model = true;
+    },
+    onSelectPop(fieldName,rows){
+        if(rows.length!=1){
+          return this.$message.error("請選擇數據");
+        }
+        if(fieldName=='pricegroup_dbid'){
+          this.formModel.pricegroup_dbidname=rows[0].group_id+" "+rows[0].group_name;
+          this.formModel.pricegroup_dbid=rows[0].pricegroup_dbid
+        }else if(fieldName=='cust_dbid'){
+          this.formModel.cust_dbidname=rows[0].cust_id+" "+rows[0].cust_name;
+          this.formModel.cust_dbid=rows[0].cust_dbid
+        }
+
+    },
+    clearPop(val){
+      if(val==0){
+        this.formModel.pricegroup_dbidname="";
+        this.formModel.pricegroup_dbid="";
+      }else if(val==1){
+        this.formModel.cust_dbidname="";
+        this.formModel.cust_dbid="";
+      }
+
+    },
+
+
+    search() {
+      //点击搜索
+      if(this.formModel.pricegroup_dbid){
+
+      }else{
+        this.$message.error("Please input Group.");
+        return false;
+      }
+      this.$refs.mytable.load();
+    },
+
+    addRow() {
+      let rows =  this.$refs.table2.getSelected()
+      if (!rows || rows.length == 0) {
+        return this.$message.error("請選擇數據");
+      }
+      this.checkData();
+      this.formModel.rows=rows;
+      this.http.post("api/View_cust_price/excuteCustomerJoinGroup", { mainData: this.formModel }, true)
+              .then((x) => {
+                if (!x.status) {
+                  this.$Message.error(x.message);
+                  return;
+                }
+              });
+    },
+
+
+    checkData(){
+      if(!this.formModel.pricegroup_dbid){
+        return this.$message.error("Please input Group.");
+      }
+      if(!this.formModel.cust_dbid){
+        return this.$message.error("Please input Customer.");
+      }
+      if(!this.formModel.start_date){
+        return this.$message.error("Please input Start Date.");
+      }
+      if(!this.formModel.end_date){
+        return this.$message.error("Please input End Date.");
+      }
+
+    },
+    //这里是从api查询后返回数据的方法
+    loadTableAfter(row) {
+      //   let url="";
+      // this.http.get(url, params, true).then((result) => {
+      //     this.da
+      // });
+    },
+    rowClick({ row, column, event }) {
+      //查询界面点击行事件
+      this.$refs.mytable.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
+    },
+    rowClick1({ row, column, event }) {
+      //查询界面点击行事件
+      this.$refs.table2.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
+    },
+    loadTableBefore(params) {
+      //查询前，设置查询条件
+      if(this.custprice_dbids.length>0){
+        params.wheres.push({ name: "custprice_dbids", value: this.custprice_dbids,displayType:'not in' });
+      }
+      if(this.formModel.cust_dbid){
+        params.wheres.push({ name: "cust_dbid", value: this.formModel.cust_dbid });
+      }else{
+        //return  this.$message.error("Please input Customer.");;
+      }
+
+      if(this.formModel.pricegroup_dbid){
+        params.wheres.push({ name: "pricegroup_dbid", value: this.formModel.pricegroup_dbid });
+      }else{
+
+      }
+
+
+      return true;
+    },
+  },
+};
+</script>
+<style lang="less" scoped>
+  .a-pop {
+    color:#0c83ff;border-bottom: 1px solid;margin-left: 9px;font-size:12px;text-decoration:none;cursor: pointer
+  }
+  .a-clear{
+    font-size:12px;text-decoration:none;color:red;border-bottom: 1px solid;margin-left: 9px;text-decoration:none;cursor: pointer
+  }
+  .header{
+    background-color:#d0d0d0;
+    height: 30px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+  }
+  .box {
+    margin: 10px 2px;
+    border: 1px solid ;
+    height: 600px;
+    position: relative;
+    overflow: hidden;
+  }
+  .main {
+    position: absolute;
+    left: 48%;
+    right: 48%;
+    top: 0px;
+    bottom: 0px;
+    height: 100%;
+  }
+  .main p{
+      text-align: center;
+      cursor: pointer;
+      font-size: large;
+      font-weight: bold;
+  }
+  .left {
+    float: left;
+    width: 48%;
+    height: 100%;
+  }
+  .right {
+    float: right;
+    width: 48%;
+    height: 100%;
+  }
+
+</style>

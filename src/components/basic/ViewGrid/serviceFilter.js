@@ -73,15 +73,18 @@ let serviceFilter = {
     return true;
   },
   modelOpenBefore (row) { //点击编辑/新建按钮弹出框前，可以在此处写逻辑，如，从后台获取数据
+    debugger
     this.editFormOptions.forEach(x => {
       x.forEach(item => {
         item.disabled=this.currentAction==this.const.VIEW;
       })
     })
     if (this.hasDetail) {
-      this.detailOptions.columns.forEach(x=>{
-        x.edit=!this.currentAction==this.const.VIEW;
-      })
+      this.detailOptions.edit=!(this.currentAction==this.const.VIEW);
+
+      /*this.detailOptions.columns.forEach(x=>{
+         x.edit=!(this.currentAction==this.const.VIEW);
+       })*/
       this.detailOptions.buttons.forEach(x=>{
         x.hidden=this.currentAction==this.const.VIEW;
       })
