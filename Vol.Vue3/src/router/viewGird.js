@@ -122,11 +122,11 @@ let viewgird = [
         path: '/View_app_power_contract_main',
         name: 'View_app_power_contract_main',
         component: () => import('@/views/contract/contract/View_app_power_contract_main.vue')
-    }    ,{
+    } /*   ,{
         path: '/Viat_app_power_contract_cust',
         name: 'Viat_app_power_contract_cust',
         component: () => import('@/views/contract/contract/Viat_app_power_contract_cust.vue')
-    }   ,{
+    } */  ,{
         path: '/Viat_com_zip_city',
         name: 'Viat_com_zip_city',
         component: () => import('@/views/basic/city/Viat_com_zip_city.vue')
@@ -259,8 +259,7 @@ let viewgird = [
         path: '/View_com_prod_maintenance',
         name: 'View_com_prod_maintenance',
         component: () => import('@/views/basic/prod/View_com_prod_maintenance.vue')
-    }
-    ,{
+    }    ,{
         path: '/Viat_app_cust_price',
         name: 'Viat_app_cust_price',
         component: () => import('@/views/price/price/Viat_app_cust_price.vue')
@@ -300,6 +299,14 @@ let viewgird = [
         path: '/CustomerDetachFromGroup',
         name: 'CustomerDetachFromGroup',
         component: () => import('@/extension/price/price/CustomerDetachFromGroup.vue')
-    }]
+    }    ,{
+        path: '/View_import_customer_maintain',
+        name: 'View_import_customer_maintain',
+        component: () => import('@/views/basic/cust/View_import_customer_maintain.vue')
+    }    ,{
+        path: '/View_app_cust_delivery_transfer',
+        name: 'View_app_cust_delivery_transfer',
+        component: () => import('@/views/basic/cust/View_app_cust_delivery_transfer.vue')
+    } ]
 
 export default viewgird
