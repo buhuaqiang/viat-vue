@@ -45,7 +45,7 @@
                               [{"title":"Remarks","field":"remarks","colSize":10,"type":"textarea"}]]);
             const searchFormFields = ref({"pricegroup_dbid":"","start_date":"","end_date":"","status":"","modified_date":"","pricegroup_dbidname":"","prods":[]});
             const searchFormOptions = ref([[{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"},{"title":"Group","field":"pricegroup_dbidname"},{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"},{"title":"Modified Date","field":"modified_date","type":"date"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],[{"title":"","field":"pricegroup_dbid"}]]);
-            const columns = ref([{field:'group_id',title:'Group Id',type:'string',width:110,require:true,align:'left',sort:true},
+            const columns = ref([{field:'group_id',title:'Group Id',type:'string',link:true,width:110,require:true,align:'left',sort:true},
                        {field:'group_name',title:'Group Name',type:'string',width:120,align:'left'},
                        {field:'prod_id',title:'Product Id',type:'string',width:110,require:true,align:'left'},
                        {field:'prod_ename',title:'Product Name',type:'string',width:110,align:'left'},
