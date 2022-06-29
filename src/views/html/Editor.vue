@@ -16,7 +16,7 @@ export default defineComponent({
        'vol-wang-editor':VolWangEditor
    },
    setup(props) {
-       const content=ref('请输入。。。。');
+       const content=ref('Please Input。。。。');
        return {content}
    }
 })
@@ -25,4 +25,4 @@ export default defineComponent({
 .editor-example{
     padding: 25px;
 }
-</style> 
+</style>

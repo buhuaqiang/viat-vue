@@ -109,6 +109,7 @@ let extension = {
               debugger;
               this.editFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
               this.editFormFields['group_name'] =reslut.group_id + " " + reslut.group_name;
+              this.$refs.modelBody.initCustomerListByGroupDbId(reslut.pricegroup_dbid);
               return;
             })
           }
@@ -225,7 +226,7 @@ let extension = {
                 }
               },
               [h("i",{class:"el-icon-zoom-in"})],
-              "選擇"
+              "Pick"
           ),
           h(
               "a",
@@ -237,7 +238,7 @@ let extension = {
                 }
               },
               [h("i",{class:"el-icon-zoom-out"})],
-              "清除"
+              "Clean"
           ),
 
         ]);
@@ -268,7 +269,7 @@ let extension = {
                 }
               },
               [h("i",{class:"el-icon-zoom-in"})],
-              "選擇"
+              "Pick"
           ),
           h(
               "a",
@@ -284,7 +285,7 @@ let extension = {
                 }
               },
               [h("i",{class:"el-icon-zoom-out"})],
-              "清除"
+              "Clean"
           ),
 
         ]);
@@ -390,6 +391,11 @@ let extension = {
       //新建保存前formData为对象，包括明细表，可以给给表单设置值，自己输出看formData的值
       return true;
     },
+ /*   addAfter(result ){
+      this.editFormFields=result.data;
+      this.currentAction=='Update'
+      return false;
+    },*/
     updateBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
       //選擇客戶List table1

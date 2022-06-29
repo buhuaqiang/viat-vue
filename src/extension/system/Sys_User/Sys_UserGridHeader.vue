@@ -15,7 +15,7 @@
       </el-alert>
       <div>
         <el-input
-          placeholder="请输入密码"
+          placeholder="Please Input密码"
           v-model="password"
           size="large"
           style="width: 100%; margin-top: 15px"

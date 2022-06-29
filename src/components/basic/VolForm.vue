@@ -76,7 +76,7 @@
               filterable
               :multiple="item.type == 'select' ? false : true"
               :placeholder="
-                item.placeholder ? item.placeholder : '请选择' + item.title
+                item.placeholder ? item.placeholder : 'Please Select ' + item.title
               "
               :allow-create="item.autocomplete"
               @change="item.onChange"
@@ -155,7 +155,7 @@
                 v-model="formFields[item.field][0]"
                 :type="item.type == 'date' ? 'date' : 'datetime'"
                 :disabledDate="(val) => getDateOptions(val, item)"
-                placeholder="开始时间"
+                placeholder="Start Date"
                 prefix-icon=" "
                 @change="
                   (val) => {
@@ -173,7 +173,7 @@
                 :disabled="item.readonly || item.disabled"
                 style="flex: 1; width: auto"
                 v-model="formFields[item.field][1]"
-                placeholder="结束时间"
+                placeholder="End Date"
                 :type="item.type == 'date' ? 'date' : 'datetime'"
                 :disabledDate="(val) => getDateOptions(val, item)"
                 @change="
@@ -200,7 +200,7 @@
                 @change="item.onChange"
                 :type="item.type"
                 :placeholder="
-                  item.placeholder ? item.placeholder : '请选择' + item.title
+                  item.placeholder ? item.placeholder : 'Please Select ' + item.title
                 "
                 :disabledDate="(val) => getDateOptions(val, item)"
                 :value-format="getDateFormat(item)"
@@ -299,7 +299,7 @@
                 maxRows: item.maxRows || 10
               }"
               :placeholder="
-                item.placeholder ? item.placeholder : '请输入' + item.title
+                item.placeholder ? item.placeholder : 'Please Input ' + item.title
               "
               :ref="item.field"
             />
@@ -323,7 +323,7 @@
               :disabled="item.readonly || item.disabled"
               v-show="!item.hidden"
               :placeholder="
-                item.placeholder ? item.placeholder : '请输入' + item.title
+                item.placeholder ? item.placeholder : 'Please Input ' + item.title
               "
             />
             <!-- 2021.11.18修复el-input没有默认enter事件时回车异常 -->
@@ -333,7 +333,7 @@
               v-else-if="item.onKeyPress"
               size="medium"
               :placeholder="
-                item.placeholder ? item.placeholder : '请输入' + item.title
+                item.placeholder ? item.placeholder : 'Please Input ' + item.title
               "
               :disabled="item.readonly || item.disabled"
               v-show="!item.hidden"
@@ -352,7 +352,7 @@
               size="medium"
               :input-style="item.inputStyle"
               :placeholder="
-                item.placeholder ? item.placeholder : '请输入' + item.title
+                item.placeholder ? item.placeholder : 'Please Input ' + item.title
               "
               :disabled="item.readonly || item.disabled"
               v-show="!item.hidden"
@@ -789,7 +789,7 @@ export default defineComponent({
         return callback();
       }
       if (!rule.phone.test((value || '').trim())) {
-        return callback(new Error('请输入正确的手机号'));
+        return callback(new Error('Please Input正确的手机号'));
       }
       callback();
     },
@@ -1104,7 +1104,7 @@ export default defineComponent({
       if (item.type == 'radio') {
         return {
           required: item.required,
-          message: '请选择' + item.title,
+          message: 'Please Select ' + item.title,
           trigger: 'change',
           type: 'string'
         };
@@ -1116,7 +1116,7 @@ export default defineComponent({
       ) {
         return {
           required: true,
-          message: '请选择' + item.title,
+          message: 'Please Select ' + item.title,
           trigger: 'change',
           type: item.range ? 'array' : 'string',
           validator: (rule, val, callback) => {
@@ -1142,7 +1142,7 @@ export default defineComponent({
             // 用户自定义的方法，如果返回了值，直接显示返回的值，验证不通过
             let _arr = this.formFields[item.field];
             if (!_arr || !_arr.length) {
-              return callback(new Error('请选择' + item.title));
+              return callback(new Error('Please Select ' + item.title));
             }
             return callback();
           }
@@ -1157,7 +1157,7 @@ export default defineComponent({
           type: item.type == 'select' ? 'string' : 'array',
           required: true,
           min: item.min || 1,
-          message: '请选择' + item.title,
+          message: 'Please Select ' + item.title,
           trigger: 'change',
           validator: (rule, value, callback) => {
             //if (this.isReadonly(item)) return callback();

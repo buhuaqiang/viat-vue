@@ -85,7 +85,7 @@
             <template #footer>
               <div v-if="!fiexdSearchForm" class="form-closex">
                 <el-button size="mini" type="primary" plain @click="search">
-                  <i class="el-icon-search" />查询
+                  <i class="el-icon-search" />Inquire
                 </el-button>
 
                 <el-button
@@ -94,14 +94,14 @@
                   plain
                   @click="resetSearch"
                 >
-                  <i class="el-icon-refresh-right" />重置
+                  <i class="el-icon-refresh-right" />Reset
                 </el-button>
                 <el-button
                   size="mini"
                   plain
                   @click="searchBoxShow = !searchBoxShow"
                 >
-                  <i class="el-icon-switch-button" />关闭
+                  <i class="el-icon-switch-button" />Close
                 </el-button>
               </div>
             </template>
@@ -148,7 +148,7 @@
               v-if="buttons.length > maxBtnLength"
             >
               <el-button type="primary" plain size="small">
-                更多<i class="el-icon-arrow-down el-icon--right"></i>
+                More<i class="el-icon-arrow-down el-icon--right"></i>
               </el-button>
               <template #dropdown>
                 <el-dropdown-menu>
@@ -284,7 +284,7 @@
                 plain
                 @click="onModelClose(false)"
               >
-                <i class="el-icon-close">关闭</i>
+                <i class="el-icon-close">Close</i>
               </el-button>
             </div>
           </template>
