@@ -47,7 +47,7 @@
                        {field:'cust_dbid',title:'客戶代碼',type:'guid',width:110,align:'left'},
                        {field:'serial_no',title:'序號',type:'decimal',width:110,align:'left'},
                        {field:'percent',title:'分配比例',type:'decimal',width:110,align:'left'},
-                       {field:'status',title:'是否有效,Y:生效/N:未生效or期滿',type:'bool',width:110,align:'left'},
+                       {field:'status',title:'是否有效,Y:生效/N:未生效or期滿',type:'string',width:110,align:'left'},
                        {field:'o_contract_no',title:'LocalAddon Contractno',type:'int',width:110,align:'left'},
                        {field:'created_user',title:'建立用戶',type:'int',width:110,align:'left'},
                        {field:'created_username',title:'created_username',type:'string',width:110,align:'left'},
