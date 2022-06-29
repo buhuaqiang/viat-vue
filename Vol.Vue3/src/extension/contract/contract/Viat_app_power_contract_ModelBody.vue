@@ -11,7 +11,7 @@
     >
       <el-tab-pane>
         <template #label>
-          <span><i class="el-icon-date"></i>合約客戶List</span>
+          <span><i class="el-icon-date"></i>Customer List</span>
         </template>
         <!-- 显示操作按钮 -->
         <div>
@@ -22,7 +22,7 @@
             size="mini"
             ghost
             @click="addCustList"
-            >添加客戶</el-button
+            >Add</el-button
           >
           <el-button
                 type="primary"
@@ -30,7 +30,7 @@
                 size="mini"
                 ghost
                 @click="delTable1"
-        >删除行</el-button
+        >Delete</el-button
         >
     <!--      <el-button
             type="warning"
@@ -39,7 +39,7 @@
             ghost
             @click="getRows"
             >获取选中的行</el-button
-          >-->
+          >
           <el-button
             type="info"
             icon="el-icon-refresh"
@@ -47,6 +47,7 @@
             @click="RefreshTable1()"
             >刷新</el-button
           >
+          -->
         </div>
        <!-- <el-alert
           title="双击行可以编辑,或者可以根据菜单： table使用->table编辑(二)在行上配置操作,完整文档见:组件api->voltable"
@@ -72,9 +73,9 @@
       </el-tab-pane>
 
       <!-- 从表2 -->
-      <el-tab-pane :lazy="false" label="合約產品List">
+      <el-tab-pane :lazy="false" label="Contract Product">
         <template #label>
-          <span><i class="el-icon-date"></i> 合約產品List</span>
+          <span><i class="el-icon-date"></i> Contract Product</span>
         </template>
         <!-- 从表2配置 ,双击可以开启编辑-->
         <div style="padding-bottom: 10px">
@@ -84,7 +85,7 @@
             size="mini"
             ghost
             @click="addProdListForpurchase"
-            >添加產品</el-button
+            >Add</el-button
           >
           <el-button
                   type="primary"
@@ -92,7 +93,7 @@
                   size="mini"
                   ghost
                   @click="delTable2"
-          >删除行</el-button
+          >Delete</el-button
           >
           <el-button
                   icon="el-icon-refresh"
@@ -108,6 +109,7 @@
                   ghost
                   @click="doCalculate">Calculate
           </el-button>
+          <!--
           <el-button
             icon="el-icon-refresh"
             size="mini"
@@ -115,6 +117,7 @@
             ghost
             @click="RefreshTable2()">刷新
           </el-button>
+          -->
         </div>
         <vol-table
           ref="table2"
@@ -140,9 +143,9 @@
 
       </el-tab-pane>
       <!-- 从表3 -->
-      <el-tab-pane :lazy="false" label="合約贈送產品List">
+      <el-tab-pane :lazy="false" label="FG Product">
         <template #label>
-          <span><i class="el-icon-date"></i> 合約贈送產品List</span>
+          <span><i class="el-icon-date"></i>FG Product</span>
         </template>
         <!-- 从表3配置 ,双击可以开启编辑-->
         <div style="padding-bottom: 10px">
@@ -152,24 +155,26 @@
                   size="mini"
                   ghost
                   @click="addProdListForFree"
-          >添加產品</el-button
+          >Add</el-button
           >
+
           <el-button
                   type="primary"
                   icon="el-icon-close"
                   size="mini"
                   ghost
                   @click="delTable3"
-          >删除行</el-button
+          >Delete</el-button
           >
+          <!--
           <el-button
                   icon="el-icon-refresh"
                   size="mini"
                   type="info"
                   ghost
                   @click="RefreshTable3()"
-          >刷新</el-button
-          >
+          >刷新</el-button>
+          -->
         </div>
         <vol-table
                 ref="table3"
@@ -222,7 +227,7 @@ export default {
         { field: "powercont_dbid", title: "外鍵ID", type: "guid", width: 80, hidden: true },
         {
           field: "territory_id",
-          title: "zone code",
+          title: "Zone Code",
           type: "string",
           width: 100,
          // require: true,
@@ -230,17 +235,17 @@ export default {
           //edit: { type: "text" }, //keep:true始终开启编辑，false双击才能编辑
         },
         { field: "cust_dbid", title: "cust_dbid", type: "string", hidden:true },
-        { field: "cust_id", title: "cust code", type: "string", width: 170 },
+        { field: "cust_id", title: "Cust ID", type: "string", width: 170 },
         {
           field: "cust_name",
-          title: "cust name",
+          title: "Customer Name",
           type: "string",
           width: 120,
         },
 
         {
           field: "created_date",
-          title: "create date",
+          title: "Create Date",
           type: "datetime",
           width: 150,
           readonly: true,
@@ -255,12 +260,12 @@ export default {
           field: "prod_dbid",title: "prod_dbid",  width: 120,hidden: true},
         {
           field: "prod_id",
-          title: "prod_id",
+          title: "Product ID",
           width: 120,
         },
         {
           field: "prod_ename",
-          title: "prod ename",
+          title: "Product Ename",
           width: 150,
         },
         {
@@ -278,7 +283,7 @@ export default {
 
         {
           field: "created_date",
-          title: "创建时间",
+          title: "Create Data",
           type: "text",
           readonly: true,
           width: 150,
@@ -292,12 +297,12 @@ export default {
           field: "prod_dbid",title: "prod_dbid",  width: 120,hidden: true},
         {
           field: "prod_id",
-          title: "prod_id",
+          title: "Product ID",
           width: 120,
         },
         {
           field: "prod_ename",
-          title: "prod ename",
+          title: "Product Ename",
           width: 150,
         },
         {
@@ -315,7 +320,7 @@ export default {
 
         {
           field: "created_date",
-          title: "创建时间",
+          title: "Create Date",
           type: "text",
           readonly: true,
           width: 150,
@@ -338,15 +343,14 @@ export default {
       this.table3Url= this.table3Url;//+this.powercont_dbid;
       //当前如果是新建重置两个表格数据
       if ($parent.currentAction == "Add") {
-        this.showFlag = false;
-        $parent.boxOptions.height=400;
-        $parent.boxOptions.width=1200;
-        //this.$refs.table1.reset();
-        //this.$refs.table2.reset();
+        this.showFlag = true;
+        $parent.boxOptions.height=800;
+        $parent.boxOptions.width=1400;
+        this.clear();
 
       } else {
         $parent.boxOptions.height=800;
-        $parent.boxOptions.width=1200;
+        $parent.boxOptions.width=1400;
         this.showFlag = true;
         //如果是编辑，添加两个表格的数据
         this.clear();
@@ -433,6 +437,37 @@ export default {
       return true;
     },
 
+    initCustomerListByGroupDbId(pricegroup_dbid){
+      //ajax根據
+      //返回指定字段
+      this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?pricegroup_dbid="+pricegroup_dbid,{} , "loading").then(reslut => {
+                let _rows = rows.map((row)=>{
+                  return{
+                    powercont_dbid:this.powercont_dbid,
+                    cust_dbid:row.cust_dbid,
+                    territory_id:row.territory_id,
+                    cust_id:row.cust_id,
+                    cust_name:row.cust_name
+                  }
+                })
+
+                //this.$refs.table1.rowData.push(..._rows);
+                //push的时候去除已经选择的客户
+                _rows.forEach(x => {
+                  let idx =  this.$refs.table1.rowData.some(item => {
+                    // 判断项应为获取的变量
+                    if(item.cust_dbid == x.cust_dbid) {
+                      return true;
+                    }
+                  })
+                  if(!idx){
+                    this.$refs.table1.rowData.push(x);
+                  }
+                })
+
+                this.table1RowData = this.$refs.table1.rowData;
+              })
+    },
     // 選擇客戶后的回調方法, table1 多選, 主表單選
     onSelectByCust(fieldName,rows){
       if(fieldName =='table1'){

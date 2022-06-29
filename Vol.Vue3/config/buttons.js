@@ -1,6 +1,6 @@
 
 let buttons = [{
-    name: "查 询",
+    name: "Inquire",
     value: 'Search',
     icon: 'el-icon-search',
     class: '',
@@ -10,7 +10,7 @@ let buttons = [{
     }
 },
 {
-    name: "新 建",
+    name: "New",
     icon: 'el-icon-plus',
     value: 'Add',
     class: '',
@@ -21,7 +21,7 @@ let buttons = [{
         this.add();
     }
 },{
-    name: "编 辑",
+    name: "Edit",
     icon: 'el-icon-edit',
     value: 'Update',
    // plain:true,
@@ -31,7 +31,7 @@ let buttons = [{
         this.edit();
     }
 },  {
-    name: "删 除",
+    name: "Delete",
     icon: 'el-icon-delete',
     class: '',
     value: 'Delete',
@@ -51,7 +51,7 @@ let buttons = [{
     }
 },
 {
-    name: "导 入",
+    name: "Import",
     icon: 'el-icon-top',
     class: '',
     type:'success',
@@ -61,7 +61,7 @@ let buttons = [{
         this.import();
     }
 }, {
-    name: "导 出",
+    name: "Export",
     icon: 'el-icon-bottom',
     type:'success',
     plain:true,
@@ -71,7 +71,7 @@ let buttons = [{
     }
 },
     {
-        name: "查 看",
+        name: "View",
         icon: 'el-icon-view',
         type:'warning',
         plain:true,

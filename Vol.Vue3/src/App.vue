@@ -6,7 +6,8 @@
 </template>
 <script>
 import { ElConfigProvider } from "element-plus";
-import zhCn from "element-plus/lib/locale/lang/zh-cn";
+//import zhCn from "element-plus/lib/locale/lang/zh-cn";、
+import enus from "element-plus/lib/locale/lang/en";
 export default {
   name: "vol_app",
   components: {
@@ -14,7 +15,7 @@ export default {
   },
   data() {
     return {
-      locale: zhCn,
+      locale: enus,
     };
   },
 };

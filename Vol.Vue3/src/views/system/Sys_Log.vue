@@ -48,7 +48,7 @@
                        {field:'BrowserType',title:'浏览器类型',type:'string',width:90,align:'left'},
                        {field:'User_Id',title:'用户ID',type:'int',width:90,hidden:true,align:'left'},
                        {field:'Role_Id',title:'角色ID',type:'int',bind:{ key:'roles',data:[]},width:90,hidden:true,align:'left'},
-                       {field:'EndDate',title:'结束时间',type:'datetime',width:150,hidden:true,align:'left',sortable:true}]);
+                       {field:'EndDate',title:'End Date',type:'datetime',width:150,hidden:true,align:'left',sortable:true}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 columns: [],

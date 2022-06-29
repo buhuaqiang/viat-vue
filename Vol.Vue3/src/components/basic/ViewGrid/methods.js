@@ -14,7 +14,7 @@ let methods = {
     if (this.currentReadonly) {
       return '';
     }
-    return '--' + (this.currentAction == this.const.ADD ? '新增' : this.currentAction == this.const.EDIT?'编辑':'查看');
+    return '--' + (this.currentAction == this.const.ADD ? 'Create' : this.currentAction == this.const.EDIT?'Edit':'View');
   },
   quickSearchKeyPress($event) {
     //查询字段为input时，按回车查询
@@ -34,7 +34,7 @@ let methods = {
     if (searchIndex != -1&&!hasOneFormItem) {
       this.buttons.splice(searchIndex + 1, 0, {
         icon: this.fiexdSearchForm ? 'el-icon-refresh-left' : 'el-icon-search',
-        name: this.fiexdSearchForm ? '重置' : '高级查询',
+        name: this.fiexdSearchForm ? 'Reset' : 'Advanced Query',
         plain: true,
         type: this.buttons[searchIndex].type,
         onClick: () => {
@@ -118,7 +118,7 @@ let methods = {
     this.currentReadonly = !saveBtn;
     //从表表格操作按钮
     let detailGridButtons = {
-      name: '刷新',
+      name: 'Refresh',
       type: 'info',
       icon: 'el-icon-refresh',
       onClick() {
@@ -178,7 +178,7 @@ let methods = {
     boxButtons.push(
       ...[
         {
-          name: '保 存',
+          name: 'Save',
           icon: 'el-icon-check',
           type: 'danger',
           disabled: false,
@@ -202,7 +202,7 @@ let methods = {
     this.detailOptions.buttons.push(
       ...[
         {
-          name: '添加行',
+          name: 'Add',
           icon: 'el-icon-plus',
           type: 'primary',
           hidden: false,
@@ -214,7 +214,7 @@ let methods = {
         {
           type: 'danger',
           plain: true,
-          name: '删除行',
+          name: 'Delete',
           hidden: false,
           icon: 'el-icon-delete',
           onClick() {
@@ -226,7 +226,7 @@ let methods = {
         {
           type: 'danger',
           plain: true,
-          name: '导入',
+          name: 'Import',
           value: 'import',
           hidden: false,
           icon: 'el-icon-upload2',
@@ -241,7 +241,7 @@ let methods = {
         {
           type: 'danger',
           plain: true,
-          name: '导出',
+          name: 'Export',
           value: 'export',
           icon: 'el-icon-download',
           hidden: false,

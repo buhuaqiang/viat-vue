@@ -107,7 +107,7 @@
                     <!-- {{ item.name }} -->
                     <el-input
                       v-if="item.type == 'text'"
-                      placeholder="请输入内容"
+                      placeholder="Please Input内容"
                       v-model="item.value"
                       :disabled="item.readonly"
                       size="medium"
@@ -117,7 +117,7 @@
                       type="textarea"
                       v-model="item.value"
                       :disabled="item.readonly"
-                      placeholder="请输入内容"
+                      placeholder="Please Input内容"
                     ></el-input>
                     <el-date-picker
                       v-else-if="item.type == 'date'"
@@ -169,7 +169,7 @@
                       v-model="item.value"
                       size="medium"
                       v-else-if="item.type == 'select'"
-                      placeholder="请选择"
+                      placeholder="Please Select "
                     >
                       <el-option
                         v-for="item in item.data"
@@ -186,7 +186,7 @@
                       size="medium"
                       :multiple="true"
                       v-else-if="item.type == 'selectList'"
-                      placeholder="请选择"
+                      placeholder="Please Select "
                     >
                       <el-option
                         v-for="item in item.data"
