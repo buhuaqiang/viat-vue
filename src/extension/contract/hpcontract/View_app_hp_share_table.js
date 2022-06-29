@@ -39,10 +39,12 @@ let extension = {
         // this.boxOptions.labelWidth = 150;
       //显示查询全部字段
       this.setFiexdSearchForm(true);
-
       //設置默認值
       let contract_no  = this.$route.query.contract_no;
       this.searchFormFields.contract_no = contract_no;
+      //let sumpercent = this.getSumPercent();
+      //this.searchFormFields.Summary =sumpercent;
+      //this.searchFormFields.Summary = summary;
       let sum_percent=this.getColumnsOption("sum_percent");
         sum_percent.formatter = (row) => {
         //对单元格的数据格式化处理
@@ -53,37 +55,107 @@ let extension = {
         return row.sum_percent;
       }
 
-
-
-
-
-
       //查詢選擇
       let cust_dbidname=this.getSearchOption("cust_dbidname");
       cust_dbidname.extra={
         render:this.getSearchRender("cust_dbid","s","c")
       }
+      //查詢條件快捷回填
+      cust_dbidname.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  cust_id = this.searchFormFields['cust_dbidname']
+          if(cust_id) {
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
+              console.log(reslut)
+              this.searchFormFields['cust_dbid'] =reslut.cust_dbid;
+              this.searchFormFields['cust_dbidname'] =reslut.cust_id + " " + reslut.cust_name;
+              return;
+            })
+          }
+        }
+      }
+
       let prod_dbidname=this.getSearchOption("prod_dbidname");
       prod_dbidname.extra={
         render:this.getSearchRender("prod_dbid","s","p")
       }
+      //查詢條件快捷回填
+      prod_dbidname.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  prod_id = this.searchFormFields['prod_dbidname']
+          if(prod_id) {
+            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
+              console.log(reslut)
+              this.searchFormFields['prod_dbid'] =reslut.prod_dbid;
+              this.searchFormFields['prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
+              return;
+            })
+          }
+        }
+      }
       //編輯選擇
-      let search_cust_dbidname=this.getEditOption("cust_dbidname");
-      search_cust_dbidname.extra = {
+      let edit_cust_dbidname=this.getEditOption("cust_dbidname");
+      edit_cust_dbidname.extra = {
         render:this.getSearchRender("cust_dbid","f","c")
+      }
+      //快捷回填
+      edit_cust_dbidname.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  cust_id = this.editFormFields['cust_dbidname']
+          if(cust_id) {
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
+              console.log(reslut)
+              this.editFormFields['cust_dbid'] =reslut.cust_dbid;
+              this.editFormFields['cust_dbidname'] =reslut.cust_id + " " + reslut.cust_name;
+              return;
+            })
+          }
+        }
       }
       let edit_prod_dbidname=this.getEditOption("prod_dbidname");
       edit_prod_dbidname.extra = {
         render:this.getSearchRender("prod_dbid","f","p")
       }
-
-
+      //快捷回填
+      edit_prod_dbidname.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  prod_id = this.editFormFields['prod_dbidname']
+          if(prod_id) {
+            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
+              console.log(reslut)
+              this.editFormFields['prod_dbid'] =reslut.prod_dbid;
+              this.editFormFields['prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
+              return;
+            })
+          }
+        }
+      }
     },
+
+
+    //获取总比值
+   /* getSumPercent() {
+      let dbid = this.$route.query.hpcont_dbid;
+      let data = '';
+      let params2={};
+      let url = "api/Viat_app_hp_contract_share/getSumPercent";
+      let params = {
+        "page": 1,
+        "rows": 30,
+        "wheres": "[]"
+      }
+      params.wheres ="[{\"name\":\"hpcont_dbid\",\"value\":\""+this.$route.query.hpcont_dbid+"\",\"displayType\":\"=\"}]" ;
+
+      let _result = this.http.post("api/Viat_app_hp_contract_share/getSumPercent", params, true).then(result => {
+        return result;
+      });
+
+      return _result;
+    },*/
     onInited() {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
-
     },
     getColumnsOption (field) {
       let option;
@@ -185,23 +257,6 @@ let extension = {
         ]);
       };
     },
-
-    //计算总比值
-  /*  async getSumPercent() {
-
-      let data = "";
-      let params = {
-        "wheres": "[]"
-      }
-      let url = "api/View_app_hp_share_table/GetSumPercent";
-      params.wheres = "[{\"name\":\"hpcont_dbid\",\"value\":\"" + this.$route.query.hpcont_dbid + "\",\"displayType\":\"=\"}]";
-      let _result = await this.http.post(url, params, true).then((result) => {
-        return result;
-      });
-      console.log( JSON.stringify(_result))
-      return data;
-    },*/
-
 
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
