@@ -53,6 +53,8 @@ let extension = {
       this.boxOptions.labelWidth=180;
       //表格设置为单选
       this.single=true;
+      //设置默认不查询
+      this.load = false;
 
       this.price_dbid = this.getSearch("pricegroup_dbid");
       var costomer_type = this.getOption("costomer_type");
@@ -310,7 +312,7 @@ let extension = {
                 }
               },
               [h("i",{class:"el-icon-zoom-in"})],
-              "選擇"
+              "Pick"
           ),
           h(
               "a",
@@ -340,7 +342,7 @@ let extension = {
                 }
               },
               [h("i",{class:"el-icon-zoom-out"})],
-              "清除"
+              "Clean"
           ),
 
         ]);
@@ -434,9 +436,11 @@ let extension = {
       if(this.currentAction=='Add'){
         this.getOption("contract_no").hidden=true;
         this.editFormFields.state='Y';
+        this.getOption("state").disabled=true;
       }else{
         this.getOption("contract_no").hidden=false;
         this.getOption("allw_type").disabled=true;
+        this.getOption("contract_no").disabled=true;
         this.getOption("state").disabled=false;
         this.editFormFields.pricegroup_dbidname = this.editFormFields.group_id+" "+this.editFormFields.group_name;
       }
