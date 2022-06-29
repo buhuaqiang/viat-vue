@@ -11,7 +11,7 @@
     >
       <el-tab-pane>
         <template #label>
-          <span><i class="el-icon-date"></i>合約客戶List</span>
+          <span><i class="el-icon-date"></i> Customer List</span>
         </template>
         <!-- 显示操作按钮 -->
         <div>
@@ -22,16 +22,14 @@
             size="mini"
             ghost
             @click="addCustList"
-            >添加客戶</el-button
-          >
+            >Add</el-button>
           <el-button
                 type="primary"
                 icon="el-icon-close"
                 size="mini"
                 ghost
                 @click="delTable1"
-        >删除行</el-button
-        >
+        >Delete</el-button>
     <!--      <el-button
             type="warning"
             icon="el-icon-check"
@@ -40,13 +38,12 @@
             @click="getRows"
             >获取选中的行</el-button
           >-->
-          <el-button
+         <!-- <el-button
             type="info"
             icon="el-icon-refresh"
             size="mini"
             @click="$refs.table1.load()"
-            >刷新</el-button
-          >
+            >刷新</el-button>-->
         </div>
        <!-- <el-alert
           title="双击行可以编辑,或者可以根据菜单： table使用->table编辑(二)在行上配置操作,完整文档见:组件api->voltable"
@@ -72,9 +69,9 @@
       </el-tab-pane>
 
       <!-- 从表2 -->
-      <el-tab-pane :lazy="false" label="合約贈送產品List">
+      <el-tab-pane :lazy="false" label="FG Product">
         <template #label>
-          <span><i class="el-icon-date"></i> 合約贈送產品List</span>
+          <span><i class="el-icon-date"></i> FG Product</span>
         </template>
         <div style="padding-bottom: 10px">
           <el-button
@@ -83,24 +80,21 @@
                   size="mini"
                   ghost
                   @click="addProdListForFree"
-          >添加產品</el-button
-          >
+          >Add</el-button>
           <el-button
                   type="primary"
                   icon="el-icon-close"
                   size="mini"
                   ghost
                   @click="delTable2"
-          >删除行</el-button
-          >
-          <el-button
+          >Delete</el-button>
+         <!-- <el-button
                   icon="el-icon-refresh"
                   size="mini"
                   type="info"
                   ghost
                   @click="$refs.table2.load()"
-          >刷新</el-button
-          >
+          >刷新</el-button>-->
         </div>
         <vol-table
                 ref="table2"
@@ -118,18 +112,19 @@
       </el-tab-pane>
 
       <!-- 从表3 -->
-      <el-tab-pane :lazy="false" label="ShareTable List">
+      <el-tab-pane :lazy="false" label="Contract Share">
         <template #label>
-          <span><i class="el-icon-date"></i> ShareTableList</span>
+          <span><i class="el-icon-date"></i> Contract Share</span>
         </template>
         <div style="padding-bottom: 10px">
           <el-button
-                  type="success"
-                  icon="el-icon-plus"
+                  icon="el-icon-refresh"
                   size="mini"
+                  type="info"
                   ghost
-                  @click="SearchShareTable"
-          >查询</el-button>
+                  @click="$refs.table3.load()"
+          >Refresh</el-button>
+
         </div>
         <vol-table
                 ref="table3"
@@ -138,7 +133,7 @@
                 :columns="tableColumns3"
                 :pagination-hide="false"
                 :height="300"
-                url="/api/View_app_hp_share_table/getPageData"
+                :url=table3Url
                 :defaultLoadPage="true"
                 @loadBefore="loadTableBefore3"
                 @loadAfter="loadTableAfter3"
@@ -173,28 +168,29 @@ export default {
       //从表1 this.$parent.editFormFields.hpcont_dbid
       table1Url: "api/Viat_app_hp_contract_cust/GetPageData" , //table1获取数据的接口
       table2Url: "api/Viat_app_hp_contract_free_prod/GetPageData" , //table2获取数据的接口 待補充
+      table3Url: "api/View_app_hp_share_table/getPageData" , //table3获取数据的接口 待補充
       //表配置的字段注意要与后台返回的查询字段大小写一致
       tableColumns1: [
         { field: "hpcontcust_dbid", title: "主键ID", type: "guid", width: 80, hidden: true },
         { field: "hpcont_dbid", title: "外鍵ID", type: "guid", width: 80, hidden: true },
         {
           field: "territory_id",
-          title: "zone code",
+          title: "Zone Code",
           type: "string",
           width: 100,
         },
         { field: "cust_dbid", title: "cust_dbid", type: "string", hidden:true },
-        { field: "cust_id", title: "cust code", type: "string", width: 170 },
+        { field: "cust_id", title: "Cust ID", type: "string", width: 170 },
         {
           field: "cust_name",
-          title: "cust name",
+          title: "Customer Name",
           type: "string",
           width: 120,
         },
 
         {
           field: "created_date",
-          title: "create date",
+          title: "Create Date",
           type: "datetime",
           width: 150,
           readonly: true,
@@ -209,12 +205,12 @@ export default {
           field: "prod_dbid",title: "prod_dbid",  width: 120,hidden: true},
         {
           field: "prod_id",
-          title: "prod_id",
+          title: "Product ID",
           width: 120,
         },
         {
           field: "prod_ename",
-          title: "prod ename",
+          title: "Product Ename",
           width: 150,
         },
        /* {
@@ -230,7 +226,7 @@ export default {
 
         {
           field: "created_date",
-          title: "创建时间",
+          title: "Created Date",
           type: "text",
           readonly: true,
           width: 150,
@@ -281,11 +277,13 @@ export default {
       this.hpcont_dbid= $parent.editFormFields.hpcont_dbid;
       this.table1Url = this.table1Url;//+this.hpcont_dbid;
       this.table2Url = this.table2Url;//+this.hpcont_dbid;
+      this.table3Url = this.table3Url;//+this.hpcont_dbid;
       //当前如果是新建重置两个表格数据
       if ($parent.currentAction == "Add") {
-        this.showFlag = false;
-        $parent.boxOptions.height=400;
+        this.showFlag = true;
+        $parent.boxOptions.height=800;
         $parent.boxOptions.width=1200;
+        this.clear();
         //this.$refs.table1.reset();
         //this.$refs.table2.reset();
 
@@ -356,8 +354,11 @@ export default {
       this.$emit("parentCall", ($this) => {
         $parent = $this;
       });
-      //獲取查詢條件hpcont_dbid
       let hpcont_dbid = $parent.currentRow.hpcont_dbid;
+      if ($parent.currentAction == "Add") {
+        return callBack(false);
+      }
+      //獲取查詢條件hpcont_dbid
       param.wheres.push({ name: "hpcont_dbid", value: hpcont_dbid });
       callBack(true);
     },
