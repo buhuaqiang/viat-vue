@@ -378,8 +378,11 @@ let extension = {
       //選擇客戶List table1
       let table1RowData = this.$refs.modelBody.table1RowData;
 
-      //table3數據回填到 formData 贈送產品
+      //table2數據回填到 formData 贈送產品
       let table2RowData = this.$refs.modelBody.table2RowData;
+
+      //table3數據回填到 formData 贈送產品
+      let table3RowData = this.$refs.modelBody.table3RowData;
 
       //删除数据回传
       let delTable1RowData = this.$refs.modelBody.delTable1RowData;

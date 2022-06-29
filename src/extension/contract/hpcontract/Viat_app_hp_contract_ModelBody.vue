@@ -141,6 +141,7 @@
                 url="/api/View_app_hp_share_table/getPageData"
                 :defaultLoadPage="true"
                 @loadBefore="loadTableBefore3"
+                @loadAfter="loadTableAfter3"
                 :index="true"
         ></vol-table>
       </el-tab-pane>
@@ -296,6 +297,7 @@ export default {
         this.clear();
         this.$refs.table1.load();
         this.$refs.table2.load();
+        this.$refs.table3.load();
       }
     },
     //shareTable查询显示
@@ -347,6 +349,19 @@ export default {
       param.wheres.push({ name: "hpcont_dbid", value: hpcont_dbid });
       callBack(true);
     },
+    //从表3加载数据数前(操作与上面一样的,增加查询条件)
+    loadTableBefore3(param, callBack) {
+      let $parent = null;
+      //当前是子页面，获取查询viewgrid页面的对象()
+      this.$emit("parentCall", ($this) => {
+        $parent = $this;
+      });
+      //獲取查詢條件hpcont_dbid
+      let hpcont_dbid = $parent.currentRow.hpcont_dbid;
+      param.wheres.push({ name: "hpcont_dbid", value: hpcont_dbid });
+      callBack(true);
+    },
+
     //从后台加载从表1数据后
     loadTableAfter1(data, callBack) {
 
@@ -355,12 +370,18 @@ export default {
       this.delTable1RowData=[];
       return true;
     },
-    //从后台加载从表1数据后
+    //从后台加载从表2数据后
     loadTableAfter2(data, callBack) {
 
       //数据加载后，赋给对像，用于编辑用
       this.table2RowData = data;
       this.delTable2RowData= [];
+      return true;
+    },
+    //从后台加载从表3数据后
+    loadTableAfter3(data, callBack) {
+      //数据加载后，赋给对像，用于编辑用
+      this.table3RowData = data;
       return true;
     },
 
@@ -532,7 +553,6 @@ export default {
       this.$refs.prodModelBody.openDemo("table2");
       this.$refs.prodModelBody.single = false;
     },
-
 
     getRows() {
       //获取选中的行
