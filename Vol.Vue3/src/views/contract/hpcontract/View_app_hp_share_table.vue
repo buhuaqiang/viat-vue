@@ -37,7 +37,7 @@
                             [{"title":"hpcont_dbid","field":"hpcont_dbid","hidden":true}],
                             [{"title":"Sharing %","field":"percent","type":"decimal"},
                                {"dataKey":"Status2","data":[],"title":"Status","field":"status","type":"select"}]]);
-            const searchFormFields = ref({"cust_dbidname":"","prod_dbidname":"","contract_no":"","Summary":""});
+            const searchFormFields = ref({"cust_dbidname":"","cust_dbid":"","prod_dbidname":"","prod_dbid":"","contract_no":"","Summary":""});
             const searchFormOptions = ref([
                 [{"title":"Contract No","field":"contract_no","disabled":true},{"title":"Cust ID","field":"cust_dbidname"},{"title":"","field":"cust_dbid","hidden":true}],
                 [{"title":"Prod ID","field":"prod_dbidname"},{"title":"","field":"prod_dbid","hidden":true},{"title":"Summary","field":"Summary"}]
