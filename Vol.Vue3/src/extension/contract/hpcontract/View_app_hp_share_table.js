@@ -42,7 +42,7 @@ let extension = {
       //設置默認值
       let contract_no  = this.$route.query.contract_no;
       this.searchFormFields.contract_no = contract_no;
-      //let sumpercent = this.getSumPercent();
+     // let sumpercent = this.getSumPercent();
       //this.searchFormFields.Summary =sumpercent;
       //this.searchFormFields.Summary = summary;
       let sum_percent=this.getColumnsOption("sum_percent");
@@ -134,24 +134,16 @@ let extension = {
 
 
     //获取总比值
-   /* getSumPercent() {
-      let dbid = this.$route.query.hpcont_dbid;
-      let data = '';
-      let params2={};
-      let url = "api/Viat_app_hp_contract_share/getSumPercent";
-      let params = {
-        "page": 1,
-        "rows": 30,
-        "wheres": "[]"
-      }
-      params.wheres ="[{\"name\":\"hpcont_dbid\",\"value\":\""+this.$route.query.hpcont_dbid+"\",\"displayType\":\"=\"}]" ;
-
-      let _result = this.http.post("api/Viat_app_hp_contract_share/getSumPercent", params, true).then(result => {
-        return result;
-      });
-
-      return _result;
-    },*/
+    getSumPercent() {
+      let sum_percent = '';
+      let hpcont_dbid = this.$route.query.hpcont_dbid;
+      this.http.get("api/Viat_app_hp_contract_share/getSumPercent?hpcont_dbid="+hpcont_dbid,{} , "loading").then(reslut => {
+        console.log(reslut)
+        sum_percent = reslut.sum_percent;
+        return;
+      })
+      return sum_percent;
+    },
     onInited() {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
