@@ -70,22 +70,95 @@ let extension = {
       pricegroup_dbidname.extra = {
         render:this.getFormRender("pricegroup_dbid","f")
       }
+      //快捷回填
+      pricegroup_dbidname.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  group_id = this.editFormFields['pricegroup_dbidname']
+          if(group_id) {
+            this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
+              console.log(reslut)
+              this.editFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
+              this.editFormFields['pricegroup_dbidname'] =reslut.group_id + " " + reslut.group_name;
+              return;
+            })
+          }
+        }
+      }
+
       //查询页面
       let search_pricegroup_dbidname=this.getSearch("pricegroup_dbidname");
       search_pricegroup_dbidname.extra = {
         render:this.getFormRender("pricegroup_dbid","s")
       }
+      //查詢條件快捷回填
+      search_pricegroup_dbidname.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  group_id = this.searchFormFields['pricegroup_dbidname']
+          if(group_id) {
+            this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
+              console.log(reslut)
+              this.searchFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
+              this.searchFormFields['pricegroup_dbidname'] =reslut.group_id + " " + reslut.group_name;
+              return;
+            })
+          }
+        }
+      }
+
       let cust_dbidname=this.getSearch("cust_dbid2name");
       cust_dbidname.extra = {
         render:this.getFormRender("cust_dbid2","s")
       }
+      //查詢條件快捷回填
+      cust_dbidname.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  cust_id = this.searchFormFields['cust_dbid2name']
+          if(cust_id) {
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
+              console.log(reslut)
+              this.searchFormFields['cust_dbid2'] =reslut.cust_dbid;
+              this.searchFormFields['cust_dbid2name'] =reslut.cust_id + " " + reslut.cust_name;
+              return;
+            })
+          }
+        }
+      }
+
       let pu_prod_dbidname=this.getSearch("pu_prod_dbidname");
       pu_prod_dbidname.extra = {
         render:this.getFormRender("pu_prod_dbid","s")
       }
+      //查詢條件快捷回填
+      pu_prod_dbidname.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  prod_id = this.searchFormFields['pu_prod_dbidname']
+          if(prod_id) {
+            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
+              console.log(reslut)
+              this.searchFormFields['pu_prod_dbid'] =reslut.prod_dbid;
+              this.searchFormFields['pu_prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
+              return;
+            })
+          }
+        }
+      }
       let cf_prod_dbidname=this.getSearch("cf_prod_dbidname");
       cf_prod_dbidname.extra = {
         render:this.getFormRender("cf_prod_dbid","s")
+      }
+      //查詢條件快捷回填
+      cf_prod_dbidname.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  prod_id = this.searchFormFields['cf_prod_dbidname']
+          if(prod_id) {
+            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
+              console.log(reslut)
+              this.searchFormFields['cf_prod_dbid'] =reslut.prod_dbid;
+              this.searchFormFields['cf_prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
+              return;
+            })
+          }
+        }
       }
 
       //日期格式化 formatter
