@@ -9,7 +9,7 @@
     ]"
   >
     <div class="mask" v-show="loading"></div>
-    <div class="message" v-show="loading">加载中.....</div>
+    <div class="message" v-show="loading">Loading.....</div>
     <el-table
       :show-summary="summary"
       :summary-method="getSummaryData"
