@@ -28,7 +28,7 @@
           v-if="!footer"
           size="mini"
           @click="handleClose()"
-          ><i class="el-icon-close"></i>关闭</el-button
+          ><i class="el-icon-close"></i>Close</el-button
         >
       </div>
     </div>
