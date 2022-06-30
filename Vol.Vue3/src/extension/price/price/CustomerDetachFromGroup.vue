@@ -3,8 +3,8 @@
     <div style="padding:20px 2px;">
       <el-form :inline="true"  label-width="150px" :model="formModel">
         <el-form-item  label="Customer:" style="width: 35%;">
-          <el-input v-model="formModel.cust_dbidname" style="width:150px;" ></el-input>
-          <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>選擇</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>清除</a>
+          <el-input v-model="formModel.cust_dbidname" @keyup.enter="custKeyPress" style="width:200px;" ></el-input>
+          <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="formModel.cust_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="Detach Start Date:" style="width: 60%">
@@ -16,8 +16,8 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item  label="Product:" style="width: 35%">
-          <el-input v-model="formModel.prod_dbidname" style="width:150px;" ></el-input>
-          <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>選擇</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>清除</a>
+          <el-input v-model="formModel.prod_dbidname" @keyup.enter="prodKeyPress" style="width:200px;" ></el-input>
+          <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="formModel.prod_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="Remark:" style="width: 60%">
@@ -36,7 +36,7 @@
               type="primary"
               icon="el-icon-document-add"
               @click="addRow()"
-      >Execute</el-button >
+      >Detach Selected</el-button >
       <el-button
               type="primary"
               icon="el-icon-refresh"
@@ -113,6 +113,38 @@ export default {
     this.labelWidth = 180;
   },
   methods: {
+    custKeyPress(){
+      let  cust_id = this.formModel.cust_dbidname
+      if(cust_id) {
+        this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
+          if(reslut!==null){
+            this.formModel.cust_dbid=reslut.cust_dbid;
+            this.formModel.cust_dbidname=reslut.cust_id + " " + reslut.cust_name;
+          }else {
+            this.$message.error("Customer Id Is Not Exists.");
+            this.formModel.cust_dbidname=''
+          }
+
+          return;
+        })
+      }
+    },
+    prodKeyPress(){
+      let  prod_id = this.formModel.prod_dbidname
+      if(prod_id) {
+        this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
+          if(reslut!==null){
+            this.formModel.prod_dbid=reslut.prod_dbid;
+            this.formModel.prod_dbidname=reslut.prod_id + " " + reslut.prod_ename;
+          }else {
+            this.$message.error("Product Id Is Not Exists.");
+            this.formModel.prod_dbidname=''
+          }
+
+          return;
+        })
+      }
+    },
     resetForm(){
         this.formModel={
           detach_date:new Date(),
@@ -237,7 +269,9 @@ export default {
   .a-clear{
     font-size:12px;text-decoration:none;color:red;border-bottom: 1px solid;margin-left: 9px;text-decoration:none;cursor: pointer
   }
-
+  .el-form-item {
+    margin-bottom: 10px;
+  }
   .view-header{
     background-color:#d0d0d0;
     height: 30px;

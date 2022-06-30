@@ -405,6 +405,7 @@ var vueParam = {
   },
   data() {
     return {
+      bakEditFormOptions:[],//備份的表單編輯json(解決調用view之後頁面本來設定的disabled屬性值無效)
       //树形结构的主键字段，如果设置值默认会开启树形table；注意rowKey字段的值必须是唯一（2021.05.02）
       rowKey: undefined,
       fiexdSearchForm: false, //2020.09.011是否固定查询表单，true查询表单将固定显示在表单的最上面
@@ -425,7 +426,7 @@ var vueParam = {
       viewModel: false, //查看表结构的弹出框
       // viewColumns: [], //查看表结构的列数据
       // viewData: [], //查看表结构信息
-      maxBtnLength: 5, //界面按钮最多显示的个数，超过的数量都显示在更多中
+      maxBtnLength: 10, //界面按钮最多显示的个数，超过的数量都显示在更多中
       buttons: [], //查询界面按钮  如需要其他操作按钮，可在表对应的.js中添加(如:Sys_User.js中buttons添加其他按钮)
       splitButtons: [],
       uploadfiled: [], //上传文件图片的字段

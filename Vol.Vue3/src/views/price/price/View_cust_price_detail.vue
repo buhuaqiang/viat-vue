@@ -70,10 +70,10 @@
                        {field:'cust_group_status',title:'cust_group_status',type:'string',width:110,hidden:true,align:'left'},
                        {field:'emp_ename',title:'emp_ename',type:'string',width:110,hidden:true,align:'left'},
                        {field:'custStatus',title:'custStatus',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'prods',title:'Products',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,align:'left'},
-                       {field:'bid_no',title:'Bid NO',type:'string',width:110,align:'left'},
-                       {field:'prod_dbid',title:'prod_dbid',type:'guid',width:110,align:'left'},
-                       {field:'cust_dbid',title:'cust_dbid',type:'guid',width:110,align:'left'}]);
+                       {field:'prods',title:'Products',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,align:'left'},
+                       {field:'bid_no',title:'Bid NO',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'prod_dbid',title:'prod_dbid',type:'guid',width:110,hidden:true,align:'left'},
+                       {field:'cust_dbid',title:'cust_dbid',type:'guid',width:110,hidden:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

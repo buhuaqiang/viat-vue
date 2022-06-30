@@ -890,7 +890,7 @@ let methods = {
     this.getRemoteFormDefaultKeyValue();
     //点击编辑按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
     this.modelOpenProcess(rows[0]);
-
+    this.viewModelOpenBefore(rows[0]);
     // this.modelOpenAfter(rows[0]);
 
   },

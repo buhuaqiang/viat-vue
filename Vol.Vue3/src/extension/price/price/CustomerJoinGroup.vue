@@ -1,11 +1,11 @@
 <template>
   <div  id="vol-main" >
     <div style="padding:20px 2px;">
-      <el-form :inline="true"  label-width="100px" :model="formModel">
+      <el-form :inline="true"  label-width="100px"  :model="formModel">
 
-        <el-form-item  label="Group:" style="width: 35%">
-          <el-input v-model="formModel.pricegroup_dbidname" style="width:150px;" ></el-input>
-          <a @click="openPriceGroup(0)" class="a-pop"><i class="el-icon-zoom-in"></i>選擇</a>&nbsp;<a class="a-clear" @click="clearPop(0)"><i class="el-icon-zoom-out"></i>清除</a>
+        <el-form-item  label="Group:" style="width: 35%;">
+          <el-input v-model="formModel.pricegroup_dbidname" @keyup.enter="groupKeyPress" style="width:200px;" ></el-input>
+          <a @click="openPriceGroup(0)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0)"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="formModel.pricegroup_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="Start Date:" style="width: 35%">
@@ -17,8 +17,8 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item  label="Customer:" style="width: 35%;">
-          <el-input v-model="formModel.cust_dbidname" style="width:150px;" ></el-input>
-          <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>選擇</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>清除</a>
+          <el-input v-model="formModel.cust_dbidname" @keyup.enter="custKeyPress" style="width:200px;" ></el-input>
+          <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="formModel.cust_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
 
@@ -161,6 +161,38 @@ export default {
     this.custprice_dbids=[]
   },
   methods: {
+    groupKeyPress(){
+      let  group_id = this.formModel.pricegroup_dbidname
+      if(group_id) {
+        this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
+          if(reslut!==null){
+            this.formModel.pricegroup_dbid=reslut.pricegroup_dbid;
+            this.formModel.pricegroup_dbidname=reslut.group_id + " " + reslut.group_name;
+          }else {
+            this.$message.error("Group Id Is Not Exists.");
+            this.formModel.pricegroup_dbidname=''
+          }
+
+          return;
+        })
+      }
+    },
+    custKeyPress(){
+      let  cust_id = this.formModel.cust_dbidname
+      if(cust_id) {
+        this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
+          if(reslut!==null){
+            this.formModel.cust_dbid=reslut.cust_dbid;
+            this.formModel.cust_dbidname=reslut.cust_id + " " + reslut.cust_name;
+          }else {
+            this.$message.error("Customer Id Is Not Exists.");
+            this.formModel.cust_dbidname=''
+          }
+
+          return;
+        })
+      }
+    },
     resetForm(){
         this.formModel={
           start_date:new Date(),
@@ -342,6 +374,10 @@ export default {
   }
   .a-clear{
     font-size:12px;text-decoration:none;color:red;border-bottom: 1px solid;margin-left: 9px;text-decoration:none;cursor: pointer
+  }
+
+  .el-form-item {
+    margin-bottom: 10px;
   }
   .header{
     background-color:#d0d0d0;

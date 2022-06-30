@@ -19,17 +19,17 @@
         </el-form-item>
         <el-form-item id="0" v-show="groupShowFlag" label="Group:" style="width: 35%">
           <el-input v-model="invalidModel.pricegroup_dbidname" style="width:150px;" :disabled="true"></el-input>
-          <a @click="openPriceGroup(0)" class="a-pop"><i class="el-icon-zoom-in"></i>選擇</a>&nbsp;<a class="a-clear" @click="clearPop(0)"><i class="el-icon-zoom-out"></i>清除</a>
+          <a @click="openPriceGroup(0)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0)"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="invalidModel.pricegroup_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item id="1" v-show="custShowFlag" label="Customer:" style="width: 35%;">
           <el-input v-model="invalidModel.cust_dbidname" style="width:150px;" :disabled="true"></el-input>
-          <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>選擇</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>清除</a>
+          <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="invalidModel.cust_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="Product:" style="width: 35%">
           <el-input v-model="invalidModel.prod_dbidname" style="width:150px;" :disabled="true"></el-input>
-          <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>選擇</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>清除</a>
+          <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="invalidModel.prod_dbid"  type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="Invalid Date:" style="width: 30%">
@@ -363,5 +363,9 @@ export default {
   }
   .a-clear{
     font-size:12px;text-decoration:none;color:red;border-bottom: 1px solid;margin-left: 9px;text-decoration:none;cursor: pointer
+  }
+
+  .el-form-item {
+    margin-bottom: 10px;
   }
 </style>

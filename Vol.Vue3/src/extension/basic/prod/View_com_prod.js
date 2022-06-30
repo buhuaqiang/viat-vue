@@ -92,6 +92,7 @@ let extension = {
       //查询界面点击行事件
        this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
+
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
       //(1)判断是编辑还是新建操作： this.currentAction=='Add';
@@ -99,6 +100,7 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+
     }
   }
 };

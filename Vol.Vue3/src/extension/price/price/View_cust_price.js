@@ -94,7 +94,7 @@ let extension = {
                 }
               },
               [h("i",{class:"el-icon-zoom-in"})],
-              "選擇"
+              "Pick"
           ),
           h(
               "a",
@@ -122,7 +122,7 @@ let extension = {
                 }
               },
               [h("i",{class:"el-icon-zoom-out"})],
-              "清除"
+              "Clean"
           ),
 
 
@@ -133,7 +133,7 @@ let extension = {
     detachSelectedData(){
       let _rows =  this.getSelectRows();
       if (!_rows || _rows.length == 0) {
-        return this.$message.error("請選擇要detach的數據");
+        return this.$message.error("Please select the data you want to detach");
       }
       let ids=[];
       _rows.forEach(r=>{
@@ -221,8 +221,10 @@ let extension = {
       //设置保存后继续添加 ，不关闭当前窗口
       this.continueAdd=true;
       this.continueAddName="Save And Continue";
+      //設置初始不加載
+      this.load=false;
       //设置查询页面显示6个按钮(默认3个)
-      this.maxBtnLength = 6;
+      //this.maxBtnLength = 6;
       //-------------日期字段格式化 start--------------
       let startDate=this.getColumns("start_date");
       let endDate=this.getColumns("end_date");
@@ -253,7 +255,6 @@ let extension = {
 
       let searchProdDBIDS=this.getSearchOption("prods");
       searchGroupDBID.hidden=true;
-      searchGroup.disabled=true;
 
       // let searchProd=this.getSearchOption("prod_dbidname");
       // let searchProdDBID=this.getSearchOption("prod_dbid");
@@ -262,15 +263,35 @@ let extension = {
       searchGroup.extra = {
         render: this.getRender("pricegroup_dbid", 's','pg')
       }
+      searchGroup.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  group_id = this.searchFormFields['pricegroup_dbidname']
+          if(group_id) {
+            this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
+              console.log(reslut)
+              if(reslut!=null){
+                this.searchFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
+                this.searchFormFields['pricegroup_dbidname'] =reslut.group_id + " " + reslut.group_name;
+                return;
+              }else {
+                this.$message.error("Group Id Is Not Exists.");
+                this.searchFormFields['pricegroup_dbidname']=''
+              }
+
+            })
+          }
+
+        }
+      }
+
       searchProdDBIDS.extra = {
         icon: "el-icon-zoom-in",
-        text: "選擇",
+        text: "Pick",
         style: "color:#409eff;font-size: 12px;cursor: pointer;",
         click: item => {
           this.$refs.gridHeader.openMulity("prods",'ms');
         }
       }
-
       //-------------列表頁搜索框綁定彈窗 end-------------
       //-------------表單輸入框綁定彈窗 start-------------
       let formGroup=this.getFormOption("pricegroup_dbidname");
@@ -279,14 +300,52 @@ let extension = {
       let formProdDBID=this.getFormOption("prod_dbid");
       formGroupDBID.hidden=true;
       formProdDBID.hidden=true;
-      formGroup.disabled=true;
-      formProd.disabled=true;
+
 
       formGroup.extra = {
         render: this.getRender("pricegroup_dbid", 'f','pg')
       }
+      formGroup.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  group_id = this.editFormFields['pricegroup_dbidname']
+          if(group_id) {
+            this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
+              if(reslut!==null){
+                this.editFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
+                this.editFormFields['pricegroup_dbidname'] =reslut.group_id + " " + reslut.group_name;
+              }else {
+                this.$message.error("Group Id Is Not Exists.");
+                this.editFormFields['pricegroup_dbidname']=''
+              }
+
+              return;
+            })
+          }
+
+        }
+      }
+
       formProd.extra = {
         render: this.getRender("prod_dbid", 'f','p')
+      }
+      formProd.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  prod_id = this.editFormFields['prod_dbidname']
+          if(prod_id) {
+            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
+              if(reslut!=null){
+                this.editFormFields['prod_dbid'] =reslut.prod_dbid;
+                this.editFormFields['prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
+              }else{
+                this.$Message.error(" Product Id Is Not Exists.");
+                this.editFormFields['prod_dbidname']=''
+              }
+
+              return;
+            })
+          }
+
+        }
       }
       //-------------表單輸入框綁定彈窗 end-------------
 
@@ -350,8 +409,6 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
-      this.getFormOption("pricegroup_dbidname").disabled=true;
-      this.getFormOption("prod_dbidname").disabled=true;
       this.getFormOption("nhi_price").disabled=true;
       if(this.currentAction==this.const.ADD){
         //設置Min Qty初始值為1
@@ -363,6 +420,8 @@ let extension = {
         this.getFormOption("invoice_price").disabled=false;
         this.getFormOption("net_price").disabled=false;
         this.getFormOption("min_qty").disabled=false;
+        this.getFormOption("pricegroup_dbidname").disabled=false;
+        this.getFormOption("prod_dbidname").disabled=false;
         this.getFormOption("pricegroup_dbidname").extra={render: this.getRender("pricegroup_dbid", 'f','pg')};
         this.getFormOption("prod_dbidname").extra={render: this.getRender("prod_dbid", 'f','p')};
 
@@ -371,7 +430,9 @@ let extension = {
         this.getFormOption("invoice_price").disabled=true;
         this.getFormOption("net_price").disabled=true;
         this.getFormOption("min_qty").disabled=true;
+        this.getFormOption("pricegroup_dbidname").disabled=true;
         this.getFormOption("pricegroup_dbidname").extra={};
+        this.getFormOption("prod_dbidname").disabled=true;
         this.getFormOption("prod_dbidname").extra={};
 
       }else if (this.currentAction==this.const.VIEW){
