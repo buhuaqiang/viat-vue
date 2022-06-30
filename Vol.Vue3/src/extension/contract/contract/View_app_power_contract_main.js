@@ -49,6 +49,7 @@ let extension = {
       // this.boxOptions.width=10000;
 
       this.setFiexdSearchForm(true);
+      this.load=false;
 
       var cust_name = this.getFormOption("cust_name");
       var group_name = this.getFormOption("group_name");
@@ -86,12 +87,16 @@ let extension = {
 
           let  cust_id = this.editFormFields['cust_name']
           if(cust_id) {
-            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
-              console.log(reslut)
-              debugger;
-              this.editFormFields['cust_dbid'] =reslut.cust_dbid;
-              this.editFormFields['cust_name'] =reslut.cust_id + " " + reslut.cust_name;
-              return;
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.editFormFields['cust_dbid'] =reslut.cust_dbid;
+                this.editFormFields['cust_name'] =reslut.cust_id + " " + reslut.cust_name;
+                return;
+              }else{
+                this.$message.error("Customer Id Is Not Exists.");
+                return;
+              }
+
             })
           }
 
@@ -104,13 +109,17 @@ let extension = {
 
           let  group_id = this.editFormFields['group_name']
           if(group_id) {
-            this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
-              console.log(reslut)
-              debugger;
-              this.editFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
-              this.editFormFields['group_name'] =reslut.group_id + " " + reslut.group_name;
-              this.$refs.modelBody.initCustomerListByGroupDbId(reslut.pricegroup_dbid);
-              return;
+            this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.editFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
+                this.editFormFields['group_name'] =reslut.group_id + " " + reslut.group_name;
+                this.$refs.modelBody.initCustomerListByGroupDbId(reslut.pricegroup_dbid);
+                return;
+              }else{
+                this.$message.error("Group Id Is Not Exists.");
+                return ;
+              }
+
             })
           }
 
@@ -134,11 +143,16 @@ let extension = {
        if($event.keyCode == 13){
          let  cust_id = this.searchFormFields['cust_dbidname']
          if(cust_id) {
-           this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
-              console.log(reslut)
-             this.searchFormFields['cust_dbid'] =reslut.cust_dbid;
-             this.searchFormFields['cust_dbidname'] =reslut.cust_id + " " + reslut.cust_name;
-             return;
+           this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+             if(reslut !=null){
+               this.searchFormFields['cust_dbid'] =reslut.cust_dbid;
+               this.searchFormFields['cust_dbidname'] =reslut.cust_id + " " + reslut.cust_name;
+               return;
+             }else{
+               this.$message.error("Customer Id Is Not Exists.");
+               return;
+             }
+
            })
          }
 
@@ -156,11 +170,16 @@ let extension = {
         if($event.keyCode == 13){
           let  group_id = this.searchFormFields['pricegroup_dbidname']
           if(group_id) {
-            this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
-              console.log(reslut)
-              this.searchFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
-              this.searchFormFields['pricegroup_dbidname'] =reslut.group_id + " " + reslut.group_name;
-              return;
+            this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+             if(reslut !=null){
+               this.searchFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
+               this.searchFormFields['pricegroup_dbidname'] =reslut.group_id + " " + reslut.group_name;
+               return;
+             }else{
+               this.$message.error("Group Id Is Not Exists.");
+               return ;
+             }
+
             })
           }
 
