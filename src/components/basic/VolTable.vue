@@ -981,7 +981,7 @@ export default defineComponent({
     },
     delRow() {
       let rows = this.getSelected();
-      if (rows.length == 0) return this.$Message.error('请选择要删除的行!');
+      if (rows.length == 0) return this.$Message.error('Please select the row to delete!');
 
       let data = this.url ? this.rowData : this.tableData;
       let indexArr = this.getSelectedIndex();

@@ -710,7 +710,7 @@ let methods = {
     }
     //删除数据
 
-    if (!rows || rows.length == 0) return this.$error('请选择要删除的行!');
+    if (!rows || rows.length == 0) return this.$error('Please select the row to delete!');
     let delKeys = rows.map((x) => {
       return x[this.table.key];
     });
@@ -847,10 +847,10 @@ let methods = {
       rows = this.$refs.table.getSelected();
     }
     if (rows.length == 0) {
-      return this.$error('请选择要编辑的行!');
+      return this.$error('Please select the row to edit!');
     }
     if (rows.length != 1) {
-      return this.$error('只能选择一行数据进行编辑!');
+      return this.$error('Only one row of data can be selected for editing!');
     }
     //记录当前编辑的行
     this.currentRow = rows[0];
@@ -873,10 +873,10 @@ let methods = {
     this.currentAction = this.const.VIEW;
     let rows = this.$refs.table.getSelected();
     if (rows.length == 0) {
-      return this.$error('请选择要查看的數據!');
+      return this.$error('Please select the data to view!');
     }
     if (rows.length != 1) {
-      return this.$error('只能选择一行数据进行查看!');
+      return this.$error('Only one row of data can be selected for viewing!');
     }
     //记录当前编辑的行
     this.currentRow = rows[0];

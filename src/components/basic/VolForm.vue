@@ -661,7 +661,7 @@ export default defineComponent({
       let result = true;
       volform.value.validate((valid) => {
         if (!valid) {
-          appContext.config.globalProperties.$message.error('数据验证未通过!');
+          appContext.config.globalProperties.$message.error('Data validation failed!');
           result = false;
         } else if (typeof callback === 'function') {
           callback(valid);
@@ -998,7 +998,7 @@ export default defineComponent({
                 if (value === '' || value === undefined) {
                   //formFields[rule.field] = 0;
                   // return callback();
-                  ruleObj.message ='請輸入'+ ruleObj.title ;
+                  ruleObj.message ='Please Input '+ ruleObj.title ;
                   return callback(new Error(ruleObj.message));
                 }
               }
