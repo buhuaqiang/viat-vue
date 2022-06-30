@@ -48,7 +48,9 @@ let extension = {
                     ])
                 }
             })
-
+            this.labelWidth=180;
+            this.setFiexdSearchForm(true);
+            this.load=false;
             let emp_dbidname=this.getOption("emp_dbidname");
             emp_dbidname.extra = {
                 render:this.getFormRender("emp_dbid","f")

@@ -8,6 +8,7 @@
 import { ElConfigProvider } from "element-plus";
 //import zhCn from "element-plus/lib/locale/lang/zh-cn";、
 import enus from "element-plus/lib/locale/lang/en";
+import '@/assets/css/addThemeTag.less'
 export default {
   name: "vol_app",
   components: {

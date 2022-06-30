@@ -46,14 +46,24 @@
                               [{"title":"备注","field":"Remark","colSize":12,"type":"textarea"}],
                               [{"title":"头像","required":true,"field":"HeadImageUrl","type":"img"}]]);
             const searchFormFields = ref({"UserName":"","Gender":"","DeptName":"","Role_Id":"","Token":"","AppType":[],"UserTrueName":"","CreateDate":"","IsRegregisterPhone":"","PhoneNo":"","Enable":"","LastLoginDate":"","Address":"","Email":""});
-            const searchFormOptions = ref([[{"title":"帐号","field":"UserName"},{"dataKey":"gender","data":[],"title":"性别","field":"Gender","type":"select"},{"title":"真实姓名","field":"UserTrueName"}],[{"title":"部门","field":"DeptName"},{"dataKey":"roles","data":[],"title":"角色","field":"Role_Id","type":"select"},{"title":"Token","field":"Token"}],
-                [/*{"dataKey":"ut","data":[],"title":"登陆设备类型","field":"AppType","type":"selectList"},
+            const searchFormOptions = ref([[{"title":"帐号","field":"UserName"},
+               /* {"dataKey":"gender","data":[],"title":"性别","field":"Gender","type":"select"},*/
+                {"title":"真实姓名","field":"UserTrueName"}],
+                /*
+                [{"title":"部门","field":"DeptName"},
+                    {"dataKey":"roles","data":[],"title":"角色","field":"Role_Id","type":"select"},
+                    {"title":"Token","field":"Token"}
+                    ],
+
+                [{"dataKey":"ut","data":[],"title":"登陆设备类型","field":"AppType","type":"selectList"},
                 {"dataKey":"isphone","data":[],"title":"手机用户","field":"IsRegregisterPhone","type":"select"},
                 {"title":"手机号","field":"PhoneNo"}],[{"dataKey":"enable","data":[],"title":"是否可用","field":"Enable","type":"select"},
 
-                 */
+
                 {"title":"地址","field":"Address"},
+
                 {"title":"Email","field":"Email"}],
+                 */
                 [{"title":"注册时间","field":"CreateDate","type":"datetime"},
                     {"title":"最后登陆时间","field":"LastLoginDate","type":"datetime"}]]);
             const columns = ref([{field:'UserName',title:'帐号',type:'string',link:true,width:110,readonly:true,require:true,align:'left',sortable:true},

@@ -40,7 +40,7 @@
       </div>
       <div v-else style="font-size: 16px; color: #939292">未获取到参数</div>
     </div>
-    <div class="f-loading" v-show="loading">正在加载中...</div>
+    <div class="f-loading" v-show="loading">Loading...</div>
   </div>
 </template>
 

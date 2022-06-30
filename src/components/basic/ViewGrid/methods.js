@@ -721,16 +721,16 @@ let methods = {
       return;
     }
     let tigger = false;
-    this.$confirm('确认要删除选择的数据吗?', '警告', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
+    this.$confirm('Are you sure you want to delete the selected data?', 'Warn', {
+      confirmButtonText: 'confirm',
+      cancelButtonText: 'Cancel',
       type: 'warning',
       center: true
     }).then(() => {
       if (tigger) return;
       tigger = true;
       let url = this.getUrl(this.const.DEL);
-      this.http.post(url, delKeys, '正在删除数据....').then((x) => {
+      this.http.post(url, delKeys, 'Deleting data....').then((x) => {
         if (!x.status) return this.$error(x.message);
         this.$success(x.message);
         //删除后

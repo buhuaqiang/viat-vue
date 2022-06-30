@@ -20,6 +20,9 @@ let extension = {
         }
       });
 
+      this.setFiexdSearchForm(true);
+     // this.load=false;
+
       //这些配置不是必须的
       this.editFormOptions.forEach((x) => {
         x.forEach((item) => {
