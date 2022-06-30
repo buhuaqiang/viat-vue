@@ -387,6 +387,31 @@ let extension = {
       return true;
     },
     addBefore(formData) {
+      //编辑保存前formData为对象，包括明细表、删除行的Id
+      //選擇客戶List table1
+      let table1RowData = this.$refs.modelBody.table1RowData;
+
+      //table2數據回填到 formData
+      let table2RowData = this.$refs.modelBody.table2RowData;
+
+      //table3數據回填到 formData 贈送產品
+      let table3RowData = this.$refs.modelBody.table3RowData;
+
+      let detailData = [
+        {
+          key: "table1RowData",
+          value: table1RowData,
+        },
+        {
+          key: "table2RowData",
+          value: table2RowData,
+        },
+        {
+          key: "table3RowData",
+          value: table3RowData,
+        }
+      ]
+      formData.detailData = detailData;
 
       //新建保存前formData为对象，包括明细表，可以给给表单设置值，自己输出看formData的值
       return true;
@@ -396,6 +421,7 @@ let extension = {
       this.currentAction=='Update'
       return false;
     },*/
+
     updateBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
       //選擇客戶List table1
