@@ -14,6 +14,7 @@
     :searchFormFields="searchFormFields"
     :searchFormOptions="searchFormOptions"
     :table="table"
+    :load="false"
     :extend="extend"
   >
   </view-grid>

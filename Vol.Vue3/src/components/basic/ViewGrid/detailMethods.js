@@ -47,7 +47,7 @@ let detailMethods = {
   delRow() {
     let rows = this.$refs.detail.getSelected();
     if (!rows || rows.length == 0) {
-      return this.$message.error("请选择要删除的行!");
+      return this.$message.error("Please select the row to delete!");
     }
     if (!this.delDetailRow(rows)) {
       return false;
