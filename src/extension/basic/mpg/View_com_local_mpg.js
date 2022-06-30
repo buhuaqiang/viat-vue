@@ -54,6 +54,8 @@ let extension = {
       this.labelWidth=180;
       //表格设置为单选
       this.single=true;
+      //設置初始不加載
+      this.load=false;
     },
     onInited() {
       //框架初始化配置后

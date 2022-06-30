@@ -180,6 +180,8 @@ let extension = {
       this.labelWidth = 180;
       //表格设置为单选
       this.single=true;
+      //設置初始不加載
+      this.load=false;
 
       //let data = { Variety: '1', AvgPrice: 888 };
       //this.$refs.myform.reset(data);
@@ -318,9 +320,9 @@ let extension = {
       let ownHospital = this.getOption("own_hospitalname");
       let med_group = this.getOption("med_groupname");
       let delv_group = this.getOption("delv_groupname");
-      ownHospital.disabled=true;
-      med_group.disabled=true;
-      delv_group.disabled=true;
+      ownHospital.disabled=false;
+      med_group.disabled=false;
+      delv_group.disabled=false;
 
       if (this.currentAction == 'update') {
         let comZipId = this.getOption("cust_zip_id");

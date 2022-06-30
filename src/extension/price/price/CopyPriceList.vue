@@ -10,28 +10,26 @@
         </el-form-item>
 
         <el-form-item v-show="custShowFlag" label="Original Customer ID:" style="width: 35%">
-          <el-input v-model="formModel.org_cust_dbidname" style="width:150px;" ></el-input>
-          <a @click="openPriceGroup(0,'org_cust_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>選擇</a>&nbsp;<a class="a-clear" @click="clearPop(0,'org_cust_dbid')"><i class="el-icon-zoom-out"></i>清除</a>
+          <el-input v-model="formModel.org_cust_dbidname" @keyup.enter="custKeyPress(0)" style="width:200px;" ></el-input>
+          <a @click="openPriceGroup(0,'org_cust_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0,'org_cust_dbid')"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="formModel.org_cust_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
 
         <el-form-item v-show="custShowFlag" label="Copy to New Customer ID:" style="width: 35%">
-          <el-input v-model="formModel.new_cust_dbidname" style="width:150px;" ></el-input>
-          <a @click="openPriceGroup(0,'new_cust_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>選擇</a>&nbsp;<a class="a-clear" @click="clearPop(0,'new_cust_dbid')"><i class="el-icon-zoom-out"></i>清除</a>
+          <el-input v-model="formModel.new_cust_dbidname" @keyup.enter="custKeyPress(1)" style="width:200px;" ></el-input>
+          <a @click="openPriceGroup(0,'new_cust_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0,'new_cust_dbid')"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="formModel.new_cust_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
 
-
-
         <el-form-item v-show="groupShowFlag" label="Original Group ID:" style="width: 35%">
-          <el-input v-model="formModel.org_pricegroup_dbidname" style="width:150px;" ></el-input>
-          <a @click="openPriceGroup(1,'org_pricegroup_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>選擇</a>&nbsp;<a class="a-clear" @click="clearPop(1,'org_pricegroup_dbid')"><i class="el-icon-zoom-out"></i>清除</a>
+          <el-input v-model="formModel.org_pricegroup_dbidname" @keyup.enter="groupKeyPress(0)" style="width:200px;" ></el-input>
+          <a @click="openPriceGroup(1,'org_pricegroup_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1,'org_pricegroup_dbid')"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="formModel.org_pricegroup_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
 
         <el-form-item v-show="groupShowFlag" label="Copy to New Group ID:" style="width: 35%">
-          <el-input v-model="formModel.new_pricegroup_dbidname" style="width:150px;" ></el-input>
-          <a @click="openPriceGroup(1,'new_pricegroup_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>選擇</a>&nbsp;<a class="a-clear" @click="clearPop(1,'new_pricegroup_dbid')"><i class="el-icon-zoom-out"></i>清除</a>
+          <el-input v-model="formModel.new_pricegroup_dbidname" @keyup.enter="groupKeyPress(1)" style="width:200px;" ></el-input>
+          <a @click="openPriceGroup(1,'new_pricegroup_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1,'new_pricegroup_dbid')"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="formModel.new_pricegroup_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
 
@@ -189,6 +187,70 @@ export default {
     this.selected_dbids=[]
   },
   methods: {
+    groupKeyPress(flag){
+      let  group_id = ''
+      if(flag==0){
+        group_id = this.formModel.org_pricegroup_dbidname
+      }else if(flag==1){
+        group_id = this.formModel.new_pricegroup_dbidname
+      }
+      if(group_id) {
+        this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
+          if(reslut!==null){
+            if(flag==0){
+              this.formModel.org_pricegroup_dbid=reslut.pricegroup_dbid;
+              this.formModel.org_pricegroup_dbidname=reslut.group_id + " " + reslut.group_name;
+            }else if(flag==1){
+              this.formModel.new_pricegroup_dbid=reslut.pricegroup_dbid;
+              this.formModel.new_pricegroup_dbidname=reslut.group_id + " " + reslut.group_name;
+            }
+          }else {
+            this.$message.error("Group Id Is Not Exists.");
+            if(flag==0){
+              this.formModel.org_pricegroup_dbidname=''
+            }else if(flag==1){
+              this.formModel.new_pricegroup_dbidname=''
+            }
+
+          }
+
+          return;
+        })
+      }
+    },
+    custKeyPress(flag){
+      let  cust_id = ''
+      if(flag==0){
+        cust_id = this.formModel.org_cust_dbidname
+      }else if(flag==1){
+        cust_id = this.formModel.new_cust_dbidname
+      }
+      if(cust_id) {
+        this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
+          if(reslut!==null){
+
+            if(flag==0){
+              this.formModel.org_cust_dbid=reslut.cust_dbid;
+              this.formModel.org_cust_dbidname=reslut.cust_id + " " + reslut.cust_name;
+            }else if(flag==1){
+              this.formModel.new_cust_dbid=reslut.cust_dbid;
+              this.formModel.new_cust_dbidname=reslut.cust_id + " " + reslut.cust_name;
+            }
+          }else {
+            this.$message.error("Customer Id Is Not Exists.");
+            if(flag==0){
+              this.formModel.org_cust_dbidname=''
+            }else if(flag==1){
+              this.formModel.new_cust_dbidname=''
+            }
+
+          }
+
+          return;
+        })
+      }
+    },
+
     hideType(val){
       if(val==0){
         this.custShowFlag=true;
@@ -198,15 +260,15 @@ export default {
         this.groupShowFlag=true;
       }
 
-      this.invalidModel.org_pricegroup_dbidname="";
-      this.invalidModel.org_pricegroup_dbid="";
-      this.invalidModel.new_pricegroup_dbidname="";
-      this.invalidModel.new_pricegroup_dbid="";
+      this.formModel.org_pricegroup_dbidname="";
+      this.formModel.org_pricegroup_dbid="";
+      this.formModel.new_pricegroup_dbidname="";
+      this.formModel.new_pricegroup_dbid="";
 
-      this.invalidModel.org_cust_dbidname="";
-      this.invalidModel.org_cust_dbid="";
-      this.invalidModel.new_cust_dbidname="";
-      this.invalidModel.new_cust_dbid="";
+      this.formModel.org_cust_dbidname="";
+      this.formModel.org_cust_dbid="";
+      this.formModel.new_cust_dbidname="";
+      this.formModel.new_cust_dbid="";
 
     },
 
@@ -427,6 +489,11 @@ export default {
   .a-clear{
     font-size:12px;text-decoration:none;color:red;border-bottom: 1px solid;margin-left: 9px;text-decoration:none;cursor: pointer
   }
+
+  .el-form-item {
+    margin-bottom: 10px;
+  }
+
   .header{
     background-color:#d0d0d0;
     height: 30px;

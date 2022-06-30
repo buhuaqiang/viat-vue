@@ -24,7 +24,7 @@
             const table = ref({
                 key: 'custprice_dbid',
                 footer: "Foots",
-                cnName: '群組價格主頁面',
+                cnName: 'Group Price Book',
                 name: 'price/View_cust_price',
                 url: "/View_cust_price/",
                 sortName: "bid_no"

@@ -1,8 +1,10 @@
+import {ref} from "vue";
 
 
 let serviceFilter = {
   onInit () { //对应created
     console.log('Create执行前')
+
   },
   onInited () { //对应created，在onInit与onInited中间会初始化界面数据对象
     console.log('Create执行后')
@@ -72,8 +74,33 @@ let serviceFilter = {
   resetUpdateFormAfter () { //重置编辑表单后的内容
     return true;
   },
-  modelOpenBefore (row) { //点击编辑/新建按钮弹出框前，可以在此处写逻辑，如，从后台获取数据
+  modelOpenBefore (row){
+    //隱藏保存按鈕
+    let saveBtn = this.boxButtons.find((x) => x.value == 'save');
+    if(saveBtn){
+      saveBtn.hidden=this.currentAction==this.const.VIEW;
+    }
+
+    if(!(this.currentAction==this.const.VIEW)){
+      if(this.bakEditFormOptions && this.bakEditFormOptions.length>0){
+        for(var i=0;i<this.bakEditFormOptions.length;i++){
+          for(var j=0;j<this.bakEditFormOptions[i].length;j++){
+            let opt=this.bakEditFormOptions[i][j];
+            console.log(opt.field+"----"+opt.disabled);
+            if(opt.disabled){
+              this.editFormOptions[i][j].disabled=true;
+            }else{
+              this.editFormOptions[i][j].disabled=false;
+            }
+          }
+        }
+      }
+    }
+  },
+
+  viewModelOpenBefore (row) {
     debugger
+    this.bakEditFormOptions=JSON.parse(JSON.stringify(this.editFormOptions))
     this.editFormOptions.forEach(x => {
       x.forEach(item => {
         item.disabled=this.currentAction==this.const.VIEW;
@@ -90,7 +117,7 @@ let serviceFilter = {
       })
     }
     //隱藏保存按鈕
-    let saveBtn = this.boxButtons.find((x) => x.name == '保 存');
+    let saveBtn = this.boxButtons.find((x) => x.value == 'save');
     if(saveBtn){
       saveBtn.hidden=this.currentAction==this.const.VIEW;
     }

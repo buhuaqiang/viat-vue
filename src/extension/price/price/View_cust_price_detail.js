@@ -8,12 +8,13 @@
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
 import View_com_prod_pop_query from "../../basic/prod/View_com_prod_pop_query.vue";
 import Viat_com_custModelBody from "../../basic/cust/Viat_com_custModelBody";
+import InvalidDataPage from "./InvalidDataPage";
 let extension = {
   components: {
     //查询界面扩展组件
     gridHeader: View_com_prod_pop_query,
     gridBody: Viat_com_custModelBody,
-    gridFooter: '',
+    gridFooter: InvalidDataPage,
     //新建、编辑弹出框扩展组件
     modelHeader: View_com_prod_pop_query,
     modelBody: Viat_com_custModelBody,
@@ -91,7 +92,7 @@ let extension = {
                 }
               },
               [h("i",{class:"el-icon-zoom-in"})],
-              "選擇"
+              "Pick"
           ),
           h(
               "a",
@@ -119,7 +120,7 @@ let extension = {
                 }
               },
               [h("i",{class:"el-icon-zoom-out"})],
-              "清除"
+              "Clean"
           ),
 
 
@@ -151,8 +152,10 @@ let extension = {
       //设置保存后继续添加 ，不关闭当前窗口
       this.continueAdd=true;
       this.continueAddName="Save And Continue";
+      //設置初始不加載
+      this.load=false;
       //设置查询页面显示6个按钮(默认3个)
-      this.maxBtnLength = 6;
+      //this.maxBtnLength = 6;
       //-------------日期字段格式化 start--------------
       let startDate=this.getColumns("start_date");
       let endDate=this.getColumns("end_date");
@@ -182,12 +185,30 @@ let extension = {
         render: this.getRender("cust_dbid", 's','c')
       }
       let searchCustDBID=this.getSearchOption("cust_dbid");
+      searchCust.onKeyPress= ($event) => {
+        if($event.keyCode==13){
+          let  cust_id = this.searchFormFields['cust_dbidname']
+          if(cust_id) {
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.searchFormFields['cust_dbid'] =reslut.cust_dbid;
+                this.searchFormFields['cust_dbidname'] =reslut.cust_id + " " + reslut.cust_name;
+                return;
+              }else{
+                this.$message.error("Customer Id Is Not Exists.");
+                this.searchFormFields['cust_dbidname']=''
+                return;
+              }
+            })
+          }
+        }
+      }
       searchCustDBID.hidden=true;
 
       let searchProdDBIDS=this.getSearchOption("prods");
       searchProdDBIDS.extra = {
         icon: "el-icon-zoom-in",
-        text: "選擇",
+        text: "Pick",
         style: "color:#409eff;font-size: 12px;cursor: pointer;",
         click: item => {
           this.$refs.gridHeader.openMulity("prods",'ms');
@@ -205,15 +226,49 @@ let extension = {
       formCust.extra = {
         render: this.getRender("cust_dbid", 'f','c')
       }
+      formCust.onKeyPress= ($event) => {
+        if($event.keyCode==13){
+          let  cust_id = this.editFormFields['cust_dbidname']
+          if(cust_id) {
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.editFormFields['cust_dbid'] =reslut.cust_dbid;
+                this.editFormFields['cust_dbidname'] =reslut.cust_id + " " + reslut.cust_name;
+                return;
+              }else{
+                this.$message.error("Customer Id Is Not Exists.");
+                this.searchFormFields['cust_dbidname']=''
+                return;
+              }
+            })
+          }
+        }
+      }
+
+
       formProd.extra = {
         render: this.getRender("prod_dbid", 'f','p')
       }
-      //-------------表單輸入框綁定彈窗 end-------------
-      searchCust.onKeyPress= ($event) => {
+      formProd.onKeyPress= ($event) => {
         if($event.keyCode==13){
-
+          let  prod_id = this.editFormFields['prod_dbidname']
+          if(prod_id) {
+            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.editFormFields['prod_dbid'] =reslut.prod_dbid;
+                this.editFormFields['prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
+                return;
+              }else{
+                this.$message.error("Product Id Is Not Exists.");
+                this.searchFormFields['prod_idname']=''
+                return;
+              }
+            })
+          }
         }
       }
+      //-------------表單輸入框綁定彈窗 end-------------
+
 
     },
     handleFormSelected(rows){
@@ -225,6 +280,9 @@ let extension = {
         this.getFormOption("gross_price").hidden=true;
       }
 
+    },
+    invalidData(){
+      this.$refs.gridFooter.openDemo();
     },
     onInited() {
       //框架初始化配置后
@@ -267,32 +325,23 @@ let extension = {
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
     modelOpenBefore(row){
+     /* if (this.currentAction==this.const.EDIT){
+        if(row.source_type==2){
+          this.$Message.error(" This group data can not edit.");
+          return false;
+        }
+      }*/
+
+    },
+    async modelOpenBeforeAsync(row) {
       if (this.currentAction==this.const.EDIT){
         if(row.source_type==2){
           this.$Message.error(" This group data can not edit.");
           return false;
         }
       }
-      //---------處理彈框字段顯示---------
-      this.editFormOptions.forEach(x => {
-        x.forEach(item => {
-          item.disabled=this.currentAction==this.const.VIEW;
-        })
-      })
-      if (this.hasDetail) {
-        this.detailOptions.columns.forEach(x=>{
-          x.edit=!this.currentAction==this.const.VIEW;
-        })
-        this.detailOptions.buttons.forEach(x=>{
-          x.hidden=this.currentAction==this.const.VIEW;
-        })
-      }
-      //隱藏保存按鈕
-      let saveBtn = this.boxButtons.find((x) => x.name == '保 存');
-      if(saveBtn){
-        saveBtn.hidden=this.currentAction==this.const.VIEW;
-      }
 
+      return true;
     },
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
@@ -301,8 +350,7 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
-      this.getFormOption("cust_dbidname").disabled=true;
-      this.getFormOption("prod_dbidname").disabled=true;
+
       this.getFormOption("nhi_price").disabled=true;
       //判斷Cust Id是否為Expfizer Cust Id
       this.getFormOption("gross_price").hidden=true;
@@ -325,12 +373,15 @@ let extension = {
         if(row.gross_price){
           this.getFormOption("gross_price").hidden=false;
         }
+
         this.getFormOption("bid_no").disabled=true;
         this.getFormOption("invoice_price").disabled=true;
         this.getFormOption("net_price").disabled=true;
         this.getFormOption("min_qty").disabled=true;
         this.getFormOption("cust_dbidname").extra={};
         this.getFormOption("prod_dbidname").extra={};
+        this.getFormOption("cust_dbidname").disabled=true;
+        this.getFormOption("prod_dbidname").disabled=true;
 
       }else if (this.currentAction==this.const.VIEW){
         if(row.gross_price){
