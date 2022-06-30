@@ -11,7 +11,7 @@
         :action="url"
       >
         <el-button size="small"
-          ><i class="el-icon-folder-opened"></i>选择文件</el-button
+          ><i class="el-icon-folder-opened"></i>Select File</el-button
         >
       </el-upload>
       <el-button
@@ -24,7 +24,7 @@
         :loading="loadingStatus"
         >
         <!-- <i v-show="!loadingStatus" class="el-icon-bottom"></i> -->
-        下载模板</el-button
+        Download Template File</el-button
       >
       <el-button
         type="success"
@@ -34,24 +34,24 @@
         :loading="loadingStatus"
         >
         <!-- <i v-show="!loadingStatus" class="el-icon-top"></i> -->
-        上传文件</el-button
+        Onload </el-button
       >
     </div>
     <div class="alert">
-      <el-alert title="上传说明" type="warning" :closable="false" show-icon
-        >只能上传excel文件,文件大小不超过5M</el-alert
+      <el-alert title="Upload instructions" type="warning" :closable="false" show-icon
+        >Only Excel files can be uploaded, and the file size is no more than 5M</el-alert
       >
     </div>
 
     <div v-if="file">
-      <h3>文件列表</h3>
+      <h3>File List</h3>
       <div class="file-info">
-        <span>文件名：{{ file.name }}</span>
-        <span>大小{{ (file.size / 1024).toFixed(2) }}KB</span>
+        <span>File Name：{{ file.name }}</span>
+        <span>Size{{ (file.size / 1024).toFixed(2) }}KB</span>
       </div>
     </div>
     <div v-show="message" class="v-r-message">
-      <h3 class="title">上传结果</h3>
+      <h3 class="title">Onload Result</h3>
       <div class="text" :class="resultClass" v-html="message"></div>
     </div>
     <slot></slot>
@@ -105,7 +105,7 @@ export default {
     getFileType() {
       let fileName = this.file.name.split(".").pop().toLocaleLowerCase() || "";
       if (["numbers", "csv", "xls", "xlsx"].indexOf(fileName) == -1) {
-        this.$Message.error("只能选择excel文件");
+        this.$Message.error("Only Excel files can be selected");
         return false;
       }
       return true;
@@ -124,7 +124,7 @@ export default {
       }
 
       if (!this.file) {
-        return this.$Message.error("请选择文件");
+        return this.$Message.error("Please select a file");
       }
       var formData = new FormData();
       formData.append("fileInput", this.file);

@@ -49,7 +49,7 @@
       :height="350"
       :width="600"
       :lazy="true"
-      :title="(boxModel ? detailOptions.cnName : table.cnName) + '-导入'"
+      :title="(boxModel ? detailOptions.cnName : table.cnName) + '-Import'"
     >
       <UploadExcel
         ref="upload_excel"
