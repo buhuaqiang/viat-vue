@@ -286,7 +286,7 @@ let extension = {
                           }
                       },
                       [h("i",{class:"el-icon-zoom-in"})],
-                      "選擇"
+                      "Pick"
                   ),
                   h(
                       "a",
@@ -314,7 +314,7 @@ let extension = {
                           }
                       },
                       [h("i",{class:"el-icon-zoom-out"})],
-                      "清除"
+                      "clear"
                   ),
 
 
