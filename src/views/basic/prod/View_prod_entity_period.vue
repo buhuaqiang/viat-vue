@@ -29,20 +29,20 @@
                 url: "/View_prod_entity_period/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"prod_dbidname":"","entity":"","start_date":"","end_date":"","status":"","emp_ename":"","modified_date":"","prod_ename":"","prod_dbid":"","prod_id":""});
-            const editFormOptions = ref([[{"title":"Product ID","required":true,"field":"prod_dbidname","type":"text"}],
-                              [{"dataKey":"entity","data":[],"title":"Entity","field":"entity","type":"select"}],
-                              [{"title":"Start Date","required":true,"field":"start_date","type":"date"}],
-                              [{"title":"End Date","required":true,"field":"end_date","type":"date"}],
-                              [{"dataKey":"duputy_status","data":[],"title":"Status","field":"status","type":"select"}],
-                              [{"title":"Last Modified","field":"emp_ename","type":"text"},
-                               {"title":"Modified Date","field":"modified_date","type":"datetime"},
-                               {"title":"","field":"prod_ename","type":"text"}],
+            const editFormFields = ref({"entity":"","prod_dbidname":"","start_date":"","end_date":"","emp_ename":"","status":"","modified_date":"","prod_ename":"","prod_dbid":"","prod_id":""});
+            const editFormOptions = ref([[{"title":"Product ID","required":true,"field":"prod_dbidname","type":"text"},
+                               {"dataKey":"entity","data":[],"title":"Entity","field":"entity","type":"select"}],
+                              [{"title":"Start Date","required":true,"field":"start_date","type":"date"},
+                               {"title":"End Date","required":true,"field":"end_date","type":"date"}],
+                              [{"dataKey":"duputy_status","data":[],"title":"Status","field":"status","type":"select"},
+                               {"title":"Last Modified","field":"emp_ename","type":"text"}],
+                              [{"title":"Modified Date","field":"modified_date","type":"datetime"}],
+                              [{"title":"","field":"prod_ename","type":"text"}],
                               [{"title":"","required":true,"field":"prod_dbid","type":"text"}],
                               [{"title":"Product ID","required":true,"field":"prod_id","type":"text"}]]);
             const searchFormFields = ref({"entity":"","prod_dbid":"","status":"","prod_dbidname":""});
             const searchFormOptions = ref([[{"title":"Product ID","field":"prod_dbidname","type":"like"},{"dataKey":"entity","data":[],"title":"Entity","field":"entity","type":"select"},{"dataKey":"duputy_status","data":[],"title":"Status","field":"status","type":"select"}],[{"title":"","field":"prod_dbid","type":"text"}]]);
-            const columns = ref([{field:'prod_id',title:'Product ID',type:'string',width:110,require:true,align:'left',sort:true},
+            const columns = ref([{field:'prod_id',title:'Product ID',type:'string',link:true,width:110,require:true,align:'left',sort:true},
                        {field:'entity',title:'Entity',type:'string',bind:{ key:'entity',data:[]},width:110,align:'left'},
                        {field:'start_date',title:'Start Date',type:'datetime',width:110,require:true,align:'left',sort:true},
                        {field:'end_date',title:'End Date',type:'datetime',width:110,require:true,align:'left',sort:true},
