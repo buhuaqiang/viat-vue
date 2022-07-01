@@ -1,7 +1,7 @@
 <template>
   <div  id="vol-main" >
     <div style="padding:20px 2px;">
-      <el-form :inline="true"  label-width="180px" :model="formModel">
+      <el-form :inline="true"  label-width="200px" :model="formModel">
         <el-form-item label="Type:" style="width: 100%">
           <el-radio-group v-model="formModel.selectType" >
             <el-radio :label="0" @change="hideType(0)">Cust</el-radio>

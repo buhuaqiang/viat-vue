@@ -38,7 +38,7 @@
                                {"dataKey":"LocalTA","data":[],"title":"ta","field":"ta","type":"select"}],
                               [{"dataKey":"Status_YN","data":[],"title":"status","field":"status","type":"select"}]]);
             const searchFormFields = ref({"mpg_id":"","mpg_name":"","bu_id":"","category":"","ta":"","status":""});
-            const searchFormOptions = ref([[{"title":"mpg_id","field":"mpg_id"},{"title":"mpg_name","field":"mpg_name","type":"like"}],[{"dataKey":"LocalTA","data":[],"title":"ta","field":"ta","type":"select"}],[{"dataKey":"LocalBu","data":[],"title":"bu_id","field":"bu_id","type":"select"},{"dataKey":"LocalMpgCategory","data":[],"title":"category","field":"category","type":"select"}],[{"dataKey":"Status_YN","data":[],"title":"status","field":"status","type":"select"}]]);
+            const searchFormOptions = ref([[{"title":"mpg_id","field":"mpg_id"},{"title":"mpg_name","field":"mpg_name","type":"like"}],[{"dataKey":"LocalTA","data":[],"title":"ta","field":"ta","type":"select"},{"dataKey":"Status_YN","data":[],"title":"status","field":"status","type":"select"}],[{"dataKey":"LocalBu","data":[],"title":"bu_id","field":"bu_id","type":"select"},{"dataKey":"LocalMpgCategory","data":[],"title":"category","field":"category","type":"select"}]]);
             const columns = ref([{field:'localmpg_dbid',title:'localmpg_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'globalmpg_dbid',title:'globalmpg_dbid',type:'guid',bind:{ key:'GlobalMpgSelect',data:[]},width:110,hidden:true,align:'left'},
                        {field:'entity',title:'entity',type:'string',width:110,align:'left',sort:true},
