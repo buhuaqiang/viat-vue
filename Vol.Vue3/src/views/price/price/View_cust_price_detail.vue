@@ -45,7 +45,7 @@
                               [{"title":"","field":"prod_dbid"},
                                {"title":"","field":"cust_dbid"}]]);
             const searchFormFields = ref({"cust_dbidname":"","status":"","start_date":"","end_date":"","modified_date":"","prods":[],"cust_dbid":""});
-            const searchFormOptions = ref([[{"title":"Cust","field":"cust_dbidname"},{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"},{"dataKey":"Status_YN","data":[],"title":"status","field":"status","type":"select"},{"title":"Modified Date","field":"modified_date","type":"date"}],[{"title":"","field":"cust_dbid"},{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}]]);
+            const searchFormOptions = ref([[{"title":"Cust","field":"cust_dbidname"},{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"}],[{"title":"","field":"cust_dbid"},{"dataKey":"Status_YN","data":[],"title":"status","field":"status","type":"select"},{"title":"Modified Date","field":"modified_date","type":"date"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}]]);
             const columns = ref([{field:'pricedetail_dbid',title:'pricedetail_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'cust_id',title:'Cust ID',type:'string',link:true,width:110,align:'left',sort:true},
                        {field:'cust_name',title:'Cust Name',type:'string',width:120,align:'left'},
