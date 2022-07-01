@@ -36,7 +36,7 @@
                                {"title":"客戶代碼","field":"cust_dbid"},
                                {"title":"序號","field":"serial_no","type":"decimal"},
                                {"title":"分配比例","field":"percent","type":"decimal"},
-                               {"title":"是否有效,Y:生效/N:未生效or期滿","field":"status"},
+                                {"dataKey":"Status2","data":[],"title":"Status","field":"status","type":"select"},
                                {"title":"LocalAddon Contractno","field":"o_contract_no","type":"number"}]]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([]);
@@ -47,7 +47,7 @@
                        {field:'cust_dbid',title:'客戶代碼',type:'guid',width:110,align:'left'},
                        {field:'serial_no',title:'序號',type:'decimal',width:110,align:'left'},
                        {field:'percent',title:'分配比例',type:'decimal',width:110,align:'left'},
-                       {field:'status',title:'是否有效,Y:生效/N:未生效or期滿',type:'string',width:110,align:'left'},
+                       {field:'status',title:'Status',type:'string',bind:{ key:'Status2',data:[]},width:110,align:'left'},
                        {field:'o_contract_no',title:'LocalAddon Contractno',type:'int',width:110,align:'left'},
                        {field:'created_user',title:'建立用戶',type:'int',width:110,align:'left'},
                        {field:'created_username',title:'created_username',type:'string',width:110,align:'left'},
