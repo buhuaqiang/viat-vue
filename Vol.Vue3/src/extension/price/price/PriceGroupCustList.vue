@@ -1,6 +1,6 @@
 <template>
 
-  <div style="padding: 0 4px;border-top: 10px solid #eee; font-weight: bolder;font-size: 14px">
+  <div style="padding: 0 4px;border-top: 10px solid #eee;">
     <div class="desc-text" style="height: 40px;padding-top: 10px;">
       <i class="el-icon-s-grid"></i> Price Group Customer List
     </div>

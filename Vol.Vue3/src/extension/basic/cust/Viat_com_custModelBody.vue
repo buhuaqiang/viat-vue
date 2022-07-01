@@ -77,12 +77,12 @@ export default {
     return {
       model: false,
       single: true,
+      returnType:"",
+      flag:"",
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
       cust_name: "", //查询条件字段
       cust_id:"",
       zip_id: "",
-      fieldName:"",//編輯字段,用於回傳設置值
-      formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields,ext-自定義擴展(价格群组invalid调用页面)
       url: "api/View_com_cust/GetPopPageData",//加载数据的接口
       columns: [
         {
@@ -162,89 +162,46 @@ export default {
     };
   },
   methods: {
-    openMulity(fieldName, formType){
-      this.single=false;
-      this.openDemo(fieldName,formType);
-    },
-    openDemo(fieldName, formType) {
+
+    openModel(single,flag,returnType) {
+      this.single=single;
       this.model = true;
-      this.fieldName = fieldName;
-      if (formType) this.formType = formType;
-
-
+      this.flag = flag;
+      this.returnType = returnType
       //打开弹出框时，加载table数据
       this.$nextTick(() => {
         this.$refs.mytable.load();
       });
     },
-    clearData(fieldName, formType) {
+    /*clearData(fieldName_dbid,fieldName_id, formType) {
       this.$emit("parentCall", ($parent) => {
-        debugger;
         if (formType == "f") {
-          $parent.editFormFields[fieldName] = "";
-          $parent.editFormFields[fieldName + "name"] = "";
+          $parent.editFormFields[fieldName_dbid] = "";
+          $parent.editFormFields[fieldName_id] = "";
         } else if (formType == "s") {
-          $parent.searchFormFields[fieldName] = "";
-          $parent.searchFormFields[fieldName + "name"] = "";
+          $parent.searchFormFields[fieldName_dbid] = "";
+          $parent.searchFormFields[fieldName_id] = "";
         }
+        $parent.pickCustomerName="";
       });
-    },
+    },*/
     search() {
       //点击搜索
       this.$refs.mytable.load();
     },
     addRow() {
+      debugger;
       var rows = this.$refs.mytable.getSelected();
       if (!rows || rows.length == 0) {
         return this.$message.error("請選擇數據");
       }
 
-      let path = this.$route.path;
-      if(path =="/view_dist_margin"  && this.formType=='mf'){//
-        let selectrows = [];//将勾选值设置成数组
-        rows.forEach(row=>{
-          selectrows.push({"key":row.cust_dbid,"value":row.cust_name});
-        })
-        this.$emit('parentCall', $parent => {//選擇數據後賦值
-          $parent.editFormOptions.forEach(x => {
-            x.forEach(item => {
-              if (item.field == 'custs') {
-                item.data = selectrows;//將選中的數據賦值到下拉框的數組中
-                item.data.forEach(a=>{//將值回顯到頁面，push(key)會將頁面顯示的值在多選框中標識出來，push(value)不會
-                  $parent.editFormFields.custs.push(a.key)
-                })
-              }
-            })
-          })
-          this.model=false;
-        })
-      }
-      else if ((path == '/View_app_power_contract_main' && this.formType == 'f') || this.formType=='ext' || (path == '/View_app_hp_contract')){//多層級調用
-        this.$emit("onSelect", this.fieldName, rows)
-      }else if (path === '/view_com_dist' && this.formType === 'f'){
-        this.$emit("parentCall", ($parent) => {
-          if(this.formType=='f'){
-            $parent.editFormFields['cust_id'] = rows[0].cust_id;
-            $parent.editFormFields['cust_dbid'] = rows[0].cust_dbid;
-          }
-        });
+      if (this.returnType=="onSelect") {//多層級調用
+        this.$emit("onSelect", this.flag, rows)
       }else{
-        //回写数据到表单
-        this.$emit("parentCall", ($parent) => {
-          //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
-          if (this.formType == "f") {
-            $parent.editFormFields[this.fieldName] = rows[0].cust_dbid;
-            $parent.editFormFields[this.fieldName + "name"] =
-              rows[0].cust_id + " " + rows[0].cust_name;
-            $parent.handleFormSelected(rows);//自定義回調方法處理,在調用頁面聲明
-          } else if (this.formType == "s") {
-            $parent.searchFormFields[this.fieldName] = rows[0].cust_dbid;
-            $parent.searchFormFields[this.fieldName + "name"] =
-              rows[0].cust_id + " " + rows[0].cust_name;
-          }
-
-        });
-        //this.$emit("handleSelected",rows);
+        this.$emit('parentCall', $parent => {
+          $parent.handleCustomerSelected(this.flag, rows);//自定義回調方法處理,在調用頁面聲明
+        })
       }
 
       //关闭当前窗口

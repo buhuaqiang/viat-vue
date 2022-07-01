@@ -86,10 +86,11 @@ export default defineComponent({
           required: true
         },
         { title: "pricegroup_dbid", field: "pricegroup_dbid" , align: "left",hidden: true},
-        { title: "Group", field: "group_name",colSize:6, align: "left",required: true},
+        { title: "Group ID", field: "group_id",colSize:6, align: "left",required: true},
+        { title: "Group Name", field: "group_name", align: "left",hidden: true},
         { title: "cust_dbid", field: "cust_dbid" , align: "left",hidden: true},
-        { title: "cust_id", field: "cust_id" , align: "left",hidden: true},
-        { title: "Customer", field: "cust_name",colSize:6,align: "left",required: true},
+        { title: "Customer ID", field: "cust_id",colSize:6,align: "left",required: true},
+        { title: "Customer Name", field: "cust_name", align: "left",hidden: true},
       ],
       [
 
@@ -153,9 +154,9 @@ export default defineComponent({
        },
       ],
       [
-        { title: "Customer", field: "cust_dbidname"},
+        { title: "Customer", field: "cust_id"},
         { title: "", field: "cust_dbid",hidden:true},
-        { title: "Group", field: "pricegroup_dbidname" },
+        { title: "Group", field: "group_id" },
         { title: "", field: "pricegroup_dbid",hidden: true },
       ],
 

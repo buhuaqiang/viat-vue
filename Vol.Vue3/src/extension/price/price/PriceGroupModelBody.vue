@@ -74,6 +74,9 @@ export default {
   data() {
     return {
       model: false,
+      single: true,
+      returnType:"",
+      flag:"",
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
       group_name: "", //查询条件字段
       group_id:"",
@@ -88,28 +91,18 @@ export default {
     };
   },
   methods: {
-    openDemo(fieldName,formType) {
+    openModel(single,flag,returnType) {
+      this.single=single;
       this.model = true;
-      this.fieldName=fieldName;
-      if(formType){
-        this.formType=formType;
-      }
+      this.flag = flag;
+      this.returnType = returnType
+
       //打开弹出框时，加载table数据
       this.$nextTick(() => {
         this.$refs.mytable.load();
       });
     },
-    clearData(fieldName,formType) {
-      this.$emit("parentCall", ($parent) => {
-        if(this.formType=='f'){
-          $parent.editFormFields[this.fieldName] = '';
-          $parent.editFormFields[this.fieldName+'name'] = '';
-        }else if(this.formType=='s'){
-          $parent.searchFormFields[this.fieldName] = '';
-          $parent.searchFormFields[this.fieldName+'name'] ='';
-        }
-      })
-    },
+
     search() {
       //点击搜索
       this.$refs.mytable.load();
@@ -119,26 +112,13 @@ export default {
       if (!rows || rows.length == 0) {
         return this.$message.error("請選擇數據");
       }
-      let path =this.$route.path;
-       if((path=='/View_app_power_contract_main' && this.formType=='f') || this.formType=='ext'){//多層級調用
-        this.$emit("onSelect",this.fieldName,rows)
-      }else if(path=='/View_app_hp_contract' && this.formType=='f'){
-        this.$emit("onSelect",this.fieldName,rows)
-      }else if(path=='/View_app_hp_contract' && this.formType=='s'){
-        this.$emit("onSelect",this.fieldName,rows)
-      }else{
-        //回写数据到表单
-        this.$emit("parentCall", ($parent) => {
-          //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
-          if(this.formType=='f'){
-            $parent.editFormFields[this.fieldName] = rows[0].pricegroup_dbid;
-            $parent.editFormFields[this.fieldName+'name'] = rows[0].group_id+" "+rows[0].group_name;
-          }else if(this.formType=='s'){
-            $parent.searchFormFields[this.fieldName] = rows[0].pricegroup_dbid;
-            $parent.searchFormFields[this.fieldName+'name'] = rows[0].group_id + " " + rows[0].group_name;
-          }
 
-        });
+      if (this.returnType=="onSelect") {//多層級調用
+        this.$emit("onSelect", this.flag, rows)
+      }else{
+        this.$emit('parentCall', $parent => {
+          $parent.handlePriceGroupSelected(this.flag, rows);//自定義回調方法處理,在調用頁面聲明
+        })
       }
 
       //关闭当前窗口
