@@ -79,7 +79,7 @@ let extension = {
                             this.searchFormFields['prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
                             return;
                         }else{
-                            this.$message.error("Customer Id Is Not Exists.");
+                            this.$message.error("Product Id Is Not Exists.");
                             return;
                         }
 
@@ -119,10 +119,9 @@ let extension = {
                         if(reslut !=null){
                             this.editFormFields['prod_dbid'] =reslut.prod_dbid;
                             this.editFormFields['prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
-                            // this.$refs.modelBody.initCustomerListByGroupDbId(reslut.pricegroup_dbid);
                             return;
                         }else{
-                            this.$message.error("Group Id Is Not Exists.");
+                            this.$message.error("Product Id Is Not Exists.");
                             return ;
                         }
 
