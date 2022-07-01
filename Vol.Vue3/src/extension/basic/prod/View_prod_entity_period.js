@@ -36,6 +36,7 @@ let extension = {
       this.labelWidth = 180;
       this.setFiexdSearchForm(true);
       this.single=true;//设置单选
+
       //日期格式化 formatter
       let start_date=this.getColumnsOption("start_date");
       start_date.formatter = (row) => {
@@ -53,95 +54,129 @@ let extension = {
         }
         return row.end_date.substr(0,10);
       }
-      //搜尋彈窗 選擇產品
+
+      //搜尋時,產品彈窗
       let proddbidname=this.getSearchOption('prod_dbidname');
       let prodbid=this.getSearchOption('prod_dbid');
       prodbid.hidden = true
-      proddbidname.readonly = true
       proddbidname.extra = {
-        render:this.getSearchRender('prod_dbid', 's' )
+        render:this.getRender('prod_dbid', 's', 'p' )
       }
-      //編輯彈窗 選擇產品
+      //編輯時,產品彈窗
       let proddbidEditname=this.getEditOption('prod_dbidname');
-      proddbidEditname.readonly = true
       proddbidEditname.extra = {
-        render:this.getFormRender('prod_dbid', 'f' )
+        render:this.getRender('prod_dbid', 'f', 'p' )
+      }
+      //查詢時輸入正確的customer_id 或prod_id回車時, 系統將智能回填customer和product name
+      proddbidname.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  searchProd_dbidname = this.searchFormFields['prod_dbidname']
+          if(searchProd_dbidname) {
+            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+searchProd_dbidname.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.searchFormFields['prod_dbid'] =reslut.prod_dbid;
+                this.searchFormFields['prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
+                return;
+              }else{
+                this.$message.error("Product Id Is Not Exists.");
+                return;
+              }
+            })
+          }
+        }
+      }
+      //編輯時輸入正確的customer_id 或prod_id回車時, 系統將智能回填customer和product name
+      proddbidEditname.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  editProd_dbidname = this.editFormFields['prod_dbidname']
+          if(editProd_dbidname) {
+            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+editProd_dbidname.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.editFormFields['prod_dbid'] =reslut.prod_dbid;
+                this.editFormFields['prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
+                return;
+              }else{
+                this.$message.error("Product Id Is Not Exists.");
+                return ;
+              }
+            })
+          }
+        }
       }
 
         //示例：设置修改新建、编辑弹出框字段标签的长度
         // this.boxOptions.labelWidth = 150;
     },
+
     /**
      *
      * @param fieldName綁定欄位
      * @param formType 表單類型f-form表單,s-查詢表單
+     * @param pageType c-cust,pg-pricegroup,p-prod
      * @returns {function(*, {row: *, column: *, index: *}): *}
      */
-    getFormRender(fieldName, formType) {//
+    getRender(fieldName,formType,pageType) {//
       return (h, { row, column, index }) => {
-        return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer', "text-decoration": "none" } }, [
+        return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
           h(
               "a",
               {
                 props: {},
-                style: { "color": "", "border-bottom": "1px solid", "margin-left": "9px", "text-decoration": "none" },
+                style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
                 onClick: (e) => {
-                  this.$refs.modelBody.openDemo(fieldName, formType)
+                  if(formType=='s'){
+                    if(pageType=='c'){
+                      this.$refs.gridHeader.openDemo(fieldName,formType);
+                    }
+                    if(pageType=='p'){
+                      this.$refs.gridBody.openDemo(fieldName,formType);
+                    }
+
+                  }
+                  if(formType=='f'){
+                    if(pageType=='c'){
+                      this.$refs.modelHeader.openDemo(fieldName,formType);
+                    }
+                    if(pageType=='p'){
+                      this.$refs.modelBody.openDemo(fieldName,formType);
+                    }
+
+
+                  }
                 }
               },
-              [h("i", { class: "el-icon-zoom-in" })],
-              "選擇"
+              [h("i",{class:"el-icon-zoom-in"})],
+              "Pick"
           ),
           h(
               "a",
               {
                 props: {},
-                style: { "color": "red", "margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none" },
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
                 onClick: (e) => {
-                  this.$refs.modelBody.clearData(fieldName, formType);
+                  if(formType=='s') {
+                    if(pageType=='c'){
+                      this.$refs.gridHeader.clearData(fieldName,formType);
+                    }
+                    if(pageType=='p'){
+                      this.$refs.gridBody.clearData(fieldName,formType);
+                    }
+                  }
+                  if(formType=='f'){
+                    if(pageType=='c'){
+                      this.$refs.modelHeader.clearData(fieldName,formType);
+                    }
+                    if(pageType=='p'){
+                      this.$refs.modelBody.clearData(fieldName,formType);
+                    }
+
+                  }
                 }
               },
-              [h("i", { class: "el-icon-zoom-out" })],
-              "清除"
+              [h("i",{class:"el-icon-zoom-out"})],
+              "Clean"
           ),
 
-        ]);
-      };
-    },
-    /**
-     *
-     * @param fieldName綁定欄位
-     * @param formType 表單類型f-form表單,s-查詢表單
-     * @param pageType c-cust,pg-pricegroup
-     * @returns {function(*, {row: *, column: *, index: *}): *}
-     */
-    getSearchRender(fieldName, formType) {//
-      return (h, { row, column, index }) => {
-        return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer', "text-decoration": "none" } }, [
-          h(
-              "a",
-              {
-                props: {},
-                style: { "color": "", "border-bottom": "1px solid", "margin-left": "9px", "text-decoration": "none" },
-                onClick: (e) => {
-                  this.$refs.gridBody.openDemo(fieldName, formType);
-                }
-              },
-              [h("i", { class: "el-icon-zoom-in" })],
-              "選擇"
-          ),
-          h(
-              "a",
-              {
-                props: {},
-                style: { "color": "red", "margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none" },
-                onClick: (e) => {
-                  this.$refs.gridBody.clearData(fieldName, formType);
-                }
-              },
-              [h("i", { class: "el-icon-zoom-out" })],
-              "清除"
-          ),
 
         ]);
       };
@@ -219,7 +254,7 @@ let extension = {
       prodenameEdit.hidden=true;
       let proddbidEdit=this.getEditOption('prod_dbid');
       proddbidEdit.hidden=true;
-      this.editFormFields.prod_dbidname= this.editFormFields.prod_ename;
+      this.editFormFields.prod_dbidname= this.editFormFields.prod_id + ' ' + this.editFormFields.prod_ename;
 
       let status=this.getEditOption('status');
       let empEname=this.getEditOption('emp_ename');
