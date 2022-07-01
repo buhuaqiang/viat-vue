@@ -1,8 +1,8 @@
 <template>
 
-  <div style="padding: 0 4px;border-top: 10px solid #eee;">
+  <div style="padding: 0 4px;border-top: 10px solid #eee; font-weight: bolder;font-size: 14px">
     <div class="desc-text" style="height: 40px;padding-top: 10px;">
-      <i class="el-icon-s-grid"></i>Price Group Customer List
+      <i class="el-icon-s-grid"></i> Price Group Customer List
     </div>
     <div style="padding:10px;background: white;padding-top: 0;">
       <vol-table ref="tableList"
