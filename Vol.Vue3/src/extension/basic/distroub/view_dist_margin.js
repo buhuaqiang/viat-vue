@@ -38,7 +38,123 @@ let extension = {
         //     }
         //   });
 
-        this.single=true;//设置单选
+        // this.single=true;//设置单选
+
+        //查詢時彈窗
+        let proddbidname=this.getSearchOption('prod_dbidname');
+        let prodbid=this.getSearchOption('prod_dbid');
+        prodbid.hidden = true
+
+        proddbidname.extra = {
+            render:this.getRender('prod_dbid', 's' ,'p')
+        }
+        let custdbidname = this.getSearchOption('cust_dbidname');
+        let custdbid= this.getSearchOption('cust_dbid');
+        custdbid.hidden = true
+
+        custdbidname.extra = {
+            render:this.getRender('cust_dbid', 's' ,'c')
+        }
+
+        //編輯彈窗
+        let proddbidEditname=this.getEditOption('prod_dbidname');
+
+        proddbidEditname.extra = {
+            render:this.getRender('prod_dbid', 'f' ,'p')
+        }
+        let custdbidEditname = this.getEditOption('cust_dbidname');
+
+        custdbidEditname.extra = {
+            render:this.getRender('cust_dbid', 'f','c' )
+        }
+
+        //查詢時輸入正確的customer_id 或prod_id, 將智能回填customer和product name
+        proddbidname.onKeyPress=($event)=>{
+            if($event.keyCode == 13){
+                let  searchProd_dbidname = this.searchFormFields['prod_dbidname']
+                if(searchProd_dbidname) {
+                    this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+searchProd_dbidname.replace(/\s/g,""),{} , "loading").then(reslut => {
+                        if(reslut !=null){
+                            this.searchFormFields['prod_dbid'] =reslut.prod_dbid;
+                            this.searchFormFields['prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
+                            return;
+                        }else{
+                            this.$message.error("Customer Id Is Not Exists.");
+                            return;
+                        }
+
+                    })
+                }
+
+            }
+        }
+
+        custdbidname.onKeyPress=($event)=>{
+            if($event.keyCode == 13){
+                let  searchCust_dbidname = this.searchFormFields['cust_dbidname']
+                if(searchCust_dbidname) {
+                    this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+searchCust_dbidname.replace(/\s/g,""),{} , "loading").then(reslut => {
+                        if(reslut !=null){
+                            this.searchFormFields['cust_dbid'] =reslut.cust_dbid;
+                            this.searchFormFields['cust_dbidname'] =reslut.cust_id + " " + reslut.cust_name;
+                            return;
+                        }else{
+                            this.$message.error("Customer Id Is Not Exists.");
+                            return;
+                        }
+
+                    })
+                }
+            }
+        }
+
+        //編輯時輸入正確的customer_id 或prod_id, 將智能回填customer和product name
+        proddbidEditname.onKeyPress=($event)=>{
+
+            if($event.keyCode == 13){
+
+                let  editProd_dbidname = this.editFormFields['prod_dbidname']
+                if(editProd_dbidname) {
+                    this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+editProd_dbidname.replace(/\s/g,""),{} , "loading").then(reslut => {
+                        if(reslut !=null){
+                            this.editFormFields['prod_dbid'] =reslut.prod_dbid;
+                            this.editFormFields['prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
+                            // this.$refs.modelBody.initCustomerListByGroupDbId(reslut.pricegroup_dbid);
+                            return;
+                        }else{
+                            this.$message.error("Group Id Is Not Exists.");
+                            return ;
+                        }
+
+                    })
+                }
+
+            }
+        }
+
+        custdbidEditname.onKeyPress=($event)=>{
+
+            if($event.keyCode == 13){
+
+                let  editCust_dbidname = this.editFormFields['cust_dbidname']
+                if(editCust_dbidname) {
+                    this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+editCust_dbidname.replace(/\s/g,""),{} , "loading").then(reslut => {
+                        if(reslut !=null){
+                            this.editFormFields['cust_dbid'] =reslut.cust_dbid;
+                            this.editFormFields['cust_dbidname'] =reslut.cust_id + " " + reslut.cust_name;
+                            return;
+                        }else{
+                            this.$message.error("Customer Id Is Not Exists.");
+                            return;
+                        }
+
+                    })
+                }
+
+            }
+        }
+
+
         //margin_value%格式化
         this.getColumnsOption("margin_value").formatter = (row) => {
             if (!row.margin_value) {
@@ -46,8 +162,6 @@ let extension = {
             }
             return  row.margin_value + '%';
         }
-
-
 
         //日期格式化 formatter
         let start_date=this.getColumnsOption("start_date");
@@ -74,6 +188,7 @@ let extension = {
             }
             return row.end_date.substr(0,10);
         }
+
         //示例：设置修改新建、编辑弹出框字段标签的长度
         // this.boxOptions.labelWidth = 150;
         this.boxOptions.labelWidth=180;
@@ -81,32 +196,9 @@ let extension = {
         //this.setFiexdSearchForm(true);
         //设置查询表单的标签文字宽度
         this.labelWidth=180;
-        //搜尋彈窗 選擇產品
-        let proddbidname=this.getSearchOption('prod_dbidname');
-        let prodbid=this.getSearchOption('prod_dbid');
-        prodbid.hidden = true
-        proddbidname.readonly = true
-        proddbidname.extra = {
-            render:this.getRender('prod_dbid', 's' ,'p')
-       }
-        let custdbidname = this.getSearchOption('cust_dbidname');
-        let custdbid= this.getSearchOption('cust_dbid');
-        custdbid.hidden = true
-        custdbidname.readonly = true
-        custdbidname.extra = {
-            render:this.getRender('cust_dbid', 's' ,'c')
-        }
-        //編輯彈窗
-        let proddbidEditname=this.getEditOption('prod_dbidname');
-        proddbidEditname.readonly = true
-        proddbidEditname.extra = {
-            render:this.getRender('prod_dbid', 'f' ,'p')
-        }
-        let custdbidEditname = this.getEditOption('cust_dbidname');
-        custdbidEditname.readonly = true
-        custdbidEditname.extra = {
-            render:this.getRender('cust_dbid', 'f','c' )
-        }
+
+
+
         //编辑弹窗 客户和产品多选绑定弹窗
         let custs=this.getEditOption("custs");
         custs.extra = {
