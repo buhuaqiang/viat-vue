@@ -127,10 +127,10 @@
 
                 this.$emit("parentCall", ($parent) => {
                     debugger
-                    if(this.formType=='f'){
+                    if(formType=='f'){
                         $parent.editFormFields[fieldName] = '';
                         $parent.editFormFields[fieldName+'name'] = '';
-                    }else if(this.formType=='s'){
+                    }else if(formType=='s'){
                         $parent.searchFormFields[fieldName] = '';
                         $parent.searchFormFields[fieldName+'name'] ='';
                     }
