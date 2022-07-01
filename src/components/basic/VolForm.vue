@@ -1261,12 +1261,15 @@ export default defineComponent({
 }
 .form-item-extra {
   > *:first-child {
-    flex: 1;
+    flex: none;
+    width:40%;
+    // modify by buhuaqiang  原值   flex: 1;
   }
   display: flex;
   .form-extra {
     padding-left: 7px;
     line-height: 36px;
+    width:100%;
   }
 }
 .v-date-range ::v-deep(.el-input__prefix) {

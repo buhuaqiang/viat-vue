@@ -194,7 +194,7 @@
     </el-tabs>
   </div>
   <custmModelBody @onSelect="onSelectByCust" ref="custmModelBody"></custmModelBody>
-  <prodModelBody  @onSelect="onSelectByProd_purchase" ref="prodModelBody"></prodModelBody>
+  <prodModelBody  @onSelect="onSelectByProd" ref="prodModelBody"></prodModelBody>
   <price-group-model-body @onSelect="onSelectByPriceGroup" ref="PriceGroupModelBody"></price-group-model-body>
 </template>
 <script>
@@ -470,6 +470,7 @@ export default {
     },
     // 選擇客戶后的回調方法, table1 多選, 主表單選
     onSelectByCust(fieldName,rows){
+      debugger;
       if(fieldName =='table1'){
 
         //返回指定字段
@@ -508,14 +509,6 @@ export default {
       }
     },
 
-    onSelectByPriceGroup(fieldName,rows){
-      this.$emit("parentCall", ($parent) => {
-        //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
-        let row = rows[0];
-        $parent.editFormFields[fieldName] = row.group_id + " " + row.group_name;
-        $parent.editFormFields['pricegroup_dbid'] = row.pricegroup_dbid;
-      });
-    },
     //合約產品計算
     doCalculate(){
       this.$Message.info("doCalculate");
@@ -526,7 +519,7 @@ export default {
     },
 
     // 從表選擇 合約產品 回調處理
-    onSelectByProd_purchase(fieldName,rows){
+    onSelectByProd(fieldName,rows){
       if(fieldName =='table2'){
 
         //返回指定字段  prod_id,prod_ename,qty,amt
@@ -591,9 +584,8 @@ export default {
     },
 
    // 主表選擇單一客戶
-    openCustmModelBody(fieldName){
-      this.$refs.custmModelBody.openDemo(fieldName);
-      this.$refs.custmModelBody.signal = true;
+    openCustmModelBody(single,fieldName){
+      this.$refs.custmModelBody.openModel(single,fieldName)
     },
     /**
      *
@@ -613,10 +605,10 @@ export default {
         }
       });
     },
-    openPriceGroupModelBody(fieldName){
+/*    openPriceGroupModelBody(fieldName){
       this.$refs.PriceGroupModelBody.openDemo(fieldName);
       this.$refs.PriceGroupModelBody.signal = true;
-    },
+    },*/
     delTable1() {
       let rows = this.$refs.table1.getSelected();
       if (rows.length == 0) {
@@ -678,20 +670,17 @@ export default {
     },
     //添加客戶
     addCustList() {
-      this.$refs.custmModelBody.openDemo("table1");
-      this.$refs.custmModelBody.single = false;
+      this.$refs.custmModelBody.openModel(false,"table1","onSelect");
     },
 
     //添加合約產品
     addProdListForpurchase(){
-      this.$refs.prodModelBody.openDemo("table2");
-      this.$refs.prodModelBody.single = false;
+      this.$refs.prodModelBody.openModel(false,"table2","onSelect");
     },
 
     //添加 合約贈送產品
     addProdListForFree(){
-      this.$refs.prodModelBody.openDemo("table3");
-      this.$refs.prodModelBody.single = false;
+      this.$refs.prodModelBody.openModel(false,"table3","onSelect");
     },
 
 

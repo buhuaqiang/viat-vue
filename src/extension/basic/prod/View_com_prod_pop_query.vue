@@ -80,11 +80,11 @@
         },
         data() {
             return {
-                single:true,
                 model: false,
+                single: true,
+                returnType:"",
+                flag:"",
                 defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
-                fieldName:"", // 自定義邏輯字段
-                formType:"",//弹框打开的form类型,f-editFormFields  s-searchFormFields,ext-自定義擴展ext-自定義擴展(价格群组invalid调用页面)
                 prod_id: "", //查询条件字段
                 prod_ename: "", //查询条件字段
                 prod_sname: "", //查询条件字段
@@ -105,130 +105,36 @@
             };
         },
         methods: {
-            /**
-             *
-             * @param fieldName
-             * @param formType  表單類型 f-form表單,s-查詢表單 ,mf-多选表单,ms-多选查询表单
-             */
-            openMulity(fieldName, formType){
-                this.single=false;
-                this.openDemo(fieldName,formType);
-            },
-            openDemo(fieldName,formType) {
+
+            openModel(single,flag,returnType) {
+                this.single=single;
                 this.model = true;
-                this.fieldName = fieldName
-                this.formType = formType
+                this.flag = flag;
+                this.returnType = returnType
                 //打开弹出框时，加载table数据
                 this.$nextTick(() => {
                     this.$refs.prodPop.load();
                 });
             },
-            clearData(fieldName,formType) {
 
-                this.$emit("parentCall", ($parent) => {
-                    debugger
-                    if(formType=='f'){
-                        $parent.editFormFields[fieldName] = '';
-                        $parent.editFormFields[fieldName+'name'] = '';
-                    }else if(formType=='s'){
-                        $parent.searchFormFields[fieldName] = '';
-                        $parent.searchFormFields[fieldName+'name'] ='';
-                    }
-                })
-            },
 
             addRow() {
-                let selectrow = this.$refs.prodPop.getSelected();
-                if(!selectrow.length){
+                let rows = this.$refs.prodPop.getSelected();
+                if(!rows.length){
                     return this.$message.error("请选择数据")
                 }
-                // //将选取的数据赋值到父页面
-                // this.$emit('parentCall', $parent => {
-                //     $parent.editFormFields.prod_sname = selectrow[0].prod_sname;
-                //     this.model=false;
-                // })
-
-
-
-                if (!selectrow || selectrow.length == 0) {
+                if (!rows || rows.length == 0) {
                     return this.$message.error("请选择行数据");
                 }
-                let path =this.$route.path;
-                if(path =="/view_dist_margin"   && this.formType=='mf'){//
-                    let selectrows = [];//将勾选值设置成数组
-                    selectrow.forEach(row=>{
-                        selectrows.push({"key":row.prod_dbid,"value":row.prod_ename});
-                    })
-                    this.$emit('parentCall', $parent => {//選擇數據後賦值
-                        $parent.editFormOptions.forEach(x => {
-                            x.forEach(item => {
-                                if (item.field == 'prods') {
-                                    item.data = selectrows;//將選中的數據賦值到下拉框的數組中
-                                    item.data.forEach(a=>{//將值回顯到頁面，push(key)會將頁面顯示的值在多選框中標識出來，push(value)不會
-                                        $parent.editFormFields.prods.push(a.key)
-                                    })
-                                }
-                            })
-                        })
-                        this.model=false;
-                    })
-                }else if( (path =="/View_cust_price" || path =="/View_cust_price_detail") && this.formType=='ms'){//
-                    let selectrows = [];//将勾选值设置成数组
-                    selectrow.forEach(row=>{
-                        selectrows.push({"key":row.prod_dbid,"value":row.prod_ename});
-                    })
-                    this.$emit('parentCall', $parent => {//選擇數據後賦值
-                        $parent.searchFormOptions.forEach(x => {
-                            x.forEach(item => {
-                                if (item.field == 'prods') {
-                                    item.data = selectrows;//將選中的數據賦值到下拉框的數組中
-                                    item.data.forEach(a=>{//將值回顯到頁面，push(key)會將頁面顯示的值在多選框中標識出來，push(value)不會
-                                        $parent.searchFormFields.prods.push(a.key)
-                                    })
-                                }
-                            })
-                        })
-                        this.model=false;
+
+                if (this.returnType=="onSelect") {//多層級調用
+                    this.$emit("onSelect", this.flag, rows)
+                }else{
+                    this.$emit('parentCall', $parent => {
+                        $parent.handleCustomerSelected(this.flag, rows);//自定義回調方法處理,在調用頁面聲明
                     })
                 }
-                else  if((path=='/View_app_power_contract_main') || this.formType=='ext' ||(path=='/View_app_hp_contract')){//多導則調用
-                    this.$emit("onSelect",this.fieldName,selectrow)
-                }
-                else{
-                    //回写数据到表单
-                    this.$emit("parentCall", ($parent) => {
-                        //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
 
-                        if(this.formType=='f'){
-                            if (selectrow[0].prod_dbid) {
-                                if (path == '/View_prod_entity_period'){
-                                    $parent.editFormFields.prod_dbid = selectrow[0].prod_dbid;
-                                    $parent.editFormFields.prod_id = selectrow[0].prod_id;
-                                    $parent.editFormFields.prod_ename = selectrow[0].prod_ename;
-                                    $parent.editFormFields[this.fieldName + 'name'] = selectrow[0].prod_id + " " + selectrow[0].prod_ename;
-                                }else {
-                                    $parent.editFormFields[this.fieldName] = selectrow[0].prod_dbid;
-                                    $parent.editFormFields[this.fieldName + 'name'] =  selectrow[0].prod_ename;
-                                    if (path == '/View_cust_price' || path == '/View_cust_price_detail') {
-                                        $parent.editFormFields['nhi_price'] = selectrow[0].nhi_price;
-                                    }
-                                }
-                            }
-                        }else if(this.formType=='s'){
-                            if (selectrow[0].prod_dbid){
-                                if (path == '/View_prod_entity_period'){
-                                    $parent.searchFormFields.prod_dbid = selectrow[0].prod_dbid;
-                                    $parent.searchFormFields[this.fieldName + 'name'] = selectrow[0].prod_ename;
-                                }else {
-                                    $parent.searchFormFields[this.fieldName] = selectrow[0].prod_dbid;
-                                    $parent.searchFormFields[this.fieldName + 'name'] = selectrow[0].prod_id + " " + selectrow[0].prod_ename;
-                                }
-                            }
-                        }
-
-
-                    });
-                }
                 this.model=false;
 
             },
