@@ -58,7 +58,7 @@
                        {field:'created_date',title:'created_date',type:'datetime',width:110,hidden:true,align:'left',sort:true},
                        {field:'modified_user',title:'modified_user',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_username',title:'modified_username',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'prod_id',title:'Product ID',type:'string',width:110,require:true,align:'left',sort:true},
+                       {field:'prod_id',title:'Product ID',type:'string',width:110,align:'left',sort:true},
                        {field:'prod_ename',title:'Product Name',type:'string',width:110,align:'left'},
                        {field:'modified_client',title:'modified_client',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},

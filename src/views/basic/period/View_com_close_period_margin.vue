@@ -30,16 +30,18 @@
                 sortName: "year"
             });
             const editFormFields = ref({"year":"","period":"","m_start_date":"","m_end_date":""});
-            const editFormOptions = ref([[{"title":"年度","required":true,"field":"year","disabled":true,"type":"text"},
-                               {"title":"期間","required":true,"field":"period","disabled":true,"type":"text"}],
-                              [{"title":"Margin起始日期","field":"m_start_date","type":"date"},
-                               {"title":"Margin結束日期","field":"m_end_date","type":"date"}]]);
+            const editFormOptions = ref([[{"title":"Year","required":true,"field":"year","disabled":true,"type":"text"},
+                               {"dataKey":"Period","data":[],"title":"Period","required":true,"field":"period","disabled":true,"type":"select"}],
+                              [{"title":"m_Start_Date","field":"m_start_date","type":"date"},
+                               {"title":"m_End_Date","field":"m_end_date","type":"date"}]]);
             const searchFormFields = ref({"year":"","period":""});
-            const searchFormOptions = ref([[{"title":"期間","field":"period","type":"text"},{"title":"年度","field":"year","type":"text"}]]);
-            const columns = ref([{field:'year',title:'年度',type:'int',sort:true,width:80,readonly:true,require:true,align:'left',sort:true},
-                       {field:'period',title:'期間',type:'int',width:80,readonly:true,require:true,align:'left'},
-                       {field:'m_start_date',title:'Margin起始日期',type:'datetime',width:150,align:'left',sort:true},
-                       {field:'m_end_date',title:'Margin結束日期',type:'datetime',width:150,align:'left',sort:true},
+            const searchFormOptions = ref([[{"title":"Year","field":"year","type":"text"},{"dataKey":"Period","data":[],"title":"Period","field":"period","type":"select"}]]);
+            const columns = ref([{field:'year',title:'Year',type:'int',sort:true,width:80,readonly:true,require:true,align:'left',sort:true},
+                       {field:'period',title:'Period',type:'int',bind:{ key:'Period',data:[]},width:80,readonly:true,require:true,align:'left'},
+                       {field:'start_date',title:'Start Date',type:'datetime',width:150,align:'left',sort:true},
+                       {field:'end_date',title:'End Date',type:'datetime',width:150,align:'left',sort:true},
+                       {field:'m_start_date',title:'m_Start_Date',type:'datetime',width:150,align:'left',sort:true},
+                       {field:'m_end_date',title:'m_End_Date',type:'datetime',width:150,align:'left',sort:true},
                        {field:'period_dbid',title:'PKID',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'modified_client',title:'最後修改者的委託人',type:'int',width:80,hidden:true,align:'left'},
                        {field:'modified_username',title:'modified_username',type:'string',width:110,hidden:true,align:'left'},
@@ -52,8 +54,6 @@
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
                        {field:'sales_end_date',title:'Sales 會計帳結束日期',type:'datetime',width:150,hidden:true,align:'left',sort:true},
                        {field:'sales_start_date',title:'Sales 會計帳起始日期',type:'datetime',width:150,hidden:true,align:'left',sort:true},
-                       {field:'end_date',title:'會計帳結束日期',type:'datetime',width:150,hidden:true,align:'left',sort:true},
-                       {field:'start_date',title:'會計帳起始日期',type:'datetime',width:150,hidden:true,align:'left',sort:true},
                        {field:'entity',title:'公司別,舊版SUN_DB',type:'string',width:110,hidden:true,align:'left'},
                        {field:'dbid',title:'識別碼, PK, Identity',type:'int',width:80,hidden:true,require:true,align:'left'},
                        {field:'modified_date',title:'最後修改時間',type:'datetime',width:150,hidden:true,align:'left',sort:true}]);

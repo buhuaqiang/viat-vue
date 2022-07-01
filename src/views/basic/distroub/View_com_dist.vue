@@ -33,7 +33,7 @@
             const editFormOptions = ref([[{"dataKey":"distributor_Drop","data":[],"title":"Distributor","required":true,"field":"dist_id","type":"select"},
                                {"dataKey":"entity","data":[],"title":"Entity","field":"entity","type":"select"}],
                               [{"title":"Viatris CustID","required":true,"field":"cust_id","type":"text"}],
-                              [{"dataKey":"狀態測試","data":[],"title":"Status","required":true,"field":"status","type":"radio"}],
+                              [{"dataKey":"Status_YN","data":[],"title":"Status","required":true,"field":"status","type":"select"}],
                               [{"title":"","required":true,"field":"cust_dbid"}]]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([[{"dataKey":"distributor_Drop","data":[],"title":"Distributor","field":"dist_id","type":"select"}]]);
@@ -42,9 +42,9 @@
                        {field:'division',title:'Dist ID',type:'string',width:110,align:'left'},
                        {field:'dist_id',title:'Distributor',type:'string',bind:{ key:'distributor_Drop',data:[]},width:110,hidden:true,require:true,align:'left'},
                        {field:'sys_value',title:'Dist Name',type:'string',width:220,align:'left'},
-                       {field:'status',title:'Status',type:'string',bind:{ key:'狀態測試',data:[]},width:110,hidden:true,require:true,align:'left'},
+                       {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,hidden:true,require:true,align:'left'},
                        {field:'cust_dbid',title:'cust_dbid',type:'guid',width:220,hidden:true,require:true,align:'left'},
-                       {field:'cust_id',title:'Viatris CustID',link:true,type:'string',width:110,require:true,align:'left'},
+                       {field:'cust_id',title:'Viatris CustID',type:'string',width:110,require:true,align:'left'},
                        {field:'cust_name',title:'Cust Name',type:'string',width:120,align:'left'},
                        {field:'status2',title:'status2',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_date',title:'modified_date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
@@ -56,8 +56,7 @@
                        {field:'created_client',title:'created_client',type:'int',width:80,hidden:true,align:'left'},
                        {field:'created_username',title:'created_username',type:'string',width:110,hidden:true,align:'left'},
                        {field:'created_user',title:'created_user',type:'int',width:80,hidden:true,align:'left'},
-                       {field:'modified_client',title:'modified_client',type:'int',width:80,hidden:true,align:'left'},
-                       {field:'dbid',title:'dbid',type:'int',width:80,hidden:true,require:true,align:'left'}]);
+                       {field:'modified_client',title:'modified_client',type:'int',width:80,hidden:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
