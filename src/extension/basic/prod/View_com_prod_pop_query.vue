@@ -203,6 +203,8 @@
                             if (selectrow[0].prod_dbid) {
                                 if (path == '/View_prod_entity_period'){
                                     $parent.editFormFields.prod_dbid = selectrow[0].prod_dbid;
+                                    $parent.editFormFields.prod_id = selectrow[0].prod_id;
+                                    $parent.editFormFields.prod_ename = selectrow[0].prod_ename;
                                     $parent.editFormFields[this.fieldName + 'name'] = selectrow[0].prod_id + " " + selectrow[0].prod_ename;
                                 }else {
                                     $parent.editFormFields[this.fieldName] = selectrow[0].prod_dbid;
