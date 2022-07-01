@@ -36,7 +36,7 @@ let extension = {
         //示例：设置修改新建、编辑弹出框字段标签的长度
       this.boxOptions.labelWidth = 180;
       this.labelWidth = 180;
-
+      this.load=false;
       //日期格式化 formatter
       let m_start_date=this.getColumnsOption("m_start_date");
       m_start_date.formatter = (row) => {

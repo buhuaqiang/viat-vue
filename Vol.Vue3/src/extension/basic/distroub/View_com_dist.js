@@ -49,9 +49,9 @@ let extension = {
         //示例：设置修改新建、编辑弹出框字段标签的长度
       this.boxOptions.labelWidth = 180;
       this.setFiexdSearchForm(true);
-
+      this.load=false;
       //表格设置为单选
-      this.single=true;
+      //this.single=true;
       let cust_id=this.getFormOption("cust_id");
       cust_id.readonly=true
       cust_id.extra = {
@@ -81,7 +81,7 @@ let extension = {
                 }
               },
               [h("i",{class:"el-icon-zoom-in"})],
-              "選擇"
+              "Pick"
           ),
           h(
               "a",
@@ -93,7 +93,7 @@ let extension = {
                 }
               },
               [h("i",{class:"el-icon-zoom-out"})],
-              "清除"
+              "Clean"
           ),
         ]);
       };
