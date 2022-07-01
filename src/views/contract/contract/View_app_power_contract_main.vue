@@ -126,23 +126,10 @@ export default defineComponent({
       [
         { title: "Close Date", field: "close_date", type: "date" },
         { title: "End Date", field: "end_date", type: "date" },
+
+
+      ],[
         { title: "Zone", field: "territory_id" },
-      ],
-      [
-        {
-          dataKey: "FullAllwType",
-          data: [],
-          title: "Allowance Type",
-          field: "allw_type",
-          type: "select",
-        },
-        {
-          dataKey: "GPDS_Contract_Type",
-          data: [],
-          title: "Contract Type",
-          field: "contract_type",
-          type: "select",
-        },
         {
           dataKey: "Contract_State",
           data: [],
@@ -151,12 +138,27 @@ export default defineComponent({
           type: "select",
         },
       ],
+      [ {
+        dataKey: "FullAllwType",
+        data: [],
+        title: "Allowance Type",
+        field: "allw_type",
+        type: "select",
+        },  {
+        dataKey: "GPDS_Contract_Type",
+        data: [],
+        title: "Contract Type",
+        field: "contract_type",
+        type: "select",
+       },
+      ],
       [
         { title: "Customer", field: "cust_dbidname"},
         { title: "", field: "cust_dbid",hidden:true},
         { title: "Group", field: "pricegroup_dbidname" },
         { title: "", field: "pricegroup_dbid",hidden: true },
       ],
+
     ]);
     const columns = ref([
       {
