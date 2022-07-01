@@ -314,7 +314,7 @@ let extension = {
                           }
                       },
                       [h("i",{class:"el-icon-zoom-out"})],
-                      "clear"
+                      "Clean"
                   ),
 
 
