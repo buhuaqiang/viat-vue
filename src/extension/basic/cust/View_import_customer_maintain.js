@@ -88,6 +88,8 @@ let extension = {
       this.setFiexdSearchForm(true);
       //设置查询表单的标签文字宽度
       this.labelWidth=180;
+      //默認不查詢
+      this.load=false;
       //表格设置为单选
       this.single=true;
       let comCity=this.getOption("cust_zip_id_city_name");
