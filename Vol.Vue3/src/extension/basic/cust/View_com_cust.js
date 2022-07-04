@@ -173,7 +173,7 @@ let extension = {
 
       //示例：设置修改新建、编辑弹出框字段标签的长度
       // this.boxOptions.labelWidth = 150;
-      this.boxOptions.labelWidth = 180;
+      this.boxOptions.labelWidth = 250;
       //显示查询全部字段
       //this.setFiexdSearchForm(true);
       //设置查询表单的标签文字宽度
@@ -209,41 +209,143 @@ let extension = {
       ownHospital.extra = {
         render: this.getFormRender("own_hospital", 'f')
       }
+      ownHospital.onKeyPress= ($event) => {
+        if($event.keyCode==13){
+          let  cust_id = this.editFormFields['own_hospitalname']
+          if(cust_id) {
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.editFormFields['own_hospital'] =reslut.cust_dbid;
+                this.editFormFields['own_hospitalname'] =reslut.cust_id + " " + reslut.cust_name;
+                return;
+              }else{
+                this.$message.error("Customer Id Is Not Exists.");
+                this.editFormFields['own_hospitalname']=''
+                return;
+              }
+            })
+          }
+        }
+      }
 
       let med_group = this.getOption("med_groupname");
       med_group.extra = {
         render: this.getFormRender("med_group", 'f')
-
+      }
+      med_group.onKeyPress= ($event) => {
+        if($event.keyCode==13){
+          let  cust_id = this.editFormFields['med_groupname']
+          if(cust_id) {
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.editFormFields['med_group'] =reslut.cust_dbid;
+                this.editFormFields['med_groupname'] =reslut.cust_id + " " + reslut.cust_name;
+                return;
+              }else{
+                this.$message.error("Customer Id Is Not Exists.");
+                this.editFormFields['med_groupname']=''
+                return;
+              }
+            })
+          }
+        }
       }
 
       let delv_group = this.getOption("delv_groupname");
       delv_group.extra = {
         render: this.getFormRender("delv_group", 'f')
       }
-
+      delv_group.onKeyPress= ($event) => {
+        if($event.keyCode==13){
+          let  cust_id = this.editFormFields['delv_groupname']
+          if(cust_id) {
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.editFormFields['delv_group'] =reslut.cust_dbid;
+                this.editFormFields['delv_groupname'] =reslut.cust_id + " " + reslut.cust_name;
+                return;
+              }else{
+                this.$message.error("Customer Id Is Not Exists.");
+                this.editFormFields['delv_groupname']=''
+                return;
+              }
+            })
+          }
+        }
+      }
 
       let searchdelv_groupname = this.getSearchOption("delv_groupname");
       let searchdelv_group = this.getSearchOption("delv_group");
       searchdelv_group.hidden = true
-      searchdelv_groupname.readonly = true
       searchdelv_groupname.extra = {
         render: this.getSearchRender("delv_group", "s", "c")
+      }
+      searchdelv_groupname.onKeyPress= ($event) => {
+        if($event.keyCode==13){
+          let  cust_id = this.searchFormFields['delv_groupname']
+          if(cust_id) {
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.searchFormFields['delv_group'] =reslut.cust_dbid;
+                this.searchFormFields['delv_groupname'] =reslut.cust_id + " " + reslut.cust_name;
+                return;
+              }else{
+                this.$message.error("Customer Id Is Not Exists.");
+                this.searchFormFields['delv_groupname']=''
+                return;
+              }
+            })
+          }
+        }
       }
 
       let searchown_hospitalname = this.getSearchOption("own_hospitalname");
       let searchown_hospital = this.getSearchOption("own_hospital");
       searchown_hospital.hidden = true
-      searchown_hospitalname.readonly = true
       searchown_hospitalname.extra = {
         render: this.getSearchRender("own_hospital", "s", "c")
       }
-
+      searchown_hospitalname.onKeyPress= ($event) => {
+        if($event.keyCode==13){
+          let  cust_id = this.searchFormFields['own_hospitalname']
+          if(cust_id) {
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.searchFormFields['own_hospital'] =reslut.cust_dbid;
+                this.searchFormFields['own_hospitalname'] =reslut.cust_id + " " + reslut.cust_name;
+                return;
+              }else{
+                this.$message.error("Customer Id Is Not Exists.");
+                this.searchFormFields['own_hospitalname']=''
+                return;
+              }
+            })
+          }
+        }
+      }
       let searchmed_groupname = this.getSearchOption("med_groupname");
       let searchmed_group = this.getSearchOption("med_group");
-      searchmed_groupname.readonly = true
       searchmed_group.hidden = true
       searchmed_groupname.extra = {
         render: this.getSearchRender("med_group", "s", "c")
+      }
+      searchmed_groupname.onKeyPress= ($event) => {
+        if($event.keyCode==13){
+          let  cust_id = this.searchFormFields['med_groupname']
+          if(cust_id) {
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.searchFormFields['med_group'] =reslut.cust_dbid;
+                this.searchFormFields['med_groupname'] =reslut.cust_id + " " + reslut.cust_name;
+                return;
+              }else{
+                this.$message.error("Customer Id Is Not Exists.");
+                this.searchFormFields['med_groupname']=''
+                return;
+              }
+            })
+          }
+        }
       }
 
     },
@@ -320,9 +422,9 @@ let extension = {
       let ownHospital = this.getOption("own_hospitalname");
       let med_group = this.getOption("med_groupname");
       let delv_group = this.getOption("delv_groupname");
-      ownHospital.disabled=false;
-      med_group.disabled=false;
-      delv_group.disabled=false;
+      // ownHospital.disabled=false;
+      // med_group.disabled=false;
+      // delv_group.disabled=false;
 
       if (this.currentAction == 'update') {
         let comZipId = this.getOption("cust_zip_id");

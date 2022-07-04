@@ -18,17 +18,17 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item id="0" v-show="groupShowFlag" label="Group:" style="width: 35%">
-          <el-input v-model="invalidModel.pricegroup_dbidname" style="width:150px;" :disabled="true"></el-input>
+          <el-input v-model="invalidModel.pricegroup_dbidname" style="width:200px;" @keyup.enter="groupKeyPress"></el-input>
           <a @click="openPriceGroup(0)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0)"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="invalidModel.pricegroup_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item id="1" v-show="custShowFlag" label="Customer:" style="width: 35%;">
-          <el-input v-model="invalidModel.cust_dbidname" style="width:150px;" :disabled="true"></el-input>
+          <el-input v-model="invalidModel.cust_dbidname" style="width:200px;" @keyup.enter="custKeyPress"></el-input>
           <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="invalidModel.cust_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="Product:" style="width: 35%">
-          <el-input v-model="invalidModel.prod_dbidname" style="width:150px;" :disabled="true"></el-input>
+          <el-input v-model="invalidModel.prod_dbidname" style="width:200px;" @keyup.enter="prodKeyPress"></el-input>
           <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="invalidModel.prod_dbid"  type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
@@ -182,6 +182,53 @@ export default {
     //this.invalidModel.pricegroup_dbidname.render = this.getRender("pricegroup_dbid", 'pg')
   },
   methods: {
+    groupKeyPress(){
+      let  group_id = this.invalidModel.pricegroup_dbidname
+      if(group_id) {
+        this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
+          if(reslut!==null){
+            this.invalidModel.pricegroup_dbid=reslut.pricegroup_dbid;
+            this.invalidModel.pricegroup_dbidname=reslut.group_id + " " + reslut.group_name;
+          }else {
+            this.$message.error("Group Id Is Not Exists.");
+            this.invalidModel.pricegroup_dbidname=''
+          }
+
+          return;
+        })
+      }
+    },
+    custKeyPress(){
+      let  cust_id = this.invalidModel.cust_dbidname
+      if(cust_id) {
+        this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
+          if(reslut!==null){
+            this.invalidModel.cust_dbid=reslut.cust_dbid;
+            this.invalidModel.cust_dbidname=reslut.cust_id + " " + reslut.cust_name;
+          }else {
+            this.$message.error("Customer Id Is Not Exists.");
+            this.invalidModel.cust_dbidname=''
+          }
+
+          return;
+        })
+      }
+    },
+    prodKeyPress(){
+      let  prod_id = this.invalidModel.prod_dbidname
+      if(prod_id) {
+        this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
+          if(reslut!==null){
+            this.invalidModel.prod_dbid=reslut.prod_dbid;
+            this.invalidModel.prod_dbidname=reslut.prod_id + " " + reslut.prod_ename;
+          }else {
+            this.$message.error("Product Id Is Not Exists.");
+            this.invalidModel.prod_dbidname=''
+          }
+          return;
+        })
+      }
+    },
     openPriceGroup(val){
       if(val==0){
         this.$refs.PriceGroupModelBody.openDemo("pricegroup_dbid","ext")

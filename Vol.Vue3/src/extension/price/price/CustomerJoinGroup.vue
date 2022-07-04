@@ -215,11 +215,13 @@ export default {
       this.search();
     },
     selected(){
+
       let rows= this.$refs.mytable.getSelected()
       if(rows.length==0){
         return this.$message.error("請選擇數據");
       }
       rows.forEach(x=>{
+        debugger
         let dbids = this.custprice_dbids.find((f) => f == x.custprice_dbid);
         if(!dbids){
           this.selectedData.push(x);

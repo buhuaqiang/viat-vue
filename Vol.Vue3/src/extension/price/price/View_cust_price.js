@@ -10,13 +10,17 @@
     // import Viat_com_custModelBody from "../../basic/cust/Viat_com_custModelBody";
   import View_com_prod_pop_query from "../../basic/prod/View_com_prod_pop_query.vue";
   import InvalidDataPage from "./InvalidDataPage";
+  import BathInsertCustPrice from "./BathInsertCustPrice";
+
+  import Common_ModelBody from "./Common_ModelBody";
+
 
 let extension = {
   components: {
     //查询界面扩展组件
     gridHeader: View_com_prod_pop_query,
     gridBody: PriceGroupModelBody,
-    gridFooter: InvalidDataPage,
+    gridFooter: Common_ModelBody,
     //新建、编辑弹出框扩展组件
     modelHeader: View_com_prod_pop_query,
     modelBody: PriceGroupModelBody,
@@ -195,7 +199,7 @@ let extension = {
     },
     //
     invalidData(){
-      this.$refs.gridFooter.openDemo();
+      this.$refs.gridFooter.openInvalidPage();
     },
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
@@ -335,6 +339,7 @@ let extension = {
             this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
               if(reslut!=null){
                 this.editFormFields['prod_dbid'] =reslut.prod_dbid;
+                this.editFormFields['nhi_price'] =reslut.nhi_price;
                 this.editFormFields['prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
               }else{
                 this.$Message.error(" Product Id Is Not Exists.");
@@ -350,17 +355,19 @@ let extension = {
       //-------------表單輸入框綁定彈窗 end-------------
 
       //在第二个按钮后添加一个新的按钮
-      // this.buttons.splice(3, 0, {
-      //   name: "View",
-      //   icon: 'el-icon-view',
-      //   type: 'warning',
-      //   onClick: function () {
-      //     this.view()
-      //   }
-      // })
+      this.buttons.splice(3, 0, {
+        name: "Bath Add",
+        icon: 'el-icon-view',
+        type: 'warning',
+        onClick: function () {
+          this.bathAdd()
+        }
+      })
       //-------------end-------------
     },
-
+    bathAdd(){
+      this.$refs.gridFooter.openBathAddPage();
+    },
     onInited() {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作

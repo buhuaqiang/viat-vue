@@ -237,7 +237,7 @@ let extension = {
                 return;
               }else{
                 this.$message.error("Customer Id Is Not Exists.");
-                this.searchFormFields['cust_dbidname']=''
+                this.editFormFields['cust_dbidname']=''
                 return;
               }
             })
@@ -260,7 +260,7 @@ let extension = {
                 return;
               }else{
                 this.$message.error("Product Id Is Not Exists.");
-                this.searchFormFields['prod_idname']=''
+                this.editFormFields['prod_idname']=''
                 return;
               }
             })
@@ -271,7 +271,7 @@ let extension = {
 
 
     },
-    handleFormSelected(rows){
+    handleCustFormSelected(rows){
       alert("check the cust is Expfizer ");
       //alert("cust_dbid:"+rows[0].cust_dbid)
       if(rows[0].cust_id=='CD15590180'){

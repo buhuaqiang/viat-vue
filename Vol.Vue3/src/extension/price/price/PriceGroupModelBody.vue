@@ -74,9 +74,9 @@ export default {
   data() {
     return {
       model: false,
-      single: true,
-      returnType:"",
-      flag:"",
+      single: true,//默認單選
+      returnType:"",//調用類型,多層級調用onSelect,handlePriceGroupSelected父頁面必須要重寫定義的方法
+      flag:"",//字段欄位標識
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
       group_name: "", //查询条件字段
       group_id:"",
@@ -108,6 +108,7 @@ export default {
       this.$refs.mytable.load();
     },
     addRow() {
+      debugger
       var rows = this.$refs.mytable.getSelected();
       if (!rows || rows.length == 0) {
         return this.$message.error("請選擇數據");
