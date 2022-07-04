@@ -329,6 +329,18 @@ let viewgird = [
         path: '/Viat_com_prod_entity_period',
         name: 'Viat_com_prod_entity_period',
         component: () => import('@/views/basic/prod/Viat_com_prod_entity_period.vue')
+    }    ,{
+        path: '/Viat_app_nhi_adjust',
+        name: 'Viat_app_nhi_adjust',
+        component: () => import('@/views/dataentry/nhiadjust/Viat_app_nhi_adjust.vue')
+    }    ,{
+        path: '/Viat_app_nhi_adjust_m',
+        name: 'Viat_app_nhi_adjust_m',
+        component: () => import('@/views/dataentry/nhiadjust/Viat_app_nhi_adjust_m.vue')
+    }    ,{
+        path: '/View_nhi_adjust',
+        name: 'View_nhi_adjust',
+        component: () => import('@/views/dataentry/nhiadjust/View_nhi_adjust.vue')
     }]
 
 export default viewgird
