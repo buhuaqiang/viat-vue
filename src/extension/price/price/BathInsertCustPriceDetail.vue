@@ -2,18 +2,19 @@
   <VolBox
     v-model="model"
     :lazy="true"
-    title="Create [Cust Price]"
+    title="Create [Cust Price Detail]"
     :height="700"
     :width="1500"
     :padding="15"
   >
     <div style="padding-bottom: 10px">
       <el-form :inline="true" label-position="left" label-width="110px" :model="formModel">
-        <el-form-item id="0" label="Group:" style="width: 40%">
-          <el-input v-model="formModel.group_id" style="width:120px;" @keyup.enter="groupKeyPress"></el-input>
-          <el-input v-model="formModel.group_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
-          <a @click="openPriceGroup(0)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0)"><i class="el-icon-zoom-out"></i>Clean</a>
-          <el-input v-model="formModel.pricegroup_dbid" type="hidden"></el-input>
+        <el-form-item id="0" label="Cust:" style="width: 40%">
+          <el-input v-model="formModel.cust_id" style="width:120px;" @keyup.enter="custKeyPress"></el-input>
+          <el-input v-model="formModel.cust_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+          <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;
+          <a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
+          <el-input v-model="formModel.cust_dbid" type="hidden"></el-input>
         </el-form-item>
         <el-form-item label="Product:" style="width: 40%">
           <el-input v-model="formModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress"></el-input>
@@ -48,6 +49,9 @@
         </el-form-item>
         <el-form-item   label="Min Qty:" style="width: 35%">
           <el-input-number v-model="formModel.min_qty"  style="width:200px;" ></el-input-number>
+        </el-form-item>
+        <el-form-item v-show="grossFlag"  label="Gross Price:" style="width: 35%">
+          <el-input v-model="formModel.gross_price" style="width:200px;"  ></el-input>
         </el-form-item>
         <el-form-item label="Remark:" style="width: 60%">
           <el-input type="textarea" v-model="formModel.remark" style="width:250px;"></el-input>
@@ -123,14 +127,16 @@ export default {
   data() {
     return {
       model: false,
+      grossFlag:false,
       pushData:[],
       formModel:{
-        group_id:'',
-        group_name:'',
-        pricegroup_dbid:'',
+        cust_id:'',
+        cust_name:'',
+        cust_dbid:'',
         prod_id:'',
         prod_ename:'',
         prod_dbid:'',
+        gross_price:'',
         nhi_price:'',
         invoice_price:'',
         net_price:'',
@@ -146,13 +152,14 @@ export default {
       url: "",//加载数据的接口
       columns: [
         { field: "custprice_dbid", title: "主键ID", type: "guid", width: 80, hidden: true,isKey: true },
-        {field:'group_id',title:'Group Id',type:'string',width:110,require:true,align:'left',sort:true},
-        {field:'group_name',title:'Group Name',type:'string',width:120,align:'left'},
+        {field:'cust_id',title:'Cust Id',type:'string',width:110,require:true,align:'left',sort:true},
+        {field:'cust_name',title:'Cust Name',type:'string',width:120,align:'left'},
         {field:'prod_id',title:'Product Id',type:'string',width:110,require:true,align:'left'},
         {field:'prod_ename',title:'Product Name',type:'string',width:110,align:'left'},,
         {field:'nhi_price',title:'NHI Price',type:'decimal',width:110,readonly:true,require:true,align:'left'},
         {field:'invoice_price',title:'Invoice Price',type:'decimal',width:110,require:true,align:'left'},
         {field:'net_price',title:'Net Price',type:'decimal',width:110,require:true,align:'left'},
+        {field:'gross_price',title:'Gross Price',type:'decimal',width:110,require:true,align:'left'},
         {field:'min_qty',title:'Min Qty',type:'int',width:110,require:true,align:'left'},
         {field:'start_date',title:'Start Date',type:'date',width:110,require:true,align:'left',sort:true},
         {field:'end_date',title:'End Date',type:'date',width:110,require:true,align:'left',sort:true},
@@ -173,10 +180,11 @@ export default {
             this.formModel.pricegroup_dbid=reslut.pricegroup_dbid;
             this.formModel.group_id=reslut.group_id;
             this.formModel.group_name=reslut.group_name;
-            this.formModel.pricegroup_dbidname=reslut.group_id + " " + reslut.group_name;
           }else {
             this.$message.error("Group Id Is Not Exists.");
-            this.formModel.pricegroup_dbidname=''
+            this.formModel.pricegroup_dbid='';
+            this.formModel.group_id='';
+            this.formModel.group_name='';
           }
 
           return;
@@ -192,10 +200,29 @@ export default {
             this.formModel.prod_id=reslut.prod_id;
             this.formModel.prod_ename=reslut.prod_ename;
             this.formModel.nhi_price=reslut.nhi_price;
-            this.formModel.prod_dbidname=reslut.prod_id + " " + reslut.prod_ename;
+
           }else {
             this.$message.error("Product Id Is Not Exists.");
-            this.formModel.prod_dbidname=''
+            this.formModel.prod_id=''
+            this.formModel.prod_ename=''
+            this.formModel.nhi_price=''
+            this.formModel.prod_dbid=''
+          }
+          return;
+        })
+      }
+    },
+    custKeyPress(){
+      let  cust_id = this.formModel.cust_id
+      if(cust_id) {
+        this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
+          if(reslut!==null){
+            this.custShowData(reslut);
+          }else {
+            this.$message.error("Customer Id Is Not Exists.");
+            this.formModel.cust_id=''
+            this.formModel.cust_dbid='';
+            this.formModel.cust_name='';
           }
           return;
         })
@@ -219,16 +246,25 @@ export default {
       this.model = true;
       this.pushData=[];
     },
+    custShowData(reslut){
+      this.formModel.cust_dbid=reslut.cust_dbid;
+      this.formModel.cust_id=reslut.cust_id ;
+      this.formModel.cust_name=reslut.cust_name;
+      //alert("check the cust is Expfizer ");
+      if(reslut.cust_id=='CD15590180'){
+        this.grossFlag=true;
+      }else{
+        this.grossFlag=false;
+      }
+    },
     onSelectPop(fieldName,rows){
         if(rows.length!=1){
           return this.$message.error("請選擇數據");
         }
         if(fieldName=='pricegroup_dbid'){
-          this.formModel.group_id=rows[0].group_id;
-          this.formModel.group_name=rows[0].group_name;
-          this.formModel.pricegroup_dbid=rows[0].pricegroup_dbid
-        }else if(fieldName=='cust_dbid'){
 
+        }else if(fieldName=='cust_dbid'){
+          this.custShowData(rows[0]);
         }else if(fieldName=='prod_dbid'){
           this.formModel.prod_dbid=rows[0].prod_dbid
           this.formModel.nhi_price=rows[0].nhi_price;
@@ -248,6 +284,8 @@ export default {
         this.formModel.cust_id="";
         this.formModel.cust_dbid="";
         this.formModel.cust_name="";
+        this.formModel.gross_price="";
+        this.grossFlag=false
       }else if(val==2){
         this.formModel.prod_id="";
         this.formModel.prod_dbid="";
@@ -293,10 +331,10 @@ export default {
     },
     add(){
       //頁面數據校驗
-      if(this.formModel.pricegroup_dbid){
+      if(this.formModel.cust_dbid){
 
       }else {
-        this.$message.error("Please input group.");
+        this.$message.error("Please input customer.");
         return false;
       }
       if(this.formModel.prod_dbid){
@@ -372,21 +410,22 @@ export default {
 
     checkData(){
       //重複判斷 group+prod 判斷
-      let index=this.pushData.findIndex((f) => f.pricegroup_dbid==this.formModel.pricegroup_dbid && f.prod_dbid==this.formModel.prod_dbid);
+      let index=this.pushData.findIndex((f) => f.cust_dbid==this.formModel.cust_dbid && f.prod_dbid==this.formModel.prod_dbid);
       if(index<0){
         //先要通過接口校驗
         this.http.post("api/View_cust_price/checkCustPriceData", { mainData: this.formModel }, true)
                 .then((x) => {
                   let addData={
-                    group_id:this.formModel.group_id,
-                    group_name:this.formModel.group_name,
-                    pricegroup_dbid:this.formModel.pricegroup_dbid,
+                    cust_id:this.formModel.cust_id,
+                    cust_name:this.formModel.cust_name,
+                    cust_dbid:this.formModel.cust_dbid,
                     prod_id:this.formModel.prod_id,
                     prod_ename:this.formModel.prod_ename,
                     prod_dbid:this.formModel.prod_dbid,
                     nhi_price:this.formModel.nhi_price,
                     invoice_price:this.formModel.invoice_price,
                     net_price:this.formModel.net_price,
+                    gross_price:this.formModel.gross_price,
                     status:'Y',
                     min_qty:this.formModel.min_qty,
                     start_date:this.formModel.start_date,
@@ -408,11 +447,12 @@ export default {
                   this.formModel.prod_ename=''
                   this.formModel.nhi_price=''
                   this.formModel.invoice_price=''
+                  this.formModel.gross_price=''
                   this.formModel.net_price=''
                 });
 
       }else{
-        this.$message.error("Group and Product already exist.");
+        this.$message.error("Customer and Product already exist.");
         return false;
       }
     },

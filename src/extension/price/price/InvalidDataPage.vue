@@ -17,18 +17,21 @@
             <el-radio :label="3" @change="hideType(3)">By Channel</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item id="0" v-show="groupShowFlag" label="Group:" style="width: 35%">
-          <el-input v-model="invalidModel.pricegroup_dbidname" style="width:200px;" @keyup.enter="groupKeyPress"></el-input>
+        <el-form-item id="0" v-show="groupShowFlag" label="Group:" style="width: 40%">
+          <el-input v-model="invalidModel.group_id" style="width:120px;" @keyup.enter="groupKeyPress"></el-input>
+          <el-input v-model="invalidModel.group_name" style="width:200px;padding-left: 2px"  :disabled="true"></el-input>
           <a @click="openPriceGroup(0)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0)"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="invalidModel.pricegroup_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item id="1" v-show="custShowFlag" label="Customer:" style="width: 35%;">
-          <el-input v-model="invalidModel.cust_dbidname" style="width:200px;" @keyup.enter="custKeyPress"></el-input>
+        <el-form-item id="1" v-show="custShowFlag" label="Customer:" style="width: 40%;">
+          <el-input v-model="invalidModel.cust_id" style="width:120px;" @keyup.enter="custKeyPress"></el-input>
+          <el-input v-model="invalidModel.cust_name" style="width:200px;padding-left: 2px"  :disabled="true"></el-input>
           <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="invalidModel.cust_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item label="Product:" style="width: 35%">
-          <el-input v-model="invalidModel.prod_dbidname" style="width:200px;" @keyup.enter="prodKeyPress"></el-input>
+        <el-form-item label="Product:" style="width: 40%">
+          <el-input v-model="invalidModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress"></el-input>
+          <el-input v-model="invalidModel.prod_ename" style="width:200px;padding-left: 2px"  :disabled="true"></el-input>
           <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="invalidModel.prod_dbid"  type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
@@ -183,15 +186,18 @@ export default {
   },
   methods: {
     groupKeyPress(){
-      let  group_id = this.invalidModel.pricegroup_dbidname
+      let  group_id = this.invalidModel.group_id
       if(group_id) {
         this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
           if(reslut!==null){
             this.invalidModel.pricegroup_dbid=reslut.pricegroup_dbid;
-            this.invalidModel.pricegroup_dbidname=reslut.group_id + " " + reslut.group_name;
+            this.invalidModel.group_id=reslut.group_id;
+            this.invalidModel.group_name=reslut.group_name;
           }else {
             this.$message.error("Group Id Is Not Exists.");
-            this.invalidModel.pricegroup_dbidname=''
+            this.invalidModel.pricegroup_dbid='';
+            this.invalidModel.group_id='';
+            this.invalidModel.group_name='';
           }
 
           return;
@@ -199,15 +205,18 @@ export default {
       }
     },
     custKeyPress(){
-      let  cust_id = this.invalidModel.cust_dbidname
+      let  cust_id = this.invalidModel.cust_id
       if(cust_id) {
         this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
           if(reslut!==null){
             this.invalidModel.cust_dbid=reslut.cust_dbid;
-            this.invalidModel.cust_dbidname=reslut.cust_id + " " + reslut.cust_name;
+            this.invalidModel.cust_id=reslut.cust_id;
+            this.invalidModel.cust_name=reslut.cust_name;
           }else {
             this.$message.error("Customer Id Is Not Exists.");
-            this.invalidModel.cust_dbidname=''
+            this.invalidModel.cust_dbid='';
+            this.invalidModel.cust_id='';
+            this.invalidModel.cust_name='';
           }
 
           return;
@@ -215,15 +224,18 @@ export default {
       }
     },
     prodKeyPress(){
-      let  prod_id = this.invalidModel.prod_dbidname
+      let  prod_id = this.invalidModel.prod_id
       if(prod_id) {
         this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
           if(reslut!==null){
             this.invalidModel.prod_dbid=reslut.prod_dbid;
-            this.invalidModel.prod_dbidname=reslut.prod_id + " " + reslut.prod_ename;
+            this.invalidModel.prod_id=reslut.prod_id;
+            this.invalidModel.prod_ename=reslut.prod_ename;
           }else {
             this.$message.error("Product Id Is Not Exists.");
-            this.invalidModel.prod_dbidname=''
+            this.invalidModel.prod_dbid='';
+            this.invalidModel.prod_id='';
+            this.invalidModel.prod_ename='';
           }
           return;
         })
@@ -231,11 +243,12 @@ export default {
     },
     openPriceGroup(val){
       if(val==0){
-        this.$refs.PriceGroupModelBody.openDemo("pricegroup_dbid","ext")
+
+        this.$refs.PriceGroupModelBody.openModel(true,"pricegroup_dbid","onSelect")
       }else if(val==1){
-        this.$refs.Viat_com_custModelBody.openDemo("cust_dbid","ext")
+        this.$refs.Viat_com_custModelBody.openModel(true,"cust_dbid","onSelect")
       }else if(val==2){
-        this.$refs.View_com_prod_pop_query.openDemo("prod_dbid","ext")
+        this.$refs.View_com_prod_pop_query.openModel(true,"prod_dbid","onSelect")
       }
 
     },
@@ -249,27 +262,33 @@ export default {
           return this.$message.error("請選擇數據");
         }
         if(fieldName=='pricegroup_dbid'){
-          this.invalidModel.pricegroup_dbidname=rows[0].group_id+" "+rows[0].group_name;
+          this.invalidModel.group_id=rows[0].group_id
+          this.invalidModel.group_name=rows[0].group_name
           this.invalidModel.pricegroup_dbid=rows[0].pricegroup_dbid
         }else if(fieldName=='cust_dbid'){
-          this.invalidModel.cust_dbidname=rows[0].cust_id+" "+rows[0].cust_name;
           this.invalidModel.cust_dbid=rows[0].cust_dbid
+          this.invalidModel.cust_id=rows[0].cust_id
+          this.invalidModel.cust_name=rows[0].cust_name
         }else if(fieldName=='prod_dbid'){
-          this.invalidModel.prod_dbidname=rows[0].prod_id+" "+rows[0].prod_ename;
           this.invalidModel.prod_dbid=rows[0].prod_dbid
+          this.invalidModel.prod_id=rows[0].prod_id
+          this.invalidModel.prod_ename=rows[0].prod_ename
         }
 
     },
     clearPop(val){
       if(val==0){
-        this.invalidModel.pricegroup_dbidname="";
+        this.invalidModel.group_id="";
+        this.invalidModel.group_name="";
         this.invalidModel.pricegroup_dbid="";
       }else if(val==1){
-        this.invalidModel.cust_dbidname="";
+        this.invalidModel.cust_id="";
+        this.invalidModel.cust_name="";
         this.invalidModel.cust_dbid="";
       }else if(val==2){
-        this.invalidModel.prod_dbidname="";
+        this.invalidModel.prod_ename="";
         this.invalidModel.prod_dbid="";
+        this.invalidModel.prod_id="";
       }
 
     },
@@ -297,14 +316,17 @@ export default {
         this.groupShowFlag=false;
       }
 
-      this.invalidModel.pricegroup_dbidname="";
+      this.invalidModel.group_id="";
+      this.invalidModel.group_name="";
       this.invalidModel.pricegroup_dbid="";
 
-      this.invalidModel.cust_dbidname="";
+      this.invalidModel.cust_id="";
+      this.invalidModel.cust_name="";
       this.invalidModel.cust_dbid="";
 
-      this.invalidModel.prod_dbidname="";
+      this.invalidModel.prod_ename="";
       this.invalidModel.prod_dbid="";
+      this.invalidModel.prod_id="";
 
     },
     addRow() {

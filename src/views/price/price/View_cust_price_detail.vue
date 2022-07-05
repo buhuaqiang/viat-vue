@@ -29,11 +29,11 @@
                 url: "/View_cust_price_detail/",
                 sortName: "cust_id"
             });
-            const editFormFields = ref({"status":"","bid_no":"","cust_dbidname":"","prod_dbidname":"","start_date":"","end_date":"","nhi_price":"","invoice_price":"","net_price":"","min_qty":"","gross_price":"","remarks":"","prod_dbid":"","cust_dbid":""});
+            const editFormFields = ref({"status":"","bid_no":"","cust_id":"","prod_id":"","start_date":"","end_date":"","nhi_price":"","invoice_price":"","net_price":"","min_qty":"","gross_price":"","remarks":"","prod_dbid":"","cust_dbid":""});
             const editFormOptions = ref([[{"title":"Bid NO","field":"bid_no"},
                                {"dataKey":"Status_YN","data":[],"title":"status","field":"status","type":"select"}],
-                              [{"title":"Cust","required":true,"field":"cust_dbidname"},
-                               {"title":"Product","field":"prod_dbidname"}],
+                              [{"title":"Cust ID","field":"cust_id"},
+                               {"title":"Product ID","field":"prod_id"}],
                               [{"title":"Start Date","required":true,"field":"start_date","type":"date"},
                                {"title":"End Date","required":true,"field":"end_date","type":"date"}],
                               [{"title":"NHI Price","required":true,"field":"nhi_price","type":"decimal"},
@@ -44,8 +44,8 @@
                               [{"title":"Remarks","field":"remarks","colSize":8}],
                               [{"title":"","field":"prod_dbid"},
                                {"title":"","field":"cust_dbid"}]]);
-            const searchFormFields = ref({"cust_dbidname":"","status":"","start_date":"","end_date":"","modified_date":"","prods":[],"cust_dbid":""});
-            const searchFormOptions = ref([[{"title":"Cust","field":"cust_dbidname"},{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"}],[{"title":"","field":"cust_dbid"},{"dataKey":"Status_YN","data":[],"title":"status","field":"status","type":"select"},{"title":"Modified Date","field":"modified_date","type":"date"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}]]);
+            const searchFormFields = ref({"cust_id":"","status":"","start_date":"","end_date":"","modified_date":"","prods":[],"cust_dbid":""});
+            const searchFormOptions = ref([[{"title":"Cust ID","field":"cust_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"}],[{"title":"","field":"cust_dbid"},{"dataKey":"Status_YN","data":[],"title":"status","field":"status","type":"select"},{"title":"Modified Date","field":"modified_date","type":"date"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}]]);
             const columns = ref([{field:'pricedetail_dbid',title:'pricedetail_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'cust_id',title:'Cust ID',type:'string',link:true,width:110,align:'left',sort:true},
                        {field:'cust_name',title:'Cust Name',type:'string',width:120,align:'left'},

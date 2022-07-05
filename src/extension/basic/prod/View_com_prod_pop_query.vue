@@ -131,7 +131,7 @@
                     this.$emit("onSelect", this.flag, rows)
                 }else{
                     this.$emit('parentCall', $parent => {
-                        $parent.handleCustomerSelected(this.flag, rows);//自定義回調方法處理,在調用頁面聲明
+                        $parent.handleProdSelected(this.flag, rows);//自定義回調方法處理,在調用頁面聲明
                     })
                 }
 

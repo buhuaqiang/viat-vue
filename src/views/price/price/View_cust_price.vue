@@ -29,11 +29,11 @@
                 url: "/View_cust_price/",
                 sortName: "bid_no"
             });
-            const editFormFields = ref({"bid_no":"","status":"","pricegroup_dbidname":"","prod_dbidname":"","prod_dbid":"","pricegroup_dbid":"","start_date":"","end_date":"","nhi_price":"","invoice_price":"","net_price":"","min_qty":"","remarks":""});
+            const editFormFields = ref({"bid_no":"","status":"","group_id":"","prod_id":"","prod_dbid":"","pricegroup_dbid":"","start_date":"","end_date":"","nhi_price":"","invoice_price":"","net_price":"","min_qty":"","remarks":""});
             const editFormOptions = ref([[{"title":"Bid NO","required":true,"field":"bid_no"},
                                {"dataKey":"Status_YN","data":[],"title":"Status","required":true,"field":"status","type":"select"}],
-                              [{"title":"Group","required":true,"field":"pricegroup_dbidname"},
-                               {"title":"Product","required":true,"field":"prod_dbidname"}],
+                              [{"title":"Group Id","required":true,"field":"group_id"},
+                               {"title":"Product Id","required":true,"field":"prod_id"}],
                               [{"title":"","field":"prod_dbid"},
                                {"title":"","field":"pricegroup_dbid"}],
                               [{"title":"Start Date","required":true,"field":"start_date","type":"date"},
@@ -43,8 +43,8 @@
                               [{"title":"Net Price","required":true,"field":"net_price","type":"decimal"},
                                {"title":"Min Qty","required":true,"field":"min_qty","type":"number"}],
                               [{"title":"Remarks","field":"remarks","colSize":10,"type":"textarea"}]]);
-            const searchFormFields = ref({"pricegroup_dbid":"","start_date":"","end_date":"","status":"","modified_date":"","pricegroup_dbidname":"","prods":[]});
-            const searchFormOptions = ref([[{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"},{"title":"Group","field":"pricegroup_dbidname"}],[{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"},{"title":"Modified Date","field":"modified_date","type":"date"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],[{"title":"","field":"pricegroup_dbid"}]]);
+            const searchFormFields = ref({"group_id":"","pricegroup_dbid":"","start_date":"","end_date":"","status":"","modified_date":"","prods":[]});
+            const searchFormOptions = ref([[{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"},{"title":"Group Id","field":"group_id"}],[{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"},{"title":"Modified Date","field":"modified_date","type":"date"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],[{"title":"","field":"pricegroup_dbid"}]]);
             const columns = ref([{field:'group_id',title:'Group Id',type:'string',link:true,width:110,require:true,align:'left',sort:true},
                        {field:'group_name',title:'Group Name',type:'string',width:120,align:'left'},
                        {field:'prod_id',title:'Product Id',type:'string',width:110,require:true,align:'left'},
@@ -81,7 +81,7 @@
                        {field:'modified_client',title:'modified_client',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:110,align:'left',sort:true},
-                       {field:'pricegroup_dbidname',title:'Group',type:'string',width:180,hidden:true,require:true,align:'left'},
+                       {field:'pricegroup_dbidname',title:'pricegroup_dbidname',type:'string',width:180,hidden:true,require:true,align:'left'},
                        {field:'entity',title:'entity',type:'string',width:110,hidden:true,align:'left'},
                        {field:'prod_cname',title:'prod_cname',type:'string',width:110,hidden:true,align:'left'},
                        {field:'pack_size_pri',title:'pack_size_pri',type:'decimal',width:110,hidden:true,align:'left'},

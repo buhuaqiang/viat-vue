@@ -60,39 +60,48 @@ let extension = {
       })
       return option;
     },
-    /**
-     *
-     * @param fieldName綁定欄位
-     * @param formType 表單類型f-form表單,s-查詢表單
-     * @param pageType c-cust,pg-pricegroup,p-prod
-     * @returns {function(*, {row: *, column: *, index: *}): *}
-     */
-    getRender(fieldName,formType,pageType) {//
+
+    getPickName(searchType){
+      if(searchType=="searchCustomer"){
+        return this.pickCustomerName
+      }else if(searchType=="searchPriceGroup"){
+        return this.pickPriceGroupName
+      }else if(searchType=="editFormSearchCustomer"){
+        return this.pickEditFormCustomerName
+      }else if(searchType=="editFormSearchPriceGroup"){
+        return this.pickEditFormPriceGroupName
+      }else if(searchType=='editFormProduct'){
+        return this.pickEditFormProductName
+      }
+
+    },
+    getPopRender(searchType) {//
       return (h, { row, column, index }) => {
-        return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+          h(
+              "input",
+              {
+                class:"el-input__inner",
+                type:"text",
+                style:{width:"70%",disabled:true},
+                readonly:"true",
+                value:this.getPickName(searchType)
+              }
+          ),
           h(
               "a",
               {
                 props: {},
-                style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
+                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer"},
                 onClick: (e) => {
-                  if(formType=='s'){
-                    if(pageType=='p'){
-                      this.$refs.gridHeader.openDemo(fieldName,formType);
-                    }
-                    if(pageType=='pg'){
-                      this.$refs.gridBody.openDemo(fieldName,formType);
-                    }
-
+                  if(searchType=="searchPriceGroup"){
+                    this.$refs.gridBody.openModel(true,searchType);
                   }
-                  if(formType=='f'){
-                    if(pageType=='p'){
-                      this.$refs.modelHeader.openDemo(fieldName,formType);
-                    }
-                    if(pageType=='pg'){
-                      this.$refs.modelBody.openDemo(fieldName,formType);
-                    }
-
+                  if(searchType=="editFormSearchPriceGroup"){
+                    this.$refs.modelBody.openModel(true,searchType);
+                  }
+                  if(searchType=='editFormProduct'){
+                    this.$refs.modelHeader.openModel(true,searchType)
 
                   }
                 }
@@ -104,24 +113,22 @@ let extension = {
               "a",
               {
                 props: {},
-                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer"},
                 onClick: (e) => {
-                  if(formType=='s') {
-                    if(pageType=='p'){
-                      this.$refs.gridHeader.clearData(fieldName,formType);
-                    }
-                    if(pageType=='pg'){
-                      this.$refs.gridBody.clearData(fieldName,formType);
-                    }
+                  if(searchType=="searchPriceGroup"){
+                    this.searchFormFields["pricegroup_dbid"] = "";
+                    this.searchFormFields["group_id"] = "";
+                    this.pickPriceGroupName = "";
                   }
-                  if(formType=='f'){
-                    if(pageType=='p'){
-                      this.$refs.modelHeader.clearData(fieldName,formType);
-                    }
-                    if(pageType=='pg'){
-                      this.$refs.modelBody.clearData(fieldName,formType);
-                    }
-
+                  if(searchType=="editFormSearchPriceGroup"){
+                    this.editFormFields['pricegroup_dbid'] = "";
+                    this.editFormFields['group_id'] = "";
+                    this.pickEditFormPriceGroupName="";
+                  }
+                  if(searchType=='editFormProduct'){
+                    this.editFormFields['prod_dbid'] = "";
+                    this.editFormFields['prod_id'] = "";
+                    this.pickEditFormProductName=''
                   }
                 }
               },
@@ -129,10 +136,60 @@ let extension = {
               "Clean"
           ),
 
+        ]);
+      };
+    },
+
+
+    getPopShowRender(searchType) {//
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+          h(
+              "input",
+              {
+                class:"el-input__inner",
+                type:"text",
+                style:{width:"70%",disabled:true},
+                readonly:"true",
+                value:this.getPickName(searchType)
+              }
+          )
 
         ]);
       };
     },
+
+    //選擇prod回填字段
+    handleProdSelected(flag,rows){
+      debugger
+      if(flag=='editFormProduct'){
+        this.editFormFields['prod_dbid'] = rows[0].prod_dbid;
+        this.editFormFields['prod_id'] = rows[0].prod_id;
+        this.pickEditFormProductName=rows[0].prod_ename
+      }
+      if(flag=='prods'){
+        let selectrows = [];//将勾选值设置成数组
+        rows.forEach(row=>{
+          selectrows.push({"key":row.prod_dbid,"value":row.prod_ename});
+          this.searchFormFields.prods.push(row.prod_dbid)
+        })
+        this.getSearchOption("prods").data=selectrows;
+      }
+    },
+    //选择group pick回填字段
+    handlePriceGroupSelected(flag,rows){
+      if(flag=="searchPriceGroup"){
+        this.searchFormFields["pricegroup_dbid"] = rows[0].pricegroup_dbid;
+        this.searchFormFields["group_id"] =rows[0].group_id;
+        this.pickPriceGroupName=rows[0].group_name;
+      }else if(flag=="editFormSearchPriceGroup"){
+        this.editFormFields["pricegroup_dbid"] = rows[0].pricegroup_dbid;
+        this.editFormFields["group_id"] =rows[0].group_id;
+        this.pickEditFormPriceGroupName=rows[0].group_name;
+      }
+
+    },
+
     //product detach
     detachSelectedData(){
       let _rows =  this.getSelectRows();
@@ -253,7 +310,7 @@ let extension = {
       }
       //-------------日期字段格式化 end--------------
       //-------------列表頁搜索框綁定彈窗 start-------------
-      let searchGroup=this.getSearchOption("pricegroup_dbidname");
+      let searchGroup=this.getSearchOption("group_id");
 
       let searchGroupDBID=this.getSearchOption("pricegroup_dbid");
 
@@ -265,11 +322,11 @@ let extension = {
       // searchProdDBID.hidden=true
 
       searchGroup.extra = {
-        render: this.getRender("pricegroup_dbid", 's','pg')
+        render: this.getPopRender("searchPriceGroup")
       }
       searchGroup.onKeyPress=($event)=>{
         if($event.keyCode == 13){
-          let  group_id = this.searchFormFields['pricegroup_dbidname']
+          let  group_id = this.searchFormFields['group_id']
           if(group_id) {
             this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
               console.log(reslut)
@@ -293,33 +350,36 @@ let extension = {
         text: "Pick",
         style: "color:#409eff;font-size: 12px;cursor: pointer;",
         click: item => {
-          this.$refs.gridHeader.openMulity("prods",'ms');
+          this.$refs.gridHeader.openModel(false,"prods");
         }
       }
       //-------------列表頁搜索框綁定彈窗 end-------------
       //-------------表單輸入框綁定彈窗 start-------------
-      let formGroup=this.getFormOption("pricegroup_dbidname");
-      let formProd=this.getFormOption("prod_dbidname");
+      let formGroup=this.getFormOption("group_id");
+      let formProd=this.getFormOption("prod_id");
       let formGroupDBID=this.getFormOption("pricegroup_dbid");
       let formProdDBID=this.getFormOption("prod_dbid");
       formGroupDBID.hidden=true;
       formProdDBID.hidden=true;
 
-
       formGroup.extra = {
-        render: this.getRender("pricegroup_dbid", 'f','pg')
+        render: this.getPopRender("editFormSearchPriceGroup")
       }
       formGroup.onKeyPress=($event)=>{
         if($event.keyCode == 13){
-          let  group_id = this.editFormFields['pricegroup_dbidname']
+          let  group_id = this.editFormFields['group_id']
           if(group_id) {
             this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
               if(reslut!==null){
                 this.editFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
-                this.editFormFields['pricegroup_dbidname'] =reslut.group_id + " " + reslut.group_name;
+                this.editFormFields['group_id'] =reslut.group_id ;//+ " " + reslut.group_name;
+                this.editFormFields['group_name'] =reslut.group_name
+                this.pickEditFormPriceGroupName=reslut.group_name
               }else {
                 this.$message.error("Group Id Is Not Exists.");
-                this.editFormFields['pricegroup_dbidname']=''
+                this.editFormFields['group_id']=''
+                this.editFormFields['pricegroup_dbid']=''
+                this.pickEditFormPriceGroupName=''
               }
 
               return;
@@ -330,20 +390,26 @@ let extension = {
       }
 
       formProd.extra = {
-        render: this.getRender("prod_dbid", 'f','p')
+        render: this.getPopRender("editFormProduct")
       }
       formProd.onKeyPress=($event)=>{
         if($event.keyCode == 13){
-          let  prod_id = this.editFormFields['prod_dbidname']
+          let  prod_id = this.editFormFields['prod_id']
           if(prod_id) {
             this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
               if(reslut!=null){
                 this.editFormFields['prod_dbid'] =reslut.prod_dbid;
                 this.editFormFields['nhi_price'] =reslut.nhi_price;
-                this.editFormFields['prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
+                this.editFormFields['prod_id'] =reslut.prod_id ;
+                this.editFormFields['prod_ename'] =reslut.prod_ename ;
+                this.pickEditFormProductName=reslut.prod_ename ;
               }else{
                 this.$Message.error(" Product Id Is Not Exists.");
-                this.editFormFields['prod_dbidname']=''
+                this.editFormFields['prod_dbid'] ='';
+                this.editFormFields['nhi_price'] ='';
+                this.editFormFields['prod_id'] ='';
+                this.editFormFields['prod_ename'] ='' ;
+                this.pickEditFormProductName='' ;
               }
 
               return;
@@ -355,18 +421,18 @@ let extension = {
       //-------------表單輸入框綁定彈窗 end-------------
 
       //在第二个按钮后添加一个新的按钮
-      this.buttons.splice(3, 0, {
+      /*this.buttons.splice(3, 0, {
         name: "Bath Add",
         icon: 'el-icon-view',
         type: 'warning',
         onClick: function () {
           this.bathAdd()
         }
-      })
+      })*/
       //-------------end-------------
     },
     bathAdd(){
-      this.$refs.gridFooter.openBathAddPage();
+      this.$refs.gridFooter.openBathAddCustPage();
     },
     onInited() {
       //框架初始化配置后
@@ -417,6 +483,9 @@ let extension = {
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
       this.getFormOption("nhi_price").disabled=true;
+      this.pickEditFormProductName='';
+      this.pickEditFormPriceGroupName=''
+
       if(this.currentAction==this.const.ADD){
         //設置Min Qty初始值為1
         this.editFormFields.min_qty=1;
@@ -427,21 +496,23 @@ let extension = {
         this.getFormOption("invoice_price").disabled=false;
         this.getFormOption("net_price").disabled=false;
         this.getFormOption("min_qty").disabled=false;
-        this.getFormOption("pricegroup_dbidname").disabled=false;
-        this.getFormOption("prod_dbidname").disabled=false;
-        this.getFormOption("pricegroup_dbidname").extra={render: this.getRender("pricegroup_dbid", 'f','pg')};
-        this.getFormOption("prod_dbidname").extra={render: this.getRender("prod_dbid", 'f','p')};
+        this.getFormOption("group_id").disabled=false;
+        this.getFormOption("prod_id").disabled=false;
+        this.getFormOption("group_id").extra={render: this.getPopRender("editFormSearchPriceGroup")};
+        this.getFormOption("prod_id").extra={render: this.getPopRender("editFormProduct")};
 
       }else if (this.currentAction==this.const.EDIT){
         this.getFormOption("bid_no").disabled=true;
         this.getFormOption("invoice_price").disabled=true;
         this.getFormOption("net_price").disabled=true;
         this.getFormOption("min_qty").disabled=true;
-        this.getFormOption("pricegroup_dbidname").disabled=true;
-        this.getFormOption("pricegroup_dbidname").extra={};
-        this.getFormOption("prod_dbidname").disabled=true;
-        this.getFormOption("prod_dbidname").extra={};
+        this.getFormOption("group_id").disabled=true;
+        this.getFormOption("group_id").extra={render: this.getPopShowRender("editFormSearchPriceGroup")};
+        this.getFormOption("prod_id").disabled=true;
+        this.getFormOption("prod_id").extra={render: this.getPopShowRender("editFormProduct")};;
 
+        this.pickEditFormProductName=row.prod_ename;
+        this.pickEditFormPriceGroupName=row.group_id
       }else if (this.currentAction==this.const.VIEW){
 
       }
