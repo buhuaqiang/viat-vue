@@ -190,7 +190,6 @@ export default {
       this.$refs.mytable.load();
     },
     addRow() {
-      debugger;
       var rows = this.$refs.mytable.getSelected();
       if (!rows || rows.length == 0) {
         return this.$message.error("請選擇數據");

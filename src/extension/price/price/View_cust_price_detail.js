@@ -84,10 +84,8 @@ let extension = {
               "a",
               {
                 props: {},
-                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer"},
+                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
-
-
                   if(searchType=='editFormProduct'){
                     this.$refs.modelHeader.openModel(true,searchType)
                   }
@@ -106,7 +104,7 @@ let extension = {
               "a",
               {
                 props: {},
-                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer"},
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
 
                   if(searchType=='editFormProduct'){
