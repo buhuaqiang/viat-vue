@@ -20,6 +20,10 @@ let extension = {
   },
   tableAction: "View_full_allowance_reverse", //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
+  text: "",
+  extra:"",
+  sum1:0,
+  sum2:0,
   methods: {
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
@@ -38,9 +42,57 @@ let extension = {
       //显示查询全部字段
       //this.setFiexdSearchForm(true);
       this. singleSearch = null;
-
+      this.extend.extra= {
+        render:this.getSUMRender("")
+      }
+      this.extend.sum1=10000;
+      this.extend.sum2=20000;
 
     },
+
+      getSUMRender() {//
+          return (h, { row, column, index }) => {
+              return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+                  h(
+                      "span",
+                      {
+                          style:{width:"10%","font-weight":"bolder"},
+                          innerHTML:"&nbsp;&nbsp;SUM:"
+                      }
+                  ),
+                  h(
+                      "input",
+                      {
+                          class:"el-input__inner",
+                          type:"text",
+                          style:{width:"40%"},
+                          disabled:"true",
+                          value:this.extend.sum1
+                      }
+                  ),
+                  h(
+                      "span",
+                      {
+                          style:{width:"10%","font-weight":"bolder"},
+                          innerHTML:"&nbsp;&nbsp;&nbsp;&nbsp;SUM(W/T):"
+                      }
+                  ),
+                  h(
+                      "input",
+                      {
+                          class:"el-input__inner",
+                          type:"text",
+                          style:{width:"40%"},
+                          disabled:"true",
+                          value:this.extend.sum2
+                      }
+                  ),
+
+
+
+              ]);
+          };
+      },
     onInited() {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作

@@ -114,7 +114,16 @@
             <span>{{ table.cnName }}</span>
           </div>
           <div class="notice">
-            <a class="text" :title="extend.text">{{ extend.text }}</a>
+<!--
+            <a class="text" :title="extend.text">{{ extend.text }}</a>-->
+
+            <div class="form-extra" v-if="extend.extra">
+              <form-expand
+                      v-if="extend.extra.render"
+                      :render="extend.extra.render"
+              ></form-expand>
+
+            </div>
           </div>
           <!--快速查询字段-->
           <div class="search-line" v-if="!fiexdSearchForm">
@@ -361,6 +370,7 @@ import Empty from "@/components/basic/Empty.vue";
 
 import VolTable from "@/components/basic/VolTable.vue";
 import VolForm from "@/components/basic/VolForm.vue";
+import FormExpand from '../VolForm/VolFormRender';
 import {
   defineAsyncComponent,
   defineComponent,
@@ -370,6 +380,7 @@ import {
 } from "vue";
 var vueParam = {
   components: {
+    FormExpand,
     "vol-form": VolForm,
     "vol-table": VolTable,
     VolBox: defineAsyncComponent(() => import("@/components/basic/VolBox.vue")),

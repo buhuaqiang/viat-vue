@@ -6,29 +6,37 @@
         border-bottom: 0;
         border-top: 1px solid #eee;
       ">
-      <el-tab-pane>
+      <el-tab-pane ref="table1">
         <template #label>
           <span><i class="el-icon-date"></i> Sharing</span>
         </template>
         <allowance-sharing ref="allowanceSharing"></allowance-sharing>
-       <!-- <div>
-          <allowance-sharing ref="allowanceSharing"></allowance-sharing>
-        </div>-->
-       <!-- <vol-table ref="table1">
-          <allowance-sharing ref="allowanceSharing"></allowance-sharing>
-        </vol-table>-->
       </el-tab-pane>
+
       <el-tab-pane>
         <template #label>
           <span><i class="el-icon-date"></i> Reverse</span>
         </template>
-
-        <!--<div>
-          <allowance-reverse ref="allowanceReverse"></allowance-reverse>
-        </div>-->
-
         <vol-table ref="table2">
           <allowance-reverse ref="allowanceReverse"></allowance-reverse>
+        </vol-table>
+      </el-tab-pane>
+
+      <el-tab-pane>
+        <template #label>
+          <span><i class="el-icon-date"></i> Adjustment</span>
+        </template>
+        <vol-table ref="table3">
+          <allowance-reverse ref="allowanceReverse"></allowance-reverse>
+        </vol-table>
+      </el-tab-pane>
+
+      <el-tab-pane>
+        <template #label>
+          <span><i class="el-icon-date"></i> Summary</span>
+        </template>
+        <vol-table ref="table4">
+          <allowance-sharing ref="allowanceSharing"></allowance-sharing>
         </vol-table>
       </el-tab-pane>
     </el-tabs>
@@ -59,8 +67,8 @@ export default {
       });
       $parent.boxOptions.height=600;
       $parent.boxOptions.width=1500;
-      this.$refs.table1.load();
-      this.$refs.table2.load();
+      //this.$refs.table1.load();
+      //this.$refs.table2.load();
     }
 
   },
