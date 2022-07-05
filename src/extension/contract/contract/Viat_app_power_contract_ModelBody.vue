@@ -6,7 +6,7 @@
         min-height: 370px;
         box-shadow: none;
         border-bottom: 0;
-        border-top: 10px solid #eee;
+        border-top: 1px solid #eee;
       "
     >
       <el-tab-pane>
@@ -14,7 +14,7 @@
           <span><i class="el-icon-date"></i>Customer List</span>
         </template>
         <!-- 显示操作按钮 -->
-        <div>
+        <div style="padding-bottom: 5px">
 
           <el-button
             type="success"
@@ -63,7 +63,7 @@
           :loadKey="true"
           :columns="tableColumns1"
           :pagination-hide="false"
-          :height="320"
+          :height="300"
           :url="table1Url"
           :index="true"
           :defaultLoadPage="true"
@@ -78,7 +78,7 @@
           <span><i class="el-icon-date"></i> Contract Product</span>
         </template>
         <!-- 从表2配置 ,双击可以开启编辑-->
-        <div style="padding-bottom: 10px">
+        <div style="padding-bottom: 5px">
           <el-button
             type="success"
             icon="el-icon-plus"
@@ -148,7 +148,7 @@
           <span><i class="el-icon-date"></i>FG Product</span>
         </template>
         <!-- 从表3配置 ,双击可以开启编辑-->
-        <div style="padding-bottom: 10px">
+        <div style="padding-bottom: 5px">
           <el-button
                   type="success"
                   icon="el-icon-plus"
