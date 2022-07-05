@@ -70,7 +70,7 @@
               :disabled="item.readonly || item.disabled"
               v-show="!item.hidden"
               size="medium"
-              style="width: 100%"
+              :style="item.extra==null?'width:100%':'width:90%'"
               v-else-if="['select', 'selectList'].indexOf(item.type) != -1"
               v-model="formFields[item.field]"
               filterable
