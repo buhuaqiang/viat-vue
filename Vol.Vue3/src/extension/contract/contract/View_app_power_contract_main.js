@@ -242,7 +242,7 @@ let extension = {
               {
                 class:"el-input__inner",
                 type:"text",
-                style:{width:"65%"},
+                style:{width:"65%","background-color":"#f5f7fb"},
                 readonly:"true",
                 value:this.getPickName(searchType)
               }
@@ -251,7 +251,7 @@ let extension = {
               "a",
               {
                 props: {},
-                style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
+                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
                   if(searchType=="editFormSearchCustomer"){
                     //this.$refs.modelBody.openCustmModelBody(true,searchType)
@@ -270,7 +270,7 @@ let extension = {
               "a",
               {
                 props: {},
-                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
                   if(searchType=="editFormSearchCustomer"){
                     this.editFormFields['cust_dbid'] = "";
@@ -322,7 +322,7 @@ let extension = {
               {
                 class:"el-input__inner",
                 type:"text",
-                style:{width:"70%"},
+                style:{width:"70%","background-color":"#f5f7fb"},
                 readonly:"true",
                 value:this.getPickName(searchType)
               }
@@ -331,7 +331,7 @@ let extension = {
               "a",
               {
                 props: {},
-                style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
+                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
                   if(searchType=="searchCustomer"){
                     this.$refs.gridFooter.openModel(true,searchType);
@@ -348,7 +348,7 @@ let extension = {
               "a",
               {
                 props: {},
-                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
                   if(searchType=="searchCustomer"){
                     this.searchFormFields["cust_dbid"] = "";
