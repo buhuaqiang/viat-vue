@@ -424,6 +424,8 @@ var vueParam = {
       pickEditFormPriceGroupName:"",
       pickEditFormProductName:"",
 
+
+
       bakEditFormOptions:[],//備份的表單編輯json(解決調用view之後頁面本來設定的disabled屬性值無效)
       //树形结构的主键字段，如果设置值默认会开启树形table；注意rowKey字段的值必须是唯一（2021.05.02）
       rowKey: undefined,

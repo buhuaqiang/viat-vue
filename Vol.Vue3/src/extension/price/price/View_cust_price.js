@@ -83,7 +83,7 @@ let extension = {
               {
                 class:"el-input__inner",
                 type:"text",
-                style:{width:"70%",disabled:true},
+                style:{width:"70%","background-color":"#f5f7fb"},
                 readonly:"true",
                 value:this.getPickName(searchType)
               }
@@ -92,7 +92,7 @@ let extension = {
               "a",
               {
                 props: {},
-                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer"},
+                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
                   if(searchType=="searchPriceGroup"){
                     this.$refs.gridBody.openModel(true,searchType);
@@ -113,7 +113,7 @@ let extension = {
               "a",
               {
                 props: {},
-                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer"},
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
                   if(searchType=="searchPriceGroup"){
                     this.searchFormFields["pricegroup_dbid"] = "";

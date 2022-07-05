@@ -44,7 +44,7 @@
                                {"title":"Min Qty","required":true,"field":"min_qty","type":"number"}],
                               [{"title":"Remarks","field":"remarks","colSize":10,"type":"textarea"}]]);
             const searchFormFields = ref({"group_id":"","pricegroup_dbid":"","start_date":"","end_date":"","status":"","modified_date":"","prods":[]});
-            const searchFormOptions = ref([[{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"},{"title":"Group Id","field":"group_id"}],[{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"},{"title":"Modified Date","field":"modified_date","type":"date"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],[{"title":"","field":"pricegroup_dbid"}]]);
+            const searchFormOptions = ref([[{"title":"Group Id","field":"group_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"}],[{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"},{"title":"Modified Date","field":"modified_date","type":"date"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],[{"title":"","field":"pricegroup_dbid"}]]);
             const columns = ref([{field:'group_id',title:'Group Id',type:'string',link:true,width:110,require:true,align:'left',sort:true},
                        {field:'group_name',title:'Group Name',type:'string',width:120,align:'left'},
                        {field:'prod_id',title:'Product Id',type:'string',width:110,require:true,align:'left'},
@@ -58,7 +58,7 @@
                        {field:'nhi_price',title:'NHI Price',type:'decimal',width:110,readonly:true,require:true,align:'left'},
                        {field:'invoice_price',title:'Invoice Price',type:'decimal',width:110,require:true,align:'left'},
                        {field:'net_price',title:'Net Price',type:'decimal',width:110,require:true,align:'left'},
-                       {field:'min_qty',title:'Min Qty',type:'int',width:110,require:true,align:'left'},
+                       {field:'min_qty',title:'Min Qty',type:'int',width:90,require:true,align:'left'},
                        {field:'start_date',title:'Start Date',type:'datetime',width:110,require:true,align:'left',sort:true},
                        {field:'end_date',title:'End Date',type:'datetime',width:110,require:true,align:'left',sort:true},
                        {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,require:true,align:'left'},

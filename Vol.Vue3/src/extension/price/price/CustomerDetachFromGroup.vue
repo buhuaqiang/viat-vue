@@ -3,7 +3,8 @@
     <div style="padding:20px 2px;">
       <el-form :inline="true"  label-width="150px" :model="formModel">
         <el-form-item  label="Customer:" style="width: 35%;">
-          <el-input v-model="formModel.cust_dbidname" @keyup.enter="custKeyPress" style="width:200px;" ></el-input>
+          <el-input v-model="formModel.cust_id" @keyup.enter="custKeyPress" style="width:120px;" ></el-input>
+          <el-input v-model="formModel.cust_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
           <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="formModel.cust_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
@@ -16,7 +17,8 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item  label="Product:" style="width: 35%">
-          <el-input v-model="formModel.prod_dbidname" @keyup.enter="prodKeyPress" style="width:200px;" ></el-input>
+          <el-input v-model="formModel.prod_id" @keyup.enter="prodKeyPress" style="width:120px;" ></el-input>
+          <el-input v-model="formModel.prod_ename" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
           <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="formModel.prod_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
@@ -114,15 +116,18 @@ export default {
   },
   methods: {
     custKeyPress(){
-      let  cust_id = this.formModel.cust_dbidname
+      let  cust_id = this.formModel.cust_id
       if(cust_id) {
         this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
           if(reslut!==null){
             this.formModel.cust_dbid=reslut.cust_dbid;
-            this.formModel.cust_dbidname=reslut.cust_id + " " + reslut.cust_name;
+            this.formModel.cust_id=reslut.cust_id
+            this.formModel.cust_name=reslut.cust_name;
           }else {
             this.$message.error("Customer Id Is Not Exists.");
-            this.formModel.cust_dbidname=''
+            this.formModel.cust_id=''
+            this.formModel.cust_dbid=''
+            this.formModel.cust_name=''
           }
 
           return;
@@ -130,15 +135,18 @@ export default {
       }
     },
     prodKeyPress(){
-      let  prod_id = this.formModel.prod_dbidname
+      let  prod_id = this.formModel.prod_id
       if(prod_id) {
         this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
           if(reslut!==null){
             this.formModel.prod_dbid=reslut.prod_dbid;
-            this.formModel.prod_dbidname=reslut.prod_id + " " + reslut.prod_ename;
+            this.formModel.prod_id=reslut.prod_id
+            this.formModel.prod_ename=reslut.prod_ename;
           }else {
             this.$message.error("Product Id Is Not Exists.");
-            this.formModel.prod_dbidname=''
+            this.formModel.prod_dbid=''
+            this.formModel.prod_id=''
+            this.formModel.prod_ename=''
           }
 
           return;
@@ -154,9 +162,9 @@ export default {
     },
     openPriceGroup(val){
       if(val==2){
-        this.$refs.View_com_prod_pop_query.openDemo("prod_dbid","ext")
+        this.$refs.View_com_prod_pop_query.openModel(true,"prod_dbid","onSelect")
       }else if(val==1){
-        this.$refs.Viat_com_custModelBody.openDemo("cust_dbid","ext")
+        this.$refs.Viat_com_custModelBody.openModel(true,"cust_dbid","onSelect")
       }
     },
 
@@ -168,20 +176,24 @@ export default {
           return this.$message.error("請選擇數據");
         }
         if(fieldName=='prod_dbid'){
-          this.formModel.prod_dbidname=rows[0].prod_id+" "+rows[0].prod_ename;
+          this.formModel.prod_id=rows[0].prod_id
+          this.formModel.prod_ename=rows[0].prod_ename;
           this.formModel.prod_dbid=rows[0].prod_dbid
         }else if(fieldName=='cust_dbid'){
-          this.formModel.cust_dbidname=rows[0].cust_id+" "+rows[0].cust_name;
+          this.formModel.cust_id=rows[0].cust_id
+          this.formModel.cust_name=rows[0].cust_name;
           this.formModel.cust_dbid=rows[0].cust_dbid
         }
 
     },
     clearPop(val){
       if(val==2){
-        this.formModel.prod_dbidname="";
+        this.formModel.prod_id="";
+        this.formModel.prod_ename="";
         this.formModel.prod_dbid="";
       }else if(val==1){
-        this.formModel.cust_dbidname="";
+        this.formModel.cust_id="";
+        this.formModel.cust_name="";
         this.formModel.cust_dbid="";
       }
 

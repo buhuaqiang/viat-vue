@@ -10,7 +10,8 @@
         </el-form-item>
 
         <el-form-item v-show="custShowFlag" label="Original Customer ID:" style="width: 35%">
-          <el-input v-model="formModel.org_cust_dbidname" @keyup.enter="custKeyPress(0)" style="width:200px;" ></el-input>
+          <el-input v-model="formModel.org_cust_id" @keyup.enter="custKeyPress(0)" style="width:120px;" ></el-input>
+          <el-input v-model="formModel.org_cust_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
           <a @click="openPriceGroup(0,'org_cust_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0,'org_cust_dbid')"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="formModel.org_cust_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
