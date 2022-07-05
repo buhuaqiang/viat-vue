@@ -127,6 +127,15 @@ let buttons = [{
         onClick: function () {
             this.detachAll();
         }
+    },
+    {
+        name: "Bath Add",
+        icon: 'el-icon-plus',
+        type: 'warning',
+        value: 'bathAdd',
+        onClick: function () {
+            this.bathAdd()
+        }
     }
 // , {
 //     name: "数据结构",
