@@ -353,6 +353,10 @@ let viewgird = [
         path: '/View_nhi_adjust_detail',
         name: 'View_nhi_adjust_detail',
         component: () => import('@/views/dataentry/nhiadjust/View_nhi_adjust_detail.vue')
+    }    ,{
+        path: '/View_invoice_pop',
+        name: 'View_invoice_pop',
+        component: () => import('@/views/dataentry/fullallowance/View_invoice_pop.vue')
     }]
 
 export default viewgird

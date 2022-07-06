@@ -8,6 +8,7 @@
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
 import customers from "@/extension/basic/cust/Viat_com_custModelBody"
 import prodPop from "@/extension/basic/prod/View_com_prod_pop_query.vue"
+import incoicePop from "./View_incoice_pop_query.vue"
 let extension = {
   components: {
     //查询界面扩展组件
@@ -17,7 +18,7 @@ let extension = {
     //新建、编辑弹出框扩展组件
     modelHeader: customers,
     modelBody: prodPop,
-    modelFooter: '',
+    modelFooter: incoicePop,
   },
   tableAction: "View_full_allowance_reverse", //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
@@ -29,6 +30,7 @@ let extension = {
         return {
             editFormSearchCustomer:"editFormSearchCustomer",
             editFormSearchProd:"editFormSearchProd",
+            editFormSearchInvoice:"editFormSearchInvoice",
         };
     },
 
@@ -116,6 +118,28 @@ let extension = {
             }
         }
 
+        let editform_invoice_no=this.getFormOption("invoice_no");
+        editform_invoice_no.extra = {
+            render:this.getFormRender("editFormSearchInvoice")
+        }
+        /*editform_invoice_no.onKeyPress=($event)=>{
+            if($event.keyCode == 13){
+                let  invoice_no = this.editFormFields['invoice_no']
+                let  cust_id = this.editFormFields['cust_id']
+                if(invoice_no) {
+                    this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+                        if(reslut !=null){
+                            this.editFormFields['invoice_no'] =reslut.cust_id ;
+                            return;
+                        }else{
+                            this.$message.error("Invoice_no Id Is Not Exists.");
+                            return;
+                        }
+                    })
+                }
+            }
+        }*/
+
     },
 
       getSUMRender() {//
@@ -169,60 +193,99 @@ let extension = {
          * @returns {function(*, {row: *, column: *, index: *}): *}
          */
     getFormRender(searchType) {//
-        return (h, { row, column, index }) => {
-            return h("div", { class:"el-input el-input--medium el-input--suffix"}, [
-                h(
-                    "input",
-                    {
-                        class:"el-input__inner",
-                        type:"text",
-                        style:{width:"65%","background-color":"#f5f7fb"},
-                        readonly:"true",
-                        value:this.getPickName(searchType)
-                    }
-                ),
-                h(
-                    "a",
-                    {
-                        props: {},
-                        style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
-                        onClick: (e) => {
-                            if(searchType=="editFormSearchCustomer"){
-                                this.$refs.modelHeader.openModel(true,searchType);
+        if(searchType=="editFormSearchInvoice"){
+            return (h, { row, column, index }) => {
+                return h("div", { class:"el-input el-input--medium el-input--suffix"}, [
+                    h(
+                        "a",
+                        {
+                            props: {},
+                            style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                            onClick: (e) => {
+                                    this.$refs.modelFooter.openModel(true,searchType);
                             }
-                            if(searchType=="editFormSearchProd"){
-                                //this.$refs.modelBody.openPriceGroupModelBody(true,searchType);
-                                this.$refs.modelBody.openModel(true,searchType);
+                        },
+                        [h("i",{class:"el-icon-zoom-in"})],
+                        "Pick"
+                    ),
+                    h(
+                        "a",
+                        {
+                            props: {},
+                            style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                            onClick: (e) => {
+                                    this.editFormFields['invoice_no'] = "";
                             }
-                        }
-                    },
-                    [h("i",{class:"el-icon-zoom-in"})],
-                    "Pick"
-                ),
-                h(
-                    "a",
-                    {
-                        props: {},
-                        style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
-                        onClick: (e) => {
-                            if(searchType=="editFormSearchCustomer"){
-                                this.editFormFields['cust_dbid'] = "";
-                                this.editFormFields['cust_id'] = "";
-                                this.pickEditFormCustomerName="";
-                            }
-                            if(searchType=="editFormSearchProd"){
-                                this.editFormFields['prod_dbid'] = "";
-                                this.editFormFields['prod_id'] = "";
-                                this.pickEditFormProductName="";
-                            }
-                        }
-                    },
-                    [h("i",{class:"el-icon-zoom-out"})],
-                    "Clean"
-                ),
+                        },
+                        [h("i",{class:"el-icon-zoom-out"})],
+                        "Clean"
+                    ),
 
-            ]);
-        };
+                ]);
+            };
+        }else{
+            return (h, { row, column, index }) => {
+                return h("div", { class:"el-input el-input--medium el-input--suffix"}, [
+                    h(
+                        "input",
+                        {
+                            class:"el-input__inner",
+                            type:"text",
+                            style:{width:"65%","background-color":"#f5f7fb"},
+                            readonly:"true",
+                            value:this.getPickName(searchType)
+                        }
+                    ),
+                    h(
+                        "a",
+                        {
+                            props: {},
+                            style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                            onClick: (e) => {
+                                if(searchType=="editFormSearchCustomer"){
+                                    this.$refs.modelHeader.openModel(true,searchType);
+                                }
+                                if(searchType=="editFormSearchProd"){
+                                    //this.$refs.modelBody.openPriceGroupModelBody(true,searchType);
+                                    this.$refs.modelBody.openModel(true,searchType);
+                                }
+                                if(searchType=="editFormSearchInvoice"){
+                                    this.$refs.modelFooter.openModel(true,searchType);
+                                }
+                            }
+                        },
+                        [h("i",{class:"el-icon-zoom-in"})],
+                        "Pick"
+                    ),
+                    h(
+                        "a",
+                        {
+                            props: {},
+                            style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                            onClick: (e) => {
+                                if(searchType=="editFormSearchCustomer"){
+                                    this.editFormFields['cust_dbid'] = "";
+                                    this.editFormFields['cust_id'] = "";
+                                    this.pickEditFormCustomerName="";
+                                }
+                                if(searchType=="editFormSearchProd"){
+                                    this.editFormFields['prod_dbid'] = "";
+                                    this.editFormFields['prod_id'] = "";
+                                    this.pickEditFormProductName="";
+                                }
+                                if(searchType=="editFormSearchInvoice"){
+                                    this.editFormFields['invoice_no'] = "";
+                                }
+                            }
+                        },
+                        [h("i",{class:"el-icon-zoom-out"})],
+                        "Clean"
+                    ),
+
+                ]);
+            };
+        }
+
     },
     getPickName(searchType){
         if(searchType=="editFormSearchCustomer"){
@@ -234,14 +297,17 @@ let extension = {
     },
     //选择客户Pick 回填字段
     handleCustomerSelected(flag,rows){
-            this.editFormFields["cust_dbid"] = rows[0].cust_dbid;
-            this.editFormFields["cust_id"] =rows[0].cust_id;
-            this.pickEditFormCustomerName=rows[0].cust_name;
+        this.editFormFields["cust_dbid"] = rows[0].cust_dbid;
+        this.editFormFields["cust_id"] =rows[0].cust_id;
+        this.pickEditFormCustomerName=rows[0].cust_name;
     },
     handleProdSelected(flag,rows){
         this.editFormFields["prod_dbid"] = rows[0].prod_dbid;
         this.editFormFields["prod_id"] =rows[0].prod_id;
         this.pickEditFormProductName=rows[0].prod_ename;
+    },
+    handleInvoiceSelected(flag,rows){
+        this.editFormFields["invoice_no"] =rows[0].invoice_no;
     },
     getFormOption (field) {
         let option;
