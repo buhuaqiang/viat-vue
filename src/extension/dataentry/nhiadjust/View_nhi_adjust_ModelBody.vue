@@ -55,6 +55,10 @@ export default {
         $parent = $this;
       });
       debugger
+      if ($parent.currentAction == "Add") {
+        debugger
+        this.showFlag = false;
+      }
       $parent.boxOptions.height=1600;
       $parent.boxOptions.width=1500;
       this.nhiadjustm_dbid = $parent.editFormFields.nhiadjustm_dbid;
