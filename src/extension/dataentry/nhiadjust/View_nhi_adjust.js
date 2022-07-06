@@ -100,7 +100,7 @@ let extension = {
               {
                 class:"el-input__inner",
                 type:"text",
-                style:{width:"70%","background-color":"#f5f7fb"},
+                style:{width:"65%","background-color":"#f5f7fb"},
                 readonly:"true",
                 value:this.getPickName(searchType)
               }
