@@ -250,6 +250,9 @@ let extension = {
     },
     searchAfter(result) {
       //查询后，result返回的查询数据,可以在显示到表格前处理表格的值
+      debugger
+      let nhiadjustm_dbid = result[0].nhiadjustm_dbid;
+      this.$store.getters.data().nhiadjustm_dbid=nhiadjustm_dbid;
       return true;
     },
     addBefore(formData) {
@@ -272,7 +275,6 @@ let extension = {
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
       debugger
-      let testm = this.editFormFields.nhiadjustm_dbid;
       this.$refs.modelBody.modelOpen();
     }
   }

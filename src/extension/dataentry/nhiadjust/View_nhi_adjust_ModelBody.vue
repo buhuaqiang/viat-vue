@@ -76,15 +76,6 @@ export default {
       debugger
       return this.nhiadjustm_dbid
     },
-    // modelOpenAfter(row) {
-    //   debugger
-    //   this.$emit("parentCall", ($parent) => {
-    //     $parent = $this;
-    //     let test = $parent.editFormFields.nhiadjustm_dbid;
-    //     this.editFormFields.nhiadjustm_dbid = test;
-    //     let a = 0;
-    //   });
-    // }
   },
 };
 </script>

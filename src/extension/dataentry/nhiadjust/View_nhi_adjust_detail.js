@@ -20,7 +20,7 @@ let extension = {
   },
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
-  // p_id:'',
+  p_id:'',
   data() {
     return {
       searchCustomer: "searchCustomer",
@@ -184,6 +184,18 @@ let extension = {
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
+      //界面查询前,可以给param.wheres添加查询参数
+      //返回false，则不会执行查询   query: {"powercont_dbid":_rows[0].powercont_dbid,"contract_no":contract_no},
+      debugger
+      // let $parent;
+      // //获取生成页面viewgrid的对象
+      // this.$emit("parentCall", ($this) => {
+      //   $parent = $this;
+      // });
+      let nhiadjustm_dbid = this.$store.getters.data().nhiadjustm_dbid;
+      // let nhiadjustm_dbid  = $parent.editFormFields.nhiadjustm_dbid;
+      // let nhiadjustm_dbid  = this.editFormFields.nhiadjustm_dbid;
+      param.wheres.push({name:'nhiadjustm_dbid',value:nhiadjustm_dbid})
       return true;
     },
     searchAfter(result) {
@@ -201,6 +213,10 @@ let extension = {
       // //删除数据回传
       // let delTable1RowData = this.$refs.modelBody.delTable1RowData;
       return true;
+    },
+    parentCall(pid){
+      debugger
+      return this.nhiadjustm_dbid
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
