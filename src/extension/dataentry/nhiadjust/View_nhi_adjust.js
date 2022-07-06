@@ -52,15 +52,16 @@ let extension = {
           this.$Message.info("Import New NHIP");
         }
       })
-      this.buttons.splice(6, 0, {
-        name: "Import New Price",
+
+      this.buttons.splice(7, 0, {
+        name: "Export Current Price",
         icon: 'md-refresh',
         type: 'info',
         onClick: function () {
-          this.$Message.info("Import New Price");
+          this.$Message.info("Export Current Price");
         }
       })
-      this.buttons.splice(7, 0, {
+      this.buttons.splice(6, 0, {
         name: "Import New Price",
         icon: 'md-refresh',
         type: 'info',
@@ -100,6 +101,8 @@ let extension = {
           this.$Message.info("Check");
         }
       })
+
+      this.maxBtnLength=11;
 
       //示例：设置修改新建、编辑弹出框字段标签的长度
       this.boxOptions.labelWidth=180;
