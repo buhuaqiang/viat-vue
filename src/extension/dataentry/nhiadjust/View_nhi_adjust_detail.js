@@ -56,6 +56,26 @@ let extension = {
         render:this.getFormRender("editFormSearchProduct")
       }
 
+      editform_prod_id.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  prod_id = this.editFormFields['prod_id']
+          if(prod_id) {
+            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.editFormFields['prod_dbid'] =reslut.prod_dbid;
+                this.editFormFields['prod_id'] =reslut.prod_id ;
+                this.pickEditFormProductName=reslut.prod_ename;
+                return;
+              }else{
+                this.$message.error("Product Id Is Not Exists.");
+                return;
+              }
+
+            })
+          }
+
+        }
+      }
 
 
 
@@ -101,11 +121,6 @@ let extension = {
                 props: {},
                 style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
-                  if(searchType=="editFormSearchCustomer"){
-                    //this.$refs.modelBody.openCustmModelBody(true,searchType)
-                    debugger
-                    this.$refs.gridFooter.openModel(true,searchType);
-                  }
                   if(searchType=="editFormSearchProduct"){
                     debugger
                     //this.$refs.modelBody.openPriceGroupModelBody(true,searchType);
@@ -122,11 +137,6 @@ let extension = {
                 props: {},
                 style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
-                  if(searchType=="editFormSearchCustomer"){
-                    this.editFormFields['cust_dbid'] = "";
-                    this.editFormFields['cust_id'] = "";
-                    this.pickEditFormCustomerName="";
-                  }
                   if(searchType=="editFormSearchProduct"){
                     this.editFormFields['prod_dbid'] = "";
                     this.editFormFields['prod_id'] = "";
@@ -149,6 +159,7 @@ let extension = {
         this.searchFormFields["prod_id"] =rows[0].prod_id;
         this.pickProductName=rows[0].prod_ename;
       }else{
+        debugger
         this.editFormFields["prod_dbid"] = rows[0].prod_dbid;
         this.editFormFields["prod_id"] =rows[0].prod_id;
         this.pickEditFormProductName=rows[0].prod_ename;
@@ -214,10 +225,10 @@ let extension = {
       // let delTable1RowData = this.$refs.modelBody.delTable1RowData;
       return true;
     },
-    parentCall(pid){
-      debugger
-      return this.nhiadjustm_dbid
-    },
+    // parentCall(pid){
+    //   debugger
+    //   return this.nhiadjustm_dbid
+    // },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
@@ -230,20 +241,14 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
-      debugger
       let prodDbid = this.getFormOption('prod_dbid');
       let nhiadjustm = this.getFormOption('nhiadjustm_dbid');
+      let prodEname = this.getFormOption('prod_ename');
+      prodEname.hidden=true;
       prodDbid.hidden=true;
       nhiadjustm.hidden=true;
-      // input.el-input__inner=this.pickEditFormProductName;
-      // prodDbid.
-      let $parent;
-      //获取生成页面viewgrid的对象
+      this.pickEditFormProductName = this.editFormFields.prod_ename;
       this.editFormFields.nhiadjustm_dbid=this.$store.getters.data().nhiadjustm_dbid;
-
-
-      // alert(id)
-
     }
   }
 };

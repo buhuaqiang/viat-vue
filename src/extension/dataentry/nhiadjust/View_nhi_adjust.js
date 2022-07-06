@@ -118,6 +118,28 @@ let extension = {
       search_Prod_id.extra={
         render:this.getSearchRender("searchProduct")
       }
+
+      search_Prod_id.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  searchProdId = this.searchFormFields['prod_id']
+          if(searchProdId) {
+            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+searchProdId.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.searchFormFields['prod_dbid'] =reslut.prod_dbid;
+                this.searchFormFields['prod_id'] =reslut.prod_id ;
+                this.pickProductName=reslut.prod_ename;
+                return;
+              }else{
+                this.$message.error("Product Id Is Not Exists.");
+                return;
+              }
+
+            })
+          }
+
+        }
+      }
+
       //日期格式化 formatter
       let start_date=this.getColumnsOption("start_date");
       start_date.formatter = (row) => {
@@ -127,6 +149,8 @@ let extension = {
         }
         return row.start_date.substr(0,10);
       }
+
+
     },
 
     getPickName(searchType){
@@ -171,9 +195,6 @@ let extension = {
                 props: {},
                 style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
-                  if(searchType=="searchCustomer"){
-                    this.$refs.gridFooter.openModel(true,searchType);
-                  }
                   if(searchType=="searchProduct"){
                     this.$refs.gridBody.openModel(true,searchType);
                   }
@@ -188,11 +209,7 @@ let extension = {
                 props: {},
                 style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
-                  if(searchType=="searchCustomer"){
-                    this.searchFormFields["cust_dbid"] = "";
-                    this.searchFormFields["cust_id"] = "";
-                    this.pickCustomerName = "";
-                  }if(searchType=="searchProduct"){
+                  if(searchType=="searchProduct"){
                     this.searchFormFields["prod_dbid"] = "";
                     this.searchFormFields["prod_id"] = "";
                     this.pickProductName = "";
