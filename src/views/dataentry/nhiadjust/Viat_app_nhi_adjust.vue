@@ -29,17 +29,17 @@
                 url: "/Viat_app_nhi_adjust/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"prod_dbid":"","old_nhi_price":"","new_nhi_price":"","nhi_id":""});
-            const editFormOptions = ref([[{"title":"Product","field":"prod_dbid"},
-                               {"title":"Old NHI Price","field":"old_nhi_price","type":"decimal"}],
-                              [{"title":"New NHI Price","field":"new_nhi_price","type":"decimal"},
-                               {"title":"NHI Code","field":"nhi_id"}]]);
+            const editFormFields = ref({"prod_dbid":"","old_nhi_price":"","new_nhi_price":"","nhi_id":"","nhiadjustm_dbid":""});
+            const editFormOptions = ref([[{"title":"Product","field":"prod_dbid"}],
+                              [{"title":"Old NHI Price","field":"old_nhi_price","type":"decimal"},
+                               {"title":"New NHI Price","field":"new_nhi_price","type":"decimal"}],
+                              [{"title":"NHI Code","field":"nhi_id"}],
+                              [{"title":"m主鍵","field":"nhiadjustm_dbid"}]]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([]);
             const columns = ref([{field:'nhiadjust_dbid',title:'PKID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
-                       {field:'dbid',title:'識別碼, PK, Identity',type:'int',width:110,hidden:true,require:true,align:'left'},
                        {field:'division',title:'所屬事業單位,01:PH;03:AH;05:CH;06:NU',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'nhiadjustm_dbid',title:'nhiadjustm_dbid',type:'guid',width:110,hidden:true,align:'left'},
+                       {field:'nhiadjustm_dbid',title:'m主鍵',type:'guid',width:110,hidden:true,align:'left'},
                        {field:'prod_dbid',title:'Product',type:'guid',width:110,align:'left',sort:true},
                        {field:'old_nhi_price',title:'Old NHI Price',type:'decimal',width:110,align:'left'},
                        {field:'new_nhi_price',title:'New NHI Price',type:'decimal',width:110,align:'left'},
