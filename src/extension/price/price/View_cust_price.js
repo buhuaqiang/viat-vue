@@ -149,7 +149,7 @@ let extension = {
               {
                 class:"el-input__inner",
                 type:"text",
-                style:{width:"70%",disabled:true},
+                style:{width:"70%","background-color":"#f5f7fb"},
                 readonly:"true",
                 value:this.getPickName(searchType)
               }
@@ -273,6 +273,7 @@ let extension = {
         //示例：设置修改新建、编辑弹出框字段标签的长度
         // this.boxOptions.labelWidth = 150;
       this.boxOptions.labelWidth = 180;
+      this.boxOptions.height=460
       //显示查询全部字段
       this.setFiexdSearchForm(true);
       //设置查询表单的标签文字宽度
@@ -344,7 +345,6 @@ let extension = {
 
         }
       }
-
       searchProdDBIDS.extra = {
         icon: "el-icon-zoom-in",
         text: "Pick",

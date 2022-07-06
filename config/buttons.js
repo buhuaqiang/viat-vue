@@ -20,7 +20,18 @@ let buttons = [{
     onClick: function () {
         this.add();
     }
+
 },{
+        name: "New",
+        icon: 'el-icon-plus',
+        type: 'success',
+        value: 'bathAdd',
+        onClick: function () {
+            this.bathAdd()
+        }
+    },
+
+    {
     name: "Edit",
     icon: 'el-icon-edit',
     value: 'Update',
@@ -128,15 +139,7 @@ let buttons = [{
             this.detachAll();
         }
     },
-    {
-        name: "Bath Add",
-        icon: 'el-icon-plus',
-        type: 'warning',
-        value: 'bathAdd',
-        onClick: function () {
-            this.bathAdd()
-        }
-    }
+
 // , {
 //     name: "数据结构",
 //     icon: 'ios-cog',
