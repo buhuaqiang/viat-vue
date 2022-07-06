@@ -918,7 +918,7 @@ export default defineComponent({
       if (option.require || option.required) {
         if (val != '0' && (val === '' || val === undefined)) {
           if (!this.errorFiled) {
-            _errMsg = '不能为空';
+            _errMsg = 'cant be empty';
           }
           return false;
         }
@@ -932,11 +932,11 @@ export default defineComponent({
         if (val == '' || val == undefined) return true;
         if (editType == 'decimal') {
           if (!this.rule.decimal.test(val)) {
-            _errMsg = '只能是数字';
+            _errMsg = 'must be number';
             return false;
           }
         } else if (!this.rule.decimal.test(val)) {
-          _errMsg = '只能是数字';
+          _errMsg = 'must be number';
           return false;
         }
         if (
@@ -944,7 +944,7 @@ export default defineComponent({
           typeof option.edit.min === 'number' &&
           val < option.edit.min
         ) {
-          _errMsg = '不能小于' + option.edit.min;
+          _errMsg = 'cant less than' + option.edit.min;
           return false;
         }
         if (
@@ -952,7 +952,7 @@ export default defineComponent({
           typeof option.edit.max === 'number' &&
           val > option.edit.max
         ) {
-          _errMsg = '不能大于' + option.edit.max;
+          _errMsg = 'cant bigger than' + option.edit.max;
           return false;
         }
         return true;
@@ -965,7 +965,7 @@ export default defineComponent({
           typeof option.edit.min === 'number' &&
           val.length < option.edit.min
         ) {
-          _errMsg = '至少' + option.edit.min + '个字符';
+          _errMsg = 'at least' + option.edit.min + 'characters';
           return false;
         }
         if (
@@ -973,7 +973,7 @@ export default defineComponent({
           typeof option.edit.max === 'number' &&
           val.length > option.edit.max
         ) {
-          _errMsg = '最多' + option.edit.max + '个字符';
+          _errMsg = 'at most' + option.edit.max + 'characters';
           return false;
         }
       }
@@ -1181,7 +1181,7 @@ export default defineComponent({
         }
       });
       if (this.summaryData.length > 0 && this.summaryData[0] == '') {
-        this.summaryData[0] = '合计';
+        this.summaryData[0] = 'Summary';
       }
     },
     getInputChangeSummaries() {},
@@ -1256,7 +1256,7 @@ export default defineComponent({
       let val = row[column.field];
       // 是否值
       if (column.edit && column.edit.type == 'switch') {
-        return val ? '是' : '否';
+        return val ? 'YES' : 'NO';
       }
       if (!column.bind || !column.bind.data) {
         return row[column.field];

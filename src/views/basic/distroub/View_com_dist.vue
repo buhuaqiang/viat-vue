@@ -24,17 +24,18 @@
             const table = ref({
                 key: 'dist_dbid',
                 footer: "Foots",
-                cnName: '經銷商客戶對應',
+                cnName: 'Distributor Mapping Customer Code Setting',
                 name: 'distroub/View_com_dist',
                 url: "/View_com_dist/",
                 sortName: "dist_id"
             });
-            const editFormFields = ref({"entity":"","dist_id":"","cust_id":"","status":"","cust_dbid":""});
+            const editFormFields = ref({"entity":"","dist_id":"","cust_id":"","status":"","cust_dbid":"","cust_name":""});
             const editFormOptions = ref([[{"dataKey":"distributor_Drop","data":[],"title":"Distributor","required":true,"field":"dist_id","type":"select"},
                                {"dataKey":"entity","data":[],"title":"Entity","field":"entity","type":"select"}],
                               [{"title":"Viatris CustID","required":true,"field":"cust_id","type":"text"}],
                               [{"dataKey":"Status_YN","data":[],"title":"Status","required":true,"field":"status","type":"select"}],
-                              [{"title":"","required":true,"field":"cust_dbid"}]]);
+                              [{"title":"","required":true,"field":"cust_dbid"}],
+                              [{"title":"Cust Name","field":"cust_name"}]]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([[{"dataKey":"distributor_Drop","data":[],"title":"Distributor","field":"dist_id","type":"select"}]]);
             const columns = ref([{field:'dist_dbid',title:'dist_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},

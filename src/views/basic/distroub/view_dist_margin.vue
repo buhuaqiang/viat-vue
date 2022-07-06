@@ -31,7 +31,7 @@
             });
             const editFormFields = ref({"dist_id":"","margin_value":"","channel":"","margin_value_type":"","start_date":"","end_date":"","custs":[],"prods":[],"prod_id":"","cust_id":"","prod_dbid":"","cust_dbid":"","status":""});
             const editFormOptions = ref([[{"dataKey":"distributor_Drop","data":[],"title":"Distributor","required":true,"field":"dist_id","type":"select"},
-                               {"title":"Margin Rate/Price","required":true,"field":"margin_value","type":"number"}],
+                               {"title":"Margin Rate/Price","required":true,"field":"margin_value","type":"decimal"}],
                               [{"dataKey":"Channel-Distributor2","data":[],"title":"Channel","field":"channel","type":"select"},
                                {"dataKey":"Margin_Type","data":[],"title":"Margin Type","required":true,"field":"margin_value_type","type":"select"}],
                               [{"title":"Start Date","required":true,"field":"start_date","type":"date"},
