@@ -29,10 +29,11 @@
                 url: "/Viat_app_nhi_adjust_m/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"nhi_batch":"","start_date":"","remarks":""});
+            const editFormFields = ref({"nhi_batch":"","start_date":"","remarks":"","nhiadjustm_dbid":""});
             const editFormOptions = ref([[{"title":"Batch No","required":true,"field":"nhi_batch","type":"text"},
                                {"title":"Base Date","field":"start_date","type":"date"},
-                               {"title":"Note","field":"remarks","type":"text"}]]);
+                               {"title":"Note","field":"remarks","type":"text"}],
+                              [{"title":"PKID","required":true,"field":"nhiadjustm_dbid","disabled":true,"type":"text"}]]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([]);
             const columns = ref([{field:'nhiadjustm_dbid',title:'PKID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},

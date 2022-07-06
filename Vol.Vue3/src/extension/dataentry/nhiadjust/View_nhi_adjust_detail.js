@@ -6,21 +6,21 @@
 **后台操作见：http://v2.volcore.xyz/document/netCoreDev
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
-import View_nhi_adjust_ModelBody from "./View_nhi_adjust_ModelBody";
 import View_com_prod_pop_query from "../../basic/prod/View_com_prod_pop_query.vue";
 let extension = {
   components: {
     //查询界面扩展组件
     gridHeader: '',
     gridBody: View_com_prod_pop_query,
-    gridFooter: '',
+    gridFooter: View_com_prod_pop_query,
     //新建、编辑弹出框扩展组件
     modelHeader: '',
-    modelBody: View_nhi_adjust_ModelBody,
+    modelBody: '',
     modelFooter: ''
   },
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
+  // p_id:'',
   data() {
     return {
       searchCustomer: "searchCustomer",
@@ -43,32 +43,21 @@ let extension = {
         //       this.$Message.success('点击了按钮');
         //     }
         //   });
-
-      //示例：设置修改新建、编辑弹出框字段标签的长度
-      this.boxOptions.labelWidth=180;
-      //显示查询全部字段
-      this.setFiexdSearchForm(true);
-      //默認不查詢
-      // this.load=false;
-      //设置查询表单的标签文字宽度
       this.labelWidth=180;
+      //设置编辑表单标签文字宽度
+      this.boxOptions.labelWidth=150;
+      this.setFiexdSearchForm(true);
+      //編輯product彈窗
+      var editform_prod_id = this.getFormOption("prod_id");
 
-      //搜尋product彈窗
-      let search_Prod_id=this.getSearchOption("prod_id");
-      search_Prod_id.extra={
-        render:this.getSearchRender("searchProduct")
+      editform_prod_id.extra = {
+        render:this.getFormRender("editFormSearchProduct")
       }
-      //日期格式化 formatter
-      let start_date=this.getColumnsOption("start_date");
-      start_date.formatter = (row) => {
-        //对单元格的数据格式化处理
-        if (!row.start_date) {
-          return;
-        }
-        return row.start_date.substr(0,10);
-      }
+
+
+
+
     },
-
     getPickName(searchType){
       if(searchType=="searchCustomer"){
         return this.pickCustomerName
@@ -91,16 +80,15 @@ let extension = {
      * @param pageType c-cust,pg-pricegroup
      * @returns {function(*, {row: *, column: *, index: *}): *}
      */
-
-    getSearchRender(searchType) {//
+    getFormRender(searchType) {//
       return (h, { row, column, index }) => {
-        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+        return h("div", { class:"el-input el-input--medium el-input--suffix"}, [
           h(
               "input",
               {
                 class:"el-input__inner",
                 type:"text",
-                style:{width:"70%","background-color":"#f5f7fb"},
+                style:{width:"65%","background-color":"#f5f7fb"},
                 readonly:"true",
                 value:this.getPickName(searchType)
               }
@@ -111,10 +99,14 @@ let extension = {
                 props: {},
                 style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
-                  if(searchType=="searchCustomer"){
+                  if(searchType=="editFormSearchCustomer"){
+                    //this.$refs.modelBody.openCustmModelBody(true,searchType)
+                    debugger
                     this.$refs.gridFooter.openModel(true,searchType);
                   }
-                  if(searchType=="searchProduct"){
+                  if(searchType=="editFormSearchProduct"){
+                    debugger
+                    //this.$refs.modelBody.openPriceGroupModelBody(true,searchType);
                     this.$refs.gridBody.openModel(true,searchType);
                   }
                 }
@@ -128,14 +120,15 @@ let extension = {
                 props: {},
                 style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
-                  if(searchType=="searchCustomer"){
-                    this.searchFormFields["cust_dbid"] = "";
-                    this.searchFormFields["cust_id"] = "";
-                    this.pickCustomerName = "";
-                  }if(searchType=="searchProduct"){
-                    this.searchFormFields["prod_dbid"] = "";
-                    this.searchFormFields["prod_id"] = "";
-                    this.pickProductName = "";
+                  if(searchType=="editFormSearchCustomer"){
+                    this.editFormFields['cust_dbid'] = "";
+                    this.editFormFields['cust_id'] = "";
+                    this.pickEditFormCustomerName="";
+                  }
+                  if(searchType=="editFormSearchProduct"){
+                    this.editFormFields['prod_dbid'] = "";
+                    this.editFormFields['prod_id'] = "";
+                    this.pickEditFormProductName="";
                   }
                 }
               },
@@ -146,6 +139,7 @@ let extension = {
         ]);
       };
     },
+
     //选择產品product Pick 回填字段
     handleProdSelected(flag,rows){
       if(flag=="searchProduct"){
@@ -169,12 +163,14 @@ let extension = {
       })
       return option;
     },
-    getColumnsOption (field) {
+    getFormOption (field) {
       let option;
-      this.columns.forEach(x => {
-        if (x.field == field) {
-          option = x;
-        }
+      this.editFormOptions.forEach(x => {
+        x.forEach(item => {
+          if (item.field == field) {
+            option = item;
+          }
+        })
       })
       return option;
     },
@@ -198,12 +194,17 @@ let extension = {
     },
     updateBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
+      //選擇產品List table1
+      // let table1RowData = this.$refs.modelBody.table1RowData;
+      // //删除数据回传
+      // let delTable1RowData = this.$refs.modelBody.delTable1RowData;
       return true;
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
+
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
       //(1)判断是编辑还是新建操作： this.currentAction=='Add';
@@ -212,8 +213,19 @@ let extension = {
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
       debugger
-      let testm = this.editFormFields.nhiadjustm_dbid;
-      this.$refs.modelBody.modelOpen();
+      let prodDbid = this.getFormOption('prod_dbid');
+      let nhiadjustm = this.getFormOption('nhiadjustm_dbid');
+      prodDbid.hidden=true;
+      nhiadjustm.hidden=true;
+      // input.el-input__inner=this.pickEditFormProductName;
+      // prodDbid.
+      let $parent;
+      //获取生成页面viewgrid的对象
+      this.editFormFields.nhiadjustm_dbid=this.$store.getters.data().nhiadjustm_dbid;
+
+
+      // alert(id)
+
     }
   }
 };

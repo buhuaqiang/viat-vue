@@ -345,6 +345,14 @@ let viewgird = [
         path: '/View_full_allowance_main',
         name: 'View_full_allowance_main',
         component: () => import('@/views/dataentry/fullallowance/View_full_allowance_main.vue')
+    }    ,{
+        path: '/View_full_allowance_reverse',
+        name: 'View_full_allowance_reverse',
+        component: () => import('@/views/dataentry/fullallowance/View_full_allowance_reverse.vue')
+    }    ,{
+        path: '/View_nhi_adjust_detail',
+        name: 'View_nhi_adjust_detail',
+        component: () => import('@/views/dataentry/nhiadjust/View_nhi_adjust_detail.vue')
     }]
 
 export default viewgird
