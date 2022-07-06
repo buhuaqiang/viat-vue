@@ -43,7 +43,7 @@ let extension = {
         //       this.$Message.success('点击了按钮');
         //     }
         //   });
-      this.buttons.splice(2, 0, {
+      this.buttons.splice(5, 0, {
         name: "Import New NHIP",
         icon: 'md-refresh',
         type: 'info',
@@ -52,7 +52,7 @@ let extension = {
           this.$Message.info("Import New NHIP");
         }
       })
-      this.buttons.splice(2, 0, {
+      this.buttons.splice(5, 0, {
         name: "Import New Price",
         icon: 'md-refresh',
         type: 'info',
@@ -60,7 +60,7 @@ let extension = {
           this.$Message.info("Import New Price");
         }
       })
-      this.buttons.splice(2, 0, {
+      this.buttons.splice(5, 0, {
         name: "Import New Price",
         icon: 'md-refresh',
         type: 'info',
@@ -68,7 +68,7 @@ let extension = {
           this.$Message.info("Import New Price");
         }
       })
-      this.buttons.splice(2, 0, {
+      this.buttons.splice(5, 0, {
         name: "Export Draft Price",
         icon: 'md-refresh',
         type: 'info',
@@ -76,7 +76,7 @@ let extension = {
           this.$Message.info("Export Draft Price");
         }
       })
-      this.buttons.splice(2, 0, {
+      this.buttons.splice(5, 0, {
         name: "Finalize",
         icon: 'md-refresh',
         type: 'info',
@@ -84,7 +84,7 @@ let extension = {
           this.$Message.info("Finalize");
         }
       })
-      this.buttons.splice(2, 0, {
+      this.buttons.splice(5, 0, {
         name: "Delete Temp Price",
         icon: 'md-refresh',
         type: 'info',
@@ -92,7 +92,7 @@ let extension = {
           this.$Message.info("Delete Temp Price");
         }
       })
-      this.buttons.splice(2, 0, {
+      this.buttons.splice(5, 0, {
         name: "Check",
         icon: 'md-refresh',
         type: 'info',
