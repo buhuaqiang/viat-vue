@@ -6,7 +6,8 @@
 **后台操作见：http://v2.volcore.xyz/document/netCoreDev
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
-
+import customers from "@/extension/basic/cust/Viat_com_custModelBody"
+import prodPop from "@/extension/basic/prod/View_com_prod_pop_query.vue"
 let extension = {
   components: {
     //查询界面扩展组件
@@ -14,9 +15,9 @@ let extension = {
     //gridBody: '',
     //gridFooter: '',
     //新建、编辑弹出框扩展组件
-    modelHeader: '',
-    modelBody: '',
-    modelFooter: ''
+    modelHeader: customers,
+    modelBody: prodPop,
+    modelFooter: '',
   },
   tableAction: "View_full_allowance_reverse", //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
@@ -24,7 +25,14 @@ let extension = {
   extra:"",
   sum1:0,
   sum2:0,
-  methods: {
+    data() {
+        return {
+            editFormSearchCustomer:"editFormSearchCustomer",
+            editFormSearchProd:"editFormSearchProd",
+        };
+    },
+
+    methods: {
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
         //示例：在按钮的最前面添加一个按钮
@@ -42,11 +50,71 @@ let extension = {
       //显示查询全部字段
       //this.setFiexdSearchForm(true);
       this. singleSearch = null;
-      this.extend.extra= {
+        this.boxOptions.width=1200;
+
+
+        //显示查询全部字段
+        this.setFiexdSearchForm(true);
+
+        this.buttons.forEach(x => {
+            if (x.name == "Inquire" || x.name =="Edit") {
+                x.hidden=true
+            }
+        })
+
+
+
+        this.extend.extra= {
         render:this.getSUMRender("")
       }
       this.extend.sum1=10000;
       this.extend.sum2=20000;
+
+        //编辑页面
+        let editform_cust_id=this.getFormOption("cust_id");
+        editform_cust_id.extra = {
+            render:this.getFormRender("editFormSearchCustomer")
+        }
+        editform_cust_id.onKeyPress=($event)=>{
+            if($event.keyCode == 13){
+                let  cust_id = this.editFormFields['cust_id']
+                if(cust_id) {
+                    this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+                        if(reslut !=null){
+                            this.editFormFields['cust_dbid'] =reslut.cust_dbid;
+                            this.editFormFields['cust_id'] =reslut.cust_id ;
+                            this.pickEditFormCustomerName=reslut.cust_name;
+                            return;
+                        }else{
+                            this.$message.error("Customer Id Is Not Exists.");
+                            return;
+                        }
+                    })
+                }
+            }
+        }
+        let editform_prod_id=this.getFormOption("prod_id");
+        editform_prod_id.extra = {
+            render:this.getFormRender("editFormSearchProd")
+        }
+        editform_prod_id.onKeyPress=($event)=>{
+            if($event.keyCode == 13){
+                let  prod_id = this.editFormFields['prod_id']
+                if(prod_id) {
+                    this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+                        if(reslut !=null){
+                            this.editFormFields['prod_dbid'] =reslut.prod_dbid;
+                            this.editFormFields['prod_id'] =reslut.prod_id ;
+                            this.pickEditFormProductName=reslut.prod_ename;
+                            return;
+                        }else{
+                            this.$message.error("product Id Is Not Exists.");
+                            return;
+                        }
+                    })
+                }
+            }
+        }
 
     },
 
@@ -87,12 +155,106 @@ let extension = {
                           value:this.extend.sum2
                       }
                   ),
-
-
-
               ]);
           };
+
+
       },
+
+        /**
+         *
+         * @param fieldName綁定欄位
+         * @param formType 表單類型f-form表單,s-查詢表單
+         * @param pageType c-cust,pg-pricegroup
+         * @returns {function(*, {row: *, column: *, index: *}): *}
+         */
+    getFormRender(searchType) {//
+        return (h, { row, column, index }) => {
+            return h("div", { class:"el-input el-input--medium el-input--suffix"}, [
+                h(
+                    "input",
+                    {
+                        class:"el-input__inner",
+                        type:"text",
+                        style:{width:"65%","background-color":"#f5f7fb"},
+                        readonly:"true",
+                        value:this.getPickName(searchType)
+                    }
+                ),
+                h(
+                    "a",
+                    {
+                        props: {},
+                        style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                        onClick: (e) => {
+                            if(searchType=="editFormSearchCustomer"){
+                                this.$refs.modelHeader.openModel(true,searchType);
+                            }
+                            if(searchType=="editFormSearchProd"){
+                                //this.$refs.modelBody.openPriceGroupModelBody(true,searchType);
+                                this.$refs.modelBody.openModel(true,searchType);
+                            }
+                        }
+                    },
+                    [h("i",{class:"el-icon-zoom-in"})],
+                    "Pick"
+                ),
+                h(
+                    "a",
+                    {
+                        props: {},
+                        style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                        onClick: (e) => {
+                            if(searchType=="editFormSearchCustomer"){
+                                this.editFormFields['cust_dbid'] = "";
+                                this.editFormFields['cust_id'] = "";
+                                this.pickEditFormCustomerName="";
+                            }
+                            if(searchType=="editFormSearchProd"){
+                                this.editFormFields['prod_dbid'] = "";
+                                this.editFormFields['prod_id'] = "";
+                                this.pickEditFormProductName="";
+                            }
+                        }
+                    },
+                    [h("i",{class:"el-icon-zoom-out"})],
+                    "Clean"
+                ),
+
+            ]);
+        };
+    },
+    getPickName(searchType){
+        if(searchType=="editFormSearchCustomer"){
+            return this.pickEditFormCustomerName
+        }else if(searchType=="editFormSearchProd"){
+            return this.pickEditFormProductName
+        }
+
+    },
+    //选择客户Pick 回填字段
+    handleCustomerSelected(flag,rows){
+            this.editFormFields["cust_dbid"] = rows[0].cust_dbid;
+            this.editFormFields["cust_id"] =rows[0].cust_id;
+            this.pickEditFormCustomerName=rows[0].cust_name;
+    },
+    handleProdSelected(flag,rows){
+        this.editFormFields["prod_dbid"] = rows[0].prod_dbid;
+        this.editFormFields["prod_id"] =rows[0].prod_id;
+        this.pickEditFormProductName=rows[0].prod_ename;
+    },
+    getFormOption (field) {
+        let option;
+        this.editFormOptions.forEach(x => {
+            x.forEach(item => {
+                if (item.field == field) {
+                    option = item;
+                }
+            })
+        })
+        return option;
+    },
+
     onInited() {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作

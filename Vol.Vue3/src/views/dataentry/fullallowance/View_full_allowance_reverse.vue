@@ -27,13 +27,10 @@
                 sortName: "created_date"
             });
             const editFormFields = ref({"cust_id":"","prod_id":"","trans_date":"","invoice_no":"","qty":"","amount":"","remarks":""});
-            const editFormOptions = ref([[{"title":"Customer ID","field":"cust_id"}],
-                              [{"title":"Product ID","field":"prod_id"},
-                               {"title":"TransDate","required":true,"field":"trans_date"}],
-                              [{"title":"Invoice No","field":"invoice_no"}],
-                              [{"title":"Qty","field":"qty","type":"decimal"}],
-                              [{"title":"Amount","field":"amount","type":"decimal"}],
-                              [{"title":"Remarks","field":"remarks"}]]);
+            const editFormOptions = ref([[{"title":"Customer ID","field":"cust_id","colSize":6},{"title":"TransDate","required":true,type:'date',"field":"trans_date","colSize":6}],
+                              [{"title":"Product ID","field":"prod_id"},{"title":"Invoice No","field":"invoice_no"}],
+                              [{"title":"Qty","field":"qty","type":"decimal"},{"title":"Reverse","field":"reverse","type":"decimal"}],
+                              [{"title":"Amount","field":"amount","type":"decimal"},{"title":"Remarks","field":"remarks"}]]);
             //const searchFormFields = ref({});
             //const searchFormOptions = ref([]);
             const columns = ref([{field:'cust_id',title:'Customer ID',type:'string',width:130,align:'left',sort:true},
