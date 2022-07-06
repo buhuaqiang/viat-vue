@@ -22,6 +22,14 @@ let extension = {
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
    Summary: '',
+  data() {
+    return {
+      searchCustomer: "searchCustomer",
+      searchProduct:"searchProduct",
+      editFormSearchCustomer: "editFormSearchCustomer",
+      editFormSearchProduct:"editFormSearchProduct",
+    }
+  },
   methods: {
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
@@ -56,76 +64,96 @@ let extension = {
       }
 
       //查詢選擇
-      let cust_dbidname=this.getSearchOption("cust_dbidname");
-      cust_dbidname.extra={
-        render:this.getSearchRender("cust_dbid","s","c")
+      let searchCust_Id=this.getSearchOption("cust_id");
+      searchCust_Id.extra={
+        render:this.getSearchRender("searchCustomer")
       }
       //查詢條件快捷回填
-      cust_dbidname.onKeyPress=($event)=>{
+      searchCust_Id.onKeyPress=($event)=>{
         if($event.keyCode == 13){
-          let  cust_id = this.searchFormFields['cust_dbidname']
+          let  cust_id = this.searchFormFields['cust_id']
           if(cust_id) {
-            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
-              console.log(reslut)
-              this.searchFormFields['cust_dbid'] =reslut.cust_dbid;
-              this.searchFormFields['cust_dbidname'] =reslut.cust_id + " " + reslut.cust_name;
-              return;
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.searchFormFields['cust_dbid'] =reslut.cust_dbid;
+                this.searchFormFields['cust_id'] =reslut.cust_id ;
+                this.pickCustomerName=reslut.cust_name;
+                return;
+              }else{
+                this.$message.error("Customer Id Is Not Exists.");
+                return;
+              }
             })
           }
         }
       }
 
-      let prod_dbidname=this.getSearchOption("prod_dbidname");
-      prod_dbidname.extra={
-        render:this.getSearchRender("prod_dbid","s","p")
+      let searchProd_id=this.getSearchOption("prod_id");
+      searchProd_id.extra={
+        render:this.getSearchRender("searchProduct")
       }
       //查詢條件快捷回填
-      prod_dbidname.onKeyPress=($event)=>{
-        if($event.keyCode == 13){
-          let  prod_id = this.searchFormFields['prod_dbidname']
-          if(prod_id) {
-            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
-              console.log(reslut)
-              this.searchFormFields['prod_dbid'] =reslut.prod_dbid;
-              this.searchFormFields['prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
-              return;
-            })
+      searchProd_id.onKeyPress=($event)=>{
+          if($event.keyCode == 13){
+            let  prod_id = this.searchFormFields['prod_id']
+            if(prod_id) {
+              this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+                if(reslut !=null){
+                  this.searchFormFields['prod_dbid'] =reslut.prod_dbid;
+                  this.searchFormFields['prod_id'] =reslut.prod_id ;
+                  this.pickProductName=reslut.prod_ename;
+                  return;
+                }else{
+                  this.$message.error("product Id Is Not Exists.");
+                  return;
+                }
+              })
+            }
           }
-        }
       }
       //編輯選擇
-      let edit_cust_dbidname=this.getEditOption("cust_dbidname");
-      edit_cust_dbidname.extra = {
-        render:this.getSearchRender("cust_dbid","f","c")
+      let edit_cust_id=this.getEditOption("cust_id");
+      edit_cust_id.extra = {
+        render:this.getSearchRender("editFormSearchCustomer")
       }
       //快捷回填
-      edit_cust_dbidname.onKeyPress=($event)=>{
+      edit_cust_id.onKeyPress=($event)=>{
         if($event.keyCode == 13){
-          let  cust_id = this.editFormFields['cust_dbidname']
+          let  cust_id = this.editFormFields['cust_id']
           if(cust_id) {
-            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
-              console.log(reslut)
-              this.editFormFields['cust_dbid'] =reslut.cust_dbid;
-              this.editFormFields['cust_dbidname'] =reslut.cust_id + " " + reslut.cust_name;
-              return;
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.editFormFields['cust_dbid'] =reslut.cust_dbid;
+                this.editFormFields['cust_id'] =reslut.cust_id ;
+                this.pickEditFormCustomerName=reslut.cust_name;
+                return;
+              }else{
+                this.$message.error("Customer Id Is Not Exists.");
+                return;
+              }
             })
           }
         }
       }
-      let edit_prod_dbidname=this.getEditOption("prod_dbidname");
-      edit_prod_dbidname.extra = {
-        render:this.getSearchRender("prod_dbid","f","p")
+      let edit_prod_id=this.getEditOption("prod_id");
+      edit_prod_id.extra = {
+        render:this.getSearchRender("editFormSearchProduct")
       }
       //快捷回填
-      edit_prod_dbidname.onKeyPress=($event)=>{
+      edit_prod_id.onKeyPress=($event)=>{
         if($event.keyCode == 13){
-          let  prod_id = this.editFormFields['prod_dbidname']
+          let  prod_id = this.searchFormFields['prod_id']
           if(prod_id) {
-            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
-              console.log(reslut)
-              this.editFormFields['prod_dbid'] =reslut.prod_dbid;
-              this.editFormFields['prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
-              return;
+            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.editFormFields['prod_dbid'] =reslut.prod_dbid;
+                this.editFormFields['prod_id'] =reslut.prod_id ;
+                this.pickEditFormProductName=reslut.prod_ename;
+                return;
+              }else{
+                this.$message.error("product Id Is Not Exists.");
+                return;
+              }
             })
           }
         }
@@ -190,64 +218,112 @@ let extension = {
      * @param pageType c-cust,p-prod
      * @returns {function(*, {row: *, column: *, index: *}): *}
      */
-    getSearchRender(fieldName,formType,pageType) {//
+    getSearchRender(searchType) {//
       return (h, { row, column, index }) => {
-        return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
           h(
-              "a",
+              "input",
               {
-                style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
-                onClick: (e) => {
-                  if(formType=='s'){//查詢頁面
-                    if(pageType=='c'){
-                      this.$refs.gridFooter.openDemo(fieldName,formType);
-                    }
-                    if(pageType=='p'){
-                      this.$refs.gridBody.openDemo(fieldName,formType);
-                    }
-                  }
-                  if(formType=='f'){//編輯頁面
-                    if(pageType=='c'){
-                      this.$refs.modelFooter.openDemo(fieldName,formType);
-                    }
-                    if(pageType=='p'){
-                      this.$refs.modelBody.openDemo(fieldName,formType);
-                    }
-                  }
-
-                }
-              },
-              [h("i",{class:"el-icon-zoom-in"})],
-              "選擇"
+                class:"el-input__inner",
+                type:"text",
+                style:{width:"70%","background-color":"#f5f7fb"},
+                readonly:"true",
+                value:this.getPickName(searchType)
+              }
           ),
           h(
               "a",
               {
-                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+                props: {},
+                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
-                  if(formType=='s') {//查詢頁面
-                    if(pageType=='c'){
-                      this.$refs.gridFooter.clearData(fieldName,formType);
-                    }if(pageType=='p'){
-                      this.$refs.gridBody.clearData(fieldName,formType);
-                    }
+                  if(searchType=="searchCustomer"){
+                    this.$refs.gridFooter.openModel(true,searchType);
                   }
-                  if(formType=='f'){//編輯頁面
-                    if(pageType=='c'){
-                      this.$refs.modelFooter.clearData(fieldName,formType);
-                    }if(pageType=='p'){
-                      this.$refs.modelBody.clearData(fieldName,formType);
-                    }
+                  if(searchType=="searchProduct"){
+                    this.$refs.gridBody.openModel(true,searchType);
                   }
-
+                  if(searchType=="editFormSearchCustomer"){
+                    this.$refs.modelFooter.openModel(true,searchType);
+                  }
+                  if(searchType=="editFormSearchProduct"){
+                    this.$refs.modelBody.openModel(true,searchType);
+                  }
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "Pick"
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                onClick: (e) => {
+                  if(searchType=="searchCustomer"){
+                    this.searchFormFields["cust_dbid"] = "";
+                    this.searchFormFields["cust_id"] = "";
+                    this.pickCustomerName = "";
+                  }if(searchType=="searchProduct"){
+                    this.searchFormFields["prod_dbid"] = "";
+                    this.searchFormFields["prod_id"] = "";
+                    this.pickProductName = "";
+                  }
+                  if(searchType=="editFormSearchCustomer"){
+                    this.editFormFields["cust_dbid"] = "";
+                    this.editFormFields["cust_id"] = "";
+                    this.pickEditFormCustomerName = "";
+                  }if(searchType=="editFormSearchProduct"){
+                    this.editFormFields["prod_dbid"] = "";
+                    this.editFormFields["prod_id"] = "";
+                    this.pickEditFormProductName = "";
+                  }
                 }
               },
               [h("i",{class:"el-icon-zoom-out"})],
-              "清除"
+              "Clean"
           ),
 
         ]);
       };
+    },
+    getPickName(searchType){
+      if(searchType=="searchCustomer"){
+        return this.pickCustomerName
+      }else if(searchType=="searchProduct"){
+        return this.pickProductName
+      }else if(searchType=="editFormSearchCustomer"){
+        return this.pickEditFormCustomerName
+      }else if(searchType=="editFormSearchProduct"){
+        return this.pickEditFormProductName
+      }
+    },
+
+    //选择客户Pick 回填字段
+    handleCustomerSelected(flag,rows){
+      if(flag=="searchCustomer"){
+        this.searchFormFields["cust_dbid"] = rows[0].cust_dbid;
+        this.searchFormFields["cust_id"] =rows[0].cust_id;
+        this.pickCustomerName=rows[0].cust_name;
+      }else{
+        this.editFormFields["cust_dbid"] = rows[0].cust_dbid;
+        this.editFormFields["cust_id"] =rows[0].cust_id;
+        this.pickEditFormCustomerName=rows[0].cust_name;
+      }
+    },
+    handleProdSelected(flag,rows){
+      if(flag=="searchProduct"){
+        //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的
+        this.searchFormFields["prod_dbid"] = rows[0].prod_dbid;
+        this.searchFormFields["prod_id"] =rows[0].prod_id;
+        this.pickProductName=rows[0].prod_ename;
+      }else{
+        this.editFormFields["prod_dbid"] = rows[0].prod_dbid;
+        this.editFormFields["prod_id"] =rows[0].prod_id;
+        this.pickEditFormProductName=rows[0].prod_ename;
+      }
+
+
     },
 
     searchBefore(param) {
@@ -281,8 +357,10 @@ let extension = {
       //看不懂就把输出看：console.log(this.editFormOptions)
 
       this.editFormFields.hpcont_dbid = this.$route.query.hpcont_dbid;
-      this.editFormFields.cust_dbidname = this.editFormFields.cust_id+" "+this.editFormFields.cust_name;
-      this.editFormFields.prod_dbidname = this.editFormFields.prod_id+" "+this.editFormFields.prod_ename;
+      this.pickEditFormCustomerName=this.editFormFields.cust_name;
+      this.pickEditFormProductName=this.editFormFields.prod_ename;
+     // this.editFormFields.cust_dbidname = this.editFormFields.cust_id+" "+this.editFormFields.cust_name;
+      //this.editFormFields.prod_dbidname = this.editFormFields.prod_id+" "+this.editFormFields.prod_ename;
     }
   }
 };
