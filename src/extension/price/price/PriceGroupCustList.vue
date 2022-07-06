@@ -8,7 +8,8 @@
       <vol-table ref="tableList"
                  :loadKey="true"
                  :columns="columns"
-                 :pagination-hide="true"
+                 :pagination="pagination"
+                 :pagination-hide="false"
                  :height="210"
                  :defaultLoadPage="false"
                  @loadBefore="loadBefore"
@@ -35,10 +36,11 @@ export default {
   data () {
     return {
       tableData: [],
+      pagination: {}, //分页配置，见voltable组件api
       //从生成的代码sellorder2.vue里面把明细配置复制过来就能用
       columns:  [
         {field:'cust_id',title:'cust_id',type:'string',width:110,align:'left',sort:true},
-        {field:'cust_name',title:'trans_date',type:'datetime',width:150,require:true,align:'left',sort:true},
+        {field:'cust_name',title:'cust_name',type:'string',width:150,require:true,align:'left',sort:true},
         {field:'status',title:'status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'},
         {field:'custGroupStatus',title:'custGroupStatus',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'}
         ]

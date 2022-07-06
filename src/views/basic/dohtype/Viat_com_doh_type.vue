@@ -34,19 +34,19 @@
                                {"title":"健保類別","required":true,"field":"doh_type"}],
                               [{"title":"健保局類別英文名稱","field":"doh_type_ename"},
                                {"title":"報表顯示類別","field":"report_type"}],
-                              [{"dataKey":"Status2","data":[],"title":"是否有效,True:生效;False:失效","field":"status","type":"select"},
+                              [{"dataKey":"Status_Effect","data":[],"title":"是否有效","field":"status","type":"select"},
                                {"title":"健保類別對照碼","field":"doh_map_type"}]]);
             const searchFormFields = ref({"doh_type":"","doh_type_name":"","doh_type_ename":"","status":""});
-            const searchFormOptions = ref([[{"title":"健保類別","field":"doh_type","type":"like"},{"title":"健保局類別名稱","field":"doh_type_name","type":"like"}],[{"title":"健保局類別英文名稱","field":"doh_type_ename","type":"like"},{"dataKey":"Status2","data":[],"title":"是否有效,True:生效;False:失效","field":"status","type":"select"}]]);
+            const searchFormOptions = ref([[{"title":"健保類別","field":"doh_type","type":"like"},{"title":"健保局類別名稱","field":"doh_type_name","type":"like"}],[{"title":"健保局類別英文名稱","field":"doh_type_ename","type":"like"},{"dataKey":"Status_Effect","data":[],"title":"是否有效","field":"status","type":"select"}]]);
             const columns = ref([{field:'doh_dbid',title:'ID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
                        {field:'dbid',title:'ID',type:'int',width:110,hidden:true,require:true,align:'left'},
-                       {field:'entity',title:'公司別,舊版SUN_DB',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'division',title:'所屬事業單位,01:PH;03:AH;05:CH;06:NU',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'entity',title:'公司別',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'division',title:'所屬事業單位',type:'string',width:110,hidden:true,align:'left'},
                        {field:'doh_type',title:'健保類別',type:'string',link:true,width:110,require:true,align:'left',sort:true},
                        {field:'doh_type_name',title:'健保局類別名稱',type:'string',width:110,align:'left'},
                        {field:'doh_type_ename',title:'健保局類別英文名稱',type:'string',width:110,align:'left'},
                        {field:'report_type',title:'報表顯示類別',type:'string',width:110,align:'left'},
-                       {field:'status',title:'是否有效,True:生效;False:失效',type:'string',bind:{ key:'Status2',data:[]},width:110,align:'left'},
+                       {field:'status',title:'是否有效',type:'string',bind:{ key:'Status_Effect',data:[]},width:110,align:'left'},
                        {field:'doh_map_type',title:'健保類別對照碼',type:'string',width:110,align:'left'},
                        {field:'created_user',title:'建立用戶',type:'int',width:110,hidden:true,align:'left'},
                        {field:'created_username',title:'created_username',type:'string',width:110,align:'left'},

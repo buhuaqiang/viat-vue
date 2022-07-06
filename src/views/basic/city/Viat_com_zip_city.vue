@@ -34,14 +34,14 @@
                                {"title":"城市名稱","required":true,"field":"city_name"}],
                               [{"title":"地區編碼","required":true,"field":"zip_id","type":"number"},
                                {"title":"地區名稱","required":true,"field":"zip_name"}],
-                              [{"dataKey":"Status2","data":[],"title":"是否有效","required":true,"field":"status","type":"select"}]]);
+                              [{"dataKey":"Status_Effect","data":[],"title":"是否有效","required":true,"field":"status","type":"select"}]]);
             const searchFormFields = ref({"zip_name":"","city_name":""});
             const searchFormOptions = ref([[{"title":"地區名稱","field":"zip_name","type":"like"},{"title":"城市名稱","field":"city_name","type":"like"}]]);
             const columns = ref([{field:'zip_id',title:'地區編碼',type:'string',width:110,require:true,align:'left',sort:true},
                        {field:'zip_name',title:'地區名稱',type:'string',link:true,width:110,require:true,align:'left'},
                        {field:'city_id',title:'城市代碼',type:'string',width:110,require:true,align:'left'},
                        {field:'city_name',title:'城市名稱',type:'string',width:110,require:true,align:'left'},
-                       {field:'status',title:'是否有效',type:'string',bind:{ key:'Status2',data:[]},width:110,require:true,align:'left'},
+                       {field:'status',title:'是否有效',type:'string',bind:{ key:'Status_Effect',data:[]},width:110,require:true,align:'left'},
                        {field:'created_user',title:'建立用戶',type:'int',width:80,hidden:true,align:'left'},
                        {field:'created_username',title:'created_username',type:'string',width:110,align:'left'},
                        {field:'created_date',title:'建立時間',type:'datetime',width:150,align:'left',sort:true},
