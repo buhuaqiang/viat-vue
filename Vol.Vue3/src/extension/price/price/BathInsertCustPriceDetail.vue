@@ -369,12 +369,22 @@ export default {
         this.$message.error("Net price can't be empty.");
         return false;
       }
+
       if(!this.formModel.start_date<=this.formModel.end_date){
         this.$message.error("start date should <= end date");
         return false;
       }
-      let message="";
+      let message1="";
+      let grossPass=true;
+      if(this.grossFlag){
+        //如果是通路商客戶,還需要判斷 gross prices  小於 net price,若小於需要確認提示框
+        if(this.formModel.gross_price<this.formModel.net_price){
+          message1="Gross Price < Net Price,Do you want to add?"
+          grossPass=false;
+        }
+      }
       let pass=true;
+      let message="";
       if(this.formModel.invoice_price<this.formModel.net_price){
         message="Invoice Price < Net Price,";
         if(this.formModel.invoice_price>this.formModel.nhi_price){
@@ -394,17 +404,45 @@ export default {
 
         }
       }
-      if(pass){
+      if(grossPass && pass){
         this.checkData();
       }else{
-        this.$confirm(message, "Confirm", {
-          confirmButtonText: "OK",
-          cancelButtonText: "Cancel",
-          type: "warning",
-          center: true,
-        }).then(() => {
-          this.checkData();
-        });
+        if(!grossPass){
+          this.$confirm(message1, "Confirm", {
+            confirmButtonText: "OK",
+            cancelButtonText: "Cancel",
+            type: "warning",
+            center: true,
+          }).then(() => {
+            if(!pass){
+              this.$confirm(message, "Confirm", {
+                confirmButtonText: "OK",
+                cancelButtonText: "Cancel",
+                type: "warning",
+                center: true,
+              }).then(() => {
+                this.checkData();
+              });
+            }else{
+              this.checkData();
+            }
+
+          });
+        }else{
+          if(!pass){
+            this.$confirm(message, "Confirm", {
+              confirmButtonText: "OK",
+              cancelButtonText: "Cancel",
+              type: "warning",
+              center: true,
+            }).then(() => {
+              this.checkData();
+            });
+          }else{
+            this.checkData();
+          }
+        }
+
       }
     },
 

@@ -29,12 +29,16 @@
           <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="invalidModel.cust_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item label="Product:" style="width: 40%">
+        <el-form-item v-show="channelShowFlag" label="Group type:" style="width: 40%">
+          <el-select v-model="invalidModel.groupType"></el-select>
+        </el-form-item>
+        <el-form-item v-show="prodShowFlag" label="Product:" style="width: 40%">
           <el-input v-model="invalidModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress"></el-input>
           <el-input v-model="invalidModel.prod_ename" style="width:200px;padding-left: 2px"  :disabled="true"></el-input>
           <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="invalidModel.prod_dbid"  type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
+
         <el-form-item label="Invalid Date:" style="width: 30%">
           <el-date-picker
                   suffix-icon="el-icon-date"
@@ -48,7 +52,7 @@
         </el-form-item>
       </el-form>
       <el-button
-              v-show="groupShowFlag || custShowFlag"
+              v-show="groupShowFlag || custShowFlag || channelShowFlag"
         type="primary"
         style="margin-left:10px"
         size="medium"
@@ -64,7 +68,7 @@
       >Invalid</el-button
       >
       <el-button
-              v-show="groupShowFlag || custShowFlag"
+              v-show="groupShowFlag || custShowFlag || channelShowFlag"
               type="warning"
               icon="el-icon-document-checked"
               @click="addAll()"
@@ -140,6 +144,8 @@ export default {
       },
       groupShowFlag:true,
       custShowFlag:false,
+      prodShowFlag:true,
+      channelShowFlag:false,
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
       group_id:"",
       cust_id:"",
@@ -296,22 +302,42 @@ export default {
 
     search() {
       //点击搜索
-      if(this.groupShowFlag){
-        this.$refs.mytable.load();
+      if (this.custShowFlag ) {
+        if(this.invalidModel.cust_dbid){
+            this.$refs.table2.load();
+        }else{
+           this.$message.error("Please input Customer.");
+
+        }
+
       }
-      if(this.custShowFlag){
-        this.$refs.table2.load();
+      if (this.groupShowFlag  ) {
+        if(this.invalidModel.pricegroup_dbid){
+          this.$refs.mytable.load();
+        }else{
+          this.$message.error("Please input Group.");
+          return  false
+        }
+
       }
+
     },
 
     hideType(val){
       if(val==0){
         this.custShowFlag=false;
         this.groupShowFlag=true;
+        this.channelShowFlag=false
       }else if (val==1){
         this.custShowFlag=true;
         this.groupShowFlag=false;
+        this.channelShowFlag=false
       }else if (val==2){
+        this.custShowFlag=false;
+        this.groupShowFlag=false;
+        this.channelShowFlag=false
+      }else if(val==3){
+        this.channelShowFlag=true
         this.custShowFlag=false;
         this.groupShowFlag=false;
       }
@@ -327,6 +353,8 @@ export default {
       this.invalidModel.prod_ename="";
       this.invalidModel.prod_dbid="";
       this.invalidModel.prod_id="";
+
+      this.invalidModel.groupType=''
 
     },
     addRow() {
