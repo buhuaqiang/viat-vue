@@ -30,17 +30,17 @@
                 sortName: "created_date"
             });
             const editFormFields = ref({"cust_dbidname":"","cust_dbid":"","cust_id":"","cust_name":"","prod_dbidname":"","prod_dbid":"","prod_id":"","prod_ename":"","hpcont_dbid":"","percent":"","status":""});
-            const editFormOptions = ref([[{"title":"Cust ID","required":true,"field":"cust_dbidname"},{"title":"cust_dbid","field":"cust_dbid","hidden":true},
-                               {"title":"Prod ID","required":true,"field":"prod_dbidname"},{"title":"prod_dbid","field":"prod_dbid","hidden":true}],
-                            [{"title":"cust_id","field":"cust_id","hidden":true},{"title":"cust_name","field":"cust_name","hidden":true}],
-                            [{"title":"prod_id","field":"prod_id","hidden":true},{"title":"prod_ename","field":"prod_ename","hidden":true}],
+            const editFormOptions = ref([[{"title":"Cust ID","required":true,"field":"cust_id"},{"title":"cust_dbid","field":"cust_dbid","hidden":true},
+                               {"title":"Prod ID","required":true,"field":"prod_id"},{"title":"prod_dbid","field":"prod_dbid","hidden":true}],
+                            [{"title":"cust_name","field":"cust_name","hidden":true}],
+                            [{"title":"prod_ename","field":"prod_ename","hidden":true}],
                             [{"title":"hpcont_dbid","field":"hpcont_dbid","hidden":true}],
                             [{"title":"Sharing %","field":"percent","type":"decimal"},
                                {"dataKey":"Status2","data":[],"title":"Status","field":"status","type":"select"}]]);
             const searchFormFields = ref({"cust_dbidname":"","cust_dbid":"","prod_dbidname":"","prod_dbid":"","contract_no":"","Summary":""});
             const searchFormOptions = ref([
-                [{"title":"Contract No","field":"contract_no","disabled":true},{"title":"Cust ID","field":"cust_dbidname"},{"title":"","field":"cust_dbid","hidden":true}],
-                [{"title":"Prod ID","field":"prod_dbidname"},{"title":"","field":"prod_dbid","hidden":true},{"title":"Summary","field":"Summary"}]
+                [{"title":"Contract No","field":"contract_no","disabled":true},{"title":"Cust ID","field":"cust_id"},{"title":"","field":"cust_dbid","hidden":true}],
+                [{"title":"Prod ID","field":"prod_id"},{"title":"","field":"prod_dbid","hidden":true},{"title":"Summary","field":"Summary"}]
 
             ]);
             const columns = ref([{field:'hpcontshare_dbid',title:'列名hpcontshare_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
