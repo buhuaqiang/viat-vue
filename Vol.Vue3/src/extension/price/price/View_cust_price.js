@@ -258,6 +258,13 @@ let extension = {
     invalidData(){
       this.$refs.gridFooter.openInvalidPage();
     },
+
+    //reset不清理我們自定義的參數值
+    resetSearchFormAfter() {
+      this.pickCustomerName=''
+      this.pickProductName=''
+      this.pickPriceGroupName=''
+    },
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
         //示例：在按钮的最前面添加一个按钮
@@ -333,11 +340,14 @@ let extension = {
               console.log(reslut)
               if(reslut!=null){
                 this.searchFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
-                this.searchFormFields['pricegroup_dbidname'] =reslut.group_id + " " + reslut.group_name;
+                this.searchFormFields['group_id'] =reslut.group_id
+                this.pickPriceGroupName=reslut.group_name;
                 return;
               }else {
                 this.$message.error("Group Id Is Not Exists.");
-                this.searchFormFields['pricegroup_dbidname']=''
+                this.searchFormFields['pricegroup_dbid'] ='';
+                this.searchFormFields['group_id'] =''
+                this.pickPriceGroupName=''
               }
 
             })
@@ -372,8 +382,7 @@ let extension = {
             this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
               if(reslut!==null){
                 this.editFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
-                this.editFormFields['group_id'] =reslut.group_id ;//+ " " + reslut.group_name;
-                this.editFormFields['group_name'] =reslut.group_name
+                this.editFormFields['group_id'] =reslut.group_id ;
                 this.pickEditFormPriceGroupName=reslut.group_name
               }else {
                 this.$message.error("Group Id Is Not Exists.");

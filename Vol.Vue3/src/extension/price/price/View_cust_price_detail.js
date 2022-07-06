@@ -352,6 +352,12 @@ let extension = {
     bathAdd(){
       this.$refs.gridFooter.openBathAddCustDetailPage();
     },
+    //reset不清理我們自定義的參數值
+    resetSearchFormAfter() {
+      this.pickCustomerName=''
+      this.pickProductName=''
+      this.pickPriceGroupName=''
+    },
     onInited() {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作

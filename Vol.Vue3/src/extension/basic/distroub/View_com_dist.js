@@ -48,7 +48,7 @@ let extension = {
       this.labelWidth = 180;
         //示例：设置修改新建、编辑弹出框字段标签的长度
       this.boxOptions.labelWidth = 180;
-      this.setFiexdSearchForm(true);
+      //this.setFiexdSearchForm(true);
       this.load=false;
       //表格设置为单选
       //this.single=true;
