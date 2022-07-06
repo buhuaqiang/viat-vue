@@ -196,6 +196,7 @@ let extension = {
         // this.boxOptions.labelWidth = 150;
 
       this.boxOptions.labelWidth = 180;
+      this.boxOptions.height=520
       //显示查询全部字段
       this.setFiexdSearchForm(true);
       //设置查询表单的标签文字宽度
@@ -349,7 +350,7 @@ let extension = {
       this.$refs.gridFooter.openInvalidPage();
     },
     bathAdd(){
-      this.$refs.gridFooter.openBathAddCustPage();
+      this.$refs.gridFooter.openBathAddCustDetailPage();
     },
     onInited() {
       //框架初始化配置后
@@ -442,11 +443,15 @@ let extension = {
 
         if(row.gross_price){
           this.getFormOption("gross_price").hidden=false;
+          this.getFormOption("gross_price").disabled=true;
+        }else{
+
         }
 
         this.getFormOption("bid_no").disabled=true;
         this.getFormOption("invoice_price").disabled=true;
         this.getFormOption("net_price").disabled=true;
+
         this.getFormOption("min_qty").disabled=true;
         this.getFormOption("cust_id").extra={render: this.getPopShowRender("formCustomer")};
         this.getFormOption("prod_id").extra={render: this.getPopShowRender("editFormProduct")};
@@ -458,6 +463,7 @@ let extension = {
       }else if (this.currentAction==this.const.VIEW){
         if(row.gross_price){
           this.getFormOption("gross_price").hidden=false;
+          this.getFormOption("gross_price").disabled=true;
         }
       }
 
