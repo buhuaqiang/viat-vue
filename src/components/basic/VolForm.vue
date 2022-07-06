@@ -1262,7 +1262,7 @@ export default defineComponent({
 .form-item-extra {
   > *:first-child {
     flex: none;
-    width:40%;
+    width:35%;
     // modify by buhuaqiang  原值   flex: 1;
   }
   display: flex;
