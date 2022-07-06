@@ -28,41 +28,58 @@
         },
         methods: {
 
-            openPriceGroupModelBody(fieldName){
-                this.$refs.PriceGroupModelBody.openDemo(fieldName,"s");
+            openPriceGroupModelBody(searchType){
+                this.$refs.PriceGroupModelBody.openModel(true,"pricegroup_dbid","onSelect");
                 this.$refs.PriceGroupModelBody.signal = true;
             },
-            CustomersModelBody(fieldName){
-                this.$refs.CustomersModelBody.openDemo(fieldName,"s");
+            CustomersModelBody(searchType){
+                this.$refs.CustomersModelBody.openModel(true,"cust_dbid","onSelect");
                 this.$refs.CustomersModelBody.signal = true;
             },
-            prodModelBody(fieldName){
-                this.$refs.prodModelBody.openDemo(fieldName,"s");
+            puProdModelBody(fieldName){
+                this.$refs.prodModelBody.openModel(true,"pu_prod_dbid","onSelect");
+                this.$refs.prodModelBody.signal = true;
+            },
+            fuProdModelBody(fieldName){
+                this.$refs.prodModelBody.openModel(true,"cf_prod_dbid","onSelect");
                 this.$refs.prodModelBody.signal = true;
             },
             onSelectByPriceGroup(fieldName,rows){
                 this.$emit("parentCall", ($parent) => {
                     //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
-                    let row = rows[0];
-                    $parent.searchFormFields[fieldName+'name'] = row.group_id + " " + row.group_name;
-                    $parent.searchFormFields[fieldName] = row.pricegroup_dbid;
+                   // $parent.handlePriceGroupSelected("searchPriceGroup",rows);
+                    $parent.searchFormFields["pricegroup_dbid"] = rows[0].pricegroup_dbid;
+                    $parent.searchFormFields["group_id"] =rows[0].group_id;
+                    $parent.pickPriceGroupName=rows[0].group_name;
                 });
             },
             onSelectByCustomers(fieldName,rows){
                 this.$emit("parentCall", ($parent) => {
                     //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
-                    let row = rows[0];
-                    $parent.searchFormFields[fieldName+'name'] = row.cust_id + " " + row.cust_name;
-                    $parent.searchFormFields[fieldName] = row.cust_dbid;
+                   // $parent.handlePriceGroupSelected("searchPriceGroup",rows);
+                    $parent.searchFormFields["cust_dbid2"] = rows[0].cust_dbid;
+                    $parent.searchFormFields["cust_id"] =rows[0].cust_id;
+                    $parent.pickCustomerName=rows[0].cust_name;
                 });
             },
             onSelectByProdPop(fieldName,rows){
-                this.$emit("parentCall", ($parent) => {
-                    //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
-                    let row = rows[0];
-                    $parent.searchFormFields[fieldName+'name'] = row.prod_id + " " + row.prod_ename;
-                    $parent.searchFormFields[fieldName] = row.prod_dbid;
-                });
+                debugger
+                if(fieldName=='pu_prod_dbid'){
+                    this.$emit("parentCall", ($parent) => {
+                        //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的
+                        $parent.searchFormFields["pu_prod_dbid"] = rows[0].prod_dbid;
+                        $parent.searchFormFields["pu_prod_id"] =rows[0].prod_id;
+                        $parent.pickPuProdName=rows[0].prod_ename;
+                    });
+                }
+                if(fieldName=='cf_prod_dbid'){
+                    this.$emit("parentCall", ($parent) => {
+                        $parent.searchFormFields["cf_prod_dbid"] = rows[0].prod_dbid;
+                        $parent.searchFormFields["cf_prod_id"] =rows[0].prod_id;
+                        $parent.pickFuProdName=rows[0].prod_ename;
+                    });
+                }
+
             },
             clearData(fieldName,pageType){
                 this.$emit("parentCall", ($parent) => {

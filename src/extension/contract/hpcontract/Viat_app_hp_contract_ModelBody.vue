@@ -429,9 +429,12 @@ export default {
     onSelectByPriceGroup(fieldName,rows){
       this.$emit("parentCall", ($parent) => {
         //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
-        let row = rows[0];
+        $parent.editFormFields["pricegroup_dbid"] = rows[0].pricegroup_dbid;
+        $parent.editFormFields["group_id"] =rows[0].group_id;
+        $parent.pickEditFormPriceGroupName=rows[0].group_name;
+       /* let row = rows[0];
         $parent.editFormFields[fieldName+'name'] = row.group_id + " " + row.group_name;
-        $parent.editFormFields['pricegroup_dbid'] = row.pricegroup_dbid;
+        $parent.editFormFields['pricegroup_dbid'] = row.pricegroup_dbid;*/
       });
     },
     //合約產品計算
@@ -482,6 +485,38 @@ export default {
       }
     },
 
+    initCustomerListByGroupDbId(pricegroup_dbid){
+      //ajax根據
+      //返回指定字段
+      this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?pricegroup_dbid="+pricegroup_dbid,{} , "loading").then(reslut => {
+        let _rows = rows.map((row)=>{
+          return{
+            powercont_dbid:this.powercont_dbid,
+            cust_dbid:row.cust_dbid,
+            territory_id:row.territory_id,
+            cust_id:row.cust_id,
+            cust_name:row.cust_name
+          }
+        })
+
+        //this.$refs.table1.rowData.push(..._rows);
+        //push的时候去除已经选择的客户
+        _rows.forEach(x => {
+          let idx =  this.$refs.table1.rowData.some(item => {
+            // 判断项应为获取的变量
+            if(item.cust_dbid == x.cust_dbid) {
+              return true;
+            }
+          })
+          if(!idx){
+            this.$refs.table1.rowData.push(x);
+          }
+        })
+
+        this.table1RowData = this.$refs.table1.rowData;
+      })
+    },
+
    // 主表選擇單一客戶
     openCustmModelBody(fieldName){
       this.$refs.custmModelBody.openDemo(fieldName);
@@ -502,9 +537,10 @@ export default {
       });
     },
     openPriceGroupModelBody(fieldName){
-      this.$refs.PriceGroupModelBody.openDemo(fieldName);
+      this.$refs.PriceGroupModelBody.openModel(true,"pricegroup_dbid","onSelect");
       this.$refs.PriceGroupModelBody.signal = true;
     },
+
     delTable1() {
       let rows = this.$refs.table1.getSelected();
       if (rows.length == 0) {
