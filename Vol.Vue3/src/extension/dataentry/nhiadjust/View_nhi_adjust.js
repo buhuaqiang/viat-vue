@@ -43,6 +43,63 @@ let extension = {
         //       this.$Message.success('点击了按钮');
         //     }
         //   });
+      this.buttons.splice(2, 0, {
+        name: "Import New NHIP",
+        icon: 'md-refresh',
+        type: 'info',
+        // color: '＃1E90FF',
+        onClick: function () {
+          this.$Message.info("Import New NHIP");
+        }
+      })
+      this.buttons.splice(2, 0, {
+        name: "Import New Price",
+        icon: 'md-refresh',
+        type: 'info',
+        onClick: function () {
+          this.$Message.info("Import New Price");
+        }
+      })
+      this.buttons.splice(2, 0, {
+        name: "Import New Price",
+        icon: 'md-refresh',
+        type: 'info',
+        onClick: function () {
+          this.$Message.info("Import New Price");
+        }
+      })
+      this.buttons.splice(2, 0, {
+        name: "Export Draft Price",
+        icon: 'md-refresh',
+        type: 'info',
+        onClick: function () {
+          this.$Message.info("Export Draft Price");
+        }
+      })
+      this.buttons.splice(2, 0, {
+        name: "Finalize",
+        icon: 'md-refresh',
+        type: 'info',
+        onClick: function () {
+          this.$Message.info("Finalize");
+        }
+      })
+      this.buttons.splice(2, 0, {
+        name: "Delete Temp Price",
+        icon: 'md-refresh',
+        type: 'info',
+        onClick: function () {
+          this.$Message.info("Delete Temp Price");
+        }
+      })
+      this.buttons.splice(2, 0, {
+        name: "Check",
+        icon: 'md-refresh',
+        type: 'info',
+        onClick: function () {
+          this.$Message.info("Check");
+        }
+      })
 
       //示例：设置修改新建、编辑弹出框字段标签的长度
       this.boxOptions.labelWidth=180;
