@@ -29,8 +29,9 @@
                 url: "/View_nhi_adjust_detail/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"prod_id":"","nhi_id":"","old_nhi_price":"","new_nhi_price":"","prod_dbid":"","nhiadjustm_dbid":""});
-            const editFormOptions = ref([[{"title":"Product_id","required":true,"field":"prod_id","type":"text"},
+            const editFormFields = ref({"prod_id":"","prod_ename":"","nhi_id":"","old_nhi_price":"","new_nhi_price":"","prod_dbid":"","nhiadjustm_dbid":""});
+            const editFormOptions = ref([[{"title":"Product ID","required":true,"field":"prod_id","type":"text"},
+                               {"title":"Product Name","field":"prod_ename","type":"text"},
                                {"title":"NHI Code","field":"nhi_id","type":"text"}],
                               [{"title":"Old NHI Price","field":"old_nhi_price","type":"text"},
                                {"title":"New NHI Price","field":"new_nhi_price","type":"text"}],
@@ -38,8 +39,8 @@
                               [{"title":"m主鍵","field":"nhiadjustm_dbid","type":"text"}]]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([]);
-            const columns = ref([{field:'prod_id',title:'Product_id',type:'string',width:110,require:true,align:'left',sort:true},
-                       {field:'prod_ename',title:'prod_ename',type:'string',width:110,align:'left'},
+            const columns = ref([{field:'prod_id',title:'Product ID',type:'string',link:true,width:110,require:true,align:'left',sort:true},
+                       {field:'prod_ename',title:'Product Name',type:'string',width:110,align:'left'},
                        {field:'nhi_id',title:'NHI Code',type:'string',width:110,align:'left'},
                        {field:'old_nhi_price',title:'Old NHI Price',type:'decimal',width:110,align:'left'},
                        {field:'new_nhi_price',title:'New NHI Price',type:'decimal',width:110,align:'left'},

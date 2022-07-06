@@ -35,7 +35,7 @@
                               [{"title":"毛利值,Rate or 固定金額","field":"margin_value","type":"text"}],
                               [{"title":"起始日期","field":"start_date","type":"datetime"}],
                               [{"title":"結束日期","field":"end_date","type":"datetime"}],
-                              [{"dataKey":"status-Dist2","data":[],"title":"Y:是,N：否","field":"status","type":"select"}],
+                              [{"dataKey":"Status_YN","data":[],"title":"Y:是,N：否","field":"status","type":"select"}],
                               [{"dataKey":"Channel-Distributor2","data":[],"title":"通路","field":"channel","type":"select"}],
                               [{"title":"客戶代碼","field":"cust_dbid","type":"text"}],
                               [{"title":"產品代碼,舊版ITEM_CODE","field":"prod_dbid","type":"text"}]]);
@@ -55,7 +55,7 @@
                        {field:'start_date',title:'起始日期',type:'datetime',width:110,align:'left',sort:true},
                        {field:'end_date',title:'結束日期',type:'datetime',width:110,align:'left',sort:true},
                        {field:'remarks',title:'備註',type:'string',width:220,align:'left'},
-                       {field:'status',title:'Y:是,N：否',type:'string',bind:{ key:'status-Dist2',data:[]},width:110,align:'left'},
+                       {field:'status',title:'Y:是,N：否',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'},
                        {field:'created_user',title:'建立用戶',type:'int',width:110,align:'left'},
                        {field:'created_username',title:'created_username',type:'string',width:110,align:'left'},
                        {field:'created_client',title:'建立者的委託人',type:'int',width:110,align:'left'},
