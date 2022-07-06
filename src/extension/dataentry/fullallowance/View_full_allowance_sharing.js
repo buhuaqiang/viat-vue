@@ -42,6 +42,14 @@ let extension = {
       //显示查询全部字段
       //this.setFiexdSearchForm(true);
       this.singleSearch = null;
+        //显示查询全部字段
+        this.setFiexdSearchForm(true);
+
+        this.buttons.forEach(x => {
+            if (x.name == "Inquire") {
+                x.hidden=true
+            }
+        })
 
      /* this.extend.extra= {
         render: h => {

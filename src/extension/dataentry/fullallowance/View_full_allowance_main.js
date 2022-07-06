@@ -21,6 +21,14 @@ let extension = {
   },
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
+  data() {
+    return {
+      searchPriceGroup:"searchPriceGroup",
+      searchCustomer: "searchCustomer",
+      searchPuProd: "searchPuProd",
+      searchFuProd: "searchFuProd",
+    };
+  },
   methods: {
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
@@ -46,80 +54,99 @@ let extension = {
       this.single=true;
 
       //查询页面
-      let search_pricegroup_dbidname=this.getSearch("pricegroup_dbidname");
-      search_pricegroup_dbidname.extra = {
-        render:this.getFormRender("pricegroup_dbid","s")
+      let search_group_id=this.getSearch("group_id");
+      search_group_id.extra = {
+        render:this.getSearchRender("searchPriceGroup")
       }
-      //查詢條件快捷回填
-      search_pricegroup_dbidname.onKeyPress=($event)=>{
+      search_group_id.onKeyPress=($event)=>{
         if($event.keyCode == 13){
-          let  group_id = this.searchFormFields['pricegroup_dbidname']
+          let  group_id = this.searchFormFields['group_id']
           if(group_id) {
-            this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
-              console.log(reslut)
-              this.searchFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
-              this.searchFormFields['pricegroup_dbidname'] =reslut.group_id + " " + reslut.group_name;
-              return;
+            this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.searchFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
+                this.searchFormFields['group_id'] =reslut.group_id ;
+                this.pickPriceGroupName=reslut.group_name;
+                return;
+              }else{
+                this.$message.error("Group Id Is Not Exists.");
+                return ;
+              }
+
             })
           }
+
         }
       }
 
-      let cust_dbidname=this.getSearch("cust_dbidname");
-      cust_dbidname.extra = {
-        render:this.getFormRender("cust_dbid","s")
+      let search_cust_id=this.getSearch("cust_id");
+      search_cust_id.extra = {
+        render:this.getSearchRender("searchCustomer")
       }
-      //查詢條件快捷回填
-      cust_dbidname.onKeyPress=($event)=>{
+      search_cust_id.onKeyPress=($event)=>{
         if($event.keyCode == 13){
-          let  cust_id = this.searchFormFields['cust_dbidname']
+          let  cust_id = this.searchFormFields['cust_id']
           if(cust_id) {
-            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
-              console.log(reslut)
-              this.searchFormFields['cust_dbid'] =reslut.cust_dbid;
-              this.searchFormFields['cust_dbidname'] =reslut.cust_id + " " + reslut.cust_name;
-              return;
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.searchFormFields['cust_dbid'] =reslut.cust_dbid;
+                this.searchFormFields['cust_id'] =reslut.cust_id ;
+                this.pickCustomerName=reslut.cust_name;
+                return;
+              }else{
+                this.$message.error("Customer Id Is Not Exists.");
+                return;
+              }
+            })
+          }
+        }
+      }
+      let search_pu_prod_id=this.getSearch("pu_prod_id");
+      search_pu_prod_id.extra = {
+        render:this.getSearchRender("searchPuProd")
+      }
+      search_pu_prod_id.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  prod_id = this.searchFormFields['pu_prod_id']
+          if(prod_id) {
+            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.searchFormFields['pu_prod_dbid'] =reslut.prod_dbid;
+                this.searchFormFields['pu_prod_id'] =reslut.prod_id ;
+                this.pickPuProdName=reslut.prod_ename;
+                return;
+              }else{
+                this.$message.error("product Id Is Not Exists.");
+                return;
+              }
+            })
+          }
+        }
+      }
+      let search_cf_prod_id=this.getSearch("cf_prod_id");
+      search_cf_prod_id.extra = {
+        render:this.getSearchRender("searchFuProd")
+      }
+      search_cf_prod_id.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  prod_id = this.searchFormFields['cf_prod_id']
+          if(prod_id) {
+            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.searchFormFields['cf_prod_dbid'] =reslut.prod_dbid;
+                this.searchFormFields['cf_prod_id'] =reslut.prod_id ;
+                this.pickFuProdName=reslut.prod_ename;
+                return;
+              }else{
+                this.$message.error("product Id Is Not Exists.");
+                return;
+              }
             })
           }
         }
       }
 
-      let cp_prod_dbidname=this.getSearch("cp_prod_dbidname");
-      cp_prod_dbidname.extra = {
-        render:this.getFormRender("cp_prod_dbid","s")
-      }
-      //查詢條件快捷回填
-      cp_prod_dbidname.onKeyPress=($event)=>{
-        if($event.keyCode == 13){
-          let  prod_id = this.searchFormFields['cp_prod_dbidname']
-          if(prod_id) {
-            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
-              console.log(reslut)
-              this.searchFormFields['cp_prod_dbid'] =reslut.prod_dbid;
-              this.searchFormFields['cp_prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
-              return;
-            })
-          }
-        }
-      }
-      let cf_prod_dbidname=this.getSearch("cf_prod_dbidname");
-      cf_prod_dbidname.extra = {
-        render:this.getFormRender("cf_prod_dbid","s")
-      }
-      //查詢條件快捷回填
-      cf_prod_dbidname.onKeyPress=($event)=>{
-        if($event.keyCode == 13){
-          let  prod_id = this.searchFormFields['cf_prod_dbidname']
-          if(prod_id) {
-            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
-              console.log(reslut)
-              this.searchFormFields['cf_prod_dbid'] =reslut.prod_dbid;
-              this.searchFormFields['cf_prod_dbidname'] =reslut.prod_id + " " + reslut.prod_ename;
-              return;
-            })
-          }
-        }
-      }
+
 
 
       //日期格式化 formatter
@@ -188,6 +215,91 @@ let extension = {
         })
       })
       return option;
+    },
+
+    getSearchRender(searchType) {//
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+          h(
+              "input",
+              {
+                class:"el-input__inner",
+                type:"text",
+                style:{width:"70%","background-color":"#f5f7fb"},
+                readonly:"true",
+                value:this.getPickName(searchType)
+              }
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                onClick: (e) => {
+                  if(searchType=="searchCustomer"){
+                    this.$refs.gridBody.CustomersModelBody(true,searchType);
+                  }
+                  if(searchType=="searchPriceGroup"){
+                    this.$refs.gridBody.openPriceGroupModelBody(true,searchType);
+                  }
+                  if(searchType=="searchPuProd"){
+                    this.$refs.gridBody.puProdModelBody(true,searchType);
+                  }
+                  if(searchType=="searchFuProd"){
+                    this.$refs.gridBody.fuProdModelBody(true,searchType);
+                  }
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "Pick"
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                onClick: (e) => {
+                  if(searchType=="searchCustomer"){
+                    this.searchFormFields["cust_dbid"] = "";
+                    this.searchFormFields["cust_id"] = "";
+                    this.pickCustomerName = "";
+                  }if(searchType=="searchPriceGroup"){
+                    this.searchFormFields["pricegroup_dbid"] = "";
+                    this.searchFormFields["group_id"] = "";
+                    this.pickPriceGroupName = "";
+                  }
+                  if(searchType=="searchFuProd"){
+                    this.searchFormFields["cf_prod_dbid"] = "";
+                    this.searchFormFields["cf_prod_id"] = "";
+                    this.pickFuProdName = "";
+                  }
+                  if(searchType=="searchPuProd"){
+                    this.searchFormFields["pu_prod_dbid"] = "";
+                    this.searchFormFields["pu_prod_id"] = "";
+                    this.pickPuProdName = "";
+                  }
+                }
+              },
+              [h("i",{class:"el-icon-zoom-out"})],
+              "Clean"
+          ),
+
+        ]);
+      };
+    },
+
+    getPickName(searchType){
+      if(searchType=="searchCustomer"){
+        return this.pickCustomerName
+      }else if(searchType=="searchPriceGroup"){
+        return this.pickPriceGroupName
+      }else if(searchType=="searchPuProd"){
+        return this.pickPuProdName
+      }else if(searchType=="searchFuProd"){
+        return this.pickFuProdName
+      }else if(searchType=="editFormSearchPriceGroup"){
+        return this.pickEditFormPriceGroupName
+      }
     },
 
     /**
