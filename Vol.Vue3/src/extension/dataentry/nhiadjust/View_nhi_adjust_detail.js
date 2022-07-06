@@ -46,7 +46,9 @@ let extension = {
       this.labelWidth=180;
       //设置编辑表单标签文字宽度
       this.boxOptions.labelWidth=150;
-      this.setFiexdSearchForm(true);
+      this.boxOptions.width=1200;
+      this.setFiexdSearchForm(false);
+      this.singleSearch = null;
       //編輯product彈窗
       var editform_prod_id = this.getFormOption("prod_id");
 
