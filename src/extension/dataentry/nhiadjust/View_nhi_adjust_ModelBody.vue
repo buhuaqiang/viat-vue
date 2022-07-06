@@ -1,5 +1,5 @@
 <template>
-  <div class="vol-tabs">
+  <div v-if="showFlag" class="vol-tabs">
     <el-tabs type="border-card" style="
         min-height: 370px;
         box-shadow: none;
@@ -56,11 +56,15 @@ export default {
       });
       debugger
       if ($parent.currentAction == "Add") {
-        debugger
         this.showFlag = false;
+        $parent.boxOptions.height=400;
+        $parent.boxOptions.width=1400;
+      }else{
+        this.showFlag = true;
+        $parent.boxOptions.height=800;
+        $parent.boxOptions.width=1400;
       }
-      $parent.boxOptions.height=1600;
-      $parent.boxOptions.width=1500;
+
       this.nhiadjustm_dbid = $parent.editFormFields.nhiadjustm_dbid;
 
       //写入缓存对象(xxx为全局缓存的唯一key)

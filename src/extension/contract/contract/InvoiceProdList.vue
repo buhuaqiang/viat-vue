@@ -1,8 +1,8 @@
 <template>
   <div style="padding: 0 4px;border-top: 10px solid #eee;">
-    <h3 >
-      <i class="ivu-icon ivu-icon-ios-information-circle-outline"></i>商品明細
-    </h3>
+    <div class="desc-text" style="height: 40px;padding-top: 10px;">
+      <i class="el-icon-s-grid"></i> Shipping Product List
+    </div>
     <div style="padding:10px;background: white;padding-top: 0;">
       <vol-table ref="tableList"
                  :loadKey="true"
