@@ -34,7 +34,7 @@
                                {"title":"Base Date","field":"start_date","type":"date"}],
                               [{"title":"Note","field":"remarks","type":"text"}]]);
             const searchFormFields = ref({"nhiadjustm_dbid":"","start_date":"","prod_id":""});
-            const searchFormOptions = ref([[{"dataKey":"nhiAdjust","data":[],"title":"Batch No","field":"nhiadjustm_dbid","type":"select"},{"title":"Base Date","field":"start_date","type":"date"},{"title":"Product","field":"prod_id","type":"text"}]]);
+            const searchFormOptions = ref([[{"dataKey":"nhiAdjust","data":[],"title":"Batch No","field":"nhiadjustm_dbid","type":"select"},{"title":"Base Date","field":"start_date","type":"date"}],[{"title":"Product","field":"prod_id","type":"text"}]]);
             const columns = ref([{field:'nhiadjustm_dbid',title:'Batch No',type:'guid',bind:{ key:'nhiAdjust',data:[]},width:110,hidden:true,require:true,align:'left'},
                        {field:'nhi_batch',title:'Batch No',type:'int',link:true,width:110,require:true,align:'left',sort:true},
                        {field:'start_date',title:'Base Date',type:'datetime',width:110,align:'left',sort:true},
