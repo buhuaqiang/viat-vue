@@ -419,6 +419,8 @@ var vueParam = {
       pickCustomerName:"",
       pickPriceGroupName:"",
       pickProductName:"",
+      pickFuProdName:"",
+      pickPuProdName:"",
 
       pickEditFormCustomerName:"",
       pickEditFormPriceGroupName:"",
