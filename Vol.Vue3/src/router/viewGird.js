@@ -268,6 +268,10 @@ let viewgird = [
         name: 'View_cust_price',
         component: () => import('@/views/price/price/View_cust_price.vue')
     }    ,{
+        path: '/View_cust_price_product_detach',
+        name: 'View_cust_price_product_detach',
+        component: () => import('@/views/price/price/View_cust_price_product_detach.vue')
+    }   ,{
         path: '/Viat_app_cust_price_detail',
         name: 'Viat_app_cust_price_detail',
         component: () => import('@/views/price/price/Viat_app_cust_price_detail.vue')
