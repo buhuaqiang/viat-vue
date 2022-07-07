@@ -40,11 +40,10 @@ let extension = {
         //示例：设置修改新建、编辑弹出框字段标签的长度
         // this.boxOptions.labelWidth = 150;
       //显示查询全部字段
-      //this.setFiexdSearchForm(true);
       this.singleSearch = null;
-        //显示查询全部字段
-        this.setFiexdSearchForm(true);
+      this.setFiexdSearchForm(false);
 
+        this.buttons.splice(0,1);
         this.buttons.forEach(x => {
             if (x.name == "Inquire") {
                 x.hidden=true
