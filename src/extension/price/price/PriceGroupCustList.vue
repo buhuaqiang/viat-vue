@@ -39,10 +39,10 @@ export default {
       pagination: {}, //分页配置，见voltable组件api
       //从生成的代码sellorder2.vue里面把明细配置复制过来就能用
       columns:  [
-        {field:'cust_id',title:'cust_id',type:'string',width:110,align:'left',sort:true},
-        {field:'cust_name',title:'cust_name',type:'string',width:150,require:true,align:'left',sort:true},
-        {field:'status',title:'status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'},
-        {field:'custGroupStatus',title:'custGroupStatus',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'}
+        {field:'cust_id',title:'Cust Id',type:'string',width:110,align:'left',sort:true},
+        {field:'cust_name',title:'Cust Name',type:'string',width:150,require:true,align:'left',sort:true},
+        {field:'custGroupStatus',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'},
+        {field:'status',title:'Cust Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'}
         ]
     }
   }

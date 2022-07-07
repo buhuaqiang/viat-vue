@@ -2,21 +2,21 @@
   <VolBox
     v-model="model"
     :lazy="true"
-    title="選擇價格群組數據"
+    title="Pick Group Data"
     :height="600"
     :width="1250"
     :padding="15"
   >
     <!-- 设置查询条件 -->
     <div style="padding-bottom: 10px">
-      <span style="margin-right: 20px">請選擇數據</span>
+      <span style="margin-right: 20px"></span>
       <el-input
-              placeholder="群組代碼"
+              placeholder="Input Group ID"
               style="width: 200px"
               v-model="group_id"
       />
       <el-input
-        placeholder="群組名稱"
+        placeholder="Input Group Name"
         style="width: 200px;padding-left: 5px"
         v-model="group_name"
       />
@@ -24,9 +24,9 @@
         type="primary"
         style="margin-left:10px"
         size="medium"
-        icon="el-icon-zoom-out"
+        icon="el-icon-zoom-in"
         @click="search"
-        >搜索</el-button
+        >Inquire</el-button
       >
     </div>
 
@@ -54,10 +54,10 @@
           type="primary"
           icon="el-icon-plus"
           @click="addRow()"
-          >添加选择的数据</el-button
+          >Add Row</el-button
         >
         <el-button size="mini" icon="el-icon-close" @click="model = false"
-          >关闭</el-button
+          >Close</el-button
         >
       </div>
     </template>
@@ -84,8 +84,8 @@ export default {
       formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields,ext-自定義擴展
       url: "api/Viat_app_cust_price_group/GetPopPageData",//加载数据的接口
       columns: [
-        {field:'group_id',title:'群組代碼',type:'string',link:true,width:110,require:true,align:'left',sort:true},
-        {field:'group_name',title:'群組名稱',type:'string',width:120,align:'left'}
+        {field:'group_id',title:'Group ID',type:'string',link:true,width:110,require:true,align:'left',sort:true},
+        {field:'group_name',title:'Group Name',type:'string',width:120,align:'left'}
         ],
       pagination: {}, //分页配置，见voltable组件api
     };
@@ -111,7 +111,7 @@ export default {
       debugger
       var rows = this.$refs.mytable.getSelected();
       if (!rows || rows.length == 0) {
-        return this.$message.error("請選擇數據");
+        return this.$message.error("Please select the row");
       }
 
       if (this.returnType=="onSelect") {//多層級調用
@@ -145,6 +145,7 @@ export default {
       if(this.group_id){
         params.wheres.push({ name: "group_id", value: this.group_id ,displayType:'like'});
       }
+      //params.wheres.push({ name: "status", value: 'Y' });
       return true;
     },
   },

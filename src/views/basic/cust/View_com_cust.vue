@@ -24,7 +24,7 @@
             const table = ref({
                 key: 'cust_dbid',
                 footer: "Foots",
-                cnName: '客戶基本信息',
+                cnName: 'Customer Maintain',
                 name: 'cust/View_com_cust',
                 url: "/View_com_cust/",
                 sortName: "cust_id"
@@ -122,7 +122,7 @@
                        {field:'med_group_cust_name',title:'med_group_cust_name',type:'string',width:110,hidden:true,align:'left'},
                        {field:'delv_group_cust_id',title:'Price Group',type:'string',width:110,hidden:true,align:'left'}]);
             const detail = ref({
-                cnName: "客戶送貨地址信息",
+                cnName: "Delivery Address",
                 table: "View_com_cust_delivery",
                 columns: [{field:'delivery_dbid',title:'delivery_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'dbid',title:'dbid',type:'decimal',width:110,hidden:true,require:true,align:'left'},

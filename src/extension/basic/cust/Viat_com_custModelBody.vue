@@ -2,33 +2,33 @@
   <VolBox
     v-model="model"
     :lazy="true"
-    title="選擇客戶數據"
+    title="Pick Customer Data"
     :height="600"
     :width="1252"
     :padding="15"
   >
     <!-- 设置查询条件 -->
     <div style="padding-bottom: 10px">
-      <span style="margin-right: 20px">请选择数据</span>
-      <el-input placeholder="客戶編號" style="width: 200px" v-model="cust_id" />
+      <span style="margin-right: 20px"></span>
+      <el-input placeholder="Input Customer Code" style="width: 200px" v-model="cust_id" />
       <el-input
-        placeholder="客戶名稱"
+        placeholder="Input Customer Name"
         style="width: 200px; padding-left: 5px"
         v-model="cust_name"
       />
       <el-input
 
-              placeholder="郵區代碼"
-              style="width: 200px"
+              placeholder="Input Zip Code"
+              style="width: 200px; padding-left: 5px"
               v-model="zip_id"
       />
       <el-button
         type="primary"
         style="margin-left: 10px"
         size="medium"
-        icon="el-icon-zoom-out"
+        icon="el-icon-zoom-in"
         @click="search"
-        >搜索</el-button
+        >Inquire</el-button
       >
     </div>
 
@@ -56,10 +56,10 @@
           type="primary"
           icon="el-icon-plus"
           @click="addRow()"
-          >添加选择的数据</el-button
+          >Add Row</el-button
         >
         <el-button size="mini" icon="el-icon-close" @click="model = false"
-          >关闭</el-button
+          >Close</el-button
         >
       </div>
     </template>
@@ -87,7 +87,7 @@ export default {
       columns: [
         {
           field: "cust_id",
-          title: "客戶編號",
+          title: "Customer Code",
           type: "string",
           width: 110,
           require: true,
@@ -96,7 +96,7 @@ export default {
         },
         {
           field: "cust_name",
-          title: "客戶名",
+          title: "Customer Name",
           type: "string",
           link: true,
           width: 120,
@@ -104,29 +104,29 @@ export default {
         },
         {
           field: "cust_address",
-          title: "客戶地址",
+          title: "Customer Address",
           type: "string",
           width: 180,
           align: "left",
         },
         {
           field: "tel_no",
-          title: "聯繫電話",
+          title: "Telephone",
           type: "string",
           width: 110,
           align: "left",
         },
-        {field:'zip_id',title:'郵區代碼',type:'string',width:110,align:'left',sort:true},
+        {field:'cust_zip_id',title:'Zip ID',type:'string',width:110,align:'left',sort:true},
         {
           field: "territory_id",
-          title: "默認區域",
+          title: "Default Zone",
           type: "string",
           width: 110,
           align: "left",
         },
         {
           field: "doh_type",
-          title: "健保類別",
+          title: "DOH Type",
           type: "string",
           bind: { key: "doh_type", data: [] },
           width: 110,
@@ -134,23 +134,23 @@ export default {
         },
         {
           field: "margin_type",
-          title: "毛利類別",
+          title: "Margin Type",
           type: "string",
           bind: { key: "doh_type", data: [] },
           width: 110,
           align: "left",
         },
-        {
-          field: "status",
-          title: "status",
-          type: "string",
-          bind: { key: "Status2", data: [] },
-          width: 110,
-          align: "left",
-        },
+        // {
+        //   field: "status",
+        //   title: "status",
+        //   type: "string",
+        //   bind: { key: "Status_YN", data: [] },
+        //   width: 110,
+        //   align: "left",
+        // },
         {
           field: "modified_date",
-          title: "最后修改时间",
+          title: "Modified Date",
           type: "datetime",
           width: 150,
           align: "left",
@@ -192,7 +192,7 @@ export default {
     addRow() {
       var rows = this.$refs.mytable.getSelected();
       if (!rows || rows.length == 0) {
-        return this.$message.error("請選擇數據");
+        return this.$message.error("Please select the row");
       }
 
       if (this.returnType=="onSelect") {//多層級調用
@@ -234,8 +234,9 @@ export default {
         });
       }
       if (this.zip_id) {
-        params.wheres.push({ name: "zip_id", value: this.zip_id,displayType:'like' });
+        params.wheres.push({ name: "cust_zip_id", value: this.zip_id,displayType:'like' });
       }
+      params.wheres.push({ name: "status", value: 'Y' });
       return true;
     },
   },
