@@ -265,7 +265,7 @@ export default {
     onSelectPop(fieldName,rows){
         debugger
         if(rows.length!=1){
-          return this.$message.error("請選擇數據");
+          return this.$message.error("Please select a record first.");
         }
         if(fieldName=='pricegroup_dbid'){
           this.invalidModel.group_id=rows[0].group_id
@@ -370,7 +370,7 @@ export default {
           return this.$message.error("Invalid date is empty.");
         }
         if (!rows || rows.length == 0) {
-          return this.$message.error("請選擇數據");
+          return this.$message.error("Please select a record first.");
         }
       }
       this.checkData();

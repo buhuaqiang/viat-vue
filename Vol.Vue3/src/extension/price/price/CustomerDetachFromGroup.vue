@@ -173,7 +173,7 @@ export default {
     },
     onSelectPop(fieldName,rows){
         if(rows.length!=1){
-          return this.$message.error("請選擇數據");
+          return this.$message.error("Please select a record first.");
         }
         if(fieldName=='prod_dbid'){
           this.formModel.prod_id=rows[0].prod_id
@@ -216,7 +216,7 @@ export default {
     addRow() {
       let rows =  this.$refs.mytable.getSelected()
       if (!rows || rows.length == 0) {
-        return this.$message.error("請選擇數據");
+        return this.$message.error("Please select a record first.");
       }
       this.checkData();
       this.formModel.rows=rows;

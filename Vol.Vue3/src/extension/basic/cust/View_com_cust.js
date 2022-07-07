@@ -241,7 +241,7 @@ let extension = {
       //显示查询全部字段
       //this.setFiexdSearchForm(true);
       //设置查询表单的标签文字宽度
-      this.labelWidth = 180;
+      this.labelWidth = 230;
       //表格设置为单选
       this.single=true;
       //設置初始不加載
@@ -504,12 +504,12 @@ let extension = {
 
 
 
-      document.getElementById("f_med_group").value=''
-      document.getElementById("f_delv_group").value=''
-      document.getElementById("f_own_hospital").value=''
       if (this.currentAction ==this.const.ADD){
         this.editFormFields.status='Y';//設置狀態默認值
         this.editFormFields.cust_id = "C0000";
+        document.getElementById("f_med_group").value=''
+        document.getElementById("f_delv_group").value=''
+        document.getElementById("f_own_hospital").value=''
       }else  if (this.currentAction ==this.const.EDIT) {
         let comZipId = this.getOption("cust_zip_id");
         let invoiceZipId = this.getOption("invoice_zip_id");
@@ -522,7 +522,7 @@ let extension = {
         document.getElementById("f_med_group").value=row.med_group_cust_name;
         document.getElementById("f_delv_group").value=row.delv_group_cust_name
         document.getElementById("f_own_hospital").value=row.own_hospital_cust_name
-      }else  if (this.currentAction ==this.const.EDIT){
+      }else  if (this.currentAction ==this.const.VIEW){
         //回顯值
         document.getElementById("f_med_group").value=row.med_group_cust_name;
         document.getElementById("f_delv_group").value=row.delv_group_cust_name

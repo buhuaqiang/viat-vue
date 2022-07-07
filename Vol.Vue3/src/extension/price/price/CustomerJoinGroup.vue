@@ -224,7 +224,7 @@ export default {
 
       let rows= this.$refs.mytable.getSelected()
       if(rows.length==0){
-        return this.$message.error("請選擇數據");
+        return this.$message.error("Please select a record first.");
       }
       rows.forEach(x=>{
         debugger
@@ -241,7 +241,7 @@ export default {
     cancelSelected(){
       let rows= this.$refs.table2.getSelected()
       if(rows.length==0){
-        return this.$message.error("請選擇數據");
+        return this.$message.error("Please select a record first.");
       }
       rows.forEach(x=>{
         let index=this.custprice_dbids.findIndex((f) => f == x.custprice_dbid);

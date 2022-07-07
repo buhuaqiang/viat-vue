@@ -259,7 +259,7 @@ export default {
     },
     onSelectPop(fieldName,rows){
         if(rows.length!=1){
-          return this.$message.error("請選擇數據");
+          return this.$message.error("Please select a record first.");
         }
         if(fieldName=='pricegroup_dbid'){
 
