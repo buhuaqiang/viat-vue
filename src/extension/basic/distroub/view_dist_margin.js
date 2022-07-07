@@ -196,10 +196,10 @@ let extension = {
         let modified_date=this.getColumnsOption("modified_date");
         modified_date.formatter = (row) => {
             //对单元格的数据格式化处理
-            if (!row.end_date) {
+            if (!row.modified_date) {
                 return;
             }
-            return row.end_date.substr(0,10);
+            return row.modified_date.substr(0,10);
         }
 
         //示例：设置修改新建、编辑弹出框字段标签的长度
