@@ -5,10 +5,10 @@
     </div>
     <div class="action-container">
       <div class="header">
-        <span class="text"><icon type="md-contact"></icon>角色权限分配</span>
+        <span class="text"><icon type="md-contact"></icon>Permission Setting</span>
 
         <el-button type="primary" size="mini" icon="el-icon-check" @click="save"
-          >保存</el-button
+          >Save</el-button
         >
       </div>
       <el-scrollbar style="flex: 1">
@@ -26,7 +26,7 @@
             <div class="action-group">
               <div
                 class="action-text"
-                :style="{ width: (4 - data.lv) * 18 + 150 + 'px' }"
+                :style="{ width: (4 - data.lv) * 18 + 200 + 'px' }"
               >
                 {{ data.text+(data.isApp?'(app)':'') }}
               </div>
@@ -113,7 +113,7 @@ export default {
     },
     save() {
       if (this.selectIndex == -1) {
-        return this.$message.error("请选择角色!");
+        return this.$message.error("Please select a role!");
       }
       let userPermissions = [];
       this.data.forEach((x) => {

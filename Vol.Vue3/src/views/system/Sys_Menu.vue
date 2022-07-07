@@ -41,7 +41,7 @@
 
     <!-- v-if="tree.length" -->
     <div class="menu-left">
-      <div class="m-title"><i class="el-icon-warning-outline"></i>菜单列表</div>
+      <div class="m-title"><i class="el-icon-warning-outline"></i>Menu List</div>
       <el-scrollbar style="height: 100%; width: 200px">
         <VolMenu :onSelect="getTreeItem"
                  :list="tree"
@@ -50,15 +50,15 @@
     </div>
     <div class="menu-right">
       <el-scrollbar style="height: 100%">
-        <el-alert title="菜单配置说明"
+        <el-alert title="Menu configuration description"
                   type="warning"
                   :closable="false"
                   show-icon>
           <div>
-            1、如果是用代码生器生成的Vue页面,Url为Vue项目中src->router->viewGrid.js对应表名的path属性
+            1、如果是用程式碼生器生成的Vue頁面，Url為Vue項目中src->router->viewGrid. js對應表名的path内容
           </div>
           <div style="padding-top: 5px">
-            2、 如果只是建一级菜单或空菜单url不用填写,【视图/表名】填写.或者/
+            2、如果只是建一級選單或空選單url不用填寫，【視圖/表名】填寫. 或者/
           </div>
         </el-alert>
         <div style="padding: 0px 30px 0 20px">
@@ -69,7 +69,7 @@
           </vol-form>
           <div>
             <div class="auth-group">
-              <label style="width: 100px">权限按钮：</label>
+              <label style="width: 100px;font-weight: bolder;color: #000000">Permission button：</label>
               <div class="ck">
                 <el-checkbox-group v-model="actions">
                   <el-checkbox v-for="(item, index) in action"
@@ -83,28 +83,28 @@
             <el-button @click="handleCheckAll"
                        size="mini"
                        type="success"
-                       plain><i class="el-icon-check"></i>全 选</el-button>
+                       plain><i class="el-icon-check"></i>Select All</el-button>
             <el-button @click="actionModel = true"
                        size="mini"
                        type="primary"
-                       plain><i class="el-icon-plus"></i>其他权限</el-button>
+                       plain><i class="el-icon-plus"></i>Other Buttons</el-button>
           </div>
           <div class="m-btn">
             <el-button type="primary"
-                       @click="save"><i class="el-icon-check"></i>保存</el-button>
+                       @click="save"><i class="el-icon-check"></i>Save</el-button>
             <el-button type="success"
                        icon="md-add"
-                       @click="add"><i class="el-icon-plus"></i>新建</el-button>
+                       @click="add"><i class="el-icon-plus"></i>Add</el-button>
             <el-button type="warning"
                        icon="md-add-circle"
-                       @click="addChild"><i class="el-icon-plus"></i>添加子级</el-button>
+                       @click="addChild"><i class="el-icon-plus"></i>Add Child</el-button>
             <el-button type="primary"
                        plain
                        icon="ios-barcode-outline"
-                       @click="addBrother"><i class="el-icon-circle-plus"></i> 添加同级</el-button>
+                       @click="addBrother"><i class="el-icon-circle-plus"></i> ADD Current level</el-button>
             <el-button type="warning"
                        plain
-                       @click="delMenu"><i class="el-icon-delete"></i> 删除菜单</el-button>
+                       @click="delMenu"><i class="el-icon-delete"></i> Delete</el-button>
           </div>
         </div>
       </el-scrollbar>
@@ -201,11 +201,11 @@ export default defineComponent({
 
       let tigger = false;
       this.$confirm(
-        "确认要删除【" + this.fields.menuName + "】菜单吗？",
-        "警告",
+        "Confirm to delete 【" + this.fields.menuName + "】Menu？",
+        "Warning",
         {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+          confirmButtonText: "Ture",
+          cancelButtonText: "Cancle",
           type: "warning",
           center: true,
         }
@@ -214,7 +214,7 @@ export default defineComponent({
         tigger = true;
         let menuId = this.fields.menu_Id;
         this.http
-          .post("/api/menu/delMenu?menuId=" + menuId, {}, "正在删除数据....")
+          .post("/api/menu/delMenu?menuId=" + menuId, {}, "Deleting data....")
           .then((x) => {
             if (!x.status) return this.$Message.error(x.message);
             this.$refs.form.reset();
@@ -246,7 +246,7 @@ export default defineComponent({
             return;
           }
 
-          this.$Message.info(x.message);
+          this.$Message.success(x.message);
           if (this.fields.menu_Id) {
             this.tree.forEach((t) => {
               if (t.id == this.fields.menu_Id) {
@@ -271,7 +271,7 @@ export default defineComponent({
     isSelect () {
       let id = this.fields.menu_Id;
       if (!id) {
-        this.$message.error("请选择节点");
+        this.$message.error("Please select a Menu node");
         return false;
       }
       return true;
@@ -344,17 +344,17 @@ export default defineComponent({
     const actionOptions = ref([
       [
         {
-          title: "权限名称",
+          title: "Button Name",
           field: "name",
-          placeholder: "权限名称,如：新增",
+          placeholder: "",
           required: true,
         },
       ],
       [
         {
-          title: "权 限 值",
+          title: "Button Value",
           field: "value",
-          placeholder: "权限值,如：Add",
+          placeholder: "",
           required: true,
         },
       ],
@@ -363,14 +363,14 @@ export default defineComponent({
     const options = ref([
       [
         {
-          title: "菜 单 ID",
+          title: "Menu ID",
           field: "menu_Id",
-          placeholder: "菜单ID",
+          placeholder: "Menu ID",
           min: 0,
           disabled: true,
         },
         {
-          title: "父 级 ID",
+          title: "Parent Menu ID",
           required: true,
           type: "number",
           min: 0,
@@ -378,59 +378,59 @@ export default defineComponent({
           // min: 0, max: 50
         },
         {
-          title: "菜单名称",
+          title: "Menu Name",
           field: "menuName",
           required: true,
         },
       ],
       [
         {
-          title: "视图/表名",
+          title: "View/Table Name",
           field: "tableName",
-          placeholder: "与代码生成器使用的名称相同",
+          placeholder: "",
           required: true,
         },
         {
-          title: "(路由)Url",
+          title: "Router Url",
           field: "url",
-          placeholder: "见:上面菜单配置说明",
+          placeholder: "",
         },
         {
-          title: "排序号",
+          title: "Order",
           field: "orderNo",
           type: "number",
           min: 0,
-          placeholder: "值越大显示越靠前",
+          placeholder: "The higher the value, the higher the display",
           required: true,
         },
       ],
       [
         {
-          title: "是否启用",
+          title: "Enable",
           field: "enable",
           required: true,
           type: "select",
           colSize: 4,
           data: [
-            { key: 1, value: "启用" },
-            { key: 2, value: "启用不显示" },
-            { key: 0, value: "禁用" },
+            { key: 1, value: "Enable" },
+            { key: 2, value: "Enable And Hidden" },
+            { key: 0, value: "Disabled" },
           ],
         },
         {
           // 2022.03.26增移动端加菜单类型
-          title: "菜单类型",
+          title: "Menu Type",
           field: "menuType",
           required: true,
           type: "select",
           colSize: 4,
           data: [
-            { key: 0, value: "PC菜单" },
-            { key: 1, value: "移动端菜单" }
+            { key: 0, value: "PC Menu" },
+            { key: 1, value: "APP Menu" }
           ],
         },
         {
-          title: "图标Icon",
+          title: "Icon",
           field: "icon",
           render: (h) => {
             return h("div", {}, [
@@ -455,7 +455,7 @@ export default defineComponent({
                     model.value = true;
                   },
                 },
-                "选择图标"
+                "Select Icon"
               ),
             ]);
           },
@@ -484,7 +484,7 @@ export default defineComponent({
             actions.value = [];
           }
         } catch (error) {
-          console.log("菜单功能权限转换成JSON失败:" + x.auth);
+          console.log("Failed to convert menu function permissions to JSON:" + x.auth);
           x.auth = [];
           //   this.icon = "";
           actions.value = [];

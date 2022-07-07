@@ -12,13 +12,14 @@ let extension = {
         modelBody: employPop,
         modelFooter: ''
     },
-    text: "只能看到当前角色下的所有帐号",
+    text: "Can only see all accounts under the current role",
     buttons: [], //扩展的按钮
     methods: { //事件扩展
         onInit() {
             this.boxOptions.height = 530;
+            this.boxOptions.labelWidth=180;
             this.columns.push({
-                title: '操作',
+                title: 'operate',
                 hidden: false,
                 align: "center",
                 fixed: 'right',
@@ -33,7 +34,7 @@ let extension = {
                                 e.stopPropagation()
                                 this.$refs.gridHeader.open(row);
                             }
-                        }, "修改密码"
+                        }, "Change Password"
                         ),
                         h(
                             "a", {
@@ -43,7 +44,7 @@ let extension = {
                                 this.edit(row);
                             }
                         },
-                            "编辑"
+                            "Edit"
                         ),
                     ])
                 }
@@ -71,7 +72,7 @@ let extension = {
                             }
                         },
                         [h("i",{class:"el-icon-zoom-in"})],
-                        "選擇"
+                        "Select"
                     ),
                     h(
                         "a",
@@ -83,7 +84,7 @@ let extension = {
                             }
                         },
                         [h("i",{class:"el-icon-zoom-out"})],
-                        "清除"
+                        "Clean"
                     ),
 
                 ]);
@@ -95,8 +96,8 @@ let extension = {
             }
             //显示新建用户的密码
             //2020.08.28优化新建成后提示方式
-            this.$confirm(result.message, '新建用户成功', {
-                confirmButtonText: '确定',
+            this.$confirm(result.message, 'Add user succeeded', {
+                confirmButtonText: 'Confirm',
                 type: 'success',
                 center: true
             }).then(() => { })

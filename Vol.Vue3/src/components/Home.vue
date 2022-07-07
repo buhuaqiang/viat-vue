@@ -45,12 +45,12 @@ export default {
         userInfo.password="9999999  "
         userInfo.verificationCode="0000"
         userInfo.UUID="9999";
-        http.post("/api/user/login?bverificationCode=false", userInfo, "正在登錄....").then((result) => {
+        http.post("/api/user/login?bverificationCode=false", userInfo, "Logging In....").then((result) => {
           if (!result.status) {
             //loading.value = false;
             return $message.error(result.message);
           }
-          $message.success("登錄成功,正在跳轉!");
+          $message.success("Login Success!");
           store.commit("setUserInfo", result.data);
           router.push({ path: "/home" });
         });
