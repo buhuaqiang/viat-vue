@@ -357,6 +357,10 @@ let viewgird = [
         path: '/View_invoice_pop',
         name: 'View_invoice_pop',
         component: () => import('@/views/dataentry/fullallowance/View_invoice_pop.vue')
+    }    ,{
+        path: '/Viat_app_hp_contract_allw_sum',
+        name: 'Viat_app_hp_contract_allw_sum',
+        component: () => import('@/views/dataentry/fullallowance/Viat_app_hp_contract_allw_sum.vue')
     }]
 
 export default viewgird
