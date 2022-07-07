@@ -30,7 +30,7 @@
             const editFormOptions = ref([[{"title":"Customer ID","field":"cust_id","required":true,"colSize":6},{"title":"TransDate","required":true,type:'date',"field":"trans_date","colSize":6}],
                               [{"title":"Product ID","field":"prod_id","required":true},{"title":"Invoice No","field":"invoice_no","required":true}],
                               [{"title":"Qty","field":"qty","type":"decimal"},{"title":"Reverse","field":"reverse","type":"decimal"}],
-                              [{"title":"Amount","field":"amount","type":"decimal","required":true},{"title":"Remarks","field":"remarks"}]]);
+                              [{"title":"Amount","field":"amount","type":"decimal","required":true},{"title":"Remarks","field":"remarks","type":"textarea"}]]);
             //const searchFormFields = ref({});
             //const searchFormOptions = ref([]);
             const columns = ref([{field:'cust_id',title:'Customer ID',type:'string',width:130,align:'left',sort:true},
