@@ -44,6 +44,7 @@ let extension = {
       //设置编辑表单标签文字宽度
       this.boxOptions.labelWidth=180;
 
+      this.boxOptions.width=1600;
       this.single=true;//设置单选
 
       /*this.editFormOptions.forEach((option)=>{
