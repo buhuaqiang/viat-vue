@@ -8,7 +8,7 @@
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
 import customers from "@/extension/basic/cust/Viat_com_custModelBody"
 import prodPop from "@/extension/basic/prod/View_com_prod_pop_query.vue"
-import incoicePop from "./View_incoice_pop_query.vue"
+import incoicePop from "./View_invoice_pop_query.vue"
 let extension = {
   components: {
     //查询界面扩展组件
