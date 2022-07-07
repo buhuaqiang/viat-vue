@@ -55,14 +55,14 @@
                               [{"dataKey":"PublicPrivate","data":[],"title":"Public/Private","field":"is_private","type":"select"},
                                {"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}],
                               [{"dataKey":"Status3","data":[],"title":"Is Hospital Owned Drug Store","required":true,"field":"own_by_hospital","type":"select"},
-                               {"title":"Owned Hospitalname","field":"own_hospital_cust_id"}],
+                               {"title":"Owned Hospital","field":"own_hospital_cust_id"}],
                               [{"title":"Medical Group","field":"med_group_cust_id"},
                                {"title":"Price Group","field":"delv_group_cust_id"}],
                               [{"title":"New Customer","field":"new_cust_id"},
                                {"title":"End Date","field":"inactive_date","type":"date"}],
                               [{"title":"Remarks","field":"remarks","colSize":8,"type":"textarea"}]]);
             const searchFormFields = ref({"cust_id":"","cust_name":"","territory_id":"","cust_zip_id":"","owner":"","tax_id":"","contact":"","cust_address":"","tel_no":"","doh_institute_no":"","doh_type":"","own_by_hospital":"","own_hospital":"","med_group":"","delv_group":"","status":"","modified_date":"","own_hospital_cust_id":"","med_group_cust_id":"","delv_group_cust_id":""});
-            const searchFormOptions = ref([[{"title":"Customer  Code","field":"cust_id","type":"like"},{"title":"Owner","field":"owner","type":"like"}],[{"title":"Customer name","field":"cust_name","type":"like"},{"title":"Contact","field":"contact"}],[{"dataKey":"viat_city_zone","data":[],"title":"Customer Zip Code","field":"cust_zip_id","type":"select"},{"title":"Telephone","field":"tel_no"}],[{"title":"Customer address","field":"cust_address","type":"like"},{"title":"Medical Group","field":"med_group_cust_id"}],[{"title":"Tax ID","field":"tax_id"},{"title":"Price Group","field":"delv_group_cust_id"}],[{"title":"Default Zone","field":"territory_id"},{"dataKey":"doh_type","data":[],"title":"DOH Type","field":"doh_type","type":"select"}],[{"title":"NHI Institute no","field":"doh_institute_no"},{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}],[{"dataKey":"Status3","data":[],"title":"Is Hospital Owned Drug Store","field":"own_by_hospital","type":"select"},{"title":"Owned Hospitalname","field":"own_hospital_cust_id"}],[{"title":"Owned Hospital","field":"own_hospital"},{"title":"Medical Group","field":"med_group"},{"title":"Price Group","field":"delv_group"},{"title":"Modified Date","field":"modified_date","type":"date"}]]);
+            const searchFormOptions = ref([[{"title":"Customer  Code","field":"cust_id","type":"like"},{"title":"Owner","field":"owner","type":"like"}],[{"title":"Customer name","field":"cust_name","type":"like"},{"title":"Contact","field":"contact"}],[{"dataKey":"viat_city_zone","data":[],"title":"Customer Zip Code","field":"cust_zip_id","type":"select"},{"title":"Telephone","field":"tel_no"}],[{"title":"Customer address","field":"cust_address","type":"like"},{"title":"Medical Group","field":"med_group_cust_id"}],[{"title":"Tax ID","field":"tax_id"},{"title":"Price Group","field":"delv_group_cust_id"}],[{"title":"Default Zone","field":"territory_id"},{"dataKey":"doh_type","data":[],"title":"DOH Type","field":"doh_type","type":"select"}],[{"title":"NHI Institute no","field":"doh_institute_no"},{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}],[{"dataKey":"Status3","data":[],"title":"Is Hospital Owned Drug Store","field":"own_by_hospital","type":"select"},{"title":"Owned Hospital","field":"own_hospital_cust_id"}],[{"title":"Owned Hospital","field":"own_hospital"},{"title":"Medical Group","field":"med_group"},{"title":"Price Group","field":"delv_group"},{"title":"Modified Date","field":"modified_date","type":"date"}]]);
             const columns = ref([{field:'cust_id',title:'Customer  Code',type:'string',link:true,width:110,require:true,align:'left',sort:true},
                        {field:'cust_name',title:'Customer name',type:'string',width:120,require:true,align:'left'},
                        {field:'territory_id',title:'Default Zone',type:'string',width:110,require:true,align:'left'},
@@ -102,7 +102,7 @@
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:150,align:'left',sort:true},
                        {field:'modified_client',title:'列名modified_client',type:'int',width:80,hidden:true,align:'left'},
                        {field:'modified_user',title:'列名modified_user',type:'int',width:80,hidden:true,align:'left'},
-                       {field:'created_date',title:'列名created_date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
+                       {field:'created_date',title:'Created Date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
                        {field:'created_client',title:'列名created_client',type:'int',width:80,hidden:true,align:'left'},
                        {field:'created_user',title:'列名created_user',type:'int',width:80,hidden:true,align:'left'},
                        {field:'cust_dbid',title:'列名cust_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
@@ -112,12 +112,12 @@
                        {field:'delv_groupname',title:'delv_groupname',type:'string',width:110,hidden:true,require:true,align:'left'},
                        {field:'C1',title:'列名C1',type:'string',width:180,hidden:true,require:true,align:'left'},
                        {field:'last_deal_date',title:'last_deal_date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
-                       {field:'created_clientusername',title:'created_clientusername',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'modified_username',title:'modified_username',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'created_clientusername',title:'Created Client',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'modified_username',title:'Modified User',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'modified_clientusername',title:'Modified Client',type:'string',width:110,hidden:true,align:'left'},
                        {field:'delv_group_cust_name',title:'delv_group_cust_name',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'own_hospital_cust_id',title:'Owned Hospitalname',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'own_hospital_cust_name',title:'own_hospital_cust_name',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'own_hospital_cust_id',title:'Owned Hospital',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'own_hospital_cust_name',title:'Owned Hospital Name',type:'string',width:110,hidden:true,align:'left'},
                        {field:'med_group_cust_id',title:'Medical Group',type:'string',width:110,hidden:true,align:'left'},
                        {field:'med_group_cust_name',title:'med_group_cust_name',type:'string',width:110,hidden:true,align:'left'},
                        {field:'delv_group_cust_id',title:'Price Group',type:'string',width:110,hidden:true,align:'left'}]);

@@ -192,7 +192,7 @@ export default {
     addRow() {
       var rows = this.$refs.mytable.getSelected();
       if (!rows || rows.length == 0) {
-        return this.$message.error("Please select the row");
+        return this.$message.error("Please select a record first.");
       }
 
       if (this.returnType=="onSelect") {//多層級調用
