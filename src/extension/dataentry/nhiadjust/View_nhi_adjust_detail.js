@@ -49,6 +49,12 @@ let extension = {
       this.boxOptions.width=1200;
       this.setFiexdSearchForm(false);
       this.singleSearch = null;
+      this.buttons.splice(0,1);
+      this.buttons.forEach(x => {
+        if (x.name == "Inquire") {
+          x.hidden=true
+        }
+      })
       //編輯product彈窗
       var editform_prod_id = this.getFormOption("prod_id");
 
