@@ -24,7 +24,7 @@
             const table = ref({
                 key: 'prod_dbid',
                 footer: "Foots",
-                cnName: '產品pop框',
+                cnName: 'ProductPop',
                 name: 'prod/View_com_prod_pop_query',
                 url: "/View_com_prod_pop_query/",
                 sortName: "created_date"

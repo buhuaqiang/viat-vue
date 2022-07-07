@@ -2,7 +2,7 @@
     <VolBox
             v-model="model"
             :lazy="true"
-            title="产品pop框"
+            title="productPop"
             :height="450"
             :width="1000"
             :padding="15"
@@ -33,7 +33,7 @@
                     size="medium"
                     icon="el-icon-zoom-out"
                     @click="search"
-            >搜索</el-button
+            >Inquire</el-button
             >
         </div>
 
@@ -61,10 +61,10 @@
                         type="primary"
                         icon="el-icon-plus"
                         @click="addRow()"
-                >确定</el-button
+                >Add Row</el-button
                 >
                 <el-button size="mini" icon="el-icon-close" @click="model = false"
-                >关闭</el-button
+                >Close</el-button
                 >
             </div>
         </template>
@@ -121,10 +121,10 @@
             addRow() {
                 let rows = this.$refs.prodPop.getSelected();
                 if(!rows.length){
-                    return this.$message.error("请选择数据")
+                    return this.$message.error("Please select row data")
                 }
                 if (!rows || rows.length == 0) {
-                    return this.$message.error("请选择行数据");
+                    return this.$message.error("Please select row data");
                 }
 
                 if (this.returnType=="onSelect") {//多層級調用
