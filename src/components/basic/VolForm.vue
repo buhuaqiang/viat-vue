@@ -166,7 +166,7 @@
               >
               </el-date-picker>
               <span style="margin: 0px 5px; font-size: 13px; color: #6f6b6b"
-                >至</span
+                >To</span
               >
               <el-date-picker
                 size="medium"
@@ -212,7 +212,7 @@
               v-else-if="item.type == 'time'"
               v-model="formFields[item.field]"
               :disabled="item.readonly || item.disabled"
-              placeholder="请选择时间"
+              placeholder="Please select a Date"
               :format="item.format"
               style="width: 100%"
               size="medium"
@@ -963,7 +963,7 @@ export default defineComponent({
               (!val || !val.length)
             ) {
               return callback(
-                new Error(item.type == 'img' ? '请上传照片' : '请上传文件')
+                new Error(item.type == 'img' ? 'Please upload a photo' : 'Please upload file')
               );
             }
             return callback();
@@ -1007,12 +1007,12 @@ export default defineComponent({
             //if (this.isReadonly(item)) return callback();
             if (ruleObj.type == 'number') {
               if (!rule.number.test(value)) {
-                ruleObj.message = ruleObj.title + '只能是整数';
+                ruleObj.message = ruleObj.title + 'only be an integer';
                 return callback(new Error(ruleObj.message));
               }
             } else {
               if (!rule.decimal.test(value)) {
-                ruleObj.message = ruleObj.title + '只能是数字';
+                ruleObj.message = ruleObj.title + 'only be  numbers';
                 return callback(new Error(ruleObj.message));
               }
             }
@@ -1021,7 +1021,7 @@ export default defineComponent({
               typeof ruleObj.min === 'number' &&
               value < ruleObj.min
             ) {
-              ruleObj.message = ruleObj.title + '不能小于' + ruleObj.min;
+              ruleObj.message = ruleObj.title + 'cannot be less than' + ruleObj.min;
               return callback(new Error(ruleObj.message));
             }
             if (
@@ -1029,7 +1029,7 @@ export default defineComponent({
               typeof ruleObj.max === 'number' &&
               value > ruleObj.max
             ) {
-              ruleObj.message = ruleObj.title + '不能大于' + ruleObj.max;
+              ruleObj.message = ruleObj.title + 'cannot be greater than' + ruleObj.max;
               return callback(new Error(ruleObj.message));
             }
             return callback();
@@ -1085,7 +1085,7 @@ export default defineComponent({
         }
         if (item.min) {
           _rule.min = item.min;
-          _rule.message = item.title + '至少' + item.min + '个字符!';
+          _rule.message = item.title + 'At least' + item.min + 'characters!';
         }
         if (item.max) {
           return [
@@ -1093,7 +1093,7 @@ export default defineComponent({
             {
               max: item.max,
               required: true,
-              message: item.title + '最多' + item.max + '个字符!',
+              message: item.title + 'most' + item.max + 'characters!',
               trigger: 'blur'
             }
           ];
@@ -1123,7 +1123,7 @@ export default defineComponent({
             //if (this.isReadonly(item)) return callback();
             // 用户自定义的方法，如果返回了值，直接显示返回的值，验证不通过
             if (!val || (item.range && !val.length)) {
-              return callback(new Error('请选择日期'));
+              return callback(new Error('Please select a date'));
             }
             return callback();
           }
@@ -1176,7 +1176,7 @@ export default defineComponent({
 
         if (_rule.max) {
           _rule.nax = item.max;
-          _rule.message = '最多只能选择' + item.max + '项';
+          _rule.message = 'select at most' + item.max + 'item';
         }
         return _rule;
       }

@@ -24,7 +24,7 @@
             const table = ref({
                 key: 'Id',
                 footer: "Foots",
-                cnName: '系统日志',
+                cnName: 'System Logs',
                 name: 'Sys_Log',
                 url: "/Sys_Log/",
                 sortName: "Id"
@@ -32,22 +32,22 @@
             const editFormFields = ref({});
             const editFormOptions = ref([]);
             const searchFormFields = ref({"BeginDate":"","Url":"","LogType":[],"Success":[],"UserIP":"","ServiceIP":"","Role_Id":""});
-            const searchFormOptions = ref([[{"title":"请求地址","field":"Url","type":"text"},{"title":"用户IP","field":"UserIP","type":"text"},{"title":"服务器IP","field":"ServiceIP","type":"text"}],[{"title":"开始时间","field":"BeginDate","type":"datetime"},{"dataKey":"restatus","data":[],"title":"响应状态","field":"Success","type":"selectList"},{"dataKey":"roles","data":[],"title":"角色ID","field":"Role_Id","type":"select"}],[{"dataKey":"log","data":[],"title":"日志类型","field":"LogType","colSize":12,"type":"checkbox"}]]);
+            const searchFormOptions = ref([[{"title":"Request URL","field":"Url","type":"text"},{"title":"User IP","field":"UserIP","type":"text"},{"title":"Server IP","field":"ServiceIP","type":"text"}],[{"title":"Begin Date","field":"BeginDate","type":"datetime"},{"dataKey":"restatus","data":[],"title":"Response","field":"Success","type":"selectList"},{"dataKey":"roles","data":[],"title":"Role ID","field":"Role_Id","type":"select"}],[{"dataKey":"log","data":[],"title":"Log Type","field":"LogType","colSize":12,"type":"checkbox"}]]);
             const columns = ref([{field:'Id',title:'Id',type:'int',width:90,hidden:true,readonly:true,require:true,align:'left'},
-                       {field:'BeginDate',title:'开始时间',type:'datetime',width:140,align:'left',sortable:true},
-                       {field:'UserName',title:'用户名称',type:'string',width:90,align:'left'},
-                       {field:'Url',title:'请求地址',type:'string',width:110,align:'left'},
-                       {field:'LogType',title:'日志类型',type:'string',bind:{ key:'log',data:[]},width:80,align:'left'},
-                       {field:'Success',title:'响应状态',type:'int',bind:{ key:'restatus',data:[]},width:80,align:'left'},
-                       {field:'ElapsedTime',title:'时长',type:'int',width:60,align:'left'},
-                       {field:'RequestParameter',title:'请求参数',type:'string',width:70,align:'left'},
-                       {field:'ResponseParameter',title:'响应参数',type:'string',width:70,align:'left'},
-                       {field:'ExceptionInfo',title:'异常信息',type:'string',width:70,align:'left'},
-                       {field:'UserIP',title:'用户IP',type:'string',width:90,align:'left'},
-                       {field:'ServiceIP',title:'服务器IP',type:'string',width:90,hidden:true,align:'left'},
-                       {field:'BrowserType',title:'浏览器类型',type:'string',width:90,align:'left'},
-                       {field:'User_Id',title:'用户ID',type:'int',width:90,hidden:true,align:'left'},
-                       {field:'Role_Id',title:'角色ID',type:'int',bind:{ key:'roles',data:[]},width:90,hidden:true,align:'left'},
+                       {field:'BeginDate',title:'Begin Date',type:'datetime',width:140,align:'left',sortable:true},
+                       {field:'UserName',title:'UserName',type:'string',width:90,align:'left'},
+                       {field:'Url',title:'Url',type:'string',width:110,align:'left'},
+                       {field:'LogType',title:'Log Type',type:'string',bind:{ key:'log',data:[]},width:80,align:'left'},
+                       {field:'Success',title:'Status',type:'int',bind:{ key:'restatus',data:[]},width:80,align:'left'},
+                       {field:'ElapsedTime',title:'Times',type:'int',width:60,align:'left'},
+                       {field:'RequestParameter',title:'Request Parameter',type:'string',width:70,align:'left'},
+                       {field:'ResponseParameter',title:'Response Parameter',type:'string',width:70,align:'left'},
+                       {field:'ExceptionInfo',title:'Exception Info',type:'string',width:70,align:'left'},
+                       {field:'UserIP',title:'User IP',type:'string',width:90,align:'left'},
+                       {field:'ServiceIP',title:'Service IP',type:'string',width:90,hidden:true,align:'left'},
+                       {field:'BrowserType',title:'Browser Type',type:'string',width:90,align:'left'},
+                       {field:'User_Id',title:'User ID',type:'int',width:90,hidden:true,align:'left'},
+                       {field:'Role_Id',title:'Role ID',type:'int',bind:{ key:'roles',data:[]},width:90,hidden:true,align:'left'},
                        {field:'EndDate',title:'End Date',type:'datetime',width:150,hidden:true,align:'left',sortable:true}]);
             const detail = ref({
                 cnName: "#detailCnName",

@@ -1006,7 +1006,7 @@ let methods = {
     let fileName = this.getFileName(isDetail);
     //2021.01.08优化导出功能
     $http
-      .post(url, param, '正在导出数据....', { responseType: 'blob' })
+      .post(url, param, 'exporting data....', { responseType: 'blob' })
       .then((content) => {
         const blob = new Blob([content]);
         if ('download' in document.createElement('a')) {

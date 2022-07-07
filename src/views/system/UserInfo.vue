@@ -3,7 +3,7 @@
       :width="500"
       :height="270"
       v-model="modifyOptions.model"
-      title="修改密码"
+      title="Change Password"
     >
       <div style="padding:10px;20px;">
         <VolForm
@@ -20,7 +20,7 @@
             icon="md-checkmark-circle"
             long
             @click="savePwd"
-            >保存</el-button
+            >Save</el-button
           >
         </div>
       </template>
@@ -34,7 +34,7 @@
             <span style="font-size: 13px">{{ userInfo.userName }}</span>
           </p>
           <p class="date">
-            <span>注册日期：{{ userInfo.createDate }}</span>
+            <span>createDate：{{ userInfo.createDate }}</span>
           </p>
           <p>
             <el-button
@@ -43,7 +43,7 @@
               size="small"
               icon="md-lock"
               long
-              >修改密码</el-button
+              >Change Password</el-button
             >
             <el-button
               style="padding: 3px 16px"
@@ -51,7 +51,7 @@
               type="primary"
               size="mini"
               ghost
-              >修改头像</el-button
+              >Change HeadImage</el-button
             >
           </p>
         </div>
@@ -73,7 +73,7 @@
             icon="md-checkmark-circle"
             long
             @click="modifyInfo"
-            >保存</el-button
+            >Save</el-button
           >
         </div>
       </vol-form>

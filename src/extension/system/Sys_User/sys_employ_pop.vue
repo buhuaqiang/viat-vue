@@ -2,26 +2,26 @@
     <VolBox
             v-model="model"
             :lazy="true"
-            title="用戶"
+            title="Employee"
             :height="600"
-            :width="1000"
+            :width="1200"
             :padding="15"
     >
         <!-- 设置查询条件 -->
         <div style="padding-bottom: 10px">
-            <span style="margin-right: 5px">Emp Code:</span>
+            <span style="margin-right: 5px">Employee Code:</span>
             <el-input
                     placeholder="emp_id"
                     style="width: 180px"
                     v-model="emp_id"
             />
-            <span style="margin-right: 5px">&nbsp;&nbsp;&nbsp;&nbsp;Emp Ename:</span>
+            <span style="margin-right: 5px">&nbsp;&nbsp;&nbsp;&nbsp;Employee Ename:</span>
             <el-input
                     placeholder="emp_ename"
                     style="width: 180px"
                     v-model="emp_ename"
             />
-            <span style="margin-right: 5px">&nbsp;&nbsp;&nbsp;&nbsp;Emp Cname:</span>
+            <span style="margin-right: 5px">&nbsp;&nbsp;&nbsp;&nbsp;Employee Cname:</span>
             <el-input
                     placeholder="emp_cname"
                     style="width: 180px"
@@ -31,9 +31,9 @@
                     type="primary"
                     style="margin-left:10px"
                     size="medium"
-                    icon="el-icon-zoom-out"
+                    icon="el-icon-search"
                     @click="search"
-            >搜索</el-button
+            >inquire</el-button
             >
         </div>
 
@@ -61,10 +61,10 @@
                         type="primary"
                         icon="el-icon-plus"
                         @click="addRow()"
-                >确定</el-button
+                >OK</el-button
                 >
                 <el-button size="mini" icon="el-icon-close" @click="model = false"
-                >关闭</el-button
+                >Close</el-button
                 >
             </div>
         </template>
@@ -92,19 +92,19 @@
                 url: "api/Viat_com_employee/GetEmployData",//加载数据的接口
                 columns: [
                     {field:'emp_dbid',title:'PKID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
-                    {field:'emp_id',title:'Emp Code',type:'string',width:110,require:true,align:'left',sort:true},
+                    {field:'emp_id',title:'Employee Code',type:'string',width:110,require:true,align:'left',sort:true},
                     {field:'entity',title:'entity',type:'string',width:110,align:'left',hidden:true},
                     {field:'division',title:'division',type:'string',width:110,align:'left',hidden:true},
                     {field:'user_name',title:'AD登入 name',type:'string',width:110,require:true,align:'left',hidden:true},
                     {field:'user_domain',title:'AD登入 domain',type:'string',width:110,require:true,align:'left',hidden:true},
                     {field:'emp_global_id',title:'emp_global_id',type:'string',width:110,align:'left',hidden:true},
-                    {field:'emp_ename',title:'Emp Ename',type:'string',width:110,align:'left'},
-                    {field:'emp_cname',title:'Emp Cname',type:'string',width:110,align:'left'},
-                    {field:'email',title:'電子郵箱',type:'string',width:120,align:'left',hidden:true},
+                    {field:'emp_ename',title:'Employee Ename',type:'string',width:110,align:'left'},
+                    {field:'emp_cname',title:'Employee Cname',type:'string',width:110,align:'left'},
+                    {field:'email',title:'Mail',type:'string',width:120,align:'left',hidden:true},
                     {field:'dept_id',title:'部門代碼',type:'string',width:110,align:'left',hidden:true},
-                    {field:'dept_name',title:'DeptName',type:'string',width:220,align:'left'},
-                    {field:'mobile',title:'手機',type:'string',width:110,align:'left',hidden:true},
-                    {field:'address',title:'地址',type:'string',width:120,align:'left',hidden:true}
+                    {field:'dept_name',title:'Department',type:'string',width:220,align:'left'},
+                    {field:'mobile',title:'mobile',type:'string',width:110,align:'left',hidden:true},
+                    {field:'address',title:'address',type:'string',width:120,align:'left',hidden:true}
                   ],
             };
         },

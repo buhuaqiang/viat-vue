@@ -392,6 +392,8 @@ let extension = {
         this.editFormFields["pricegroup_dbid"] = rows[0].pricegroup_dbid;
         this.editFormFields["group_id"] =rows[0].group_id;
         this.pickEditFormPriceGroupName=rows[0].group_name;
+        //更新cust list 
+        this.$refs.modelBody.initCustomerListByGroupDbId(rows[0].pricegroup_dbid);
       }
 
     },

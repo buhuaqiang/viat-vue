@@ -14,9 +14,10 @@ let extension = {
   methods: {
     //事件扩展
     onInit() {
+      this.boxOptions.labelWidth=180
       this.columns.forEach((x) => {
         if (x.field == 'ParentId') {
-          x.title = '上级角色';
+          x.title = 'Parent Role';
         }
       });
 
@@ -27,7 +28,7 @@ let extension = {
       this.editFormOptions.forEach((x) => {
         x.forEach((item) => {
           if (item.field == 'ParentId') {
-            item.title = '上级角色';
+            item.title = 'Parent Role';
             //设置任意节点都能选中(默认只能选中最后一个节点)
             item.changeOnSelect = true;
           }

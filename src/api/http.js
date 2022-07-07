@@ -46,7 +46,7 @@ axios.interceptors.response.use((res) => {
                 if (!localStorage.getItem('user')) {
                     Message.error({
                         showClose: true,
-                        message: '登陆已过期',
+                        message: 'Login expired',
                         type: 'error'
                     });
                 }
@@ -56,14 +56,14 @@ axios.interceptors.response.use((res) => {
 
         }
         if (error.response.status == '404') {
-            httpMessage = "未找到请求地址";
+            httpMessage = "Request address not found";
         }
         else if (error.response.data && error.response.data.message) {
             httpMessage = error.response.data.message;
         }
     }
     else {
-        httpMessage = '服务器处理异常'
+        httpMessage = 'Server handles exception'
     }
     redirect(httpMessage);
     return Promise.reject(error.response || {}, httpMessage);
@@ -101,7 +101,7 @@ function showLoading (loading) {
     loadingInstance = Loading.service({
         target: '#loading-container',
         customClass: "el-loading",
-        text: typeof loading == "string" ? loading : '正在处理.....',
+        text: typeof loading == "string" ? loading : 'Processing.....',
         spinner: 'el-icon-loading',
         background: 'rgba(58, 61, 63, 0.32)'
     });
@@ -125,7 +125,7 @@ function post (url, params, loading, config) {
             .then(response => {
                 resolve(response.data);
             }, err => {
-                reject(err && err.data && err.data.message ? err.data.message : '服务器处理异常');
+                reject(err && err.data && err.data.message ? err.data.message : 'Server handles exception');
             })
             .catch((error) => {
                 reject(error)

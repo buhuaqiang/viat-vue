@@ -440,8 +440,8 @@ export default {
     initCustomerListByGroupDbId(pricegroup_dbid){
       //ajax根據
       //返回指定字段
-      this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?pricegroup_dbid="+pricegroup_dbid,{} , "loading").then(reslut => {
-                let _rows = rows.map((row)=>{
+      this.http.get("api/Viat_com_cust/GetCustListByPriceGroupDBID?sPriceGroupDBID="+pricegroup_dbid,{} , "loading").then(reslut => {
+                let _rows = reslut.map((row)=>{
                   return{
                     powercont_dbid:this.powercont_dbid,
                     cust_dbid:row.cust_dbid,
