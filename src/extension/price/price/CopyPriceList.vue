@@ -17,19 +17,22 @@
         </el-form-item>
 
         <el-form-item v-show="custShowFlag" label="Copy to New Customer ID:" style="width: 35%">
-          <el-input v-model="formModel.new_cust_dbidname" @keyup.enter="custKeyPress(1)" style="width:200px;" ></el-input>
+          <el-input v-model="formModel.new_cust_id" @keyup.enter="custKeyPress(1)" style="width:120px;" ></el-input>
+          <el-input v-model="formModel.new_cust_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
           <a @click="openPriceGroup(0,'new_cust_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0,'new_cust_dbid')"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="formModel.new_cust_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
 
         <el-form-item v-show="groupShowFlag" label="Original Group ID:" style="width: 35%">
-          <el-input v-model="formModel.org_pricegroup_dbidname" @keyup.enter="groupKeyPress(0)" style="width:200px;" ></el-input>
+          <el-input v-model="formModel.org_group_id" @keyup.enter="groupKeyPress(0)" style="width:120px;" ></el-input>
+          <el-input v-model="formModel.org_group_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
           <a @click="openPriceGroup(1,'org_pricegroup_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1,'org_pricegroup_dbid')"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="formModel.org_pricegroup_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
 
         <el-form-item v-show="groupShowFlag" label="Copy to New Group ID:" style="width: 35%">
-          <el-input v-model="formModel.new_pricegroup_dbidname" @keyup.enter="groupKeyPress(1)" style="width:200px;" ></el-input>
+          <el-input v-model="formModel.new_group_id" @keyup.enter="groupKeyPress(1)" style="width:120px;" ></el-input>
+          <el-input v-model="formModel.new_group_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
           <a @click="openPriceGroup(1,'new_pricegroup_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1,'new_pricegroup_dbid')"><i class="el-icon-zoom-out"></i>Clean</a>
           <el-input v-model="formModel.new_pricegroup_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
         </el-form-item>
@@ -191,26 +194,32 @@ export default {
     groupKeyPress(flag){
       let  group_id = ''
       if(flag==0){
-        group_id = this.formModel.org_pricegroup_dbidname
+        group_id = this.formModel.org_group_id
       }else if(flag==1){
-        group_id = this.formModel.new_pricegroup_dbidname
+        group_id = this.formModel.new_group_id
       }
       if(group_id) {
         this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
           if(reslut!==null){
             if(flag==0){
               this.formModel.org_pricegroup_dbid=reslut.pricegroup_dbid;
-              this.formModel.org_pricegroup_dbidname=reslut.group_id + " " + reslut.group_name;
+              this.formModel.org_group_id=reslut.group_id
+              this.formModel.org_group_name=reslut.group_name;
             }else if(flag==1){
               this.formModel.new_pricegroup_dbid=reslut.pricegroup_dbid;
-              this.formModel.new_pricegroup_dbidname=reslut.group_id + " " + reslut.group_name;
+              this.formModel.new_group_id=reslut.group_id ;
+              this.formModel.new_group_name=reslut.group_name;
             }
           }else {
             this.$message.error("Group Id Is Not Exists.");
             if(flag==0){
-              this.formModel.org_pricegroup_dbidname=''
+              this.formModel.org_pricegroup_dbid='';
+              this.formModel.org_group_id=''
+              this.formModel.org_group_name=''
             }else if(flag==1){
-              this.formModel.new_pricegroup_dbidname=''
+              this.formModel.new_pricegroup_dbid='';
+              this.formModel.new_group_id='' ;
+              this.formModel.new_group_name='';
             }
 
           }
@@ -222,9 +231,9 @@ export default {
     custKeyPress(flag){
       let  cust_id = ''
       if(flag==0){
-        cust_id = this.formModel.org_cust_dbidname
+        cust_id = this.formModel.org_cust_id
       }else if(flag==1){
-        cust_id = this.formModel.new_cust_dbidname
+        cust_id = this.formModel.new_cust_id
       }
       if(cust_id) {
         this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
@@ -232,17 +241,23 @@ export default {
 
             if(flag==0){
               this.formModel.org_cust_dbid=reslut.cust_dbid;
-              this.formModel.org_cust_dbidname=reslut.cust_id + " " + reslut.cust_name;
+              this.formModel.org_cust_id=reslut.cust_id
+              this.formModel.org_cust_name=reslut.cust_name;
             }else if(flag==1){
               this.formModel.new_cust_dbid=reslut.cust_dbid;
-              this.formModel.new_cust_dbidname=reslut.cust_id + " " + reslut.cust_name;
+              this.formModel.new_cust_id=reslut.cust_id
+              this.formModel.new_cust_name=reslut.cust_name;
             }
           }else {
             this.$message.error("Customer Id Is Not Exists.");
             if(flag==0){
-              this.formModel.org_cust_dbidname=''
+              this.formModel.org_cust_dbid='';
+              this.formModel.org_cust_id=''
+              this.formModel.org_cust_name=''
             }else if(flag==1){
-              this.formModel.new_cust_dbidname=''
+              this.formModel.new_cust_dbid=''
+              this.formModel.new_cust_id=''
+              this.formModel.new_cust_name=''
             }
 
           }
@@ -261,14 +276,18 @@ export default {
         this.groupShowFlag=true;
       }
 
-      this.formModel.org_pricegroup_dbidname="";
+      this.formModel.org_group_id="";
+      this.formModel.org_group_name="";
       this.formModel.org_pricegroup_dbid="";
-      this.formModel.new_pricegroup_dbidname="";
+      this.formModel.new_group_id="";
+      this.formModel.new_group_name="";
       this.formModel.new_pricegroup_dbid="";
 
-      this.formModel.org_cust_dbidname="";
+      this.formModel.org_cust_id="";
+      this.formModel.org_cust_name="";
       this.formModel.org_cust_dbid="";
-      this.formModel.new_cust_dbidname="";
+      this.formModel.new_cust_id="";
+      this.formModel.new_cust_name="";
       this.formModel.new_cust_dbid="";
 
     },
@@ -298,7 +317,7 @@ export default {
     selected(){
       let rows= this.$refs.mytable.getSelected()
       if(rows.length==0){
-        return this.$message.error("請選擇數據");
+        return this.$message.error("Please select a row");
       }
       rows.forEach(x=>{
         let dbids = this.selected_dbids.find((f) => f == x.custprice_dbid);
@@ -314,7 +333,7 @@ export default {
     cancelSelected(){
       let rows= this.$refs.table2.getSelected()
       if(rows.length==0){
-        return this.$message.error("請選擇數據");
+        return this.$message.error("Please select a row");
       }
       rows.forEach(x=>{
         let index=this.selected_dbids.findIndex((f) => f == x.custprice_dbid);
@@ -333,9 +352,9 @@ export default {
     },
     openPriceGroup(val,fieldName){
       if(val==0){
-        this.$refs.Viat_com_custModelBody.openDemo(fieldName,"ext")
+        this.$refs.Viat_com_custModelBody.openModel(true,fieldName,"onSelect")
       }else if(val==1){
-        this.$refs.PriceGroupModelBody.openDemo(fieldName,"ext")
+        this.$refs.PriceGroupModelBody.openModel(true,fieldName,"onSelect")
       }
 
     },
@@ -348,32 +367,40 @@ export default {
           return this.$message.error("請選擇數據");
         }
         if(fieldName=='org_pricegroup_dbid'){
-          this.formModel.org_pricegroup_dbidname=rows[0].group_id+" "+rows[0].group_name;
+          this.formModel.org_group_id=rows[0].group_id
+          this.formModel.org_group_name=rows[0].group_name;
           this.formModel.org_pricegroup_dbid=rows[0].pricegroup_dbid
         }else if(fieldName=='new_pricegroup_dbid'){
-          this.formModel.new_pricegroup_dbidname=rows[0].group_id+" "+rows[0].group_name;
+          this.formModel.new_group_id=rows[0].group_id
+          this.formModel.new_group_name=rows[0].group_name;
           this.formModel.new_pricegroup_dbid=rows[0].pricegroup_dbid
         }else if(fieldName=='new_cust_dbid'){
-          this.formModel.new_cust_dbidname=rows[0].cust_id+" "+rows[0].cust_name;
+          this.formModel.new_cust_id=rows[0].cust_id
+          this.formModel.new_cust_name=rows[0].cust_name;
           this.formModel.new_cust_dbid=rows[0].cust_dbid
         }else if(fieldName=='org_cust_dbid'){
-          this.formModel.org_cust_dbidname=rows[0].cust_id+" "+rows[0].cust_name;
+          this.formModel.org_cust_id=rows[0].cust_id
+          this.formModel.org_cust_name=rows[0].cust_name;
           this.formModel.org_cust_dbid=rows[0].cust_dbid
         }
 
     },
     clearPop(val,fieldName){
       if(fieldName=='org_pricegroup_dbid'){
-        this.formModel.org_pricegroup_dbidname="";
+        this.formModel.org_group_id="";
+        this.formModel.org_group_name="";
         this.formModel.org_pricegroup_dbid=""
       }else if(fieldName=='new_pricegroup_dbid'){
-        this.formModel.new_pricegroup_dbidname=""
+        this.formModel.new_group_id="";
+        this.formModel.new_group_name="";
         this.formModel.new_pricegroup_dbid=""
       }else if(fieldName=='new_cust_dbid'){
-        this.formModel.new_cust_dbidname=""
+        this.formModel.new_cust_id=""
+        this.formModel.new_cust_name=""
         this.formModel.new_cust_dbid=""
       }else if(fieldName=='org_cust_dbid'){
-        this.formModel.org_cust_dbidname=""
+        this.formModel.org_cust_id=""
+        this.formModel.org_cust_name=""
         this.formModel.org_cust_dbid=""
       }
 
@@ -405,7 +432,7 @@ export default {
     addRow() {
       let rows =  this.$refs.table2.getSelected()
       if (!rows || rows.length == 0) {
-        return this.$message.error("請選擇數據");
+        return this.$message.error("Please select a row");
       }
       this.checkData();
       this.formModel.rows=rows;

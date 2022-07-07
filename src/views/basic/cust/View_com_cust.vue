@@ -27,7 +27,7 @@
                 cnName: 'Customer Maintain',
                 name: 'cust/View_com_cust',
                 url: "/View_com_cust/",
-                sortName: "cust_id"
+                sortName: "created_date"
             });
             const editFormFields = ref({"cust_id":"","cust_name":"","cust_zip_id":"","cust_city_name":"","cust_address":"","invoice_name":"","tax_id":"","invoice_city_name":"","invoice_zip_id":"","invoice_address":"","territory_id":"","owner":"","contact":"","tel_no":"","fax_no":"","email":"","doh_institute_no":"","ctrl_drug_no":"","doh_type":"","margin_type":"","ctrl_drug_contact":"","is_contract":"","is_private":"","status":"","own_by_hospital":"","own_hospital_cust_id":"","med_group_cust_id":"","delv_group_cust_id":"","new_cust_id":"","inactive_date":"","remarks":""});
             const editFormOptions = ref([[{"title":"Customer  Code","required":true,"field":"cust_id"},

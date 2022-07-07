@@ -95,6 +95,12 @@ let serviceFilter = {
           }
         }
       }
+
+      if (this.hasDetail) {
+        this.detailOptions.buttons.forEach(x=>{
+          x.hidden=false;
+        })
+      }
     }
   },
 
