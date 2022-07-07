@@ -51,15 +51,12 @@ let extension = {
         // this.boxOptions.labelWidth = 150;
       //显示查询全部字段
       //this.setFiexdSearchForm(true);
+      this.setFiexdSearchForm(false);
       this. singleSearch = null;
-        this.boxOptions.width=1200;
-
-
-        //显示查询全部字段
-        this.setFiexdSearchForm(true);
-
+      this.boxOptions.width=1200;
+        this.buttons.splice(0,1);
         this.buttons.forEach(x => {
-            if (x.name == "Inquire" || x.name =="Edit") {
+            if (x.name == "Inquire") {
                 x.hidden=true
             }
         })
