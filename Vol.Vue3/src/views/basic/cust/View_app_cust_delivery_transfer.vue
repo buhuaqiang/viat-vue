@@ -31,7 +31,7 @@
             });
             const editFormFields = ref({"delivery_addr":"","delivery_zip_id":"","delivery_tel_no":"","delivery_contact":"","delivery_name":"","seq_no":""});
             const editFormOptions = ref([[{"title":"","field":"delivery_addr"}],
-                              [{"title":"","field":"delivery_zip_id"}],
+                              [{"dataKey":"viat_city_zone","data":[],"title":"","field":"delivery_zip_id","type":"select"}],
                               [{"title":"","field":"delivery_tel_no"}],
                               [{"title":"","field":"delivery_contact"}],
                               [{"title":"","field":"delivery_name"}],
@@ -40,7 +40,7 @@
             const searchFormOptions = ref([]);
             const columns = ref([{field:'seq_no',title:'seq_no',type:'decimal',width:110,align:'left',sort:true},
                        {field:'delivery_name',title:'delivery_name',type:'string',width:120,align:'left'},
-                       {field:'delivery_zip_id',title:'delivery_zip_id',type:'string',width:110,align:'left'},
+                       {field:'delivery_zip_id',title:'delivery_zip_id',type:'string',bind:{ key:'viat_city_zone',data:[]},width:110,align:'left'},
                        {field:'delivery_addr',title:'delivery_addr',type:'string',width:180,align:'left'},
                        {field:'delivery_contact',title:'delivery_contact',type:'string',width:120,align:'left'},
                        {field:'delivery_tel_no',title:'delivery_tel_no',type:'string',width:110,align:'left'},
