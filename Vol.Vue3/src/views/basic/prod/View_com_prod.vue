@@ -36,7 +36,7 @@
                                {"title":"Item Description(English)","field":"prod_ename"}],
                               [{"title":"Unit Of Stock","field":"unit_stock"},
                                {"title":"Unit Of Sale","field":"unit_sale"}],
-                              [{"dataKey":"finance_mpg","data":[],"title":"Finance MPG","field":"global_mpg"},
+                              [{"dataKey":"finance_mpg","data":[],"title":"Finance MPG","field":"global_mpg","type":"select"},
                                {"dataKey":"sales_mpg","data":[],"title":"Sales MPG","field":"lmpg_mpg_id","type":"select"}],
                               [{"title":"NHI Product Code","field":"nhi_id"},
                                {"dataKey":"distributor","data":[],"title":"Default Distributor","field":"default_dist_id","type":"select"}],
