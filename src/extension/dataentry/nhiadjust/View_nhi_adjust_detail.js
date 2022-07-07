@@ -58,9 +58,9 @@ let extension = {
 
       editform_prod_id.onKeyPress=($event)=>{
         if($event.keyCode == 13){
-          let  prod_id = this.editFormFields['prod_id']
-          if(prod_id) {
-            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+          let  editProdId = this.editFormFields['prod_id']
+          if(editProdId) {
+            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+editProdId.replace(/\s/g,""),{} , "loading").then(reslut => {
               if(reslut !=null){
                 this.editFormFields['prod_dbid'] =reslut.prod_dbid;
                 this.editFormFields['prod_id'] =reslut.prod_id ;
