@@ -224,6 +224,18 @@ let extension = {
         return row.end_date.substr(0,10);
       }
 
+      //form表单日期校验
+      let editform_end_date = this.getFormOption("end_date");
+
+      editform_end_date.validator = (rule, val, callback) => {
+        let editform_start_date_val=this.editFormFields.start_date;
+        let editform_end_date_val=this.editFormFields.end_date;
+        if (editform_end_date_val!='' &&editform_start_date_val!='' && new Date(editform_end_date_val)<new Date(editform_start_date_val)) {
+          return '[End Data] Should be later than  [Start Date]'
+        }
+        return "";
+      }
+
     },
 
 
@@ -392,7 +404,7 @@ let extension = {
         this.editFormFields["pricegroup_dbid"] = rows[0].pricegroup_dbid;
         this.editFormFields["group_id"] =rows[0].group_id;
         this.pickEditFormPriceGroupName=rows[0].group_name;
-        //更新cust list 
+        //更新cust list
         this.$refs.modelBody.initCustomerListByGroupDbId(rows[0].pricegroup_dbid);
       }
 
