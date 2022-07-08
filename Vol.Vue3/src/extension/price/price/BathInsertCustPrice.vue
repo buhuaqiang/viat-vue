@@ -9,17 +9,25 @@
   >
     <div style="padding-bottom: 10px">
       <el-form :inline="true" label-position="left" label-width="110px" :model="formModel">
+        <el-form-item  label="Bid NO:" style="width: 70%">
+          <el-input v-model="formModel.bid_no" style="width:200px;" ></el-input>
+        </el-form-item>
         <el-form-item id="0" label="Group:" style="width: 40%">
           <el-input v-model="formModel.group_id" style="width:120px;" @keyup.enter="groupKeyPress"></el-input>
           <el-input v-model="formModel.group_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+          <el-input v-model="formModel.pricegroup_dbid" type="hidden" style="width: 0px"></el-input>
           <a @click="openPriceGroup(0)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0)"><i class="el-icon-zoom-out"></i>Clean</a>
-          <el-input v-model="formModel.pricegroup_dbid" type="hidden"></el-input>
+        </el-form-item>
+        <el-form-item v-show="nhiGroupFlag"  label="NHI Code:" style="">
+          <el-input v-model="formModel.nhi_id" style="width:200px;" ></el-input>
+          <el-checkbox @change="selfPayChecked"  label="Self Pay" key="Self Pay" size="small" style="padding-left: 10px"/>
         </el-form-item>
         <el-form-item label="Product:" style="width: 40%">
           <el-input v-model="formModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress"></el-input>
           <el-input v-model="formModel.prod_ename" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+          <el-input v-model="formModel.prod_dbid"  type="hidden" style="width: 0px"></el-input>
           <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
-          <el-input v-model="formModel.prod_dbid"  type="hidden"></el-input>
+
         </el-form-item>
         <el-form-item label="Start Date:" style="width: 35%">
           <el-date-picker
@@ -96,7 +104,7 @@
     <template #footer>
       <div>
         <el-button size="mini" icon="el-icon-close" @click="model = false"
-          >关闭</el-button
+          >Close</el-button
         >
       </div>
     </template>
@@ -123,8 +131,10 @@ export default {
   data() {
     return {
       model: false,
+      nhiGroupFlag:false,
       pushData:[],
       formModel:{
+        bid_no:'',
         group_id:'',
         group_name:'',
         pricegroup_dbid:'',
@@ -136,6 +146,7 @@ export default {
         net_price:'',
         status:'Y',
         min_qty:1,
+        nhi_id:'',
         start_date:new Date(),
         end_date:new Date('2099-12-31')
       },
@@ -165,6 +176,13 @@ export default {
 
   },
   methods: {
+    selfPayChecked(val){
+      if(val){
+        this.formModel.nhi_id="Self Pay"
+      }else {
+        this.formModel.nhi_id=""
+      }
+    },
     groupKeyPress(){
       let  group_id = this.formModel.group_id
       if(group_id) {
@@ -174,9 +192,15 @@ export default {
             this.formModel.group_id=reslut.group_id;
             this.formModel.group_name=reslut.group_name;
             this.formModel.pricegroup_dbidname=reslut.group_id + " " + reslut.group_name;
+            if(reslut.group_id=='NHI'){
+              this.nhiGroupFlag=true
+            }
           }else {
             this.$message.error("Group Id Is Not Exists.");
-            this.formModel.pricegroup_dbidname=''
+            this.formModel.pricegroup_dbid="";
+            this.formModel.group_id='';
+            this.formModel.group_name='';
+            this.nhiGroupFlag=false
           }
 
           return;
@@ -193,9 +217,14 @@ export default {
             this.formModel.prod_ename=reslut.prod_ename;
             this.formModel.nhi_price=reslut.nhi_price;
             this.formModel.prod_dbidname=reslut.prod_id + " " + reslut.prod_ename;
+            if(this.nhiGroupFlag){
+              this.formModel.nhi_id=reslut.nhi_id;
+            }
           }else {
             this.$message.error("Product Id Is Not Exists.");
-            this.formModel.prod_dbidname=''
+            this.formModel.prod_id="";
+            this.formModel.prod_dbid="";
+            this.formModel.prod_ename="";
           }
           return;
         })
@@ -227,6 +256,9 @@ export default {
           this.formModel.group_id=rows[0].group_id;
           this.formModel.group_name=rows[0].group_name;
           this.formModel.pricegroup_dbid=rows[0].pricegroup_dbid
+          if(rows[0].group_id=='NHI'){
+            this.nhiGroupFlag=true
+          }
         }else if(fieldName=='cust_dbid'){
 
         }else if(fieldName=='prod_dbid'){
@@ -236,6 +268,9 @@ export default {
           this.formModel.prod_ename=rows[0].prod_ename;
           this.formModel.invoice_price='';
           this.formModel.net_price='';
+          if(this.nhiGroupFlag){
+            this.formModel.nhi_id=rows[0].nhi_id;
+          }
         }
 
     },
@@ -244,6 +279,7 @@ export default {
         this.formModel.pricegroup_dbid="";
         this.formModel.group_id='';
         this.formModel.group_name='';
+        this.nhiGroupFlag=false
       }else if(val==1){
         this.formModel.cust_id="";
         this.formModel.cust_dbid="";
@@ -291,6 +327,12 @@ export default {
       })
       return time_str
     },
+    isDecimal(val) {
+      return /(^[\-0-9][0-9]*(.[0-9]+)?)$/.test(val);
+    },
+    isNumber(val) {
+      return /(^[\-0-9][0-9]*([0-9]+)?)$/.test(val);
+    },
     add(){
       //頁面數據校驗
       if(this.formModel.pricegroup_dbid){
@@ -320,13 +362,23 @@ export default {
         return false;
       }
       if(this.formModel.invoice_price){
+        if(this.isDecimal(this.formModel.invoice_price) || this.isNumber(this.formModel.invoice_price)){
 
+        }else{
+          this.$message.error("Invoice price invalid.");
+          return false;
+        }
       }else {
         this.$message.error("Invoice price can't be empty.");
         return false;
       }
       if(this.formModel.net_price){
+        if(this.isDecimal(this.formModel.net_price) || this.isNumber(this.formModel.net_price)){
 
+        }else{
+          this.$message.error("Net price invalid.");
+          return false;
+        }
       }else {
         this.$message.error("Net price can't be empty.");
         return false;
@@ -337,6 +389,7 @@ export default {
       }
       let message="";
       let pass=true;
+
       if(this.formModel.invoice_price<this.formModel.net_price){
         message="Invoice Price < Net Price,";
         if(this.formModel.invoice_price>this.formModel.nhi_price){
@@ -345,16 +398,17 @@ export default {
         message+="can’t be saved. Please check."
         this.$message.error(message);
         return false;
-      }else{
-        if(this.formModel.invoice_price>this.formModel.nhi_price){
-          pass=false;
-          message="Invoice Price > NHI Price";
-          if(this.formModel.invoice_price==this.formModel.net_price){
-            message+="Invoice Price ≠ Nhi Price but  Invoice Price = Net Price."
-          }
-          message+="Do you want to add?"
-
+      } else if (this.formModel.invoice_price > this.formModel.nhi_price ||
+              (this.formModel.nhi_price != this.formModel.net_price && this.formModel.net_price == this.formModel.invoice_price)) {
+        message = "";
+        if (this.formModel.invoice_price > this.formModel.nhi_price){
+          message += "Invoice Price > NHI Price. ";
         }
+        if ((this.formModel.nhi_price != this.formModel.invoice_price && this.formModel.net_price == this.formModel.invoice_price)) {
+          message += "Invoice Price ≠ NHI Price but Invoice Price = Net Price.";
+        }
+        message +="Do you want to add?."
+        pass=false;
       }
       if(pass){
         this.checkData();
@@ -370,6 +424,42 @@ export default {
       }
     },
 
+    priceCheck(){
+      if (this.formModel.invoice_price < this.formModel.net_price) {
+        let message="Invoice Price < Net Price,can't be saved.Please check."
+        if(this.formModel.invoice_price > this.formModel.nhi_price){
+          message+="Invoice Price > NHI Price."
+        }
+        return false;
+      }
+      else if ( this.formModel.invoice_price  >this.formModel.nhi_price) {
+        let message="Invoice Price > NHI Price,do you want to save data anyway?"
+        //
+      } else {
+
+      }
+    },
+    draftPriceCheck(){
+      if (this.formModel.invoice_price < this.formModel.net_price) {
+        let message="Invoice Price < Net Price,can't be saved.Please check."
+        if(this.formModel.invoice_price > this.formModel.formModel.nhi_price){
+          message+="Invoice Price > NHI Price."
+        }
+        return false;
+      }else if (this.formModel.invoice_price > this.formModel.formModel.nhi_price ||
+              (this.formModel.formModel.nhi_price != this.formModel.net_price && this.formModel.net_price == this.formModel.invoice_price)) {
+         let tmp_msg = "";
+        if (this.formModel.invoice_price > this.formModel.formModel.nhi_price)
+          tmp_msg += "Invoice Price > NHI Price. ";
+        if ((this.formModel.nhi_price != this.formModel.invoice_price && this.formModel.net_price == this.formModel.invoice_price))
+          tmp_msg += "Invoice Price ≠ NHI Price but Invoice Price = Net Price.";
+          tmp_msg +="Do you want to add?."
+
+      } else {
+
+      }
+    },
+
     checkData(){
       //重複判斷 group+prod 判斷
       let index=this.pushData.findIndex((f) => f.pricegroup_dbid==this.formModel.pricegroup_dbid && f.prod_dbid==this.formModel.prod_dbid);
@@ -378,6 +468,7 @@ export default {
         this.http.post("api/View_cust_price/checkCustPriceData", { mainData: this.formModel }, true)
                 .then((x) => {
                   let addData={
+                    bid_no: this.formModel.bid_no,
                     group_id:this.formModel.group_id,
                     group_name:this.formModel.group_name,
                     pricegroup_dbid:this.formModel.pricegroup_dbid,
@@ -390,7 +481,8 @@ export default {
                     status:'Y',
                     min_qty:this.formModel.min_qty,
                     start_date:this.formModel.start_date,
-                    end_date:this.formModel.end_date
+                    end_date:this.formModel.end_date,
+                    nhi_id:this.formModel.nhi_id
                   }
                   this.pushData.push(addData);
                   //清除form數據
@@ -409,10 +501,12 @@ export default {
                   this.formModel.nhi_price=''
                   this.formModel.invoice_price=''
                   this.formModel.net_price=''
+                  this.formModel.nhi_id=''
+                  this.nhiGroupFlag=false
                 });
 
       }else{
-        this.$message.error("Group and Product already exist.");
+        this.$message.error("Group and Product already exist in draft.");
         return false;
       }
     },
@@ -424,7 +518,12 @@ export default {
       }else{
         this.http.post("api/View_cust_price/bathSaveCustPrice", rows , true)
                 .then((x) => {
-                  this.$message.success('success');
+                  debugger
+                  if(x.status){
+                    this.$message.success('Save Completed.');
+                  }else{
+                    this.$message.error(x.message);
+                  }
                   this.model=false;
                 });
       }
@@ -472,4 +571,5 @@ export default {
   .el-form-item {
     margin-bottom: 10px;
   }
+
 </style>

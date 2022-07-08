@@ -5,8 +5,9 @@
         <el-form-item  label="Customer:" style="width: 35%;">
           <el-input v-model="formModel.cust_id" @keyup.enter="custKeyPress" style="width:120px;" ></el-input>
           <el-input v-model="formModel.cust_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+          <el-input v-model="formModel.cust_dbid" type="hidden" style="width:0px;" :disabled="true"></el-input>
           <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
-          <el-input v-model="formModel.cust_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
+
         </el-form-item>
         <el-form-item label="Detach Start Date:" style="width: 60%">
           <el-date-picker
@@ -19,8 +20,9 @@
         <el-form-item  label="Product:" style="width: 35%">
           <el-input v-model="formModel.prod_id" @keyup.enter="prodKeyPress" style="width:120px;" ></el-input>
           <el-input v-model="formModel.prod_ename" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+          <el-input v-model="formModel.prod_dbid" type="hidden" style="width:0px;" :disabled="true"></el-input>
           <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
-          <el-input v-model="formModel.prod_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
+
         </el-form-item>
         <el-form-item label="Remark:" style="width: 60%">
           <el-input type="textarea" v-model="formModel.remark" style="width:250px;"></el-input>

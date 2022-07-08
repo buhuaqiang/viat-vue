@@ -9,18 +9,23 @@
   >
     <div style="padding-bottom: 10px">
       <el-form :inline="true" label-position="left" label-width="110px" :model="formModel">
+        <el-form-item  label="Bid NO:" style="width: 70%">
+          <el-input v-model="formModel.bid_no" style="width:200px;" ></el-input>
+        </el-form-item>
         <el-form-item id="0" label="Cust:" style="width: 40%">
           <el-input v-model="formModel.cust_id" style="width:120px;" @keyup.enter="custKeyPress"></el-input>
           <el-input v-model="formModel.cust_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+          <el-input v-model="formModel.cust_dbid" type="hidden" style="width: 0px"></el-input>
           <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;
           <a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
-          <el-input v-model="formModel.cust_dbid" type="hidden"></el-input>
+
         </el-form-item>
         <el-form-item label="Product:" style="width: 40%">
           <el-input v-model="formModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress"></el-input>
           <el-input v-model="formModel.prod_ename" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+          <el-input v-model="formModel.prod_dbid"  type="hidden" style="width: 0px"></el-input>
           <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
-          <el-input v-model="formModel.prod_dbid"  type="hidden"></el-input>
+
         </el-form-item>
         <el-form-item label="Start Date:" style="width: 35%">
           <el-date-picker
@@ -100,7 +105,7 @@
     <template #footer>
       <div>
         <el-button size="mini" icon="el-icon-close" @click="model = false"
-          >关闭</el-button
+          >Close</el-button
         >
       </div>
     </template>
@@ -130,6 +135,7 @@ export default {
       grossFlag:false,
       pushData:[],
       formModel:{
+        bid_no:'',
         cust_id:'',
         cust_name:'',
         cust_dbid:'',
@@ -247,15 +253,18 @@ export default {
       this.pushData=[];
     },
     custShowData(reslut){
+      debugger
       this.formModel.cust_dbid=reslut.cust_dbid;
       this.formModel.cust_id=reslut.cust_id ;
       this.formModel.cust_name=reslut.cust_name;
       //alert("check the cust is Expfizer ");
-      if(reslut.cust_id=='CD15590180'){
-        this.grossFlag=true;
-      }else{
-        this.grossFlag=false;
+      if(reslut.cust_id){
+        this.http.get("api/View_cust_price_detail/IsExpfizer?cust_id="+reslut.cust_id,{} , "loading").then(reslut => {
+          this.grossFlag=reslut
+          return;
+        })
       }
+
     },
     onSelectPop(fieldName,rows){
         if(rows.length!=1){
@@ -329,6 +338,12 @@ export default {
       })
       return time_str
     },
+    isDecimal(val) {
+      return /(^[\-0-9][0-9]*(.[0-9]+)?)$/.test(val);
+    },
+    isNumber(val) {
+      return /(^[\-0-9][0-9]*([0-9]+)?)$/.test(val);
+    },
     add(){
       //頁面數據校驗
       if(this.formModel.cust_dbid){
@@ -358,13 +373,23 @@ export default {
         return false;
       }
       if(this.formModel.invoice_price){
+        if(this.isDecimal(this.formModel.invoice_price) || this.isNumber(this.formModel.invoice_price)){
 
+        }else{
+          this.$message.error("Invoice price invalid.");
+          return false;
+        }
       }else {
         this.$message.error("Invoice price can't be empty.");
         return false;
       }
       if(this.formModel.net_price){
+        if(this.isDecimal(this.formModel.net_price) || this.isNumber(this.formModel.net_price)){
 
+        }else{
+          this.$message.error("Net price invalid.");
+          return false;
+        }
       }else {
         this.$message.error("Net price can't be empty.");
         return false;
@@ -378,10 +403,19 @@ export default {
       let grossPass=true;
       if(this.grossFlag){
         //如果是通路商客戶,還需要判斷 gross prices  小於 net price,若小於需要確認提示框
-        if(this.formModel.gross_price<this.formModel.net_price){
-          message1="Gross Price < Net Price,Do you want to add?"
-          grossPass=false;
+        if(this.formModel.gross_price){
+          if(this.isDecimal(this.formModel.gross_price) || this.isNumber(this.formModel.gross_price)){
+            if(this.formModel.gross_price<this.formModel.net_price){
+              message1="Gross Price < Net Price,Do you want to add?"
+              grossPass=false;
+            }
+          }else{
+            this.$message.error("Gross price invalid.");
+            return false;
+          }
         }
+
+
       }
       let pass=true;
       let message="";
@@ -393,16 +427,17 @@ export default {
         message+="can’t be saved. Please check."
         this.$message.error(message);
         return false;
-      }else{
-        if(this.formModel.invoice_price>this.formModel.nhi_price){
-          pass=false;
-          message="Invoice Price > NHI Price";
-          if(this.formModel.invoice_price==this.formModel.net_price){
-            message+="Invoice Price ≠ Nhi Price but  Invoice Price = Net Price."
-          }
-          message+="Do you want to add?"
-
+      } else if (this.formModel.invoice_price > this.formModel.nhi_price ||
+              (this.formModel.nhi_price != this.formModel.net_price && this.formModel.net_price == this.formModel.invoice_price)) {
+        message = "";
+        if (this.formModel.invoice_price > this.formModel.nhi_price){
+          message += "Invoice Price > NHI Price. ";
         }
+        if ((this.formModel.nhi_price != this.formModel.invoice_price && this.formModel.net_price == this.formModel.invoice_price)) {
+          message += "Invoice Price ≠ NHI Price but Invoice Price = Net Price.";
+        }
+        message +="Do you want to add?."
+        pass=false;
       }
       if(grossPass && pass){
         this.checkData();
@@ -447,7 +482,7 @@ export default {
     },
 
     checkData(){
-      //重複判斷 group+prod 判斷
+      //重複判斷
       let index=this.pushData.findIndex((f) => f.cust_dbid==this.formModel.cust_dbid && f.prod_dbid==this.formModel.prod_dbid);
       if(index<0){
         //先要通過接口校驗
@@ -490,7 +525,7 @@ export default {
                 });
 
       }else{
-        this.$message.error("Customer and Product already exist.");
+        this.$message.error("Customer and Product already exist in draft.");
         return false;
       }
     },
@@ -550,4 +585,5 @@ export default {
   .el-form-item {
     margin-bottom: 10px;
   }
+
 </style>

@@ -6,8 +6,9 @@
         <el-form-item  label="Group:" style="width: 35%;">
           <el-input v-model="formModel.group_id" @keyup.enter="groupKeyPress" style="width:120px;" ></el-input>
           <el-input v-model="formModel.group_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+          <el-input v-model="formModel.pricegroup_dbid" type="hidden" style="width:0px;" :disabled="true"></el-input>
           <a @click="openPriceGroup(0)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0)"><i class="el-icon-zoom-out"></i>Clean</a>
-          <el-input v-model="formModel.pricegroup_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
+
         </el-form-item>
         <el-form-item label="Start Date:" style="width: 35%">
           <el-date-picker
@@ -20,8 +21,9 @@
         <el-form-item  label="Customer:" style="width: 35%;">
           <el-input v-model="formModel.cust_id" @keyup.enter="custKeyPress" style="width:120px;" ></el-input>
           <el-input v-model="formModel.cust_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+          <el-input v-model="formModel.cust_dbid" type="hidden" style="width:0px;" :disabled="true"></el-input>
           <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
-          <el-input v-model="formModel.cust_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
+
         </el-form-item>
 
         <el-form-item label="End Date:" style="width: 35%">
@@ -272,7 +274,7 @@ export default {
     },
     onSelectPop(fieldName,rows){
         if(rows.length!=1){
-          return this.$message.error("請選擇數據");
+          return this.$message.error("Please select a record first.");
         }
         if(fieldName=='pricegroup_dbid'){
           this.formModel.group_id=rows[0].group_id
@@ -390,7 +392,9 @@ export default {
 
   .el-form-item {
     margin-bottom: 10px;
+
   }
+
   .header{
     background-color:#d0d0d0;
     height: 30px;
@@ -430,5 +434,6 @@ export default {
     width: 48%;
     height: 100%;
   }
+
 
 </style>
