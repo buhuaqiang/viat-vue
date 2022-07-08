@@ -24,7 +24,7 @@
             const table = ref({
                 key: 'nhiadjustm_dbid',
                 footer: "Foots",
-                cnName: 'NHI Adjust',
+                cnName: 'NHI Adjustment',
                 name: 'nhiadjust/View_nhi_adjust',
                 url: "/View_nhi_adjust/",
                 sortName: "created_date"
