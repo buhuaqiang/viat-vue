@@ -422,7 +422,7 @@ export default {
       if(rows.length==0){
         this.$message.error("draft cache is empty.");
       }else{
-        this.http.post("api/View_cust_price/bathSaveCustPrice", { mainData: rows }, true)
+        this.http.post("api/View_cust_price/bathSaveCustPrice", rows , true)
                 .then((x) => {
                   this.$message.success('success');
                   this.model=false;
