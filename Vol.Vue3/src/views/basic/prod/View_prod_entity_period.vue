@@ -24,7 +24,7 @@
             const table = ref({
                 key: 'period_dbid',
                 footer: "Foots",
-                cnName: '產品幣別視圖',
+                cnName: 'Product Entity Control',
                 name: 'prod/View_prod_entity_period',
                 url: "/View_prod_entity_period/",
                 sortName: "created_date"
