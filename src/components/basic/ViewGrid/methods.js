@@ -802,7 +802,7 @@ let methods = {
       return x.value == 'save';
     });
     if (_button) {
-      _button.name = isAdd ? this.continueAddName : '保 存';
+      _button.name = isAdd ? this.continueAddName : 'Save';
     }
   },
   resetAdd() {

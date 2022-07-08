@@ -20,14 +20,16 @@
         <el-form-item id="0" v-show="groupShowFlag" label="Group:" style="width: 40%">
           <el-input v-model="invalidModel.group_id" style="width:120px;" @keyup.enter="groupKeyPress"></el-input>
           <el-input v-model="invalidModel.group_name" style="width:200px;padding-left: 2px"  :disabled="true"></el-input>
+          <el-input v-model="invalidModel.pricegroup_dbid" type="hidden" style="width:0px;" :disabled="true"></el-input>
           <a @click="openPriceGroup(0)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0)"><i class="el-icon-zoom-out"></i>Clean</a>
-          <el-input v-model="invalidModel.pricegroup_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
+
         </el-form-item>
         <el-form-item id="1" v-show="custShowFlag" label="Customer:" style="width: 40%;">
           <el-input v-model="invalidModel.cust_id" style="width:120px;" @keyup.enter="custKeyPress"></el-input>
           <el-input v-model="invalidModel.cust_name" style="width:200px;padding-left: 2px"  :disabled="true"></el-input>
+          <el-input v-model="invalidModel.cust_dbid" type="hidden" style="width:0px;" :disabled="true"></el-input>
           <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
-          <el-input v-model="invalidModel.cust_dbid" type="hidden" style="width:150px;" :disabled="true"></el-input>
+
         </el-form-item>
         <el-form-item v-show="channelShowFlag" label="Group type:" style="width: 40%">
           <el-select v-model="invalidModel.groupType"></el-select>
@@ -35,8 +37,9 @@
         <el-form-item v-show="prodShowFlag" label="Product:" style="width: 40%">
           <el-input v-model="invalidModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress"></el-input>
           <el-input v-model="invalidModel.prod_ename" style="width:200px;padding-left: 2px"  :disabled="true"></el-input>
+          <el-input v-model="invalidModel.prod_dbid"  type="hidden" style="width:0px;" :disabled="true"></el-input>
           <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
-          <el-input v-model="invalidModel.prod_dbid"  type="hidden" style="width:150px;" :disabled="true"></el-input>
+
         </el-form-item>
 
         <el-form-item label="Invalid Date:" style="width: 30%">
@@ -464,5 +467,8 @@ export default {
 
   .el-form-item {
     margin-bottom: 10px;
+  }
+  .el-form-item--medium .el-form-item__content{
+    line-height: 0px;
   }
 </style>
