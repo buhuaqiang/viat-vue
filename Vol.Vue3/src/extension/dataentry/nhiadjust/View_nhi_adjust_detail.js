@@ -32,6 +32,9 @@ let extension = {
     }
   },
   methods: {
+    onActivated(){//禁用頁面緩存，每次进入页面查询数据
+      this.search()
+    },
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
         //示例：在按钮的最前面添加一个按钮
@@ -210,6 +213,7 @@ let extension = {
       //   $parent = $this;
       // });
       let nhiadjustm_dbid = this.$store.getters.data().nhiadjustm_dbid;
+      alert(nhiadjustm_dbid)
       // let nhiadjustm_dbid  = $parent.editFormFields.nhiadjustm_dbid;
       // let nhiadjustm_dbid  = this.editFormFields.nhiadjustm_dbid;
       param.wheres.push({name:'nhiadjustm_dbid',value:nhiadjustm_dbid})
@@ -247,6 +251,7 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+      debugger
       let prodDbid = this.getFormOption('prod_dbid');
       let nhiadjustm = this.getFormOption('nhiadjustm_dbid');
       let prodEname = this.getFormOption('prod_ename');
