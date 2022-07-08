@@ -24,26 +24,26 @@
             const table = ref({
                 key: 'custdeltransfer_dbid',
                 footer: "Foots",
-                cnName: '客戶運送轉移',
+                cnName: 'Import Customer Maintain Detail',
                 name: 'cust/View_app_cust_delivery_transfer',
                 url: "/View_app_cust_delivery_transfer/",
                 sortName: "seq_no"
             });
             const editFormFields = ref({"delivery_addr":"","delivery_zip_id":"","delivery_tel_no":"","delivery_contact":"","delivery_name":"","seq_no":""});
-            const editFormOptions = ref([[{"title":"","field":"delivery_addr"}],
-                              [{"dataKey":"viat_city_zone","data":[],"title":"","field":"delivery_zip_id","type":"select"}],
-                              [{"title":"","field":"delivery_tel_no"}],
-                              [{"title":"","field":"delivery_contact"}],
-                              [{"title":"","field":"delivery_name"}],
-                              [{"title":"","field":"seq_no","type":"decimal"}]]);
+            const editFormOptions = ref([[{"title":"Delivery Address","field":"delivery_addr"}],
+                              [{"title":"Zip","field":"delivery_zip_id"}],
+                              [{"title":"Telephone","field":"delivery_tel_no"}],
+                              [{"title":"Delivery Contact","field":"delivery_contact"}],
+                              [{"title":"Delivery Name","field":"delivery_name"}],
+                              [{"title":"SeqNo","field":"seq_no","type":"decimal"}]]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([]);
-            const columns = ref([{field:'seq_no',title:'seq_no',type:'decimal',width:110,align:'left',sort:true},
-                       {field:'delivery_name',title:'delivery_name',type:'string',width:120,align:'left'},
-                       {field:'delivery_zip_id',title:'delivery_zip_id',type:'string',bind:{ key:'viat_city_zone',data:[]},width:110,align:'left'},
-                       {field:'delivery_addr',title:'delivery_addr',type:'string',width:180,align:'left'},
-                       {field:'delivery_contact',title:'delivery_contact',type:'string',width:120,align:'left'},
-                       {field:'delivery_tel_no',title:'delivery_tel_no',type:'string',width:110,align:'left'},
+            const columns = ref([{field:'seq_no',title:'SeqNo',type:'decimal',width:110,align:'left',sort:true},
+                       {field:'delivery_name',title:'Delivery Name',type:'string',width:120,align:'left'},
+                       {field:'delivery_zip_id',title:'Zip',type:'string',width:110,align:'left'},
+                       {field:'delivery_addr',title:'Delivery Address',type:'string',width:180,align:'left'},
+                       {field:'delivery_contact',title:'Delivery Contact',type:'string',width:120,align:'left'},
+                       {field:'delivery_tel_no',title:'Telephone',type:'string',width:110,align:'left'},
                        {field:'custdeltransfer_dbid',title:'custdeltransfer_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'dbid',title:'dbid',type:'int',width:110,hidden:true,require:true,align:'left'},
                        {field:'entity',title:'entity',type:'string',width:110,hidden:true,align:'left'},

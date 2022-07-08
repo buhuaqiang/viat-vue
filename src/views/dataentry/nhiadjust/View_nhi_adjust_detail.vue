@@ -24,7 +24,7 @@
             const table = ref({
                 key: 'nhiadjust_dbid',
                 footer: "Foots",
-                cnName: '健保價調整明細',
+                cnName: 'NHI Adjust Detail',
                 name: 'nhiadjust/View_nhi_adjust_detail',
                 url: "/View_nhi_adjust_detail/",
                 sortName: "created_date"

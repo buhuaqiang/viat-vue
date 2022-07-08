@@ -24,7 +24,7 @@
             const table = ref({
                 key: 'custtransfer_dbid',
                 footer: "Foots",
-                cnName: '匯入客戶資料維護',
+                cnName: 'Import Customer Maintain',
                 name: 'cust/View_import_customer_maintain',
                 url: "/View_import_customer_maintain/",
                 sortName: "created_date"
@@ -175,14 +175,14 @@
                        {field:'C1',title:'C1',type:'string',width:110,hidden:true,align:'left'},
                        {field:'dbid',title:'dbid',type:'int',width:80,hidden:true,require:true,align:'left'}]);
             const detail = ref({
-                cnName: "客戶運送轉移",
+                cnName: "Import Customer Maintain Detail",
                 table: "View_app_cust_delivery_transfer",
-                columns: [{field:'seq_no',title:'seq_no',type:'decimal',width:110,edit:{type:''},align:'left',sort:true},
-                       {field:'delivery_name',title:'delivery_name',type:'string',width:120,edit:{type:''},align:'left'},
-                       {field:'delivery_zip_id',title:'delivery_zip_id',type:'string',width:110,edit:{type:''},align:'left'},
-                       {field:'delivery_addr',title:'delivery_addr',type:'string',width:180,edit:{type:''},align:'left'},
-                       {field:'delivery_contact',title:'delivery_contact',type:'string',width:120,edit:{type:''},align:'left'},
-                       {field:'delivery_tel_no',title:'delivery_tel_no',type:'string',width:110,edit:{type:''},align:'left'},
+                columns: [{field:'seq_no',title:'SeqNo',type:'decimal',width:110,edit:{type:''},align:'left',sort:true},
+                       {field:'delivery_name',title:'Delivery Name',type:'string',width:120,edit:{type:''},align:'left'},
+                       {field:'delivery_zip_id',title:'Zip',type:'string',bind:{ key:'viat_city_zone',data:[]},width:110,edit:{type:'select'},align:'left'},
+                       {field:'delivery_addr',title:'Delivery Address',type:'string',width:180,edit:{type:''},align:'left'},
+                       {field:'delivery_contact',title:'Delivery Contact',type:'string',width:120,edit:{type:''},align:'left'},
+                       {field:'delivery_tel_no',title:'Telephone',type:'string',width:110,edit:{type:''},align:'left'},
                        {field:'custdeltransfer_dbid',title:'custdeltransfer_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'dbid',title:'dbid',type:'int',width:110,hidden:true,require:true,align:'left'},
                        {field:'entity',title:'entity',type:'string',width:110,hidden:true,align:'left'},
