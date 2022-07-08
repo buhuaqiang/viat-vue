@@ -40,11 +40,11 @@ let extension = {
       //显示查询全部字段
       this.setFiexdSearchForm(true);
       //设置查询表单的标签文字宽度
-      this.labelWidth=180;
+      this.labelWidth=200;
       //设置编辑表单标签文字宽度
-      this.boxOptions.labelWidth=180;
+      this.boxOptions.labelWidth=200;
 
-      this.boxOptions.width=1600;
+     // this.boxOptions.width=1600;
       this.single=true;//设置单选
 
       /*this.editFormOptions.forEach((option)=>{
