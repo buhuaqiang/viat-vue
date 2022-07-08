@@ -32,6 +32,12 @@ let extension = {
     }
   },
   methods: {
+    onActivated(){//禁用頁面緩存，每次进入页面查询数据
+      debugger
+      let nhiadjustm_dbid = this.$store.getters.data().nhiadjustm_dbid;
+      this.searchFormFields.nhiadjustm_dbid = nhiadjustm_dbid;
+      this.search()
+    },
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
         //示例：在按钮的最前面添加一个按钮
@@ -268,8 +274,8 @@ let extension = {
     searchAfter(result) {
       //查询后，result返回的查询数据,可以在显示到表格前处理表格的值
       debugger
-      let nhiadjustm_dbid = result[0].nhiadjustm_dbid;
-      this.$store.getters.data().nhiadjustm_dbid=nhiadjustm_dbid;
+      // let nhiadjustm_dbid = result[0].nhiadjustm_dbid;
+      // this.$store.getters.data().nhiadjustm_dbid=nhiadjustm_dbid;
       return true;
     },
     addBefore(formData) {
@@ -282,6 +288,12 @@ let extension = {
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
+      //debugger
+      // console.log(this.$refs.table.getSelected(row));
+      //let test = this.$refs.table.getSelected(row);
+      this.$store.getters.data().nhiadjustm_dbid = row.nhiadjustm_dbid;
+       // let nhiadjustm_dbid = result[0].nhiadjustm_dbid;
+      // this.$store.getters.data().nhiadjustm_dbid=nhiadjustm_dbid;
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
     modelOpenAfter(row) {
