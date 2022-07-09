@@ -32,9 +32,6 @@ let extension = {
     }
   },
   methods: {
-    onActivated(){//禁用頁面緩存，每次进入页面查询数据
-      this.search()
-    },
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
         //示例：在按钮的最前面添加一个按钮
@@ -131,7 +128,6 @@ let extension = {
                 style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
                   if(searchType=="editFormSearchProduct"){
-                    debugger
                     //this.$refs.modelBody.openPriceGroupModelBody(true,searchType);
                     this.$refs.gridBody.openModel(true,searchType);
                   }
@@ -168,7 +164,6 @@ let extension = {
         this.searchFormFields["prod_id"] =rows[0].prod_id;
         this.pickProductName=rows[0].prod_ename;
       }else{
-        debugger
         this.editFormFields["prod_dbid"] = rows[0].prod_dbid;
         this.editFormFields["prod_id"] =rows[0].prod_id;
         this.pickEditFormProductName=rows[0].prod_ename;
@@ -206,17 +201,13 @@ let extension = {
       //返回false，则不会执行查询
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询   query: {"powercont_dbid":_rows[0].powercont_dbid,"contract_no":contract_no},
-      debugger
-      // let $parent;
+       //let $parent;
       // //获取生成页面viewgrid的对象
-      // this.$emit("parentCall", ($this) => {
-      //   $parent = $this;
-      // });
+       //this.$emit("parentCall", ($this) => {
+        // $parent = $this;
+       //});
       let nhiadjustm_dbid = this.$store.getters.data().nhiadjustm_dbid;
-      alert(nhiadjustm_dbid)
-      // let nhiadjustm_dbid  = $parent.editFormFields.nhiadjustm_dbid;
-      // let nhiadjustm_dbid  = this.editFormFields.nhiadjustm_dbid;
-      param.wheres.push({name:'nhiadjustm_dbid',value:nhiadjustm_dbid})
+      param.wheres.push({name:"nhiadjustm_dbid",value:nhiadjustm_dbid})
       return true;
     },
     searchAfter(result) {
@@ -235,10 +226,7 @@ let extension = {
       // let delTable1RowData = this.$refs.modelBody.delTable1RowData;
       return true;
     },
-    // parentCall(pid){
-    //   debugger
-    //   return this.nhiadjustm_dbid
-    // },
+
     rowClick({ row, column, event }) {
       //查询界面点击行事件
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
@@ -251,7 +239,6 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
-      debugger
       let prodDbid = this.getFormOption('prod_dbid');
       let nhiadjustm = this.getFormOption('nhiadjustm_dbid');
       let prodEname = this.getFormOption('prod_ename');
