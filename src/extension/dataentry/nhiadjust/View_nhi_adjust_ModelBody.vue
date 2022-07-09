@@ -11,16 +11,9 @@
           <span><i class="el-icon-date"></i> NHIAdjustDetail</span>
         </template>
         <vol-table ref="table1">
-        <nhi-adjust-detail ref="nhiAdjustDetail" @parentCall="parentCall"></nhi-adjust-detail>
+        <nhi-adjust-detail ref="nhiAdjustDetail"></nhi-adjust-detail>
         </vol-table>
-       <!-- <div>
-          <allowance-sharing ref="allowanceSharing"></allowance-sharing>
-        </div>-->
-       <!-- <vol-table ref="table1">
-          <allowance-sharing ref="allowanceSharing"></allowance-sharing>
-        </vol-table>-->
       </el-tab-pane>
-
     </el-tabs>
   </div>
 
@@ -46,36 +39,49 @@ export default {
   methods: {
     //如果要获取页面的参数请使用 this.$emit("parentCall",见下面的使用方法
     //shareTable查询显示
+    loadBefore(params, callback) {
+      //设置查询 条件
+      var _row;
+      //获取主表选中的行
+      alert("11")
+      //设置查询条件，用主表id加载明细表数据(如果是自己定义的接口，这里条件自己处理)
+      params.value =$parent.editFormFields.nhiadjustm_dbid;
+      return callback(true);
+    },
 
     modelOpen() {
-      debugger
       let $parent;
       //获取生成页面viewgrid的对象
       this.$emit("parentCall", ($this) => {
         $parent = $this;
       });
-      debugger
       if ($parent.currentAction == "Add") {
         this.showFlag = false;
         $parent.boxOptions.height=400;
         $parent.boxOptions.width=1400;
       }else{
+        let aa =$parent.editFormFields.nhiadjustm_dbid;
         this.showFlag = true;
         $parent.boxOptions.height=800;
         $parent.boxOptions.width=1400;
+        //写入缓存对象(xxx为全局缓存的唯一key)
+        this.nhiadjustm_dbid = $parent.editFormFields.nhiadjustm_dbid;
+        this.$store.getters.data().nhiadjustm_dbid=this.nhiadjustm_dbid;
+        //執行查詢
+        this.$refs.nhiAdjustDetail.$refs.grid.search();
+
       }
 
-      this.nhiadjustm_dbid = $parent.editFormFields.nhiadjustm_dbid;
+      //this.nhiadjustm_dbid = $parent.editFormFields.nhiadjustm_dbid;
 
       //写入缓存对象(xxx为全局缓存的唯一key)
-      this.$store.getters.data().nhiadjustm_dbid=this.nhiadjustm_dbid;
-      debugger
+      //this.$store.getters.data().nhiadjustm_dbid=this.nhiadjustm_dbid;
+
       // this.$refs.table2.load();
     },
-    parentCall(pid){
-      debugger
+   /* parentCall(pid){
       return this.nhiadjustm_dbid
-    },
+    },*/
   },
 };
 </script>
