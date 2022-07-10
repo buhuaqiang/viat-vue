@@ -516,15 +516,27 @@ export default {
       if(rows.length==0){
         this.$message.error("draft cache is empty.");
       }else{
-        this.http.post("api/View_cust_price/bathSaveCustPrice", rows , true)
+        this.http.post("api/View_cust_price/bathSaveCheckData", rows , true)
                 .then((x) => {
                   debugger
                   if(x.status){
-                    this.$message.success('Save Completed.');
+                    //校验通过
+                    //调用保存访求
+                    this.http.post("api/View_cust_price/bathSaveCustPrice", x.data , true).then((data)=>
+                    {
+                        if(data.status) {
+                          this.$message.success('Save Completed.');
+                          this.model=false;
+                        }
+                        else
+                        {
+                          this.$message.error(data.message);
+                        }
+                    });
+
                   }else{
                     this.$message.error(x.message);
                   }
-                  this.model=false;
                 });
       }
 

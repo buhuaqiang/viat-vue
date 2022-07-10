@@ -379,7 +379,7 @@ export default {
       this.checkData();
       this.invalidModel.rows=rows;
       this.invalidModel.isAll=0;
-      this.http.post("api/View_cust_price/invalidData", { mainData: this.invalidModel }, true)
+      this.http.post("api/View_cust_price/invalidData",  this.invalidModel, true)
               .then((x) => {
                 if (!x.status) {
                   this.$Message.error(x.message);
@@ -390,7 +390,7 @@ export default {
     addAll() {
       this.checkData();
       this.invalidModel.isAll=1;
-      this.http.post("api/View_cust_price/invalidData", { mainData: this.invalidModel }, true)
+      this.http.post("api/View_cust_price/invalidData", this.invalidModel, true)
               .then((x) => {
                 if (!x.status) {
                   this.$Message.error(x.message);
