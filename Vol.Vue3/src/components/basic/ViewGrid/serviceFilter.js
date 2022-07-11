@@ -97,6 +97,7 @@ let serviceFilter = {
       }
 
       if (this.hasDetail) {
+        this.detailOptions.edit=!(this.currentAction==this.const.VIEW);
         this.detailOptions.buttons.forEach(x=>{
           x.hidden=false;
         })

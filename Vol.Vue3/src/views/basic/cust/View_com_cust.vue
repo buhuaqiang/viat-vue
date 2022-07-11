@@ -111,7 +111,6 @@
                        {field:'med_groupname',title:'med_groupname',type:'string',width:110,hidden:true,require:true,align:'left'},
                        {field:'delv_groupname',title:'delv_groupname',type:'string',width:110,hidden:true,require:true,align:'left'},
                        {field:'C1',title:'列名C1',type:'string',width:180,hidden:true,require:true,align:'left'},
-                       {field:'last_deal_date',title:'last_deal_date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
                        {field:'created_clientusername',title:'Created Client',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_username',title:'Modified User',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'Modified Client',type:'string',width:110,hidden:true,align:'left'},

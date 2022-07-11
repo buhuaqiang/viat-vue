@@ -27,7 +27,7 @@
                 cnName: 'Group Price Book',
                 name: 'price/View_cust_price',
                 url: "/View_cust_price/",
-                sortName: "bid_no"
+                sortName: "prod_id,modified_date"
             });
             const editFormFields = ref({"bid_no":"","status":"","group_id":"","prod_id":"","prod_dbid":"","pricegroup_dbid":"","start_date":"","end_date":"","nhi_price":"","invoice_price":"","net_price":"","min_qty":"","remarks":""});
             const editFormOptions = ref([[{"title":"Bid NO","field":"bid_no"},
@@ -81,15 +81,15 @@
                        {field:'modified_client',title:'modified_client',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:110,align:'left',sort:true},
-                       {field:'pricegroup_dbidname',title:'pricegroup_dbidname',type:'string',width:180,hidden:true,require:true,align:'left'},
+                       {field:'pricegroup_dbidname',title:'pricegroup_dbidname',type:'string',width:180,hidden:true,align:'left'},
                        {field:'entity',title:'entity',type:'string',width:110,hidden:true,align:'left'},
                        {field:'prod_cname',title:'prod_cname',type:'string',width:110,hidden:true,align:'left'},
                        {field:'pack_size_pri',title:'pack_size_pri',type:'decimal',width:110,hidden:true,align:'left'},
                        {field:'state',title:'state',type:'string',width:110,hidden:true,align:'left'},
                        {field:'C1',title:'C1',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'prod_dbidname',title:'Product',type:'string',width:120,hidden:true,require:true,align:'left'},
-                       {field:'prods',title:'Products',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,require:true,align:'left'},
-                       {field:'QueryStatus',title:'Status',type:'string',bind:{ key:'price_book_query_status',data:[]},width:110,hidden:true,require:true,align:'left'}]);
+                       {field:'prod_dbidname',title:'Product',type:'string',width:120,hidden:true,align:'left'},
+                       {field:'prods',title:'Products',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,align:'left'},
+                       {field:'QueryStatus',title:'Status',type:'string',bind:{ key:'price_book_query_status',data:[]},width:110,hidden:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

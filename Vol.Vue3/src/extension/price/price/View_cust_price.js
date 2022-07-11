@@ -471,13 +471,18 @@ let extension = {
     },
     updateBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
-      if(formData.mainData.nhi_price >= formData.mainData.invoice_price && formData.mainData.invoice_price >= formData.mainData.net_price ){
+     /* if(formData.mainData.nhi_price >= formData.mainData.invoice_price && formData.mainData.invoice_price >= formData.mainData.net_price ){
 
       }else{
         this.$Message.error(" Nhi price >= Invoice Price and Invoice Price >= Net Price");
         return false;
-      }
+      }*/
+      if(formData.mainData.start_date < formData.mainData.end_date){
 
+      }else{
+        this.$Message.error("Start date can't behind end date");
+        return false;
+      }
       return true;
     },
     rowClick({ row, column, event }) {
@@ -511,6 +516,12 @@ let extension = {
         this.getFormOption("prod_id").extra={render: this.getPopRender("editFormProduct")};
 
       }else if (this.currentAction==this.const.EDIT){
+
+        if(row.status=='Y'){
+          this.getFormOption("status").disabled=false;
+        }else if(row.status=='N'){
+          this.getFormOption("status").disabled=true;
+        }
         this.getFormOption("bid_no").disabled=true;
         this.getFormOption("invoice_price").disabled=true;
         this.getFormOption("net_price").disabled=true;

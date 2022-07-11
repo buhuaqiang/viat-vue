@@ -183,7 +183,21 @@ export default {
         this.formModel.nhi_id=""
       }
     },
+    //獲取bid no
+    getBidNO(){
+      if(!this.formModel.bid_no){
+        this.http.post("api/View_cust_price/getMaxBindNo",{} , "loading").then(reslut => {
+          if(reslut!==null){
+            this.formModel.bid_no=reslut
+          }else {
+            this.formModel.bid_no=''
+          }
+        })
+      }
+
+    },
     groupKeyPress(){
+      this.getBidNO();
       let  group_id = this.formModel.group_id
       if(group_id) {
         this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
@@ -235,6 +249,7 @@ export default {
     },
     openPriceGroup(val){
       if(val==0){
+        this.getBidNO()
         this.$refs.PriceGroupModelBody.openModel(true,"pricegroup_dbid","onSelect")
       }else if(val==1){
         this.$refs.Viat_com_custModelBody.openModel(true,"cust_dbid","onSelect")
@@ -247,6 +262,21 @@ export default {
     openDemo() {
       this.model = true;
       this.pushData=[];
+      this.formModel.bid_no=''
+      this.formModel.start_date=new Date()
+      this.formModel.end_date=new Date('2099-12-31')
+      this.formModel.group_id=''
+      this.formModel.group_name=''
+      this.formModel.pricegroup_dbid=''
+      this.formModel.prod_id=''
+      this.formModel.prod_ename=''
+      this.formModel.prod_dbid=''
+      this.formModel.nhi_price=''
+      this.formModel.invoice_price=''
+      this.formModel.net_price=''
+      this.formModel.status='Y'
+      this.formModel.min_qty=1
+      this.formModel.nhi_id=''
     },
     onSelectPop(fieldName,rows){
         if(rows.length!=1){

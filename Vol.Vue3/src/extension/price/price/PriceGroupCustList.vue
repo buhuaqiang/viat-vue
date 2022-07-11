@@ -28,7 +28,6 @@ export default {
   },
   methods: {
     loadBefore (params, callback) {
-
       return callback(true);
     },
 
