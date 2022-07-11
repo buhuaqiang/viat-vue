@@ -37,6 +37,8 @@ let extension = {
       this.boxOptions.labelWidth = 180;
       this.labelWidth = 180;
       this.load=false;
+      this.getEditOption("year").readonly = true;
+      this.getEditOption("period").readonly = true;
       //日期格式化 formatter
       let start_date=this.getColumnsOption("start_date");
       start_date.formatter = (row) => {
@@ -72,7 +74,17 @@ let extension = {
       }
 
     },
-
+    getEditOption(field) {
+      let option;
+      this.editFormOptions.forEach(x => {
+        x.forEach(item => {
+          if (item.field == field) {
+            option = item;
+          }
+        })
+      })
+      return option;
+    },
     getColumnsOption (field) {
       let option;
       this.columns.forEach(x => {
