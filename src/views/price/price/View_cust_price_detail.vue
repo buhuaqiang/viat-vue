@@ -52,10 +52,10 @@
                        {field:'source_type',title:'source_type',type:'string',width:110,hidden:true,require:true,align:'left'},
                        {field:'group_id',title:'Group ID',type:'string',width:80,require:true,align:'left'},
                        {field:'group_name',title:'Group Name',type:'string',width:120,align:'left'},
-                       {field:'cust_dbidname',title:'Cust',type:'string',width:180,hidden:true,require:true,align:'left'},
+                       {field:'cust_dbidname',title:'Cust',type:'string',width:180,hidden:true,align:'left'},
                        {field:'prod_id',title:'Product ID',type:'string',width:110,align:'left'},
                        {field:'prod_ename',title:'Product Name',type:'string',width:110,align:'left'},
-                       {field:'prod_dbidname',title:'Product',type:'string',width:120,hidden:true,require:true,align:'left'},
+                       {field:'prod_dbidname',title:'Product',type:'string',width:120,hidden:true,align:'left'},
                        {field:'nhi_price',title:'NHI Price',type:'decimal',width:80,align:'left'},
                        {field:'invoice_price',title:'Invoice Price',type:'decimal',width:80,align:'left'},
                        {field:'net_price',title:'Net Price',type:'decimal',width:80,align:'left'},
@@ -70,11 +70,11 @@
                        {field:'cust_group_status',title:'cust_group_status',type:'string',width:110,hidden:true,align:'left'},
                        {field:'emp_ename',title:'emp_ename',type:'string',width:110,hidden:true,align:'left'},
                        {field:'custStatus',title:'custStatus',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'prods',title:'Products',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,require:true,align:'left'},
+                       {field:'prods',title:'Products',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,align:'left'},
                        {field:'bid_no',title:'Bid NO',type:'string',width:110,hidden:true,align:'left'},
                        {field:'prod_dbid',title:'prod_dbid',type:'guid',width:110,hidden:true,align:'left'},
                        {field:'cust_dbid',title:'cust_dbid',type:'guid',width:110,hidden:true,align:'left'},
-                       {field:'QueryStatus',title:'Status',type:'string',bind:{ key:'price_book_query_status',data:[]},width:110,hidden:true,require:true,align:'left'}]);
+                       {field:'QueryStatus',title:'Status',type:'string',bind:{ key:'price_book_query_status',data:[]},width:110,hidden:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

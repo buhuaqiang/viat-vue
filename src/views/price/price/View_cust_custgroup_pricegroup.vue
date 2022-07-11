@@ -76,7 +76,6 @@
                        {field:'modified_user',title:'modified_user',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_client',title:'modified_client',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_date',title:'modified_date',type:'datetime',width:110,hidden:true,align:'left',sort:true},
-                       {field:'last_deal_date',title:'last_deal_date',type:'datetime',width:110,hidden:true,align:'left',sort:true},
                        {field:'created_username',title:'created_username',type:'string',width:110,hidden:true,align:'left'},
                        {field:'created_clientusername',title:'created_clientusername',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_username',title:'modified_username',type:'string',width:110,hidden:true,align:'left'},

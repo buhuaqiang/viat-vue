@@ -178,6 +178,19 @@ export default {
 
   },
   methods: {
+    //獲取bid no
+    getBidNO(){
+      if(!this.formModel.bid_no){
+        this.http.post("api/View_cust_price/getMaxBindNo",{} , "loading").then(reslut => {
+          if(reslut!==null){
+            this.formModel.bid_no=reslut
+          }else {
+            this.formModel.bid_no=''
+          }
+        })
+      }
+
+    },
     groupKeyPress(){
       let  group_id = this.formModel.group_id
       if(group_id) {
@@ -198,6 +211,7 @@ export default {
       }
     },
     prodKeyPress(){
+
       let  prod_id = this.formModel.prod_id
       if(prod_id) {
         this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
@@ -206,19 +220,21 @@ export default {
             this.formModel.prod_id=reslut.prod_id;
             this.formModel.prod_ename=reslut.prod_ename;
             this.formModel.nhi_price=reslut.nhi_price;
-
+            this.getGrossPrice(reslut.prod_id)
           }else {
             this.$message.error("Product Id Is Not Exists.");
             this.formModel.prod_id=''
             this.formModel.prod_ename=''
             this.formModel.nhi_price=''
             this.formModel.prod_dbid=''
+            this.formModel.gross_price=''
           }
           return;
         })
       }
     },
     custKeyPress(){
+      this.getBidNO()
       let  cust_id = this.formModel.cust_id
       if(cust_id) {
         this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id,{} , "loading").then(reslut => {
@@ -241,6 +257,7 @@ export default {
       if(val==0){
         this.$refs.PriceGroupModelBody.openModel(true,"pricegroup_dbid","onSelect")
       }else if(val==1){
+        this.getBidNO()
         this.$refs.Viat_com_custModelBody.openModel(true,"cust_dbid","onSelect")
       }else if(val==2){
         this.$refs.View_com_prod_pop_query.openModel(true,"prod_dbid","onSelect")
@@ -281,7 +298,19 @@ export default {
           this.formModel.prod_ename=rows[0].prod_ename;
           this.formModel.invoice_price='';
           this.formModel.net_price='';
+          this.getGrossPrice(rows[0].prod_id)
+
         }
+
+    },
+
+    getGrossPrice(prod_id){
+      //api/View_cust_price/getNetPriceByProdID?prod_id=
+      if(prod_id && this.grossFlag){
+        this.http.post("api/View_cust_price/getNetPriceByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
+          this.formModel.gross_price=reslut
+        })
+      }
 
     },
     clearPop(val){
