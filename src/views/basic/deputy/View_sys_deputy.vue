@@ -30,17 +30,16 @@
                 sortName: "created_date"
             });
             const editFormFields = ref({"user_id":"","userid1":"","UserName1":"","UserTrueName1":"","user_idname":"","Userid2":"","Userid2name":"","UserName2":"","UserTrueName2":"","start_date":"","end_date":"","deputy_user_id":"","status":""});
-            const editFormOptions = ref([[{"title":"User Id","required":true,"field":"user_id",hidden:true,"type":"number"},
+            const editFormOptions = ref([[
                                {"title":"User Name",hidden:true,"field":"UserName1"},
-                                {"title":"Login User","field":"user_idname"},
-                                {"title":"Deputy User","field":"deputy_user_idname"},
+                                {"title":"Login User","field":"user_id"},
+                                {"title":"Deputy User","field":"deputy_user_id"},
                                {"title":"UserTrueName1",hidden:true,"field":"UserTrueName1"}],
-                            [{"title":"userid1","field":"userid1",hidden:true}],
-                              [{"title":"Deputy Name","field":"UserName2",hidden:true},
-                                  {"title":"UserTrueName2","field":"UserTrueName2",hidden:true},
-                               {"title":"Userid2","field":"Userid2",hidden:true}],
+                              [
+                                  {"title":"UserTrueName2","field":"UserTrueName2",hidden:true}
+                              ],
                               [{"title":"Start Date","required":true,"field":"start_date","type":"datetime"},{"title":"End Date","required":true,"field":"end_date","type":"datetime"}],
-                              [{"title":"Deputy Id","field":"deputy_user_id","type":"number",hidden:true}],
+
                               [{"dataKey":"duputy_status","data":[],"required":true,"title":"status","field":"status","type":"radio"}]
             ]);
             const searchFormFields = ref({"start_date":"","end_date":""});

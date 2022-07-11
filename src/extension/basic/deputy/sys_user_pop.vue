@@ -93,7 +93,38 @@
             };
         },
         methods: {
-            open(fieldName,formType) {
+
+            openModel(single,flag,returnType) {
+                this.single=single;
+                this.model = true;
+                this.flag = flag;
+                this.returnType = returnType
+                //打开弹出框时，加载table数据
+                this.$nextTick(() => {
+                    this.$refs.userPop.load();
+                });
+            },
+            addRow() {
+                let rows = this.$refs.userPop.getSelected();
+                if(!rows.length){
+                    return this.$message.error("Please select row data")
+                }
+                if (!rows || rows.length == 0) {
+                    return this.$message.error("Please select row data");
+                }
+
+                if (this.returnType=="onSelect") {//多層級調用
+                    this.$emit("onSelect", this.flag, rows)
+                }else{
+                    this.$emit('parentCall', $parent => {
+                        $parent.handleProdSelected(this.flag, rows);//自定義回調方法處理,在調用頁面聲明
+                    })
+                }
+
+                this.model=false;
+
+            },
+            /*open(fieldName,formType) {
                 this.model = true;
                 //this.fieldName = fieldName
                 this.fieldName=fieldName;
@@ -102,8 +133,8 @@
                 this.$nextTick(() => {
                     this.$refs.userPop.load();
                 });
-            },
-            clearData(fieldName,formType) {
+            },*/
+            /*clearData(fieldName,formType) {
 
                 this.$emit("parentCall", ($parent) => {
                     if(this.formType=='f'){
@@ -114,20 +145,20 @@
                         $parent.searchFormFields[fieldName+'name'] ='';
                     }
                 })
-            },
+            },*/
 
-            addRow() {
+            /*addRow() {
                 let selectrow = this.$refs.userPop.getSelected();
                 if(!selectrow.length){
                     return this.$message.error("请选择数据")
                 }
                 // //将选取的数据赋值到父页面
-                /* this.$emit('parentCall', $parent => {
+                /!* this.$emit('parentCall', $parent => {
                      $parent.editFormFields.user_name2 = selectrow[0].UserName+;
                      $parent.editFormFields.UserTrueName = selectrow[0].UserTrueName;
                      $parent.editFormFields.user_id = selectrow[0].User_Id;
                      this.model=false;
-                 })*/
+                 })*!/
 
                 //回写数据到表单
                 this.$emit("parentCall", ($parent) => {
@@ -142,7 +173,7 @@
                 });
                 this.model=false;
 
-            },
+            },*/
             search() {
                 //点击搜索
                 this.$refs.userPop.load();
