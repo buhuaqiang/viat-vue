@@ -26,6 +26,8 @@ let extension = {
       deputyDate: "", //查询条件字段
       startDate:"",//输入的开始时间
       endDate:"",//輸入結束時間
+      editFormSearchLoginUser: "editFormSearchLoginUser",
+      editFormSearchDeputyUser: "editFormSearchDeputyUser",
     };
   },
   methods: {
@@ -57,9 +59,9 @@ let extension = {
           this.$refs.modelHeader.open();
         }
       }*/
-      let user_idname=this.getOption("user_idname");
-      user_idname.extra = {
-        render:this.getFormRender("user_id","f")
+      let editform_user_id=this.getOption("user_id");
+      editform_user_id.extra = {
+        render:this.getFormRender("editFormSearchLoginUser")
       }
       //選擇登錄人
      /* let UserTrueName=this.getOption("user_name2");
@@ -72,9 +74,9 @@ let extension = {
         }
       }*/
 
-      let userName=this.getOption("deputy_user_idname");
+      let userName=this.getOption("deputy_user_id");
       userName.extra = {
-        render:this.getFormRender("deputy_user_id","f")
+        render:this.getFormRender("editFormSearchDeputyUser")
       }
 
       //不同查询条件下修改输入框
@@ -129,13 +131,85 @@ let extension = {
 
     },
 
+
+    getFormRender(searchType) {//
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix"}, [
+          h(
+              "input",
+              {
+                class:"el-input__inner",
+                type:"text",
+                style:{width:"65%","background-color":"#f5f7fb"},
+                readonly:"true",
+                value:this.getPickName(searchType)
+              }
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                onClick: (e) => {
+                  if(searchType=="editFormSearchLoginUser" || searchType=="editFormSearchDeputyUser"){
+                    this.$refs.modelBody.openModel(true,searchType);
+                  }
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "Pick"
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                onClick: (e) => {
+                  if(searchType=="editFormSearchLoginUser"){
+                    this.editFormFields['user_id'] = "";
+                    this.pickEditFormLoginUser="";
+                  }
+                  if(searchType=="editFormSearchDeputyUser"){
+                    this.editFormFields['deputy_user_id'] = "";
+                    this.pickEditFormDeputyUser="";
+                  }
+                }
+              },
+              [h("i",{class:"el-icon-zoom-out"})],
+              "Clean"
+          ),
+
+        ]);
+      };
+    },
+
+    //product Pick 回填字段
+    handleProdSelected(flag,rows){
+      if(flag=="editFormSearchLoginUser"){
+        this.editFormFields['user_id'] = rows[0].User_Id;
+        this.pickEditFormLoginUser=rows[0].UserName;
+      }else if(flag=="editFormSearchDeputyUser"){
+        this.editFormFields['deputy_user_id'] = rows[0].User_Id;
+        this.pickEditFormDeputyUser=rows[0].UserName;
+      }
+    },
+
+    getPickName(searchType){
+      if(searchType=="editFormSearchLoginUser"){
+        return this.pickEditFormLoginUser
+      }else if(searchType=="editFormSearchDeputyUser"){
+        return this.pickEditFormDeputyUser
+      }
+
+    },
+
     /**
      *
      * @param fieldName綁定欄位
      * @param formType 表單類型f-form表單,s-查詢表單
      * @returns {function(*, {row: *, column: *, index: *}): *}
      */
-    getFormRender(fieldName,formType) {//
+    /*getFormRender(fieldName,formType) {//
       return (h, { row, column, index }) => {
         return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
           h(
@@ -177,7 +251,7 @@ let extension = {
 
         ]);
       };
-    },
+    },*/
     //获取编辑页面字段
     getOption(field) {
       let option;
@@ -254,9 +328,16 @@ let extension = {
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
 
+      //var editform_user_id = this.getFormOption("user_id");
+      //var editform_deputy_user_id = this.getFormOption("deputy_user_id");
+      this.editFormFields.user_id= this.editFormFields.user_id;
+      this.editFormFields.deputy_user_id= this.editFormFields.deputy_user_id;
+      this.pickEditFormLoginUser=this.editFormFields.UserName1;
+      this.pickEditFormDeputyUser=this.editFormFields.UserName2;
 
-      this.editFormFields.user_idname = this.editFormFields.UserName1+" "+this.editFormFields.UserTrueName1;
-      this.editFormFields.deputy_user_idname = this.editFormFields.UserName2+" "+this.editFormFields.UserTrueName2;
+
+     // this.editFormFields.user_idname = this.editFormFields.UserName1+" "+this.editFormFields.UserTrueName1;
+     // this.editFormFields.deputy_user_idname = this.editFormFields.UserName2+" "+this.editFormFields.UserTrueName2;
 
     }
   }

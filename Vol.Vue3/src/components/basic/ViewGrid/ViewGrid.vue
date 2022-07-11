@@ -425,6 +425,8 @@ var vueParam = {
       pickEditFormCustomerName:"",
       pickEditFormPriceGroupName:"",
       pickEditFormProductName:"",
+      pickEditFormLoginUser:"",
+      pickEditFormDeputyUser:"",
 
 
 
