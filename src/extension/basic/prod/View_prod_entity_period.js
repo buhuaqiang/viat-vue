@@ -42,8 +42,8 @@ let extension = {
         //       this.$Message.success('点击了按钮');
         //     }
         //   });
-      this.boxOptions.labelWidth = 180;
-      this.labelWidth = 180;
+      this.boxOptions.labelWidth = 120;
+      this.labelWidth = 120;
       this.setFiexdSearchForm(true);
       this.single=true;//设置单选
 
