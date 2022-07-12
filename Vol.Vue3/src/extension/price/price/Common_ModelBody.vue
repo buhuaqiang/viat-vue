@@ -1,6 +1,6 @@
 <template>
   <invalid-data-page ref="InvalidDataPage"></invalid-data-page>
-  <bath-insert-cust-price ref="BathInsertCustPrice"></bath-insert-cust-price>
+  <bath-insert-cust-price ref="BathInsertCustPrice" ></bath-insert-cust-price>
   <BathInsertCustPriceDetail ref="BathInsertCustPriceDetail"></BathInsertCustPriceDetail>
 </template>
 <script>
@@ -30,6 +30,10 @@ export default {
     openBathAddCustDetailPage(){
       this.$refs.BathInsertCustPriceDetail.openDemo();
     },
+    custPriceSearch(){
+
+    },
+
   },
 };
 </script>

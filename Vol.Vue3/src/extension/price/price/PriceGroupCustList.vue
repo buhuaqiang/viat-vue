@@ -28,6 +28,12 @@ export default {
   },
   methods: {
     loadBefore (params, callback) {
+      //解決分頁參數傳遞問題
+      if(params.wheres && params.wheres.length>0){
+        this.wheres=params.wheres
+      }else{
+        params.wheres=this.wheres
+      }
       return callback(true);
     },
 
@@ -35,6 +41,7 @@ export default {
   data () {
     return {
       tableData: [],
+      wheres:{},
       pagination: {}, //分页配置，见voltable组件api
       //从生成的代码sellorder2.vue里面把明细配置复制过来就能用
       columns:  [

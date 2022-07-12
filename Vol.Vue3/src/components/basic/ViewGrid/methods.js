@@ -118,16 +118,16 @@ let methods = {
     this.currentReadonly = !saveBtn;
     //从表表格操作按钮
     let detailGridButtons = {
-      name: 'Refresh',
-      type: 'info',
-      icon: 'el-icon-refresh',
-      onClick() {
-        //如果明细表当前的状态为新建时，禁止刷新
-        if (this.currentAction == this.const.ADD) {
-          return;
-        }
-        this.refreshRow();
-      }
+      // name: 'Refresh',
+      // type: 'info',
+      // icon: 'el-icon-refresh',
+      // onClick() {
+      //   //如果明细表当前的状态为新建时，禁止刷新
+      //   if (this.currentAction == this.const.ADD) {
+      //     return;
+      //   }
+      //   this.refreshRow();
+      // }
     };
 
     let importExcel = this.buttons.some((x) => {
@@ -223,32 +223,32 @@ let methods = {
         },
         //2022.01.08增加明细表导入导出功能
         //注意需要重写后台明细表接口的导入与下载模板、导出的权限,Sys_DictionaryListController.cs/SellOrderListController.cs
-        {
-          type: 'danger',
-          plain: true,
-          name: 'Import',
-          value: 'import',
-          hidden: false,
-          icon: 'el-icon-upload2',
-          onClick() {
-            this.upload.url = `${this.http.ipAddress}api/${this.detail.table}/${this.const.IMPORT}?table=1`;
-            this.upload.template.url = `${this.http.ipAddress}api/${this.detail.table}/${this.const.DOWNLOADTEMPLATE}`;
-            //定义下载模板的文件名
-            this.upload.template.fileName = this.detail.cnName;
-            this.upload.excel = true;
-          }
-        },
-        {
-          type: 'danger',
-          plain: true,
-          name: 'Export',
-          value: 'export',
-          icon: 'el-icon-download',
-          hidden: false,
-          onClick() {
-            this.export(true);
-          }
-        }
+        // {
+        //   type: 'danger',
+        //   plain: true,
+        //   name: 'Import',
+        //   value: 'import',
+        //   hidden: false,
+        //   icon: 'el-icon-upload2',
+        //   onClick() {
+        //     this.upload.url = `${this.http.ipAddress}api/${this.detail.table}/${this.const.IMPORT}?table=1`;
+        //     this.upload.template.url = `${this.http.ipAddress}api/${this.detail.table}/${this.const.DOWNLOADTEMPLATE}`;
+        //     //定义下载模板的文件名
+        //     this.upload.template.fileName = this.detail.cnName;
+        //     this.upload.excel = true;
+        //   }
+        // },
+        // {
+        //   type: 'danger',
+        //   plain: true,
+        //   name: 'Export',
+        //   value: 'export',
+        //   icon: 'el-icon-download',
+        //   hidden: false,
+        //   onClick() {
+        //     this.export(true);
+        //   }
+        // }
       ]
     );
     this.detailOptions.buttons.forEach((button) => {
@@ -339,6 +339,7 @@ let methods = {
     return query;
   },
   search() {
+    debugger
     //查询
     // let query = this.getSearchParameters();
     // this.$refs.table.load(query, true);
@@ -649,6 +650,7 @@ let methods = {
     }
     let url = this.getUrl(this.currentAction);
     this.http.post(url, formData, true).then((x) => {
+      debugger
       //保存后
       if (_currentIsAdd) {
         if (!this.addAfter(x)) return;
@@ -666,7 +668,7 @@ let methods = {
         if (!this.updateAfter(x)) return;
       }
       if (!x.status) return this.$error(x.message);
-      this.$success(x.message);
+      this.$success(x.message?x.message:"Saved successfully!");
       //如果保存成功后需要关闭编辑框，直接返回不处理后面
       if (this.boxOptions.saveClose) {
         this.boxModel = false;
@@ -967,12 +969,49 @@ let methods = {
     };
     xmlResquest.send();
   },
+  parseTime(time,cFormat){
+    const format=cFormat||'{y}-{m}-{d} {h}:{i}:{s}'
+    let date
+    if(typeof time ==='object'){
+      date=time
+    }else {
+      if(typeof time ==='string'){
+        if((/^[0-9]+$/.test(time))){
+          time=parseInt(time)
+        }else{
+          time=time.replace(new RegExp(/-/gm),'/')
+        }
+      }
+      if((typeof time==='number') && (time.toString().length)===10){
+        time=time*1000
+      }
+      date=new Date(time)
+    }
+    const formatObj={
+      y:date.getFullYear(),
+      m:date.getMonth()+1,
+      d:date.getDate(),
+      h:date.getHours(),
+      i:date.getMinutes(),
+      s:date.getSeconds(),
+      a:date.getDay()
+    }
+    const time_str=format.replace(/{([ymdhisa])+}/g,(result,key)=>{
+      const value=formatObj[key]
+      if(key==='a'){
+        return['日','一','二','三','四','五','六'][value]
+      }
+      return  value.toString().padStart(2,'0')
+    })
+    return time_str
+  },
   getFileName(isDetail) {
     //2021.01.08增加导出excel时自定义文件名
+    let timeStr=this.parseTime(new Date(),'{y}{m}{d}{h}{i}{s}')
     if (isDetail) {
-      return this.detail.cnName + '.xlsx';
+      return this.detail.cnName +timeStr+ '.xlsx';
     }
-    return this.table.cnName + '.xlsx';
+    return this.table.cnName +timeStr+ '.xlsx';
   },
   export(isDetail) {
     //导出

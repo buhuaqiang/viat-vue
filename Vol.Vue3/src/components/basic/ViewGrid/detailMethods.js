@@ -23,7 +23,6 @@ let detailMethods = {
     this.detailRowClick({ row, column, event })
   },
   detailRowClick({ row, column, event }) {
-
   },
   resetDetailTable(row) {//编辑和查看明细时重置从表数据
     if (!this.detailOptions.columns || this.detailOptions.columns.length == 0) {
@@ -54,9 +53,9 @@ let detailMethods = {
     }
 
     let tigger = false;
-    this.$confirm('确认要删除选择的数据吗?', '警告', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
+    this.$confirm('Are you sure to delete the record?', 'warning', {
+      confirmButtonText: 'OK',
+      cancelButtonText: 'CANCEL',
       type: 'warning',
       center: true
     }).then(() => {
