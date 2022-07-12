@@ -30,14 +30,15 @@
                 sortName: "created_date"
             });
             const editFormFields = ref({"entity":"","prod_id":"","prod_sname":"","prod_ename":"","unit_stock":"","unit_sale":"","lmpg_mpg_id":"","global_mpg":"","nhi_id":"","default_dist_id":"","pack_size":"","pack_size_pri":"","nhi_price":"","division":"","prod_short_name":"","license_no":"","license_name":"","prod_form":"","prod_strength":"","is_ctrl_drug":"","prod_packed":"","safty_stock":"","state":"","status_sample":"","status_bid":"","status_stock_pfizer":"","status_stock_dist":""});
-            const editFormOptions = ref([[{"dataKey":"entity","data":[],"title":"Entity","field":"entity","disabled":true},
-                {"title":"Item Code","field":"prod_id","disabled":true}],
+            const editFormOptions = ref([[{"dataKey":"entity","data":[],"title":"Entity","field":"entity","disabled":true,"type":"select"},
+                {"title":"Item Code","field":"prod_id","disabled":true,"required":true}],
                 [{"title":"Item Description(Chinese)","field":"prod_sname","disabled":true},
                     {"title":"Item Description(English)","field":"prod_ename","disabled":true}],
                 [{"title":"Unit Of Stock","field":"unit_stock","disabled":true},
                     {"title":"Unit Of Sale","field":"unit_sale","disabled":true}],
-                [{"dataKey":"finance_mpg","data":[],"title":"Global Mpg","field":"global_mpg","disabled":true},
-                    {"dataKey":"sales_mpg","data":[],"title":"Local Mpg","field":"lmpg_mpg_id","disabled":true}],
+                [{"dataKey":"finance_mpg","data":[],"title":"Global Mpg","field":"global_mpg","disabled":true,"type":"select"},
+                    {"dataKey":"sales_mpg","data":[],"title":"Local Mpg","field":"localmpg_dbid","disabled":true,"type":"select"}],
+               // [{"dataKey":"sales_mpg","data":[],"title":"localmpg_dbid","field":"localmpg_dbid","type":"select"}]
                 [{"title":"NHI Product Code","field":"nhi_id","disabled":true},
                     {"dataKey":"distributor","data":[],"title":"Default Distributor","field":"default_dist_id","type":"select"}],
                 [{"title":"NHI Fact/Dis Percent","field":"pack_size","disabled":true,"type":"decimal"},
@@ -52,18 +53,18 @@
                 [{"title":"Packed","field":"prod_packed"},
                     {"dataKey":"SunLocalPerform","data":[],"title":"Is Control Drug","field":"is_ctrl_drug","type":"select"}],
                 [{"title":"Sample Safty Stock","field":"safty_stock","type":"number"},
-                    {"dataKey":"prod_status","data":[],"title":"Status","field":"state","type":"select"}],
+                    {"dataKey":"prod_status","data":[],"title":"Status","field":"state","type":"select","required":true}],
                 [{"dataKey":"SunLocalPerform","data":[],"title":"Samples Prohibited","field":"status_sample","type":"select"},
                     {"dataKey":"SunLocalPerform","data":[],"title":"Bids Prohibited","field":"status_bid","type":"select"}],
                 [{"dataKey":"SunLocalPerform","data":[],"title":"No Stock(Pfizer)","field":"status_stock_pfizer","disabled":true,"type":"radio"},
                     {"dataKey":"SunLocalPerform","data":[],"title":"No Stock(Dist)","field":"status_stock_dist","type":"radio"}]]);
-            const searchFormFields = ref({"entity":"","division":"","lmpg_mpg_id":"","global_mpg":"","prod_id":"","prod_sname":"","prod_ename":"","inv_type":"","state":""});
+            const searchFormFields = ref({"entity":"","division":"","localmpg_dbid":"","global_mpg":"","prod_id":"","prod_sname":"","prod_ename":"","inv_type":"","state":""});
             //const searchFormOptions = ref([[{"dataKey":"entity","data":[],"title":"Entity","field":"entity","type":"select"},{"dataKey":"division","data":[],"title":"Division","field":"division","type":"select"}],[{"title":"Item Description(Chinese)","field":"prod_sname","type":"like"},{"title":"Item Description(English)","field":"prod_ename","type":"like"}],[{"title":"Item Code","field":"prod_id","type":"like"},{"dataKey":"prod_status","data":[],"title":"Status","field":"state","type":"select"}],[{"dataKey":"sales_mpg","data":[],"title":"Sales MPG","field":"lmpg_mpg_id","type":"select"},{"dataKey":"finance_mpg","data":[],"title":"Finance MPG","field":"global_mpg","type":"select"}],[{"dataKey":"inv_type","data":[],"title":"Inv Type","field":"inv_type","type":"select"}]]);
-            const searchFormOptions = ref([[{"dataKey":"entity","data":[],"title":"Entity","field":"entity","type":"select"},{"dataKey":"division","data":[],"title":"Division","field":"division","type":"select"},{"title":"Item Description(Chinese)","field":"prod_sname","type":"like"},{"title":"Item Description(English)","field":"prod_ename","type":"like"}],[{"title":"Item Code","field":"prod_id","type":"like"},{"dataKey":"prod_status","data":[],"title":"Status","field":"state","type":"select"},{"dataKey":"sales_mpg","data":[],"title":"Local Mpg","field":"lmpg_mpg_id","type":"select"},{"dataKey":"finance_mpg","data":[],"title":"Global Mpg","field":"global_mpg","type":"select"}],[{"dataKey":"inv_type","data":[],"title":"Inv Type","field":"inv_type","type":"select"}]]);
+            const searchFormOptions = ref([[{"dataKey":"entity","data":[],"title":"Entity","field":"entity","type":"select"},{"dataKey":"division","data":[],"title":"Division","field":"division","type":"select"},{"title":"Item Description(Chinese)","field":"prod_sname","type":"like"},{"title":"Item Description(English)","field":"prod_ename","type":"like"}],[{"title":"Item Code","field":"prod_id","type":"like"},{"dataKey":"prod_status","data":[],"title":"Status","field":"state","type":"select"},{"dataKey":"sales_mpg","data":[],"title":"Local Mpg","field":"localmpg_dbid","type":"select"},{"dataKey":"finance_mpg","data":[],"title":"Global Mpg","field":"global_mpg","type":"select"}],[{"dataKey":"inv_type","data":[],"title":"Inv Type","field":"inv_type","type":"select"}]]);
             const columns = ref([{field:'dbid',title:'列名dbid',type:'int',width:110,hidden:true,require:true,align:'left'},
                        {field:'entity',title:'Entity',type:'string',bind:{ key:'entity',data:[]},link:true,width:80,readonly:true,align:'left',sort:true},
                        {field:'division',title:'Division',type:'string',bind:{ key:'division',data:[]},width:80,readonly:true,align:'left'},
-                       {field:'lmpg_mpg_id',title:'Local Mpg',type:'string',bind:{ key:'sales_mpg',data:[]},width:80,readonly:true,require:true,align:'left'},
+                       {field:'localmpg_dbid',title:'Local Mpg',type:'string',bind:{ key:'sales_mpg',data:[]},width:80,readonly:true,require:true,align:'left'},
                        {field:'global_mpg',title:'Global Mpg',type:'string',bind:{ key:'finance_mpg',data:[]},width:80,readonly:true,align:'left'},
                        {field:'prod_id',title:'Item Code',type:'string',width:90,readonly:true,require:true,align:'left'},
                        {field:'prod_sname',title:'Item Description(Chinese)',type:'string',width:130,readonly:true,align:'left'},
