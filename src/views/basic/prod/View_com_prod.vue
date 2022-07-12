@@ -83,7 +83,7 @@
                        {field:'license_no',title:'License Product No',type:'string',width:110,hidden:true,align:'left'},
                        {field:'license_name',title:'License Product Name',type:'string',width:110,hidden:true,align:'left'},
                        {field:'stock_market',title:'列名stock_market',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'stock_pfizer',title:'列名stock_pfizer',type:'int',width:110,hidden:true,align:'left'},
+                       {field:'stock_pfizer',title:'stock_pfizer',type:'int',width:110,hidden:true,align:'left'},
                        {field:'safty_stock',title:'Sample Safty Stock',type:'int',width:110,hidden:true,align:'left'},
                        {field:'state',title:'Status',type:'string',bind:{ key:'prod_status',data:[]},width:80,align:'left'},
                        {field:'status_sample',title:'Samples Prohibited',type:'string',bind:{ key:'SunLocalPerform',data:[]},width:110,align:'left'},
