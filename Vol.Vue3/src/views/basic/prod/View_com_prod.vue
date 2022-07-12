@@ -36,8 +36,8 @@
                     {"title":"Item Description(English)","field":"prod_ename","disabled":true}],
                 [{"title":"Unit Of Stock","field":"unit_stock","disabled":true},
                     {"title":"Unit Of Sale","field":"unit_sale","disabled":true}],
-                [{"dataKey":"finance_mpg","data":[],"title":"Global Mpg","field":"global_mpg","disabled":true,"type":"select"},
-                    {"dataKey":"sales_mpg","data":[],"title":"Local Mpg","field":"localmpg_dbid","disabled":true,"type":"select"}],
+                [{"dataKey":"finance_mpg","data":[],"title":"Global Mpg","field":"global_mpg","disabled":true,"type":"select","required":true},
+                    {"dataKey":"sales_mpg","data":[],"title":"Local Mpg","field":"localmpg_dbid","disabled":true,"type":"select","required":true}],
                // [{"dataKey":"sales_mpg","data":[],"title":"localmpg_dbid","field":"localmpg_dbid","type":"select"}]
                 [{"title":"NHI Product Code","field":"nhi_id","disabled":true},
                     {"dataKey":"distributor","data":[],"title":"Default Distributor","field":"default_dist_id","type":"select"}],
