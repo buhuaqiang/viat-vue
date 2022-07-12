@@ -93,6 +93,17 @@ let extension = {
       //查询界面点击行事件
        this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
+    getOption(field) {
+      let option;
+      this.editFormOptions.forEach(x => {
+        x.forEach(item => {
+          if (item.field == field) {
+            option = item;
+          }
+        })
+      })
+      return option;
+    },
 
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
@@ -101,7 +112,39 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+      if(this.currentAction=='Add'){
+        this.getOption("entity").disabled=false;
+        this.getOption("prod_id").disabled=false;
+        this.getOption("prod_sname").disabled=false;
+        this.getOption("prod_ename").disabled=false;
+        this.getOption("unit_stock").disabled=false;
+        this.getOption("unit_sale").disabled=false;
+        this.getOption("global_mpg").disabled=false;
+        this.getOption("localmpg_dbid").disabled=false;
+        this.getOption("nhi_id").disabled=false;
+        this.getOption("pack_size").disabled=false;
+        this.getOption("pack_size_pri").disabled=false;
+        this.getOption("nhi_price").disabled=false;
+        this.getOption("division").disabled=false;
+        this.getOption("status_stock_pfizer").disabled=false;
 
+
+      }else{
+        this.getOption("entity").disabled=true;
+        this.getOption("prod_id").disabled=true;
+        this.getOption("prod_sname").disabled=true;
+        this.getOption("prod_ename").disabled=true;
+        this.getOption("unit_stock").disabled=true;
+        this.getOption("unit_sale").disabled=true;
+        this.getOption("global_mpg").disabled=true;
+        this.getOption("localmpg_dbid").disabled=true;
+        this.getOption("nhi_id").disabled=true;
+        this.getOption("pack_size").disabled=true;
+        this.getOption("pack_size_pri").disabled=true;
+        this.getOption("nhi_price").disabled=true;
+        this.getOption("division").disabled=true;
+        this.getOption("status_stock_pfizer").disabled=true;
+      }
     }
   }
 };
