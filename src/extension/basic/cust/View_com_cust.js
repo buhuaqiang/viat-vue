@@ -75,7 +75,48 @@ let extension = {
       return data;
     },
 
+    getPopRenderText(searchType){
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+          h(
+              "input",
+              {
+                class:"el-input__inner",
+                type:"text",
+                id:searchType,
+                style:{width:"70%","background-color":"#f5f7fb"},
+                readonly:"true"
+              }
+          ),
+          h(
+              "a",
+              {
+                props: {},
 
+                style: { "color":"grey","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px","pointer-events": "none"},
+                onClick: (e) => {
+
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "Pick"
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"grey","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px","pointer-events": "none"},
+                onClick: (e) => {
+
+                }
+              },
+              [h("i",{class:"el-icon-zoom-out"})],
+              "Clean"
+          ),
+
+        ]);
+      };
+    },
 
     getPopRender(searchType) {//
       return (h, { row, column, index }) => {
@@ -219,6 +260,42 @@ let extension = {
       })
       return option;
     },
+    parseTime(time,cFormat){
+      const format=cFormat||'{y}-{m}-{d} {h}:{i}:{s}'
+      let date
+      if(typeof time ==='object'){
+        date=time
+      }else {
+        if(typeof time ==='string'){
+          if((/^[0-9]+$/.test(time))){
+            time=parseInt(time)
+          }else{
+            time=time.replace(new RegExp(/-/gm),'/')
+          }
+        }
+        if((typeof time==='number') && (time.toString().length)===10){
+          time=time*1000
+        }
+        date=new Date(time)
+      }
+      const formatObj={
+        y:date.getFullYear(),
+        m:date.getMonth()+1,
+        d:date.getDate(),
+        h:date.getHours(),
+        i:date.getMinutes(),
+        s:date.getSeconds(),
+        a:date.getDay()
+      }
+      const time_str=format.replace(/{([ymdhisa])+}/g,(result,key)=>{
+        const value=formatObj[key]
+        if(key==='a'){
+          return['日','一','二','三','四','五','六'][value]
+        }
+        return  value.toString().padStart(2,'0')
+      })
+      return time_str
+    },
     resetSearchFormAfter() {
       document.getElementById("med_group").value=''
       document.getElementById("delv_group").value=''
@@ -263,7 +340,13 @@ let extension = {
       let invoiceCity = this.getOption("invoice_city_name");
       let comZipId = this.getOption("cust_zip_id");
       let invoiceZipId = this.getOption("invoice_zip_id");
-
+      let status=this.getOption("status");
+      status.onChange=(val, option)=>{
+        if(val=='N'){
+          let dateStrs=this.parseTime(new Date(),'{y}-{m}-{d}')
+          this.editFormFields['inactive_date']=dateStrs;
+        }
+      }
 
       comCity.onChange = (val, option) => {
         this.editFormFields.cust_zip_id = '';//清除原來選擇的數據
@@ -276,9 +359,7 @@ let extension = {
       }
 
       let ownHospital = this.getOption("own_hospital_cust_id");
-      ownHospital.extra = {
-        render: this.getPopRender("f_own_hospital")
-      }
+
       ownHospital.onKeyPress= ($event) => {
         if($event.keyCode==13){
           let  cust_id = this.editFormFields['own_hospital_cust_id']
@@ -301,9 +382,7 @@ let extension = {
       }
 
       let med_group = this.getOption("med_group_cust_id");
-      med_group.extra = {
-        render: this.getPopRender("f_med_group")
-      }
+
       med_group.onKeyPress= ($event) => {
         if($event.keyCode==13){
           let  cust_id = this.editFormFields['med_group_cust_id']
@@ -326,9 +405,7 @@ let extension = {
       }
 
       let delv_group = this.getOption("delv_group_cust_id");
-      delv_group.extra = {
-        render: this.getPopRender("f_delv_group")
-      }
+
       delv_group.onKeyPress= ($event) => {
         if($event.keyCode==13){
           let  cust_id = this.editFormFields['delv_group_cust_id']
@@ -432,17 +509,12 @@ let extension = {
 
     },
     onInited() {
+      this.detailOptions.columns.forEach(x=>{
+
+      });
       //this.height = this.height-60
       //框架初始化配置后
       //隐藏不需要的按钮
-      this.detailOptions.buttons.forEach(but => {
-        if (but.value == 'import' || but.value == 'export') {
-          but.hidden = true;
-        }
-      })
-
-
-
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
       let detailCityName = this.getDetailColumns("city_name");
@@ -492,6 +564,14 @@ let extension = {
       //查询界面点击行事件
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
+    addRow() {
+      debugger
+      let index=this.$refs.detail.rowData.length
+      this.$refs.detail.addRow({seq_no:index+1});
+      this.updateDetailTableSummaryTotal();
+      //設置當前行可編輯
+      this.$refs.detail.edit.rowIndex = index
+    },
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
       //(1)判断是编辑还是新建操作： this.currentAction=='Add';
@@ -503,13 +583,31 @@ let extension = {
       this.getOption("cust_id").hidden = this.currentAction ==this.const.ADD;
 
 
-
+      let ownHospital = this.getOption("own_hospital_cust_id");
+      let delv_group = this.getOption("delv_group_cust_id");
+      let med_group = this.getOption("med_group_cust_id");
+      ownHospital.extra = {
+        render: this.getPopRender("f_own_hospital")
+      }
+      med_group.extra = {
+        render: this.getPopRender("f_med_group")
+      }
+      delv_group.extra = {
+        render: this.getPopRender("f_delv_group")
+      }
       if (this.currentAction ==this.const.ADD){
         this.editFormFields.status='Y';//設置狀態默認值
+        this.editFormFields.is_contract='Y';//
+        this.editFormFields.is_private='Y';//
+        this.editFormFields.own_by_hospital='Y';//
         this.editFormFields.cust_id = "C0000";
         document.getElementById("f_med_group").value=''
         document.getElementById("f_delv_group").value=''
         document.getElementById("f_own_hospital").value=''
+
+
+
+
       }else  if (this.currentAction ==this.const.EDIT) {
         let comZipId = this.getOption("cust_zip_id");
         let invoiceZipId = this.getOption("invoice_zip_id");
@@ -523,10 +621,21 @@ let extension = {
         document.getElementById("f_delv_group").value=row.delv_group_cust_name
         document.getElementById("f_own_hospital").value=row.own_hospital_cust_name
       }else  if (this.currentAction ==this.const.VIEW){
+        ownHospital.extra = {
+          render: this.getPopRenderText("f_own_hospital")
+        }
+        med_group.extra = {
+          render: this.getPopRenderText("f_med_group")
+        }
+        delv_group.extra = {
+          render: this.getPopRenderText("f_delv_group")
+        }
         //回顯值
         document.getElementById("f_med_group").value=row.med_group_cust_name;
         document.getElementById("f_delv_group").value=row.delv_group_cust_name
         document.getElementById("f_own_hospital").value=row.own_hospital_cust_name
+
+
       }
 
     }

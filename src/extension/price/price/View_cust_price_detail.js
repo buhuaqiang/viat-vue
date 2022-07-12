@@ -392,7 +392,7 @@ let extension = {
         this.$Message.error(" Nhi price >= Invoice Price and Invoice Price >= Net Price");
         return false;
       }*/
-      if(formData.mainData.start_date < formData.mainData.end_date){
+      if(formData.mainData.start_date <= formData.mainData.end_date){
 
       }else{
         this.$Message.error("Start date can't behind end date");

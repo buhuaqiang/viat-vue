@@ -1054,7 +1054,7 @@ export default defineComponent({
       if (inputTypeArr.indexOf(item.type) != -1) {
         let message =
           item.title +
-          (item.type == 'mail' ? '必须是一个邮箱地址' : '不能为空');
+          (item.type == 'mail' ? ' has to be a valid mail' : ' cant be empty');
         let type = item.type == 'mail' ? 'email' : types[item.columnType];
         let _rule = {
           required: true,

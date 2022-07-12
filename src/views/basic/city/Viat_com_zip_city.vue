@@ -27,7 +27,7 @@
                 cnName: 'Zip City Setting',
                 name: 'city/Viat_com_zip_city',
                 url: "/Viat_com_zip_city/",
-                sortName: "city_id"
+                sortName: "zip_id"
             });
             const editFormFields = ref({"city_id":"","city_name":"","zip_id":"","zip_name":"","status":""});
             const editFormOptions = ref([[{"title":"City ID","required":true,"field":"city_id","type":"number"},

@@ -106,7 +106,7 @@
             :pagination-hide="false"
             :single="false"
             :height="300"
-            :url="url"
+            :url="url2"
             :defaultLoadPage="false"
             @loadBefore="loadTableBefore"
             :index="true"
@@ -158,7 +158,8 @@ export default {
       remark:"",
       fieldName:"",//編輯字段,用於回傳設置值
       formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields
-      url: "api/View_cust_price/GetPopPageData",//加载数据的接口
+      url: "api/View_cust_price/GetGroupInvalidPageData",//group加载数据的接口
+      url:"api/View_cust_price_detail/GetCustInvalidPageData",//customer加载数据的接口
       columns: [
         { field: "custprice_dbid", title: "主键ID", type: "guid", width: 80, hidden: true,isKey: true },
         {field:'group_id',title:'Group Id',type:'string',width:110,require:true,align:'left',sort:true},
