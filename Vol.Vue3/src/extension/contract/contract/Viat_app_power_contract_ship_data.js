@@ -22,6 +22,10 @@ let extension = {
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
   methods: {
+    onActivated(){//禁用頁面緩存，每次进入页面查询数据
+      this.table.cnName="GP合約發票-"+this.$route.query.contract_no;
+      this.search()
+    },
     getOption(field) {
       let option;
       this.editFormOptions.forEach(x => {
@@ -51,7 +55,7 @@ let extension = {
       //this.searchFormFields.contract_no.readonly=true;
       //表格设置为单选
       this.single=true;
-      this.table.cnName="GP合約發票-"+this.$route.query.contract_no;
+
 
 
     },
@@ -91,7 +95,6 @@ let extension = {
       return true;
     },
     rowClick({ row, column, event }) {
-      debugger
       //查询界面点击行事件
       //取消其他行选中
       this.$refs.table.$refs.table.clearSelection();
