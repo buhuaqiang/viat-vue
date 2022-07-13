@@ -3,13 +3,19 @@
             v-model="model"
             :lazy="true"
             title="productPop"
-            :height="450"
-            :width="1000"
+            :height="800"
+            :width="1200"
             :padding="15"
     >
         <!-- 设置查询条件 -->
         <div style="padding-bottom: 10px">
-            <span style="margin-right: 5px">ID:</span>
+            <span style="margin-right: 5px">Entity:</span>
+            <el-input
+                    placeholder="Entity"
+                    style="width: 180px"
+                    v-model="entity"
+            />
+            <span style="margin-right: 5px">&nbsp;&nbsp;&nbsp;&nbsp;ID:</span>
             <el-input
                     placeholder="ID"
                     style="width: 180px"
@@ -31,7 +37,7 @@
                     type="primary"
                     style="margin-left:10px"
                     size="medium"
-                    icon="el-icon-zoom-out"
+                    icon="el-icon-search"
                     @click="search"
             >Inquire</el-button
             >
@@ -44,7 +50,7 @@
                 :columns="columns"
                 :pagination="pagination"
                 :pagination-hide="false"
-                :max-height="380"
+                :max-height="650"
                 :url="url"
                 :index="true"
                 :single=single
@@ -85,12 +91,14 @@
                 returnType:"",
                 flag:"",
                 defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
+                entity:"",//查询条件字段
                 prod_id: "", //查询条件字段
                 prod_ename: "", //查询条件字段
                 prod_sname: "", //查询条件字段
 
                 url: "api/View_com_prod_pop_query/GetProdPageData",//加载数据的接口
                 columns: [
+                    {field:'entity',title:'Entity',type:'string',width:90,align:'left',sort:true},
                     {field:'mpg_id',title:'Mpg',type:'string',width:90,align:'left',sort:true},
                     {field:'localmpg_dbid',title:'localmpg_dbid',type:'guid',width:110,hidden:true,align:'left'},
                     {field:'prod_id',title:'PID',type:'string',width:90,require:true,align:'left'},
@@ -99,6 +107,7 @@
                     {field:'prod_sname',title:'C-Name',type:'string',width:130,align:'left'},
                     {field:'nhi_price',title:'NHI Price',type:'decimal',width:90,align:'left'},
                     {field:'pack_size',title:'Pack Size',type:'decimal',width:90,align:'left'},
+                    {field:'prod_type',title:'Prod Type',type:'string',width:90,align:'left'},
                     {field:'globalmpg_dbid',title:'globalmpg_dbid',type:'guid',width:110,hidden:true,align:'left'},
                     {field:'created_date',title:'created_date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
                     {field:'prod_dbid',title:'prod_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'}],
@@ -148,8 +157,22 @@
                 this.$refs.prodPop.$refs.table.toggleRowSelection(row);//单击行时选中当前行;
             },
             loadTableBefore(params) {
-                //查询前，设置查询条件
+                if(this.entity){
+                    params.wheres.push({ name: "entity", value: this.entity});
+                }
                 if (this.prod_id) {
+                    params.wheres.push({ name: "prod_id", value: this.prod_id });
+                }
+                if (this.prod_ename) {
+                    params.wheres.push({ name: "prod_ename", value: this.prod_ename });
+                }
+                if (this.prod_sname) {
+                    params.wheres.push({ name: "prod_sname", value: this.prod_sname });
+                }
+
+
+                //查询前，设置查询条件
+                /*if (this.prod_id) {
                     params.wheres = [{ name: "prod_id", value: this.prod_id }];
                 }
                 if (this.prod_ename) {
@@ -157,7 +180,7 @@
                 }
                 if (this.prod_sname) {
                     params.wheres = [{ name: "prod_sname", value: this.prod_sname }];
-                }
+                }*/
                 return true;
             },
 
