@@ -139,6 +139,15 @@ let buttons = [{
             this.detachAll();
         }
     },
+    {
+        name: "Edit Share Table",
+        icon: 'el-icon-document',
+        type: 'primary',
+        value:'editShare',
+        onClick: function () {
+            this.openEditShareTable()
+        }
+    },
 
 // , {
 //     name: "数据结构",

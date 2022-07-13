@@ -27,7 +27,7 @@
           <span><i class="el-icon-date"></i> Adjustment</span>
         </template>
         <vol-table ref="table3">
-          <allowance-reverse ref="allowanceReverse"></allowance-reverse>
+          <allowance-adjustment ref="allowanceAdjustment"></allowance-adjustment>
         </vol-table>
       </el-tab-pane>
 
@@ -36,7 +36,7 @@
           <span><i class="el-icon-date"></i> Summary</span>
         </template>
         <vol-table ref="table4">
-          <allowance-sharing ref="allowanceSharing"></allowance-sharing>
+         <allowance-summary ref="allowanceSummary"></allowance-summary>
         </vol-table>
       </el-tab-pane>
     </el-tabs>
@@ -50,8 +50,10 @@ import VolTable from "@/components/basic/VolTable.vue";
 import custmModelBody from  '../../basic/cust/Viat_com_custModelBody.vue'; //'@/extension/basic/cust/Viat_com_custModelBody'
 import allowanceSharing from   "@/views/dataentry/fullallowance/View_full_allowance_sharing.vue";
 import allowanceReverse from "@/views/dataentry/fullallowance/View_full_allowance_reverse.vue";
+import allowanceAdjustment from "@/views/dataentry/fullallowance/View_full_allowance_adjustment.vue";
+import allowanceSummary from "@/views/dataentry/fullallowance/View_full_allowance_summary.vue";
 export default {
-  components: {allowanceSharing,allowanceReverse},
+  components: {allowanceSharing,allowanceReverse,allowanceAdjustment,allowanceSummary},
   data() {
 
   },
