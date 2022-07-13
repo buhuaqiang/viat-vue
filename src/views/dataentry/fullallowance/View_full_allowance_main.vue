@@ -37,6 +37,7 @@
             const searchFormOptions = ref([[{"title":"Contract No","field":"contract_no","colSize":6},{"title":"Effective Date","field":"start_date","colSize":3},{"title":"","field":"end_date","colSize":2}],[{"title":"Group","field":"group_id","colSize":6},{"title":"pricegroup_dbid","field":"pricegroup_dbid",hidden:true},{"title":"Customer","field":"cust_id","colSize":6},{"title":"cust_dbid","field":"cust_dbid",hidden:true}],[{"title":"Contract Product","field":"pu_prod_id","colSize":6},{"title":"cp_prod_dbid","field":"cp_prod_dbid",hidden:true},{"title":"FG Product","field":"cf_prod_id","colSize":6},{"title":"cf_prod_dbid","field":"cf_prod_dbid",hidden:true}],[{"dataKey":"Contract_State","data":[],"title":"Contract Status","field":"status","type":"select","colSize":6}]]);
             const columns = ref([{field:'contract_no',title:'Contract No',type:'string',link:true,width:110,align:'left',sort:true},
                        {field:'group_id',title:'Group',type:'string',width:110,align:'left'},
+                        {field:'hpcont_dbid',title:'hpcont_dbid',type:'string',hidden:true,width:110,align:'left'},
                        {field:'group_name',title:'GroupName',type:'string',width:110,align:'left'},
                        {field:'cust_id',title:'CustID',type:'string',width:110,align:'left'},
                        {field:'cust_name',title:'CustName',type:'string',width:110,align:'left'},

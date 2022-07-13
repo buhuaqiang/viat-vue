@@ -189,10 +189,7 @@ let viewgird = [
     }      ,{
         path: '/Viat_app_power_contract_ship_data',
         name: 'Viat_app_power_contract_ship_data',
-        component: () => import('@/views/contract/contract/Viat_app_power_contract_ship_data.vue'),
-        meta: {
-            keepAlive: false//禁用页面缓存
-        }
+        component: () => import('@/views/contract/contract/Viat_app_power_contract_ship_data.vue')
     }    ,{
         path: '/View_app_power_contract_ship_data_prod_list',
         name: 'View_app_power_contract_ship_data_prod_list',
@@ -287,10 +284,7 @@ let viewgird = [
     }    ,{
         path: '/View_app_hp_share_table',
         name: 'View_app_hp_share_table',
-        component: () => import('@/views/contract/hpcontract/View_app_hp_share_table.vue'),
-        meta: {
-            keepAlive: false//禁用页面缓存
-        }
+        component: () => import('@/views/contract/hpcontract/View_app_hp_share_table.vue')
     }    ,{
         path: '/Viat_app_hp_contract_share',
         name: 'Viat_app_hp_contract_share',
@@ -352,11 +346,14 @@ let viewgird = [
     }    ,{
         path: '/View_full_allowance_reverse',
         name: 'View_full_allowance_reverse',
-        component: () => import('@/views/dataentry/fullallowance/View_full_allowance_reverse.vue')
+        component: () => import('@/views/dataentry/fullallowance/View_full_allowance_reverse.vue'),
     }    ,{
         path: '/View_nhi_adjust_detail',
         name: 'View_nhi_adjust_detail',
-        component: () => import('@/views/dataentry/nhiadjust/View_nhi_adjust_detail.vue')
+        component: () => import('@/views/dataentry/nhiadjust/View_nhi_adjust_detail.vue'),
+        meta: {
+            keepAlive: false
+        }
     }    ,{
         path: '/View_invoice_pop',
         name: 'View_invoice_pop',
@@ -365,6 +362,30 @@ let viewgird = [
         path: '/Viat_app_hp_contract_allw_sum',
         name: 'Viat_app_hp_contract_allw_sum',
         component: () => import('@/views/dataentry/fullallowance/Viat_app_hp_contract_allw_sum.vue')
+    }    ,{
+        path: '/Viat_app_hp_contract_purchase_prod',
+        name: 'Viat_app_hp_contract_purchase_prod',
+        component: () => import('@/views/contract/hpcontract/Viat_app_hp_contract_purchase_prod.vue')
+    }    ,{
+        path: '/View_full_allowance_adjustment',
+        name: 'View_full_allowance_adjustment',
+        component: () => import('@/views/dataentry/fullallowance/View_full_allowance_adjustment.vue')
+    }    ,{
+        path: '/View_full_allowance_summary',
+        name: 'View_full_allowance_summary',
+        component: () => import('@/views/dataentry/fullallowance/View_full_allowance_summary.vue')
+    }    ,{
+        path: '/Viat_wk_contract_stretagy',
+        name: 'Viat_wk_contract_stretagy',
+        component: () => import('@/views/workflow/pricestretagy/Viat_wk_contract_stretagy.vue')
+    }    ,{
+        path: '/View_wk_cont_stretagy_detail',
+        name: 'View_wk_cont_stretagy_detail',
+        component: () => import('@/views/workflow/pricestretagy/View_wk_cont_stretagy_detail.vue')
+    }    ,{
+        path: '/Viat_wk_cont_stretagy_detail',
+        name: 'Viat_wk_cont_stretagy_detail',
+        component: () => import('@/views/workflow/pricestretagy/Viat_wk_cont_stretagy_detail.vue')
     }]
 
 export default viewgird

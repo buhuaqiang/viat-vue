@@ -169,6 +169,16 @@ let extension = {
         return row.end_date.substr(0,10);
       }
 
+      //在第二个按钮后添加一个新的按钮
+      /*this.buttons.splice(2, 0, {
+        name: "Edit Share Table",
+        icon: 'el-icon-edit-outline',
+        type: 'primary',
+        onClick: function () {
+          this.openEditShareTable()
+        }
+      })*/
+
 
 
     },
@@ -215,6 +225,24 @@ let extension = {
         })
       })
       return option;
+    },
+
+    //打開shareTab
+    openEditShareTable(){
+      let url='@extension/contract/hpcontract/View_app_hp_share_table'
+      //let url='/Viat_com_system_value'
+      let _rows =  this.getSelectRows();
+      if (!_rows || _rows.length != 1) {
+        return this.$message.error("請選擇一條數據");
+      }
+      let contract_no=_rows[0].contract_no
+debugger
+      this.$tabs.open({
+        text: "Share Table",
+        path: url,
+        query: {"hpcont_dbid":_rows[0].hpcont_dbid,"contract_no":contract_no},
+      });
+
     },
 
     getSearchRender(searchType) {//
