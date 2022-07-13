@@ -102,6 +102,11 @@ let extension = {
         }
       }
 
+      var allw_type = this.getOption("allw_type");
+      allw_type.onChange = (val) => {
+          this.$refs.modelBody.changeAllw(val);
+      }
+
       //查询页面
       let search_group_id=this.getSearch("group_id");
       search_group_id.extra = {
@@ -226,14 +231,14 @@ let extension = {
       }
 
     //在第二个按钮后添加一个新的按钮
-      this.buttons.splice(2, 0, {
+      /*this.buttons.splice(2, 0, {
         name: "Edit Share Table",
         icon: 'el-icon-edit-outline',
         type: 'primary',
         onClick: function () {
           this.openEditShareTable()
         }
-      })
+      })*/
 
     },
     onInited() {
@@ -490,6 +495,9 @@ let extension = {
       //table3數據回填到 formData 贈送產品
       let table3RowData = this.$refs.modelBody.table3RowData;
 
+      //table4數據回填到 formData
+      let table4RowData = this.$refs.modelBody.table4RowData;
+
       let detailData = [
         {
           key: "table1RowData",
@@ -502,13 +510,27 @@ let extension = {
         {
           key: "table3RowData",
           value: table3RowData,
-        }
+        },
+        {
+          key: "table4RowData",
+          value: table4RowData,
+        },
       ]
       formData.detailData = detailData;
 
       //新建保存前formData为对象，包括明细表，可以给给表单设置值，自己输出看formData的值
       return true;
     },
+   /* addAfter (result) {//新建保存后result返回的状态及表单对象
+      let url='/View_app_hp_share_table'
+      this.$tabs.open({
+        text: "Share Table",
+        path: url,
+        query: {"hpcont_dbid":"30E41672-23E1-4FDF-AA89-26AE4A3E28F4","contract_no":"A-96825546"},
+      });
+      return true;
+    },*/
+
     updateBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
 
@@ -521,11 +543,17 @@ let extension = {
       //table3數據回填到 formData 贈送產品
       let table3RowData = this.$refs.modelBody.table3RowData;
 
+      //table4數據回填到 formData 贈送產品
+      let table4RowData = this.$refs.modelBody.table4RowData;
+
       //删除数据回传
       let delTable1RowData = this.$refs.modelBody.delTable1RowData;
 
       //table2數據回填到 formData
       let delTable2RowData = this.$refs.modelBody.delTable2RowData;
+
+      //table4數據回填到 formData
+      let delTable4RowData = this.$refs.modelBody.delTable4RowData;
 
       //vue2方法,  不使用,可以直接賦值
       //this.$set(this.detailData, "table1RowData", table1RowData)
@@ -542,12 +570,20 @@ let extension = {
           value: table2RowData,
         },
         {
+          key: "table4RowData",
+          value: table4RowData,
+        },
+        {
           key: "delTable1RowData",
           value: delTable1RowData,
         },
         {
           key: "delTable2RowData",
           value: delTable2RowData,
+        },
+        {
+          key: "delTable4RowData",
+          value: delTable4RowData,
         },
       ]
 
@@ -572,6 +608,7 @@ let extension = {
         this.getOption("contract_no").hidden=true;
         this.editFormFields.state='Y';
         this.getOption("state").disabled=true;
+        this.getOption("allw_type").disabled=false;
       }else{
         this.getOption("contract_no").hidden=false;
         this.getOption("allw_type").disabled=true;
@@ -593,19 +630,14 @@ let extension = {
       this.editFormFields.group_id= this.editFormFields.group_id;
       this.pickEditFormPriceGroupName=this.editFormFields.group_name;
 
-
-
-
-
-
      // let pricegroup_dbidname =this.getOption("pricegroup_dbidname");
       var costomer_type  = this.editFormFields.costomer_type;
       if(costomer_type=='1'){
-        group_id.hidden=true
+        editform_group_id.hidden=true
       }else if(costomer_type=='0'){
-        group_id.hidden=false
+        editform_group_id.hidden=false
       }else{
-        group_id.hidden=true
+        editform_group_id.hidden=true
       }
 
       this.$refs.modelBody.modelOpen();

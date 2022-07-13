@@ -35,7 +35,7 @@
                               [{"title":"Subject","field":"subject"}],
                               [{"title":"Cc","field":"cc"}],
                               [{"title":"Bcc","field":"bcc"}],
-                              [{"title":"列名content","field":"content","type":"textarea"}],
+                              [{"title":"content","field":"content","type":"textarea"}],
                               [{"title":"Remarks","field":"remarks"}],
                               [{"title":"Last Modified","field":"emp_ename","disabled":true},
                                {"title":"Modified Date","field":"modified_date","disabled":true}]]);

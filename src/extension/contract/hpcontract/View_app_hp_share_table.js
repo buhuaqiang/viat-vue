@@ -32,6 +32,11 @@ let extension = {
   },
   methods: {
      //下面这些方法可以保留也可以删除
+    onActivated(){//禁用頁面緩存，每次进入页面查询数据
+      let contract_no  = this.$route.query.contract_no;
+      this.searchFormFields.contract_no = contract_no;
+      this.search()
+    },
     onInit() {  //框架初始化配置前，
         //示例：在按钮的最前面添加一个按钮
         //   this.buttons.unshift({  //也可以用push或者splice方法来修改buttons数组
@@ -48,9 +53,7 @@ let extension = {
       //显示查询全部字段
       this.setFiexdSearchForm(true);
       //設置默認值
-      let contract_no  = this.$route.query.contract_no;
-      this.searchFormFields.contract_no = contract_no;
-     // let sumpercent = this.getSumPercent();
+
       //this.searchFormFields.Summary =sumpercent;
       //this.searchFormFields.Summary = summary;
       let sum_percent=this.getColumnsOption("sum_percent");
@@ -159,16 +162,14 @@ let extension = {
         }
       }
     },
-
-
     //获取总比值
     getSumPercent() {
       let sum_percent = '';
       let hpcont_dbid = this.$route.query.hpcont_dbid;
-      this.http.get("api/Viat_app_hp_contract_share/getSumPercent?hpcont_dbid="+hpcont_dbid,{} , "loading").then(reslut => {
-        console.log(reslut)
+      //this.http.get("api/Viat_app_hp_contract_share/GetSumPercentByHpcontDBID?hpcont_dbid="+hpcont_dbid,{} , "loading").then(reslut => {
+      this.http.get("api/Viat_app_hp_contract_share/GetSumPercentByHpcontDBID?hpcont_dbid="+this.$route.query.hpcont_dbid,{} , "loading").then(reslut => {
         sum_percent = reslut.sum_percent;
-        return;
+        return ;
       })
       return sum_percent;
     },
@@ -333,10 +334,12 @@ let extension = {
       return true;
     },
     searchAfter(result) {
+      //this.getSumPercent();
       //查询后，result返回的查询数据,可以在显示到表格前处理表格的值
       return true;
     },
     addBefore(formData) {
+
       //新建保存前formData为对象，包括明细表，可以给给表单设置值，自己输出看formData的值
       return true;
     },
