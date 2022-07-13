@@ -83,6 +83,16 @@ let extension = {
         //     }
         //   });
       // this.boxOptions.labelWidth = 150;
+      this.buttons.splice(3, 0, {
+        name: "ignore",
+        icon: 'md-refresh',
+        type: 'Update',
+        // color: '＃1E90FF',
+        onClick: function () {
+          // this.$Message.info("Import New NHIP");
+          this.ignore();
+        }
+      })
       this.boxOptions.labelWidth=235;
       //显示查询全部字段
       this.setFiexdSearchForm(true);
@@ -92,6 +102,13 @@ let extension = {
       this.load=false;
       //表格设置为单选
       this.single=true;
+
+      this.buttons[1].hidden =true;
+      this.buttons[3].hidden =true;//ignore
+
+
+
+
       let comCity=this.getOption("cust_zip_id_city_name");
       let invoiceCity=this.getOption("invoice_zip_id_city_name");
       let comZipId=this.getOption("cust_zip_id");
@@ -109,6 +126,30 @@ let extension = {
 
         //示例：设置修改新建、编辑弹出框字段标签的长度
         // this.boxOptions.labelWidth = 150;
+    },
+    ignore(){
+      let _rows =  this.getSelectRows();
+      if (!_rows || _rows.length ==0) {
+        return this.$message.error("請至少選擇一條數據");
+      }
+
+      let ids=[];
+      _rows.forEach(r=>{
+        ids.push(r.custtransfer_dbid);
+      })
+      this.$confirm('確認要Ignore選擇的數據嗎?', '警告', {
+        confirmButtonText: '確定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+            this.http.post("api/View_import_customer_maintain/ignore", ids, "Ignoreing").then(reslut => {
+              this.$refs.table.load();
+              this.$Message.success("Ignore success")
+              return;
+            })
+          }
+      )
     },
     onInited() {
       //框架初始化配置后
@@ -141,13 +182,31 @@ let extension = {
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
+      debugger
+// if (this.$refs.table.getSelected()){
+//
+// }
+
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
+      let rowState = this.$refs.table.getSelected()[0].state;
+      if (rowState == '0'){
+        this.buttons[3].hidden =true;
+        this.buttons[2].hidden =false;//edit active
+      }else {
+        this.buttons[2].hidden =true;
+        this.buttons[3].hidden =false;
+      }
+      if (rowState != '2'){
+        this.buttons[4].hidden =false;
+      }
+
     },
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
       //(1)判断是编辑还是新建操作： this.currentAction=='Add';
       //(2)给弹出框设置默认值
       //(3)this.editFormFields.字段='xxx';
+      debugger
 
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
