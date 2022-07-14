@@ -362,7 +362,8 @@ let viewgird = [
         path: '/Viat_app_hp_contract_allw_sum',
         name: 'Viat_app_hp_contract_allw_sum',
         component: () => import('@/views/dataentry/fullallowance/Viat_app_hp_contract_allw_sum.vue')
-    }    ,{
+
+    }   ,{
         path: '/Viat_app_hp_contract_purchase_prod',
         name: 'Viat_app_hp_contract_purchase_prod',
         component: () => import('@/views/contract/hpcontract/Viat_app_hp_contract_purchase_prod.vue')
@@ -386,6 +387,7 @@ let viewgird = [
         path: '/Viat_wk_cont_stretagy_detail',
         name: 'Viat_wk_cont_stretagy_detail',
         component: () => import('@/views/workflow/pricestretagy/Viat_wk_cont_stretagy_detail.vue')
+
     }]
 
 export default viewgird
