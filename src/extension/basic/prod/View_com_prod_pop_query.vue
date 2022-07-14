@@ -157,6 +157,9 @@
                 this.$refs.prodPop.$refs.table.toggleRowSelection(row);//单击行时选中当前行;
             },
             loadTableBefore(params) {
+                if (!params.sort) {//設置排序
+                    params.sort = "created_date";
+                }
                 if(this.entity){
                     params.wheres.push({ name: "entity", value: this.entity});
                 }
