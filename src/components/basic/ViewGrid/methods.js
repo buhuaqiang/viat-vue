@@ -649,7 +649,6 @@ let methods = {
     }
     let url = this.getUrl(this.currentAction);
     this.http.post(url, formData, true).then((x) => {
-      debugger
       //保存后
       if (_currentIsAdd) {
         if (!this.addAfter(x)) return;

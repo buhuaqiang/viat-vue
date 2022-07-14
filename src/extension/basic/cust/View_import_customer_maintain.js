@@ -84,9 +84,10 @@ let extension = {
         //   });
       // this.boxOptions.labelWidth = 150;
       this.buttons.splice(3, 0, {
-        name: "ignore",
-        icon: 'md-refresh',
-        type: 'Update',
+        name: "Ignore",
+        value: 'ignore',
+        icon: 'el-icon-delete',
+        type: 'warning',
         // color: '＃1E90FF',
         onClick: function () {
           // this.$Message.info("Import New NHIP");
@@ -103,8 +104,11 @@ let extension = {
       //表格设置为单选
       this.single=true;
 
-      this.buttons[1].hidden =true;
-      this.buttons[3].hidden =true;//ignore
+      this.buttons.forEach(x => {
+        if (x.name == "edit" || x.name == "ignore") {
+          x.hidden=true
+        }
+      })
 
 
 
