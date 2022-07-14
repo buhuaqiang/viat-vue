@@ -557,7 +557,7 @@ export default {
                         if(data.status) {
                           this.$message.success('Save Completed.');
                           this.model=false;
-                          this.$emit("custPriceSearch");
+                          this.$emit("onSave");
                         }
                         else
                         {

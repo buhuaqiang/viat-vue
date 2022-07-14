@@ -29,14 +29,15 @@
                 url: "/Viat_com_doh_type/",
                 sortName: "dbid"
             });
-            const editFormFields = ref({"doh_type":"","doh_type_name":"","doh_type_ename":"","report_type":"","status":""});
+            const editFormFields = ref({"doh_type":"","doh_type_name":"","doh_type_ename":"","report_type":"","status":"","channel":""});
             const editFormOptions = ref([[{"title":"DOH Type Name","field":"doh_type_name"},
                                {"title":"DOH Type","required":true,"field":"doh_type"}],
                               [{"title":"DOH English Name","field":"doh_type_ename"},
                                {"title":"Margin Report Type","field":"report_type"}],
-                              [{"dataKey":"Status_Effect","data":[],"title":"Status","field":"status","type":"select"}]]);
-            const searchFormFields = ref({"doh_type":"","doh_type_name":"","doh_type_ename":"","status":""});
-            const searchFormOptions = ref([[{"title":"DOH Type","field":"doh_type","type":"like"},{"title":"DOH Type Name","field":"doh_type_name","type":"like"}],[{"title":"DOH English Name","field":"doh_type_ename","type":"like"},{"dataKey":"Status_Effect","data":[],"title":"Status","field":"status","type":"select"}]]);
+                              [{"dataKey":"Channel","data":[],"title":"Channel","field":"channel","type":"select"},
+                               {"dataKey":"Status_Effect","data":[],"title":"Status","field":"status","type":"select"}]]);
+            const searchFormFields = ref({"doh_type":"","doh_type_name":"","doh_type_ename":"","status":"","channel":""});
+            const searchFormOptions = ref([[{"title":"DOH Type","field":"doh_type","type":"like"},{"title":"DOH Type Name","field":"doh_type_name","type":"like"}],[{"title":"DOH English Name","field":"doh_type_ename","type":"like"},{"dataKey":"Status_Effect","data":[],"title":"Status","field":"status","type":"select"}],[{"dataKey":"Channel","data":[],"title":"Channel","field":"channel","type":"select"}]]);
             const columns = ref([{field:'doh_dbid',title:'ID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
                        {field:'entity',title:'公司別',type:'string',width:110,hidden:true,align:'left'},
                        {field:'division',title:'所屬事業單位',type:'string',width:110,hidden:true,align:'left'},
@@ -55,7 +56,8 @@
                        {field:'modified_client',title:'最後修改者的委託人',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,hidden:true,align:'left',sort:true},
                        {field:'created_clientusername',title:'created_clientusername',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'}]);
+                       {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'channel',title:'Channel',type:'string',bind:{ key:'Channel',data:[]},width:110,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

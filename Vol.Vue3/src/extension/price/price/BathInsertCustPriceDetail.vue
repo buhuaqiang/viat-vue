@@ -564,10 +564,28 @@ export default {
       if(rows.length==0){
         this.$message.error("draft cache is empty.");
       }else{
-        this.http.post("api/View_cust_price/bathSaveCustPrice", { mainData: rows }, true)
+        this.http.post("api/View_cust_price_detail/bathSaveCheckData", rows , true)
                 .then((x) => {
-                  this.$message.success('success');
-                  this.model=false;
+                  debugger
+                  if(x.status){
+                    //校验通过
+                    //调用保存访求
+                    this.http.post("api/View_cust_price_detail/bathSaveCustPrice", x.data , true).then((data)=>
+                    {
+                      if(data.status) {
+                        this.$message.success('Save Completed.');
+                        this.model=false;
+                        this.$emit("onSave");
+                      }
+                      else
+                      {
+                        this.$message.error(data.message);
+                      }
+                    });
+
+                  }else{
+                    this.$message.error(x.message);
+                  }
                 });
       }
 

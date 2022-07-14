@@ -1,7 +1,7 @@
 <template>
   <invalid-data-page ref="InvalidDataPage"></invalid-data-page>
-  <bath-insert-cust-price ref="BathInsertCustPrice" ></bath-insert-cust-price>
-  <BathInsertCustPriceDetail ref="BathInsertCustPriceDetail"></BathInsertCustPriceDetail>
+  <bath-insert-cust-price ref="BathInsertCustPrice" @onSave="saveCustPrice"></bath-insert-cust-price>
+  <BathInsertCustPriceDetail ref="BathInsertCustPriceDetail"  @onSave="saveCustPriceDetail"></BathInsertCustPriceDetail>
 </template>
 <script>
 //开发一对多从表需要参照voltable与viewgrid组件api
@@ -30,8 +30,16 @@ export default {
     openBathAddCustDetailPage(){
       this.$refs.BathInsertCustPriceDetail.openDemo();
     },
-    custPriceSearch(){
-
+    saveCustPriceDetail(){
+     debugger
+      this.$emit("parentCall", ($parent) => {
+        $parent.search();
+      });
+    },
+    saveCustPrice(){
+      this.$emit("parentCall", ($parent) => {
+        $parent.search();
+      });
     },
 
   },
