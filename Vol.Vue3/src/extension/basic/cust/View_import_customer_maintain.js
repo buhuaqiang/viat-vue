@@ -192,23 +192,53 @@ let extension = {
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
       //沒選到任何數據時隱藏Edit, Ignore 顯示View按鈕
       if (!this.$refs.table.getSelected()[0] ){
-        this.buttons[4].hidden =true;
-        this.buttons[2].hidden =true;
-        this.buttons[3].hidden =false;
+        this.buttons.forEach(x => {
+          debugger
+          if (x.name == "Edit" || x.name == "Ignore") {
+            x.hidden=true;
+          }
+          if (x.name == "View"){
+            x.hidden=false;
+          }
+        })
       }else{
         //有選到數據時作以下判斷
         let rowState = this.$refs.table.getSelected()[0].state;
         if (rowState == '0'){
-          this.buttons[3].hidden =true;
-          this.buttons[2].hidden =false;//edit active
+          this.buttons.forEach(x => {
+            debugger
+            if (x.name == "Edit") {
+              x.hidden=false;
+            }
+            if (x.name == "View"){
+              x.hidden=true;
+            }
+          })
         }else {
-          this.buttons[2].hidden =true;
-          this.buttons[3].hidden =false;
+          this.buttons.forEach(x => {
+            debugger
+            if (x.name == "Edit") {
+              x.hidden=true;
+            }
+            if (x.name == "View"){
+              x.hidden=false;
+            }
+          })
         }
         if (rowState != '2'){
-          this.buttons[4].hidden =false;
+          this.buttons.forEach(x => {
+            debugger
+            if (x.name == "Ignore") {
+              x.hidden=false;
+            }
+          })
         }else{
-          this.buttons[4].hidden =true;
+          this.buttons.forEach(x => {
+            debugger
+            if (x.name == "Ignore") {
+              x.hidden=true;
+            }
+          })
         }
       }
 
