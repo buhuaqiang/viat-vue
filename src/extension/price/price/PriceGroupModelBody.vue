@@ -40,7 +40,7 @@
       :max-height="420"
       :url="url"
       :index="true"
-      :single="true"
+      :single="single"
       :defaultLoadPage="defaultLoadPage"
       @loadBefore="loadTableBefore"
       @loadAfter="loadTableAfter"
@@ -108,7 +108,6 @@ export default {
       this.$refs.mytable.load();
     },
     addRow() {
-      debugger
       var rows = this.$refs.mytable.getSelected();
       if (!rows || rows.length == 0) {
         return this.$message.error("Please select a record first.");

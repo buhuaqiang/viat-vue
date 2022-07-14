@@ -41,51 +41,9 @@ let extension = {
 
         let cust_dbid = this.getEditFormOption("cust_dbid");
         cust_dbid.hidden = true;
+        this.getEditFormOption("cust_name").hidden = true;
       },
-      /**
-       *
-       * @param fieldName綁定欄位
-       * @param formType 表單類型f-form表單,s-查詢表單
-       * @param pageType c-cust,pg-pricegroup
-       * @returns {function(*, {row: *, column: *, index: *}): *}
-       */
-      /*getFormRender(formType) {//
-        return (h, {row, column, index}) => {
-          return h("div", {
-            style: {
-              color: '#0c83ff',
-              'font-size': '12px',
-              cursor: 'pointer',
-              "text-decoration": "none"
-            }
-          }, [
-            h(
-              "a",
-              {
-                props: {},
-                style: {"color": "", "border-bottom": "1px solid", "margin-left": "9px", "text-decoration": "none"},
-                onClick: (e) => {
-                  this.$refs.modelBody.openModel(false, "searchCustomer", "")
-                }
-              },
-              [h("i", {class: "el-icon-zoom-in"})],
-              "Pick"
-            ),
-            h(
-              "a",
-              {
-                props: {},
-                style: {"color": "red", "margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
-                onClick: (e) => {
-                  this.clearData();
-                }
-              },
-              [h("i", {class: "el-icon-zoom-out"})],
-              "Clean"
-            ),
-          ]);
-        };
-      },*/
+
       /**
        *
        * @param fieldName綁定欄位

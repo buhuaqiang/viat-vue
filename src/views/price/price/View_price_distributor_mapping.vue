@@ -30,15 +30,15 @@
                 sortName: "prod_dbid"
             });
             const editFormFields = ref({"prods":[],"pricegroups":[],"custs":[],"i_dist_id":"","start_date":"","e_dist_id":"","end_date":"","modified_date":"","status":"","remarks":"","prod_ename":[],"group_name":[],"cust_name":[],"prod_id":[],"group_id":[],"cust_id":[]});
-            const editFormOptions = ref([[{"dataKey":"mul_select_for_pop","data":[],"title":"Product","required":true,"field":"prods",colSize:8,"type":"selectList"}],
-                              [{"dataKey":"mul_select_for_pop","data":[],"title":"Group ID","field":"pricegroups",colSize:8,"type":"selectList"}],
-                              [{"dataKey":"mul_select_for_pop","data":[],"title":"Customer","field":"custs",colSize:8,"type":"selectList"}],
+            const editFormOptions = ref([[{"dataKey":"mul_select_for_pop","data":[],"title":"Product","required":true,"field":"prods","type":"selectList"}],
+                              [{"dataKey":"mul_select_for_pop","data":[],"title":"Group ID","field":"pricegroups","type":"selectList"}],
+                              [{"dataKey":"mul_select_for_pop","data":[],"title":"Customer","field":"custs","type":"selectList"}],
                               [{"dataKey":"distributor_Drop","data":[],"title":"Original Distributor","required":true,"field":"i_dist_id","type":"select"},
-                               {"title":"Start Date","required":true,"field":"start_date","type":"datetime"}],
+                               {"title":"Start Date","required":true,"field":"start_date","type":"date"}],
                               [{"dataKey":"distributor_Drop","data":[],"title":"Assign Distributor","field":"e_dist_id","type":"select"},
-                               {"title":"End Date","required":true,"field":"end_date","type":"datetime"}],
+                               {"title":"End Date","required":true,"field":"end_date","type":"date"}],
                               [{"dataKey":"Status_YN","data":[],"title":"Status","required":true,"field":"status","type":"select"},
-                               {"title":"Modified Date","field":"modified_date","type":"datetime"}],
+                               {"title":"Modified Date","field":"modified_date","type":"date"}],
                               [{"title":"Remarks","field":"remarks"}],
                               [{"dataKey":"mul_select_for_pop","data":[],"title":"Product Name","field":"prod_ename","type":"selectList"}],
                               [{"dataKey":"mul_select_for_pop","data":[],"title":"Group Name","field":"group_name","type":"selectList"}],
@@ -47,7 +47,7 @@
                               [{"dataKey":"mul_select_for_pop","data":[],"title":"Group ID","field":"group_id","type":"selectList"}],
                               [{"dataKey":"mul_select_for_pop","data":[],"title":"Customer ID","field":"cust_id","type":"selectList"}]]);
             const searchFormFields = ref({"prods":[],"prod_dbid":"","cust_dbid":"","pricegroup_dbid":"","prod_id":"","prod_ename":"","group_id":"","group_name":"","cust_id":"","cust_name":"","i_dist_id":"","start_date":"","end_date":"","status":""});
-            const searchFormOptions = ref([[{"dataKey":"mul_select_for_pop","data":[],"title":"Product","field":"prods","type":"selectList"}],[{"dataKey":"mul_select_for_pop","data":[],"title":"Group ID","field":"group_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Group Name","field":"group_name"}],[{"dataKey":"mul_select_for_pop","data":[],"title":"Customer ID","field":"cust_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Customer Name","field":"cust_name"}],[{"dataKey":"distributor_Drop","data":[],"title":"Original Distributor","field":"i_dist_id","type":"select"}],[{"title":"Start Date","field":"start_date","type":"datetime"},{"title":"End Date","field":"end_date","type":"datetime"}],[{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}],[{"title":"","field":"prod_dbid"}],[{"title":"","field":"cust_dbid"}],[{"title":"","field":"pricegroup_dbid"}],[{"dataKey":"mul_select_for_pop","data":[],"title":"Product ID","field":"prod_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Product Name","field":"prod_ename"}]]);
+            const searchFormOptions = ref([[{"dataKey":"mul_select_for_pop","data":[],"title":"Product","field":"prods","type":"selectList"}],[{"dataKey":"mul_select_for_pop","data":[],"title":"Group ID","field":"group_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Group Name","field":"group_name"}],[{"dataKey":"mul_select_for_pop","data":[],"title":"Customer ID","field":"cust_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Customer Name","field":"cust_name"}],[{"dataKey":"distributor_Drop","data":[],"title":"Original Distributor","field":"i_dist_id","type":"select"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],[{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}],[{"title":"","field":"prod_dbid"}],[{"title":"","field":"cust_dbid"}],[{"title":"","field":"pricegroup_dbid"}],[{"dataKey":"mul_select_for_pop","data":[],"title":"Product ID","field":"prod_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Product Name","field":"prod_ename"}]]);
             const columns = ref([{field:'prods',title:'Product',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,require:true,align:'left'},
                        {field:'custs',title:'Customer',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,align:'left'},
                        {field:'pricegroups',title:'Group ID',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,align:'left'},
