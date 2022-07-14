@@ -187,24 +187,28 @@ let extension = {
     rowClick({ row, column, event }) {
       //查询界面点击行事件
       debugger
-// if (this.$refs.table.getSelected()){
-//
-// }
-
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
-      let rowState = this.$refs.table.getSelected()[0].state;
-      if (rowState == '0'){
-        this.buttons[3].hidden =true;
-        this.buttons[2].hidden =false;//edit active
-      }else {
+
+      if (!this.$refs.table.getSelected()[0] || !this.$refs.table.getSelected()[0]){
+        this.buttons[4].hidden =true;
         this.buttons[2].hidden =true;
         this.buttons[3].hidden =false;
-      }
-      if (rowState != '2'){
-        this.buttons[4].hidden =false;
       }else{
-        this.buttons[4].hidden =true;
+        let rowState = this.$refs.table.getSelected()[0].state;
+        if (rowState == '0'){
+          this.buttons[3].hidden =true;
+          this.buttons[2].hidden =false;//edit active
+        }else {
+          this.buttons[2].hidden =true;
+          this.buttons[3].hidden =false;
+        }
+        if (rowState != '2'){
+          this.buttons[4].hidden =false;
+        }else{
+          this.buttons[4].hidden =true;
+        }
       }
+
 
     },
     modelOpenAfter(row) {
