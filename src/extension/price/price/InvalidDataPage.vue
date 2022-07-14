@@ -31,8 +31,16 @@
           <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
 
         </el-form-item>
-        <el-form-item v-show="channelShowFlag" label="Group type:" style="width: 40%">
-          <el-select v-model="invalidModel.groupType"></el-select>
+        <el-form-item v-show="channelShowFlag" label="Channel:" style="width: 40%">
+          <el-select v-model="invalidModel.channelValue">
+            <el-option
+                    v-for="item in channelData"
+                    :key="item.key"
+                    :label="item.value"
+                    :value="item.key"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item v-show="prodShowFlag" label="Product:" style="width: 40%">
           <el-input v-model="invalidModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress"></el-input>
@@ -149,6 +157,7 @@ export default {
       custShowFlag:false,
       prodShowFlag:true,
       channelShowFlag:false,
+      channelData:[],
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
       group_id:"",
       cust_id:"",
@@ -193,8 +202,15 @@ export default {
   },
   created() {
     //this.invalidModel.pricegroup_dbidname.render = this.getRender("pricegroup_dbid", 'pg')
+    this.getChannel();
   },
   methods: {
+    getChannel(){
+      //健保渠道
+      this.http.post('/api/Sys_Dictionary/GetVueDictionary', ['Channel']).then((dic) => {
+         this.channelData=dic[0].data;
+       });
+    },
     groupKeyPress(){
       let  group_id = this.invalidModel.group_id
       if(group_id) {
@@ -311,9 +327,14 @@ export default {
             this.$refs.table2.load();
         }else{
            this.$message.error("Please input Customer.");
-
         }
-
+      }
+      if (this.channelShowFlag ) {
+        if(this.invalidModel.channelValue){
+          this.$refs.table2.load();
+        }else{
+          this.$message.error("Please select a channel.");
+        }
       }
       if (this.groupShowFlag  ) {
         if(this.invalidModel.pricegroup_dbid){
@@ -358,9 +379,10 @@ export default {
       this.invalidModel.prod_dbid="";
       this.invalidModel.prod_id="";
 
-      this.invalidModel.groupType=''
+      this.invalidModel.channelValue=''
 
     },
+
     addRow() {
       let rows = [];
       if(this.custShowFlag || this.groupShowFlag){
@@ -441,6 +463,11 @@ export default {
           return this.$message.error("Please input Customer.");
         }
       }
+      if(this.channelShowFlag ){
+        if(!this.invalidModel.channelValue){
+          return this.$message.error("Please select channel.");
+        }
+      }
       if(!this.custShowFlag && !this.groupShowFlag){
         if(!this.invalidModel.prod_dbid){
           return this.$message.error("Please input Product.");
@@ -476,6 +503,11 @@ export default {
           return  this.$message.error("Please input Group.");;
         }
 
+      }
+      if(this.channelShowFlag){
+        if(this.invalidModel.channelValue){
+          params.wheres.push({ name: "channelValue", value: this.invalidModel.channelValue });
+        }
       }
       if(this.invalidModel.prod_dbid){
         params.wheres.push({ name: "prod_dbid", value: this.invalidModel.prod_dbid });
