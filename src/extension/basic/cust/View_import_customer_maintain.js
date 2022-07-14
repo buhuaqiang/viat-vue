@@ -104,9 +104,11 @@ let extension = {
       //表格设置为单选
       this.single=true;
 
+      //一進入Search畫面兩個按鈕隱藏
       this.buttons.forEach(x => {
-        if (x.name == "edit" || x.name == "ignore") {
-          x.hidden=true
+        debugger
+        if (x.name == "Edit" || x.name == "Ignore") {
+          x.hidden=true;
         }
       })
 
@@ -188,12 +190,13 @@ let extension = {
       //查询界面点击行事件
       debugger
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
-
+      //沒選到任何數據時隱藏Edit, Ignore 顯示View按鈕
       if (!this.$refs.table.getSelected()[0] || !this.$refs.table.getSelected()[0]){
         this.buttons[4].hidden =true;
         this.buttons[2].hidden =true;
         this.buttons[3].hidden =false;
       }else{
+        //有選到數據時作以下判斷
         let rowState = this.$refs.table.getSelected()[0].state;
         if (rowState == '0'){
           this.buttons[3].hidden =true;
