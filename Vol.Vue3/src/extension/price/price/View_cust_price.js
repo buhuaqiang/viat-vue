@@ -452,6 +452,7 @@ let extension = {
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
+
       return true;
     },
     searchAfter(result) {

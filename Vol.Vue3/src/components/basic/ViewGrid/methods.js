@@ -339,7 +339,6 @@ let methods = {
     return query;
   },
   search() {
-    debugger
     //查询
     // let query = this.getSearchParameters();
     // this.$refs.table.load(query, true);
