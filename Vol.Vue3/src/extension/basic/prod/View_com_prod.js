@@ -17,12 +17,17 @@ let extension = {
     modelHeader: '',
     modelBody: '',
     modelFooter: '',
-
-
   },
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
+  LoadPage: false,//定義參數判斷是否是第一次打開頁面
   methods: {
+    onActivated(){
+      if(!this.LoadPage){//打開頁面執行查詢後在從其他頁簽返回是執行此操作
+        this.search();
+      }
+
+    },
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
         //示例：在按钮的最前面添加一个按钮
@@ -34,7 +39,8 @@ let extension = {
         //       this.$Message.success('点击了按钮');
         //     }
         //   });
-
+      //第一次打開頁面
+     this.LoadPage = true;
         //示例：设置修改新建、编辑弹出框字段标签的长度
         // this.boxOptions.labelWidth = 150;
       //显示查询全部字段
@@ -46,6 +52,9 @@ let extension = {
 
      // this.boxOptions.width=1600;
       this.single=true;//设置单选
+
+      //設置初始不加載
+      this.load=false;
 
       /*this.editFormOptions.forEach((option)=>{
         option.forEach((item)=>{
@@ -73,11 +82,13 @@ let extension = {
 
     },
     searchBefore(param) {
+      this.LoadPage = false;//執行查詢改變值，可以使數據從其他頁簽返回時再次執行查詢
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
       return true;
     },
     searchAfter(result) {
+
       //查询后，result返回的查询数据,可以在显示到表格前处理表格的值
       return true;
     },
