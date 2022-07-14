@@ -75,8 +75,9 @@ export default {
       //this.nhiadjustm_dbid = $parent.editFormFields.nhiadjustm_dbid;
 
       //写入缓存对象(xxx为全局缓存的唯一key)
-      //this.$store.getters.data().nhiadjustm_dbid=this.nhiadjustm_dbid;
-
+      this.$store.getters.data().nhiadjustm_dbid=this.nhiadjustm_dbid;
+      this.$refs.nhiAdjustDetail.$refs.grid.search();
+      debugger
       // this.$refs.table2.load();
     },
    /* parentCall(pid){

@@ -144,7 +144,8 @@ let extension = {
 
         }
       }
-
+      let dateNoRange = this.getSearchOption('start_date');
+      dateNoRange.range = false;
       //日期格式化 formatter
       let start_date=this.getColumnsOption("start_date");
       start_date.formatter = (row) => {
@@ -288,9 +289,9 @@ let extension = {
       //查询界面点击行事件
       // console.log(this.$refs.table.getSelected(row));
       //let test = this.$refs.table.getSelected(row);
-      //this.$store.getters.data().nhiadjustm_dbid = row.nhiadjustm_dbid;
-       // let nhiadjustm_dbid = result[0].nhiadjustm_dbid;
-      // this.$store.getters.data().nhiadjustm_dbid=nhiadjustm_dbid;
+      //= row.nhiadjustm_dbid;
+
+
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
     modelOpenAfter(row) {

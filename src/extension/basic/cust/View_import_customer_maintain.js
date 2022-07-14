@@ -198,6 +198,8 @@ let extension = {
       }
       if (rowState != '2'){
         this.buttons[4].hidden =false;
+      }else{
+        this.buttons[4].hidden =true;
       }
 
     },

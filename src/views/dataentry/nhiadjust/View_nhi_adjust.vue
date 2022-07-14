@@ -53,8 +53,8 @@
                        {field:'modified_date',title:'modified_date',type:'datetime',width:110,hidden:true,align:'left',sort:true},
                        {field:'prod_dbid',title:'prod_dbid',type:'guid',width:110,hidden:true,align:'left'},
                        {field:'dbid',title:'dbid',type:'int',width:80,hidden:true,require:true,align:'left'},
-                       {field:'prod_id',title:'Product',type:'string',width:110,require:true,align:'left'},
-                       {field:'prod_ename',title:'prod_ename',type:'string',width:110,align:'left'}]);
+                       {field:'prod_id',title:'Product',type:'string',width:110,hidden:true,require:true,align:'left'},
+                       {field:'prod_ename',title:'prod_ename',type:'string',width:110,hidden:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

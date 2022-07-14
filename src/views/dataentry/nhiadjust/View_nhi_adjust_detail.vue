@@ -44,7 +44,7 @@
                        {field:'nhi_id',title:'NHI Code',type:'string',width:110,align:'left'},
                        {field:'old_nhi_price',title:'Old NHI Price',type:'decimal',width:110,align:'left'},
                        {field:'new_nhi_price',title:'New NHI Price',type:'decimal',width:110,align:'left'},
-                       {field:'created_date',title:'created_date',type:'datetime',width:150,align:'left',sort:true},
+                       {field:'created_date',title:'created_date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
                        {field:'nhiadjust_dbid',title:'nhiadjust_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'prod_dbid',title:'Product',type:'guid',width:110,hidden:true,align:'left'},
                        {field:'nhiadjustm_dbid',title:'m主鍵',type:'guid',width:110,hidden:true,align:'left'}]);
