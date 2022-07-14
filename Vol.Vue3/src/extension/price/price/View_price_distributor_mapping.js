@@ -40,15 +40,11 @@ let extension = {
       //示例：设置修改新建、编辑弹出框字段标签的长度
       this.boxOptions.labelWidth = 180;
       this.setFiexdSearchForm(true);
-      //this.single = true;
       this.load = false;
 
       var s_prod_id = this.getSearchOption("prod_id");
       var s_group_id = this.getSearchOption("group_id");
       var s_cust_id = this.getSearchOption("cust_id");
-      var e_prods = this.getEditOption("prods");
-      var e_pricegroups = this.getEditOption("pricegroups");
-      var e_custs = this.getEditOption("custs");
       var s_prod_ename = this.getSearchOption("prod_ename");
       var e_prod_ename = this.getEditOption("prod_ename");
       var s_group_name = this.getSearchOption("group_name");
@@ -73,40 +69,17 @@ let extension = {
       }
       let cust_dbid = this.getSearchOption("cust_dbid");
       cust_dbid.hidden = true
-      // e_custs.extra = {
-      //   render: this.getFormRender('editFormSearchCustomer', 's', 'header')
-      // }
-      e_custs.extra = {
-        icon: "el-icon-zoom-in",
-        text: "Pick",
-        style: "color:#409eff;font-size: 12px;cursor: pointer;",
-        click: item => {
-          this.$refs.gridHeader.openModel(false,"editCustomerM");
-        }
-      }
-
 
       s_prod_ename.hidden = true
       s_prod_ename.readonly;
       let prod_dbid = this.getSearchOption("prod_dbid");
+      prod_dbid.hidden = true
       this.getSearchOption("prods").extra = {
         icon: "el-icon-zoom-in",
         text: "Pick",
         style: "color:#409eff;font-size: 12px;cursor: pointer;",
         click: item => {
           this.$refs.gridBody.openModel(false,"searchProduct");
-        }
-      }
-      prod_dbid.hidden = true
-      // e_prods.extra = {
-      //   render: this.getFormRender('editFormSearchProduct', 's', 'body')
-      // }
-      e_prods.extra = {
-        icon: "el-icon-zoom-in",
-        text: "Pick",
-        style: "color:#409eff;font-size: 12px;cursor: pointer;",
-        click: item => {
-          this.$refs.gridBody.openModel(false,"editProdM");
         }
       }
 
@@ -117,19 +90,6 @@ let extension = {
       }
       let pricegroup_dbid = this.getSearchOption("pricegroup_dbid");
       pricegroup_dbid.hidden = true
-      // e_pricegroups.extra = {
-      //   render: this.getFormRender('editFormSearchPriceGroup', 's', 'footer')
-      // }
-      e_pricegroups.extra = {
-        icon: "el-icon-zoom-in",
-        text: "Pick",
-        style: "color:#409eff;font-size: 12px;cursor: pointer;",
-        click: item => {
-          this.$refs.gridFooter.openModel(false,"editGroupM");
-        }
-      }
-
-
 
       s_cust_id.onKeyPress = ($event) => {
         if ($event.keyCode === 13) {
@@ -188,7 +148,6 @@ let extension = {
       //日期格式化 formatter
       let created_date = this.getColumnsOption("created_date");
       created_date.formatter = (row) => {
-        //对单元格的数据格式化处理
         if (!row.created_date) {
           return;
         }
@@ -196,7 +155,6 @@ let extension = {
       }
       let start_date = this.getColumnsOption("start_date");
       start_date.formatter = (row) => {
-        //对单元格的数据格式化处理
         if (!row.start_date) {
           return;
         }
@@ -204,7 +162,6 @@ let extension = {
       }
       let end_date = this.getColumnsOption("end_date");
       end_date.formatter = (row) => {
-        //对单元格的数据格式化处理
         if (!row.end_date) {
           return;
         }
@@ -536,15 +493,38 @@ let extension = {
       this.pickEditFormProductName = []
       this.pickEditFormPriceGroupName = []
       if (this.currentAction === this.const.ADD) {
-        custs.hidden = true
-        prods.hidden = true
         s_prods.hidden = true
-        pricegroups.hidden = true
+        this.getEditOption("custs").extra = {
+          icon: "el-icon-zoom-in",
+          text: "Pick",
+          style: "color:#409eff;font-size: 12px;cursor: pointer;",
+          click: item => {
+            this.$refs.gridHeader.openModel(false,"editCustomerM");
+          }
+        }
+        this.getEditOption("prods").extra = {
+          icon: "el-icon-zoom-in",
+          text: "Pick",
+          style: "color:#409eff;font-size: 12px;cursor: pointer;",
+          click: item => {
+            this.$refs.gridBody.openModel(false,"editProdM");
+          }
+        }
+        this.getEditOption("pricegroups").extra = {
+          icon: "el-icon-zoom-in",
+          text: "Pick",
+          style: "color:#409eff;font-size: 12px;cursor: pointer;",
+          click: item => {
+            this.$refs.gridFooter.openModel(false,"editGroupM");
+          }
+        }
       } else if (this.currentAction === this.const.EDIT) {
-        custs.hidden = false
-        prods.hidden = false
-        s_prods.hidden = false
-        pricegroups.hidden = false
+        this.getEditOption("custs").disabled = true;
+        this.getEditOption("prods").disabled = true;
+        this.getEditOption("pricegroups").disabled = true;
+        this.getEditOption("custs").extra = {};
+        this.getEditOption("prods").extra = {};
+        this.getEditOption("pricegroups").extra = {};
       }
     }
   }
