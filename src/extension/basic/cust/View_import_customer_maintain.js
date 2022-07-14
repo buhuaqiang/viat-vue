@@ -191,7 +191,7 @@ let extension = {
       debugger
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
       //沒選到任何數據時隱藏Edit, Ignore 顯示View按鈕
-      if (!this.$refs.table.getSelected()[0] || !this.$refs.table.getSelected()[0]){
+      if (!this.$refs.table.getSelected()[0] ){
         this.buttons[4].hidden =true;
         this.buttons[2].hidden =true;
         this.buttons[3].hidden =false;
