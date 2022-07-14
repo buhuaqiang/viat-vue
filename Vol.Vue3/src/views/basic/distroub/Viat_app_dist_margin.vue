@@ -24,7 +24,7 @@
             const table = ref({
                 key: 'distmargin_dbid',
                 footer: "Foots",
-                cnName: '經銷商margin設定',
+                cnName: 'Dist Margin Rate Main Table',
                 name: 'distroub/Viat_app_dist_margin',
                 url: "/Viat_app_dist_margin/",
                 sortName: "distmargin_dbid"
@@ -50,7 +50,6 @@
                        {field:'margin_value',title:'毛利值,Rate or 固定金額',type:'decimal',width:110,align:'left'},
                        {field:'prod_dbid',title:'產品代碼,舊版ITEM_CODE',type:'guid',width:110,align:'left'},
                        {field:'cust_dbid',title:'客戶代碼',type:'guid',width:110,align:'left'},
-                       {field:'local_mpg_dbid',title:'Local MPG ID',type:'guid',width:110,align:'left'},
                        {field:'channel',title:'通路',type:'string',bind:{ key:'Channel-Distributor2',data:[]},width:110,align:'left'},
                        {field:'start_date',title:'起始日期',type:'datetime',width:110,align:'left',sort:true},
                        {field:'end_date',title:'結束日期',type:'datetime',width:110,align:'left',sort:true},
@@ -65,7 +64,8 @@
                        {field:'modified_username',title:'modified_username',type:'string',width:110,align:'left'},
                        {field:'modified_client',title:'最後修改者的委託人',type:'int',width:110,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,align:'left'},
-                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,align:'left',sort:true}]);
+                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,align:'left',sort:true},
+                       {field:'localmpg_dbid',title:'localmpg_dbid',type:'guid',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
