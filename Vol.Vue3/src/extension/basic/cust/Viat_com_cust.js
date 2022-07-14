@@ -6,7 +6,7 @@
 **后台操作见：http://v2.volcore.xyz/document/netCoreDev
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
- Viat_com_custModelBody from "./Viat_com_custModelBody";
+import Viat_com_custModelBody from "./Viat_com_custModelBody";
 let extension = {
   components: {
     //查询界面扩展组件
