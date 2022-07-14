@@ -43,8 +43,8 @@
                               [{"title":"Net Price","field":"net_price","type":"decimal"},
                                {"title":"Min Qty","field":"min_qty","type":"number"}],
                               [{"title":"Remarks","field":"remarks","colSize":10,"type":"textarea"}]]);
-            const searchFormFields = ref({"group_id":"","pricegroup_dbid":"","start_date":"","end_date":"","modified_date":"","prods":[],"QueryStatus":""});
-            const searchFormOptions = ref([[{"title":"Group Id","field":"group_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"}],[{"dataKey":"price_book_query_status","data":[],"title":"Status","field":"QueryStatus","type":"select"},{"title":"Modified Date","field":"modified_date","type":"date"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],[{"title":"","field":"pricegroup_dbid"}]]);
+            const searchFormFields = ref({"group_id":"","pricegroup_dbid":"","start_date":"","end_date":"","modified_date":"","prods":[],"QueryStatus":"","ShowInvalidProd":[]});
+            const searchFormOptions = ref([[{"title":"Group Id","field":"group_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"}],[{"dataKey":"price_book_query_status","data":[],"title":"Status","field":"QueryStatus","type":"select"},{"title":"Modified Date","field":"modified_date","type":"date"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],[{"title":"","field":"pricegroup_dbid"},{"dataKey":"Show Invalid products","data":[],"title":"","field":"ShowInvalidProd","type":"checkbox"}]]);
             const columns = ref([{field:'group_id',title:'Group Id',type:'string',link:true,width:110,align:'left',sort:true},
                        {field:'group_name',title:'Group Name',type:'string',width:120,align:'left'},
                        {field:'prod_id',title:'Product Id',type:'string',width:110,align:'left'},
@@ -81,15 +81,17 @@
                        {field:'modified_client',title:'modified_client',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:110,align:'left',sort:true},
-                       {field:'pricegroup_dbidname',title:'pricegroup_dbidname',type:'string',width:180,hidden:true,align:'left'},
+                       {field:'pricegroup_dbidname',title:'pricegroup_dbidname',type:'string',width:180,hidden:true,require:true,align:'left'},
                        {field:'entity',title:'entity',type:'string',width:110,hidden:true,align:'left'},
                        {field:'prod_cname',title:'prod_cname',type:'string',width:110,hidden:true,align:'left'},
                        {field:'pack_size_pri',title:'pack_size_pri',type:'decimal',width:110,hidden:true,align:'left'},
                        {field:'state',title:'state',type:'string',width:110,hidden:true,align:'left'},
                        {field:'C1',title:'C1',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'prod_dbidname',title:'Product',type:'string',width:120,hidden:true,align:'left'},
-                       {field:'prods',title:'Products',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,align:'left'},
-                       {field:'QueryStatus',title:'Status',type:'string',bind:{ key:'price_book_query_status',data:[]},width:110,hidden:true,align:'left'}]);
+                       {field:'prod_dbidname',title:'Product',type:'string',width:120,hidden:true,require:true,align:'left'},
+                       {field:'prods',title:'Products',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,require:true,align:'left'},
+                       {field:'QueryStatus',title:'Status',type:'string',bind:{ key:'price_book_query_status',data:[]},width:110,hidden:true,require:true,align:'left'},
+                       {field:'dbid',title:'dbid',type:'int',width:80,hidden:true,require:true,align:'left'},
+                       {field:'ShowInvalidProd',title:'ShowInvalidProd',type:'string',bind:{ key:'Show Invalid products',data:[]},width:110,hidden:true,require:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
@@ -110,3 +112,9 @@
         },
     });
 </script>
+<style>
+    .el-checkbox-group{
+        font-size: 0;
+        padding-left: 180px;
+    }
+</style>

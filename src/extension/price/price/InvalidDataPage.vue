@@ -380,24 +380,51 @@ export default {
       this.checkData();
       this.invalidModel.rows=rows;
       this.invalidModel.isAll=0;
-      this.http.post("api/View_cust_price/invalidData",  this.invalidModel, true)
-              .then((x) => {
-                if (!x.status) {
-                  this.$Message.error(x.message);
-                  return;
-                }
-              });
+      this.$confirm('Are you sure invalid price ?', 'warning', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'CANCEL',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        this.http.post("api/View_cust_price/invalidData",  this.invalidModel, true)
+                .then((x) => {
+                  if (!x.status) {
+                    this.$Message.error(x.message);
+                    return;
+                  }else{
+                    this.search();
+                    this.$Message.success("Save Completed!");
+                  }
+                });
+      });
+
     },
     addAll() {
       this.checkData();
       this.invalidModel.isAll=1;
-      this.http.post("api/View_cust_price/invalidData", this.invalidModel, true)
-              .then((x) => {
-                if (!x.status) {
-                  this.$Message.error(x.message);
-                  return;
-                }
-              });
+
+      this.$confirm('Are you sure invalid price ?', 'warning', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'CANCEL',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        this.http.post("api/View_cust_price/invalidData",  this.invalidModel, true)
+                .then((x) => {
+                        this.http.post("api/View_cust_price/invalidData", this.invalidModel, true)
+                          .then((x) => {
+                            if (!x.status) {
+                              this.$Message.error(x.message);
+                              return;
+                            }else{
+                              this.search();
+                              this.$Message.success("Save Completed!");
+                            }
+                          });
+                });
+      });
+
+
     },
 
     checkData(){

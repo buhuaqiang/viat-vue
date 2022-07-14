@@ -420,7 +420,6 @@ let extension = {
           return false;
         }
       }
-
       return true;
     },
     modelOpenAfter(row) {
