@@ -39,6 +39,7 @@ let extension = {
       this.labelWidth = 180;
       //示例：设置修改新建、编辑弹出框字段标签的长度
       this.boxOptions.labelWidth = 180;
+      this.boxOptions.width=1500;
       this.setFiexdSearchForm(true);
       this.load = false;
 
