@@ -29,7 +29,7 @@
                 url: "/Viat_app_cust_price_detail/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"division":"","bid_no":"","prod_dbid":"","cust_dbid":"","nhi_price":"","invoice_price":"","net_price":"","gross_price":"","min_qty":"","start_date":"","end_date":"","status":"","is_used":"","source":"","remarks":"","sys_end_date":"","org_start_date":"","org_end_date":""});
+            const editFormFields = ref({"division":"","bid_no":"","prod_dbid":"","cust_dbid":"","nhi_price":"","invoice_price":"","net_price":"","gross_price":"","min_qty":"","start_date":"","end_date":"","status":"","source":"","remarks":"","sys_end_date":"","org_start_date":"","org_end_date":"","reserv_price":""});
             const editFormOptions = ref([[{"title":"所屬事業單位,01:PH;03:AH;05:CH;06:NU","field":"division"},
                                {"title":"議價決標單號","field":"bid_no"},
                                {"title":"產品表PK","field":"prod_dbid"},
@@ -44,10 +44,10 @@
                                {"title":"系統結束日","field":"sys_end_date"},
                                {"title":"原生效日","field":"org_start_date"},
                                {"title":"原結束日","field":"org_end_date"},
+                               {"title":"淨售價","field":"reserv_price","type":"decimal"},
                                {"title":"生效日","required":true,"field":"start_date"},
                                {"title":"結束日","required":true,"field":"end_date"},
-                               {"title":"status","field":"status"},
-                               {"title":"作廢否,True:作廢;False:不作廢","field":"is_used"}]]);
+                               {"title":"status","required":true,"field":"status"}]]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([]);
             const columns = ref([{field:'pricedetail_dbid',title:'PKID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
@@ -62,8 +62,7 @@
                        {field:'min_qty',title:'最低訂購量',type:'int',width:110,align:'left'},
                        {field:'start_date',title:'生效日',type:'datetime',width:110,require:true,align:'left',sort:true},
                        {field:'end_date',title:'結束日',type:'datetime',width:110,require:true,align:'left',sort:true},
-                       {field:'status',title:'status',type:'string',width:110,align:'left'},
-                       {field:'is_used',title:'作廢否,True:作廢;False:不作廢',type:'string',width:110,align:'left'},
+                       {field:'status',title:'status',type:'string',width:110,require:true,align:'left'},
                        {field:'source',title:'資料來源,0:EBMS;1:Manual;2:Copy;3:Detach',type:'string',width:110,align:'left'},
                        {field:'remarks',title:'備註',type:'string',width:220,align:'left'},
                        {field:'sys_end_date',title:'系統結束日',type:'datetime',width:110,align:'left',sort:true},
@@ -80,7 +79,8 @@
                        {field:'modified_username',title:'modified_username',type:'string',width:110,align:'left'},
                        {field:'modified_client',title:'最後修改者的委託人',type:'int',width:110,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,align:'left'},
-                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,align:'left',sort:true}]);
+                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,align:'left',sort:true},
+                       {field:'reserv_price',title:'淨售價',type:'decimal',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

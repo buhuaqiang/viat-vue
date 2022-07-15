@@ -1,5 +1,5 @@
 <template>
-  <invalid-data-page ref="InvalidDataPage"></invalid-data-page>
+  <invalid-data-page ref="InvalidDataPage"  @onSave="afterInvalid"></invalid-data-page>
   <bath-insert-cust-price ref="BathInsertCustPrice" @onSave="saveCustPrice"></bath-insert-cust-price>
   <BathInsertCustPriceDetail ref="BathInsertCustPriceDetail"  @onSave="saveCustPriceDetail"></BathInsertCustPriceDetail>
 </template>
@@ -30,8 +30,12 @@ export default {
     openBathAddCustDetailPage(){
       this.$refs.BathInsertCustPriceDetail.openDemo();
     },
+    afterInvalid(){
+      this.$emit("parentCall", ($parent) => {
+        $parent.search();
+      });
+    },
     saveCustPriceDetail(){
-     debugger
       this.$emit("parentCall", ($parent) => {
         $parent.search();
       });

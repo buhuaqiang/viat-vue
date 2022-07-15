@@ -106,7 +106,7 @@
     ></vol-table>
 
     <vol-table
-            v-show="custShowFlag"
+            v-show="custShowFlag || channelShowFlag"
             ref="table2"
             :loadKey="true"
             :clickEdit="false"
@@ -415,6 +415,7 @@ export default {
                     return;
                   }else{
                     this.search();
+                    this.$emit("onSave");
                     this.$Message.success("Save Completed!");
                   }
                 });
@@ -440,6 +441,7 @@ export default {
                               return;
                             }else{
                               this.search();
+                              this.$emit("onSave");
                               this.$Message.success("Save Completed!");
                             }
                           });

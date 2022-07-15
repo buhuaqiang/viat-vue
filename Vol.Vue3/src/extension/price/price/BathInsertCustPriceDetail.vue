@@ -10,7 +10,7 @@
     <div style="padding-bottom: 10px">
       <el-form :inline="true" label-position="left" label-width="110px" :model="formModel">
         <el-form-item  label="Bid NO:" style="width: 70%">
-          <el-input v-model="formModel.bid_no" style="width:200px;" ></el-input>
+          <el-input v-model="formModel.bid_no" style="width:200px;" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item id="0" label="Cust:" style="width: 40%">
           <el-input v-model="formModel.cust_id" style="width:120px;" @keyup.enter="custKeyPress"></el-input>
@@ -82,7 +82,7 @@
       <el-button
               type="warning"
               icon="el-icon-close"
-              @click="model = false"
+              @click="closeWindow"
       >Close</el-button>
     </div>
 
@@ -104,7 +104,7 @@
     <!-- 设置弹出框的操作按钮 -->
     <template #footer>
       <div>
-        <el-button size="mini" icon="el-icon-close" @click="model = false"
+        <el-button size="mini" icon="el-icon-close" @click="closeWindow"
           >Close</el-button
         >
       </div>
@@ -178,6 +178,16 @@ export default {
 
   },
   methods: {
+    closeWindow(){
+      this.$confirm("Are you sure to close?", "Confirm", {
+        confirmButtonText: "OK",
+        cancelButtonText: "Cancel",
+        type: "warning",
+        center: true,
+      }).then(() => {
+        this.model = false
+      });
+    },
     //獲取bid no
     getBidNO(){
       if(!this.formModel.bid_no){

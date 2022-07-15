@@ -22,6 +22,15 @@
               style="width: 200px; padding-left: 5px"
               v-model="zip_id"
       />
+      <el-select v-model="channelValue" placeholder="Select channel" style="width: 200px; padding-left: 5px">
+        <el-option
+                v-for="item in channelData"
+                :key="item.key"
+                :label="item.value"
+                :value="item.key"
+        >
+        </el-option>
+      </el-select>
       <el-button
         type="primary"
         style="margin-left: 10px"
@@ -83,6 +92,8 @@ export default {
       cust_name: "", //查询条件字段
       cust_id:"",
       zip_id: "",
+      channelValue:"",
+      channelData:[],
       url: "api/View_com_cust/GetPopPageData",//加载数据的接口
       columns: [
         {
@@ -162,8 +173,14 @@ export default {
     };
   },
   methods: {
-
+    getChannel(){
+      //健保渠道
+      this.http.post('/api/Sys_Dictionary/GetVueDictionary', ['Channel']).then((dic) => {
+        this.channelData=dic[0].data;
+      });
+    },
     openModel(single,flag,returnType) {
+      this.getChannel();
       this.single=single;
       this.model = true;
       this.flag = flag;
@@ -172,6 +189,7 @@ export default {
       this.$nextTick(() => {
         this.$refs.mytable.load();
       });
+
     },
     /*clearData(fieldName_dbid,fieldName_id, formType) {
       this.$emit("parentCall", ($parent) => {
@@ -237,6 +255,9 @@ export default {
         params.wheres.push({ name: "cust_zip_id", value: this.zip_id,displayType:'like' });
       }
       params.wheres.push({ name: "status", value: 'Y' });
+      if(this.channelValue){
+        params.wheres.push({ name: "channelValue", value: this.channelValue });
+      }
       return true;
     },
   },

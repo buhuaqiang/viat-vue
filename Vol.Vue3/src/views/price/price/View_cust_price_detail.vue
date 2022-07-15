@@ -29,7 +29,7 @@
                 url: "/View_cust_price_detail/",
                 sortName: "cust_id"
             });
-            const editFormFields = ref({"status":"","bid_no":"","cust_id":"","prod_id":"","start_date":"","end_date":"","nhi_price":"","invoice_price":"","net_price":"","min_qty":"","gross_price":"","remarks":"","prod_dbid":"","cust_dbid":""});
+            const editFormFields = ref({"status":"","bid_no":"","cust_id":"","prod_id":"","start_date":"","end_date":"","nhi_price":"","invoice_price":"","net_price":"","min_qty":"","gross_price":"","reserv_price":"","remarks":"","prod_dbid":"","cust_dbid":""});
             const editFormOptions = ref([[{"title":"Bid NO","field":"bid_no"},
                                {"dataKey":"Status_YN","data":[],"title":"status","required":true,"field":"status","type":"select"}],
                               [{"title":"Cust ID","field":"cust_id"},
@@ -41,7 +41,8 @@
                               [{"title":"Net Price","field":"net_price","type":"decimal"},
                                {"title":"Min Qty","field":"min_qty","type":"number"}],
                               [{"title":"Gross Price","field":"gross_price","type":"decimal"}],
-                              [{"title":"Remarks","field":"remarks","colSize":8,"type":"textarea"}],
+                              [{"title":"Reserv Price","field":"reserv_price","type":"decimal"},
+                               {"title":"Remarks","field":"remarks","type":"textarea"}],
                               [{"title":"","field":"prod_dbid"},
                                {"title":"","field":"cust_dbid"}]]);
             const searchFormFields = ref({"cust_id":"","start_date":"","end_date":"","modified_date":"","prods":[],"cust_dbid":"","QueryStatus":"","ShowInvalidProd":[]});
@@ -60,6 +61,7 @@
                        {field:'invoice_price',title:'Invoice Price',type:'decimal',width:80,align:'left'},
                        {field:'net_price',title:'Net Price',type:'decimal',width:80,align:'left'},
                        {field:'gross_price',title:'Gross Price',type:'decimal',width:80,align:'left'},
+                       {field:'reserv_price',title:'reserv_price',type:'decimal',width:110,align:'left'},
                        {field:'min_qty',title:'Min Qty',type:'int',width:80,align:'left'},
                        {field:'status',title:'status',type:'string',bind:{ key:'Status_YN',data:[]},width:80,require:true,align:'left'},
                        {field:'start_date',title:'Start Date',type:'datetime',width:110,align:'left',sort:true},
