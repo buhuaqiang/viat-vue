@@ -29,7 +29,7 @@
                 url: "/Viat_app_cust_price/",
                 sortName: "bid_no"
             });
-            const editFormFields = ref({"bid_no":"","requestor":"","prod_dbid":"","pricegroup_dbid":"","nhi_price":"","invoice_price":"","net_price":"","min_qty":"","start_date":"","end_date":"","status":"","is_used":"","source":"","nhi_id":"","remarks":"","sys_end_date":"","org_start_date":"","org_end_date":""});
+            const editFormFields = ref({"bid_no":"","requestor":"","prod_dbid":"","pricegroup_dbid":"","nhi_price":"","invoice_price":"","net_price":"","min_qty":"","start_date":"","end_date":"","status":"","is_used":"","source":"","nhi_id":"","remarks":"","sys_end_date":"","org_start_date":"","org_end_date":"","reserv_price":""});
             const editFormOptions = ref([[{"title":"議價決標單號","field":"bid_no"},
                                {"title":"申請人員工編號","field":"requestor"},
                                {"title":"產品表PKID","field":"prod_dbid"},
@@ -45,6 +45,7 @@
                                {"title":"系統結束日","field":"sys_end_date"},
                                {"title":"原生效日","field":"org_start_date"},
                                {"title":"原結束日","field":"org_end_date"},
+                               {"title":"淨售價","field":"reserv_price","type":"decimal"},
                                {"title":"生效日","required":true,"field":"start_date"},
                                {"title":"結束日","required":true,"field":"end_date"},
                                {"title":"是否有效,True:生效;False:失效","required":true,"field":"status"}]]);
@@ -81,7 +82,8 @@
                        {field:'modified_username',title:'modified_username',type:'string',width:110,align:'left'},
                        {field:'modified_client',title:'最後修改者的委託人',type:'int',width:110,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,align:'left'},
-                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,align:'left',sort:true}]);
+                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,align:'left',sort:true},
+                       {field:'reserv_price',title:'淨售價',type:'decimal',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
