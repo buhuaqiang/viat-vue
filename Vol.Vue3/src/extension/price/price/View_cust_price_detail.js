@@ -197,6 +197,7 @@ let extension = {
 
       this.boxOptions.labelWidth = 180;
       this.boxOptions.height=520
+      this.boxOptions.width=1400
       //显示查询全部字段
       this.setFiexdSearchForm(true);
       //设置查询表单的标签文字宽度

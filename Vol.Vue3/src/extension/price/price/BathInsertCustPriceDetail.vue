@@ -576,7 +576,6 @@ export default {
       }else{
         this.http.post("api/View_cust_price_detail/bathSaveCheckData", rows , true)
                 .then((x) => {
-                  debugger
                   if(x.status){
                     //校验通过
                     //调用保存访求

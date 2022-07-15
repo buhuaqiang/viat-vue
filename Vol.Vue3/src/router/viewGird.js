@@ -388,6 +388,10 @@ let viewgird = [
         name: 'Viat_wk_cont_stretagy_detail',
         component: () => import('@/views/workflow/pricestretagy/Viat_wk_cont_stretagy_detail.vue')
 
+    },{
+        path: '/invalidPage',
+        name: 'invalidPage',
+        component: () => import('@/extension/price/price/InvalidDataPageTab.vue')
     }]
 
 export default viewgird

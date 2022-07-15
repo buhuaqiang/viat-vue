@@ -136,6 +136,8 @@ export default {
       this.$refs.mytable.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
     loadTableBefore(params) {
+      debugger
+      params.sort="group_id";
       //查询前，设置查询条件
       params.wheres.push({ name: "status", value: 'Y' });
       if (this.group_name ) {
