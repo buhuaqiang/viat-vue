@@ -29,7 +29,7 @@
                 url: "/View_cust_price/",
                 sortName: "prod_id,modified_date"
             });
-            const editFormFields = ref({"bid_no":"","status":"","group_id":"","prod_id":"","prod_dbid":"","pricegroup_dbid":"","start_date":"","end_date":"","nhi_price":"","invoice_price":"","net_price":"","min_qty":"","reserv_price":"","remarks":""});
+            const editFormFields = ref({"bid_no":"","status":"","group_id":"","prod_id":"","prod_dbid":"","pricegroup_dbid":"","start_date":"","end_date":"","nhi_price":"","invoice_price":"","net_price":"","min_qty":"","reserv_price":"","remarks":"","nhi_id":""});
             const editFormOptions = ref([[{"title":"Bid NO","field":"bid_no"},
                                {"dataKey":"Status_YN","data":[],"title":"Status","required":true,"field":"status","type":"select"}],
                               [{"title":"Group Id","field":"group_id"},
@@ -43,7 +43,8 @@
                               [{"title":"Net Price","field":"net_price","type":"decimal"},
                                {"title":"Min Qty","field":"min_qty","type":"number"}],
                               [{"title":"Reser Price","field":"reserv_price","type":"decimal"},
-                               {"title":"Remarks","field":"remarks","type":"textarea"}]]);
+                               {"title":"Remarks","field":"remarks","type":"textarea"}],
+                                [{"title":"NHI Code","field":"nhi_id"}]]);
             const searchFormFields = ref({"group_id":"","pricegroup_dbid":"","start_date":"","end_date":"","modified_date":"","prods":[],"QueryStatus":"","ShowInvalidProd":[]});
             const searchFormOptions = ref([[{"title":"Group Id","field":"group_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"}],[{"dataKey":"price_book_query_status","data":[],"title":"Status","field":"QueryStatus","type":"select"},{"title":"Modified Date","field":"modified_date","type":"date"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],[{"title":"","field":"pricegroup_dbid"},{"dataKey":"Show Invalid products","data":[],"title":"","field":"ShowInvalidProd","type":"checkbox"}]]);
             const columns = ref([{field:'group_id',title:'Group Id',type:'string',link:true,width:110,align:'left',sort:true},

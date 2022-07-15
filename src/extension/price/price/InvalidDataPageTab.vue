@@ -1,13 +1,6 @@
 <template>
-  <VolBox
-    v-model="model"
-    :lazy="true"
-    title="Invalid Cache"
-    :height="700"
-    :width="1500"
-    :padding="15"
-  >
-    <div style="padding-bottom: 10px">
+<div style="padding-left: 10px;">
+    <div style="padding-bottom: 20px;padding-left: 10px">
       <el-form :inline="true" label-position="left" label-width="100px" :model="invalidModel">
         <el-form-item label="Type:" style="width: 100%">
           <el-radio-group v-model="invalidModel.selectType" >
@@ -95,7 +88,7 @@
       :columns="columns"
       :pagination="pagination"
       :pagination-hide="false"
-      :height="440"
+      :height="580"
       :url="url"
       :index="true"
       :single="false"
@@ -114,24 +107,24 @@
             :pagination="pagination2"
             :pagination-hide="false"
             :single="false"
-            :height="300"
+            :height="580"
             :url="url2"
             :defaultLoadPage="false"
             @loadBefore="loadTableBefore"
             :index="true"
     ></vol-table>
     <!-- 设置弹出框的操作按钮 -->
-    <template #footer>
+    <!--<template #footer>
       <div>
         <el-button size="mini" icon="el-icon-close" @click="model = false"
           >关闭</el-button
         >
       </div>
-    </template>
+    </template>-->
     <price-group-model-body ref="PriceGroupModelBody" @onSelect="onSelectPop"></price-group-model-body>
     <viat_com_cust-model-body ref="Viat_com_custModelBody" @onSelect="onSelectPop"></viat_com_cust-model-body>
     <view_com_prod_pop_query ref="View_com_prod_pop_query" @onSelect="onSelectPop"></view_com_prod_pop_query>
-  </VolBox>
+</div>
 </template>
 <script>
 import VolBox from "@/components/basic/VolBox.vue";

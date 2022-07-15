@@ -75,6 +75,42 @@ let extension = {
       }
 
     },
+    selfPay() {//
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+          h(
+              "input",
+              {
+                class:"",
+                value:"Self Pay",
+                text:"Self Pay",
+                type:"checkbox",
+                style:{width:"20%"},
+                onClick: (e) => {
+                  let checkflag=e.currentTarget.checked
+                  if(checkflag){
+                    this.editFormFields.nhi_id='Self Pay';
+                  }else{
+                    this.editFormFields.nhi_id='';
+                  }
+                }
+              }
+          ),
+          h(
+              "label",
+              {
+                props: {},
+                style: { },
+                onClick: (e) => {
+
+                }
+              },
+              "Self Pay"
+          ),
+        ]);
+      };
+    },
+
     getPopRender(searchType) {//
       return (h, { row, column, index }) => {
         return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
@@ -154,7 +190,30 @@ let extension = {
                 value:this.getPickName(searchType)
               }
           )
+          /*,h(
+              "a",
+              {
+                props: {},
+                style: { "color":"grey","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                onClick: (e) => {
 
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "Pick"
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"grey","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                onClick: (e) => {
+
+                }
+              },
+              [h("i",{class:"el-icon-zoom-out"})],
+              "Clean"
+          ),*/
         ]);
       };
     },
@@ -281,6 +340,7 @@ let extension = {
         // this.boxOptions.labelWidth = 150;
       this.boxOptions.labelWidth = 180;
       this.boxOptions.height=460
+      this.boxOptions.width=1400
       //显示查询全部字段
       this.setFiexdSearchForm(true);
       //设置查询表单的标签文字宽度
@@ -329,6 +389,9 @@ let extension = {
       // let searchProdDBID=this.getSearchOption("prod_dbid");
       // searchProdDBID.hidden=true
 
+      this.getFormOption("nhi_id").extra={
+        render:this.selfPay()
+      },
       searchGroup.extra = {
         render: this.getPopRender("searchPriceGroup")
       }
@@ -452,7 +515,7 @@ let extension = {
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
-
+      param.sort="prod_id";
       return true;
     },
     searchAfter(result) {
@@ -533,7 +596,14 @@ let extension = {
         this.getFormOption("prod_id").extra={render: this.getPopShowRender("editFormProduct")};;
 
         this.pickEditFormProductName=row.prod_ename;
-        this.pickEditFormPriceGroupName=row.group_id
+        this.pickEditFormPriceGroupName=row.group_name
+
+
+        if(row.group_id=='NHI'){
+          this.getFormOption("nhi_id").hidden=false;
+        }else{
+          this.getFormOption("nhi_id").hidden=true;
+        }
       }else if (this.currentAction==this.const.VIEW){
 
       }
