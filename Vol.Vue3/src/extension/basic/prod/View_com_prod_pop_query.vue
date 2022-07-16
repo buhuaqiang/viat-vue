@@ -10,11 +10,24 @@
         <!-- 设置查询条件 -->
         <div style="padding-bottom: 10px">
             <span style="margin-right: 5px">Entity:</span>
-            <el-input
+           <!-- <el-input
                     placeholder="Entity"
                     style="width: 180px"
                     v-model="entity"
-            />
+            />-->
+            <el-select
+                placeholder="Entity"
+                style="width: 180px"
+                v-model="entity"
+            >
+                <el-option
+                    v-for="item in entitys"
+                    :key="item.key"
+                    :label="item.value"
+                    :value="item.key"
+                >
+                </el-option>
+            </el-select>
             <span style="margin-right: 5px">&nbsp;&nbsp;&nbsp;&nbsp;ID:</span>
             <el-input
                     placeholder="ID"
@@ -95,7 +108,7 @@
                 prod_id: "", //查询条件字段
                 prod_ename: "", //查询条件字段
                 prod_sname: "", //查询条件字段
-
+                entitys:[{"key":'TWD',"value":'TWD'},{"key":'WAL',"value":'WAL'},{"key":'WTC',"value":'WTC'},{"key":'5U1',"value":'5U1'},{"key":'5U2',"value":'5U2'}],
                 url: "api/View_com_prod_pop_query/GetProdPageData",//加载数据的接口
                 columns: [
                     {field:'entity',title:'Entity',type:'string',width:90,align:'left',sort:true},
@@ -159,8 +172,8 @@
             },
             loadTableBefore(params) {
                 if (!params.sort) {//設置排序
-                    //params.sort = "created_date,prod_ename";
-                    params.sort = "prod_ename";
+                    params.sort = "created_date";
+                    //params.sort = "prod_ename,created_date";
                 }
                 if(this.entity){
                     params.wheres.push({ name: "entity", value: this.entity});
