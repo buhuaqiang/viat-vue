@@ -134,6 +134,7 @@ export default {
       this.loadingStatus = true;
       this.http.post(_url, formData).then(
         (x) => {
+          debugger
           // this.$refs.uploadFile.clearFiles();
           this.loadingStatus = false;
           this.file = null;
