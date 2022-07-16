@@ -197,7 +197,7 @@ export default {
   },
   created() {
     //this.invalidModel.pricegroup_dbidname.render = this.getRender("pricegroup_dbid", 'pg')
-
+    this.getChannel();
   },
   methods: {
     getChannel(){
@@ -382,12 +382,13 @@ export default {
     },
 
     addRow() {
+      debugger
       let rows = [];
-      if(this.custShowFlag || this.groupShowFlag){
+      if(this.custShowFlag || this.groupShowFlag || this.channelShowFlag){
         if(this.groupShowFlag){
           rows=this.$refs.mytable.getSelected()
         }
-        if(this.custShowFlag){
+        if(this.custShowFlag || this.channelShowFlag){
           rows=this.$refs.table2.getSelected()
         }
         if(!this.invalidModel.invalid_date){
@@ -397,82 +398,90 @@ export default {
           return this.$message.error("Please select a record first.");
         }
       }
-      this.checkData();
-      this.invalidModel.rows=rows;
-      this.invalidModel.isAll=0;
-      this.$confirm('Are you sure invalid price ?', 'warning', {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'CANCEL',
-        type: 'warning',
-        center: true
-      }).then(() => {
-        this.http.post("api/View_cust_price/invalidData",  this.invalidModel, true)
-                .then((x) => {
-                  if (!x.status) {
-                    this.$Message.error(x.message);
-                    return;
-                  }else{
-                    this.search();
-                    this.$emit("onSave");
-                    this.$Message.success("Save Completed!");
-                  }
-                });
-      });
-
+      let issucc=this.checkData();
+      if(issucc){
+        this.invalidModel.rows=rows;
+        this.invalidModel.isAll=0;
+        this.$confirm('Are you sure invalid price ?', 'warning', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'CANCEL',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          this.http.post("api/View_cust_price/invalidData",  this.invalidModel, true)
+                  .then((x) => {
+                    if (!x.status) {
+                      this.$Message.error(x.message);
+                      return;
+                    }else{
+                      this.search();
+                      //this.$emit("onSave");
+                      this.$Message.success("Save Completed!");
+                    }
+                  });
+        });
+      }
     },
     addAll() {
-      this.checkData();
-      this.invalidModel.isAll=1;
+      let issucc=this.checkData();
+      if(issucc){
+        this.invalidModel.isAll=1;
 
-      this.$confirm('Are you sure invalid price ?', 'warning', {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'CANCEL',
-        type: 'warning',
-        center: true
-      }).then(() => {
-        this.http.post("api/View_cust_price/invalidData",  this.invalidModel, true)
-                .then((x) => {
-                        this.http.post("api/View_cust_price/invalidData", this.invalidModel, true)
-                          .then((x) => {
-                            if (!x.status) {
-                              this.$Message.error(x.message);
-                              return;
-                            }else{
-                              this.search();
-                              this.$emit("onSave");
-                              this.$Message.success("Save Completed!");
-                            }
-                          });
-                });
-      });
-
-
+        this.$confirm('Are you sure invalid price ?', 'warning', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'CANCEL',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          this.http.post("api/View_cust_price/invalidData",  this.invalidModel, true)
+                  .then((x) => {
+                    this.http.post("api/View_cust_price/invalidData", this.invalidModel, true)
+                            .then((x) => {
+                              if (!x.status) {
+                                this.$Message.error(x.message);
+                                return;
+                              }else{
+                                this.search();
+                                //this.$emit("onSave");
+                                this.$Message.success("Save Completed!");
+                              }
+                            });
+                  });
+        });
+      }
     },
 
     checkData(){
+      debugger
       if(!this.invalidModel.invalid_date){
-        return this.$message.error("Invalid date is empty.");
+         this.$message.error("Invalid date is empty.");
+        return false
       }
       if(this.groupShowFlag ){
         if(!this.invalidModel.pricegroup_dbid){
-          return this.$message.error("Please input Group.");
+           this.$message.error("Please input Group.");
+          return false
         }
       }
       if(this.custShowFlag ){
         if(!this.invalidModel.cust_dbid){
-          return this.$message.error("Please input Customer.");
+           this.$message.error("Please input Customer.");
+          return false
         }
       }
       if(this.channelShowFlag ){
         if(!this.invalidModel.channelValue){
-          return this.$message.error("Please select channel.");
+           this.$message.error("Please select channel.");
+          return false
         }
       }
-      if(!this.custShowFlag && !this.groupShowFlag){
+      if(!this.custShowFlag && !this.groupShowFlag && !this.channelShowFlag){
         if(!this.invalidModel.prod_dbid){
-          return this.$message.error("Please input Product.");
+           this.$message.error("Please input Product.");
+          return false
         }
       }
+      return  true;
     },
     //这里是从api查询后返回数据的方法
     loadTableAfter(row) {

@@ -1,5 +1,5 @@
 <template>
-  <VolBox
+  <!--<VolBox
     v-model="model"
     :lazy="true"
     title="Invalid Cache"
@@ -87,7 +87,7 @@
       >
     </div>
 
-    <!-- vol-table配置的这些属性见VolTable组件api文件 -->
+    &lt;!&ndash; vol-table配置的这些属性见VolTable组件api文件 &ndash;&gt;
     <vol-table
             v-show="groupShowFlag"
       ref="mytable"
@@ -120,7 +120,7 @@
             @loadBefore="loadTableBefore"
             :index="true"
     ></vol-table>
-    <!-- 设置弹出框的操作按钮 -->
+    &lt;!&ndash; 设置弹出框的操作按钮 &ndash;&gt;
     <template #footer>
       <div>
         <el-button size="mini" icon="el-icon-close" @click="model = false"
@@ -131,7 +131,7 @@
     <price-group-model-body ref="PriceGroupModelBody" @onSelect="onSelectPop"></price-group-model-body>
     <viat_com_cust-model-body ref="Viat_com_custModelBody" @onSelect="onSelectPop"></viat_com_cust-model-body>
     <view_com_prod_pop_query ref="View_com_prod_pop_query" @onSelect="onSelectPop"></view_com_prod_pop_query>
-  </VolBox>
+  </VolBox>-->
 </template>
 <script>
 import VolBox from "@/components/basic/VolBox.vue";
