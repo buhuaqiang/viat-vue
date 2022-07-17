@@ -57,8 +57,11 @@
         <el-form-item   label="Min Qty:" style="width: 35%">
           <el-input-number v-model="formModel.min_qty"  style="width:200px;" ></el-input-number>
         </el-form-item>
-        <el-form-item label="Remark:" style="width: 60%">
-          <el-input type="textarea" v-model="formModel.remark" style="width:250px;"></el-input>
+        <el-form-item   label="Reserv Price:" style="width: 35%">
+          <el-input v-model="formModel.reserv_price" style="width:200px;" ></el-input>
+        </el-form-item>
+        <el-form-item label="Remarks:" style="width: 60%">
+          <el-input type="textarea" v-model="formModel.remarks" style="width:250px;"></el-input>
         </el-form-item>
       </el-form>
       <el-button
@@ -148,7 +151,9 @@ export default {
         min_qty:1,
         nhi_id:'',
         start_date:new Date(),
-        end_date:new Date('2099-12-31')
+        end_date:new Date('2099-12-31'),
+        reserv_price:'',
+        remarks:""
       },
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
 
@@ -167,6 +172,9 @@ export default {
         {field:'min_qty',title:'Min Qty',type:'int',width:110,require:true,align:'left'},
         {field:'start_date',title:'Start Date',type:'date',width:110,require:true,align:'left',sort:true},
         {field:'end_date',title:'End Date',type:'date',width:110,require:true,align:'left',sort:true},
+        {field:'reserv_price',title:'Reser Price',type:'decimal',width:110,align:'left'},
+        {field:'status',title:'Status',bind:{ key:'Status_YN',data:[]},type:'string',width:110,align:'left'},
+        {field:'remarks',title:'Remarks',type:'string',width:110,align:'left'},
         ],
 
       pagination: {}, //分页配置，见voltable组件api
@@ -522,7 +530,9 @@ export default {
                     min_qty:this.formModel.min_qty,
                     start_date:this.formModel.start_date,
                     end_date:this.formModel.end_date,
-                    nhi_id:this.formModel.nhi_id
+                    nhi_id:this.formModel.nhi_id,
+                    reserv_price:this.formModel.reserv_price,
+                    remarks:this.formModel.remarks
                   }
                   this.pushData.push(addData);
                   //清除form數據
