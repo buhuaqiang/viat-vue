@@ -14,7 +14,7 @@
         </el-form-item>
         <el-form-item id="0" label="Group:" style="width: 40%">
           <el-input v-model="formModel.group_id" style="width:120px;" @keyup.enter="groupKeyPress"></el-input>
-          <el-input v-model="formModel.group_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+          <el-input v-model="formModel.group_name" style="width:300px;padding-left: 2px" :disabled="true"></el-input>
           <el-input v-model="formModel.pricegroup_dbid" type="hidden" style="width: 0px"></el-input>
           <a @click="openPriceGroup(0)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0)"><i class="el-icon-zoom-out"></i>Clean</a>
         </el-form-item>
@@ -24,7 +24,7 @@
         </el-form-item>
         <el-form-item label="Product:" style="width: 40%">
           <el-input v-model="formModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress"></el-input>
-          <el-input v-model="formModel.prod_ename" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+          <el-input v-model="formModel.prod_ename" style="width:300px;padding-left: 2px" :disabled="true"></el-input>
           <el-input v-model="formModel.prod_dbid"  type="hidden" style="width: 0px"></el-input>
           <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
 
@@ -553,6 +553,8 @@ export default {
                   this.formModel.net_price=''
                   this.formModel.nhi_id=''
                   this.nhiGroupFlag=false
+                  this.formModel.reserv_price=''
+                  this.formModel.remarks=''
                 });
 
       }else{

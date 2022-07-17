@@ -594,8 +594,8 @@ let extension = {
         this.getFormOption("group_id").extra={render: this.getPopShowRender("editFormSearchPriceGroup")};
         this.getFormOption("prod_id").disabled=true;
         this.getFormOption("prod_id").extra={render: this.getPopShowRender("editFormProduct")};;
-
-        this.pickEditFormProductName=row.prod_ename;
+        this.getFormOption("reserv_price").disabled=true;
+         this.pickEditFormProductName=row.prod_ename;
         this.pickEditFormPriceGroupName=row.group_name
 
 
