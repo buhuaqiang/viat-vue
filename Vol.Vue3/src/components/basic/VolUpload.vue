@@ -41,7 +41,7 @@
           </div>
         </div>
         <el-button v-else @click="handleClick"
-          >选择{{ img ? "图片" : "文件" }}</el-button
+          >Select{{ img ? " Image" : " File" }}</el-button
         >
 
         <el-button
@@ -50,7 +50,7 @@
           :disabled="changed"
           @click="upload(true)"
           :loading="loadingStatus"
-          >上传文件</el-button
+          >Upload Files</el-button
         >
       </div>
       <slot></slot>
@@ -213,7 +213,7 @@ export default {
       files: [],
       bigImg: "",
       loadingStatus: false,
-      loadText: "上传文件",
+      loadText: "Upload Files",
     };
   },
   created() {
@@ -378,7 +378,7 @@ export default {
           (x) => {
             // this.$refs.uploadFile.clearFiles();
             this.loadingStatus = false;
-            this.loadText = "上传文件";
+            this.loadText = "Upload Files";
             if (!this.uploadAfter(x, this.files)) {
               this.changed = false;
               return;
@@ -406,7 +406,7 @@ export default {
             this.files = _files;
           },
           (error) => {
-            this.loadText = "上传文件";
+            this.loadText = "Upload Files";
             this.loadingStatus = false;
           }
         );

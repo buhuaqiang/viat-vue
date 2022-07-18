@@ -591,9 +591,11 @@ export default {
         this.formModel.nhi_price=''
         this.formModel.invoice_price=''
         this.formModel.net_price=''
-        this.formModel.nhi_id=''
+        this.formModel.bid_price=''
         this.formModel.reserv_price=''
-
+        this.formModel.min_qry=1
+        this.formModel.fg=1
+        this.formModel.dis=1
 
       }else{
         this.$message.error("Product Price is already exist in draft.");
