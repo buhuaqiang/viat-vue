@@ -29,8 +29,9 @@
                 url: "/View_wk_bid_price_apply_main/",
                 sortName: "BID_NO"
             });
-            const editFormFields = ref({"bid_no":"","apply_type":"","cust_id":"","group_id":"","isgroup":"","bid_date":"","start_date":"","end_date":"","upload":"","remarks":""});
+            const editFormFields = ref({"bidmast_dbid":"","bid_no":"","apply_type":"","cust_id":"","group_id":"","isgroup":"","bid_date":"","start_date":"","end_date":"","upload":"","remarks":""});
             const editFormOptions = ref([[{"title":"Bid NO","required":true,"field":"bid_no","type":"text"},
+                             {"title":"bidmast dbid","field":"bidmast_dbid",hidden:true},
                                {"dataKey":"ApprovalType","data":[],"title":"Apply Type","required":true,"field":"apply_type","disabled":true,"type":"select"}],
                               [{"dataKey":"CustomerType","data":[],"title":"Is Group","required":true,"field":"isgroup","type":"radio"},
                                {"title":"Customer ID","field":"cust_id","type":"text"},

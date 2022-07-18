@@ -66,7 +66,7 @@
           :height="300"
           :url="table1Url"
           :index="true"
-          :defaultLoadPage="true"
+          :defaultLoadPage="false"
           @loadBefore="loadTableBefore1"
           @loadAfter="loadTableAfter1"
         ></vol-table>
@@ -127,7 +127,7 @@
           :pagination-hide="false"
           :height="300"
           :url=table2Url
-          :defaultLoadPage="true"
+          :defaultLoadPage="false"
           @loadBefore="loadTableBefore2"
           @loadAfter="loadTableAfter2"
           :index="true"
@@ -184,7 +184,7 @@
                 :pagination-hide="false"
                 :height="300"
                 :url=table3Url
-                :defaultLoadPage="true"
+                :defaultLoadPage="false"
                 @loadBefore="loadTableBefore3"
                 @loadAfter="loadTableAfter3"
                 :index="true"
@@ -360,56 +360,25 @@ export default {
       }
     },
     loadTableBefore1(param, callBack) {
-      let $parent = null;
-      //当前是子页面，获取查询viewgrid页面的对象()
-      this.$emit("parentCall", ($this) => {
-        $parent = $this;
-      });
-      //如果是新建功能，禁止刷新操作
-      if ($parent.currentAction == "Add") {
-        return callBack(false);
-      }
-      //获取当前编辑主键id值
-      let powercont_dbid = $parent.currentRow.powercont_dbid;
+
       //添加从表的查询参数(条件)
       //将当前选中的行主键传到后台用于查询(后台在GetTable2Data(PageDataOptions loadData)会接收到此参数)
-      param.wheres.push({ name: "powercont_dbid", value: powercont_dbid });
+      param.wheres.push({ name: "powercont_dbid", value: this.powercont_dbid });
       callBack(true);
     },
     //从表2加载数据数前(操作与上面一样的,增加查询条件)
     loadTableBefore2(param, callBack) {
-      let $parent = null;
-      //当前是子页面，获取查询viewgrid页面的对象()
-      this.$emit("parentCall", ($this) => {
-        $parent = $this;
-      });
-      //如果是新建功能，禁止刷新操作
-      if ($parent.currentAction == "Add") {
-        return callBack(false);
-      }
-      //获取当前编辑主键id值
-      let powercont_dbid = $parent.currentRow.powercont_dbid;
+
       //添加从表的查询参数(条件)
       //将当前选中的行主键传到后台用于查询(后台在GetTable2Data(PageDataOptions loadData)会接收到此参数)
-      param.wheres.push({ name: "powercont_dbid", value: powercont_dbid });
+      param.wheres.push({ name: "powercont_dbid", value: this.powercont_dbid });
       callBack(true);
     },
     //从表2加载数据数前(操作与上面一样的,增加查询条件)
     loadTableBefore3(param, callBack) {
-      let $parent = null;
-      //当前是子页面，获取查询viewgrid页面的对象()
-      this.$emit("parentCall", ($this) => {
-        $parent = $this;
-      });
-      //如果是新建功能，禁止刷新操作
-      if ($parent.currentAction == "Add") {
-        return callBack(false);
-      }
-      //获取当前编辑主键id值
-      let powercont_dbid = $parent.currentRow.powercont_dbid;
       //添加从表的查询参数(条件)
       //将当前选中的行主键传到后台用于查询(后台在GetTable2Data(PageDataOptions loadData)会接收到此参数)
-      param.wheres.push({ name: "powercont_dbid", value: powercont_dbid });
+      param.wheres.push({ name: "powercont_dbid", value: this.powercont_dbid });
       callBack(true);
     },
     //从后台加载从表1数据后

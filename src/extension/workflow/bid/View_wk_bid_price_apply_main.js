@@ -8,7 +8,8 @@
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
 import PriceGroupModelBody from "../../price/price/PriceGroupModelBody";
 import Viat_com_custModelBody from "../../basic/cust/Viat_com_custModelBody";
-import BidPrice_Common_ModelBody from "./BidPrice_Common_ModelBody";
+//import BidPrice_Common_ModelBody from "./BidPrice_Common_ModelBody";
+import BathInsertBidPrice from "./BathInsertBidPrice";
 let extension = {
   components: {
     //查询界面扩展组件
@@ -17,7 +18,7 @@ let extension = {
     gridFooter: Viat_com_custModelBody,
     //新建、编辑弹出框扩展组件
     modelHeader: '',
-    modelBody: BidPrice_Common_ModelBody,
+    modelBody: BathInsertBidPrice,
     modelFooter: ''
   },
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
@@ -88,7 +89,6 @@ let extension = {
                 this.editFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
                 this.editFormFields['group_id'] =reslut.group_id ;
                 this.pickEditFormPriceGroupName=reslut.group_name;
-                this.$refs.modelBody.initCustomerListByGroupDbId(reslut.pricegroup_dbid);
                 return;
               }else{
                 this.$message.error("Group Id Is Not Exists.");
@@ -196,6 +196,40 @@ let extension = {
         }
         return "";
       }
+
+
+      this.editFormOptions.forEach(x => {
+        x.forEach(item => {
+          if (item.field == 'upload') {
+            item.type = 'file';//可以指定上传文件类型img/file/excel
+            //设置上传图片字段100%宽度
+            //启用多图上传(默认单图)
+            item.multiple = true;
+            //禁止自动上传(默认自动上传)
+            item.autoUpload=false;
+            //最多可以上传3张照片
+            item.maxFile = 5;
+            //限制图片大小，默认3M
+            item.maxSize = 3;
+            //选择文件时
+            item.onChange=(files)=>{
+              console.log('选择文件事件')
+              //此处不返回true，会中断代码执行
+              return true;
+            }
+            //上传前
+            item.uploadBefore=(files)=>{
+              console.log('上传前')
+              return true;
+            }
+            //上传后
+            item.uploadAfter=(files)=>{
+              console.log('上传后')
+              return true;
+            }
+          }
+        })
+      })
     },
     /**
      *
@@ -224,11 +258,9 @@ let extension = {
                 style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
                   if(searchType=="editFormSearchCustomer"){
-                    //this.$refs.modelBody.openCustmModelBody(true,searchType)
                     this.$refs.gridFooter.openModel(true,searchType);
                   }
                   if(searchType=="editFormSearchPriceGroup"){
-                    //this.$refs.modelBody.openPriceGroupModelBody(true,searchType);
                     this.$refs.gridBody.openModel(true,searchType);
                   }
                 }
@@ -450,7 +482,7 @@ let extension = {
       }
 
       this.editFormFields.apply_type='03'
-      this.$refs.modelBody.openBathAddCustPage();
+      this.$refs.modelBody.openModel();
     }
   }
 };
