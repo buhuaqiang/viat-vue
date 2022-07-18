@@ -46,7 +46,9 @@
                               [{"title":"","field":"prod_dbid"},
                                {"title":"","field":"cust_dbid"}]]);
             const searchFormFields = ref({"cust_id":"","start_date":"","end_date":"","modified_date":"","prods":[],"cust_dbid":"","QueryStatus":"","ShowInvalidProd":[]});
-            const searchFormOptions = ref([[{"title":"Cust ID","field":"cust_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"}],[{"title":"","field":"cust_dbid"},{"dataKey":"price_book_query_status","data":[],"title":"Status","field":"QueryStatus","type":"select"},{"title":"Modified Date","field":"modified_date","type":"date"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],[{"dataKey":"Show Invalid products","data":[],"title":"","field":"ShowInvalidProd","type":"checkbox"}]]);
+            const searchFormOptions = ref([[{"title":"Cust ID","field":"cust_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"}],
+                [{"title":"","field":"cust_dbid"},{"dataKey":"price_book_query_status","data":[],"title":"Status","field":"QueryStatus","type":"select"},{"title":"Modified Date","field":"updated_date","type":"date"}],
+                [{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],[{"dataKey":"Show Invalid products","data":[],"title":"","field":"ShowInvalidProd","type":"checkbox"}]]);
             const columns = ref([{field:'pricedetail_dbid',title:'pricedetail_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'cust_id',title:'Cust ID',type:'string',link:true,width:110,align:'left',sort:true},
                        {field:'cust_name',title:'Cust Name',type:'string',width:120,align:'left'},
@@ -66,7 +68,8 @@
                        {field:'status',title:'status',type:'string',bind:{ key:'Status_YN',data:[]},width:80,require:true,align:'left'},
                        {field:'start_date',title:'Start Date',type:'datetime',width:110,align:'left',sort:true},
                        {field:'end_date',title:'End Date',type:'datetime',width:110,align:'left',sort:true},
-                       {field:'modified_date',title:'Modified Date',type:'datetime',width:110,align:'left',sort:true},
+                       {field:'update_date',title:'Modified Date',type:'date',width:110,align:'left',sort:true},
+                       {field:'modified_date',title:'Modified Date',type:'datetime',width:110,align:'left',sort:true,hidden:true},
                        {field:'remarks',title:'Remarks',type:'string',width:150,align:'left'},
                        {field:'state',title:'state',type:'string',width:110,hidden:true,align:'left'},
                        {field:'cust_group_status',title:'cust_group_status',type:'string',width:110,hidden:true,align:'left'},

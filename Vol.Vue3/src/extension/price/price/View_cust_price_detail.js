@@ -146,7 +146,30 @@ let extension = {
                 value:this.getPickName(searchType)
               }
           )
+          ,h(
+              "a",
+              {
+                props: {},
+                style: { "color":"grey","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                onClick: (e) => {
 
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "Pick"
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"grey","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                onClick: (e) => {
+
+                }
+              },
+              [h("i",{class:"el-icon-zoom-out"})],
+              "Clean"
+          ),
         ]);
       };
     },
@@ -197,7 +220,7 @@ let extension = {
 
       this.boxOptions.labelWidth = 180;
       this.boxOptions.height=520
-      this.boxOptions.width=1400
+      this.boxOptions.width=1600
       //显示查询全部字段
       this.setFiexdSearchForm(true);
       //设置查询表单的标签文字宽度

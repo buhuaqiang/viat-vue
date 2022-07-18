@@ -22,13 +22,13 @@ export default {
   },
   methods: {
    openInvalidPage(){
-     this.$refs.InvalidDataPage.openDemo();
+     this.$refs.InvalidDataPage.openModel();
    },
     openBathAddCustPage(){
-      this.$refs.BathInsertCustPrice.openDemo();
+      this.$refs.BathInsertCustPrice.openModel();
     },
     openBathAddCustDetailPage(){
-      this.$refs.BathInsertCustPriceDetail.openDemo();
+      this.$refs.BathInsertCustPriceDetail.openModel();
     },
     afterInvalid(){
       this.$emit("parentCall", ($parent) => {
