@@ -384,14 +384,14 @@ let viewgird = [
         name: 'View_wk_cont_stretagy_detail',
         component: () => import('@/views/workflow/pricestretagy/View_wk_cont_stretagy_detail.vue')
     }    ,{
-        path: '/Viat_wk_cont_stretagy_detail',
-        name: 'Viat_wk_cont_stretagy_detail',
-        component: () => import('@/views/workflow/pricestretagy/Viat_wk_cont_stretagy_detail.vue')
-
-    },{
         path: '/invalidPage',
         name: 'invalidPage',
         component: () => import('@/extension/price/price/InvalidDataPageTab.vue')
+    },
+    {
+        path: '/View_wk_bid_price_apply_main',
+        name: 'View_wk_bid_price_apply_main',
+        component: () => import('@/views/workflow/bid/View_wk_bid_price_apply_main.vue')
     }]
 
 export default viewgird
