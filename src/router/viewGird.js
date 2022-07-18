@@ -392,6 +392,15 @@ let viewgird = [
         path: '/View_wk_bid_price_apply_main',
         name: 'View_wk_bid_price_apply_main',
         component: () => import('@/views/workflow/bid/View_wk_bid_price_apply_main.vue')
-    }   ]
+    }    ,{
+        path: '/View_wk_cust_main',
+        name: 'View_wk_cust_main',
+        component: () => import('@/views/workflow/custapply/View_wk_cust_main.vue')
+    }    ,{
+        path: '/Viat_wk_cust',
+        name: 'Viat_wk_cust',
+        component: () => import('@/views/workflow/custapply/Viat_wk_cust.vue')
+    }]
+
 
 export default viewgird
