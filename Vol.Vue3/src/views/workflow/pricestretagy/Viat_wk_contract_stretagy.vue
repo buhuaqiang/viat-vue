@@ -24,7 +24,7 @@
             const table = ref({
                 key: 'contstret_dbid',
                 footer: "Foots",
-                cnName: '價格策略合約',
+                cnName: 'Price strategy contract',
                 name: 'pricestretagy/Viat_wk_contract_stretagy',
                 url: "/Viat_wk_contract_stretagy/",
                 sortName: "created_date"
