@@ -31,7 +31,7 @@
             });
             const editFormFields = ref({"bid_no":"","apply_type":"","cust_name":"","cust_id":"","cust_city_name":"","cust_zip_id":"","cust_address":"","invoice_name":"","invoice_city_name":"","invoice_zip_id":"","invoice_address":"","delivery_city_name":"","delivery_zip_id":"","delivery_addr":"","delivery_contact":"","delivery_tel_no":"","doh_type":"","doh_institute_no":"","is_private":"","owner":"","tax_id":"","email":"","fax_no":"",own_hospital_cust_id:"","own_hospital":"","ctrl_drug_no":"","ctrl_drug_contact":"","remarks":"","created_username":"","created_date":"","modified_username":"","modified_date":""});
             const editFormOptions = ref([[{"title":"Bid No","field":"bid_no","disabled":true},
-                               {"dataKey":"Apply_type","data":[],"title":"Apply Type","field":"apply_type","type":"select","required":true}],
+                               {"dataKey":"ApprovalType","data":[],"title":"Apply Type","field":"apply_type","type":"select","required":true}],
                               [{"title":"Cust Name","field":"cust_name","required":true},{"title":"Cust Code","field":"cust_id","disabled":true,hidden: true}],
                               [{"dataKey":"viat_city","data":[],"title":"Cust City Name","field":"cust_city_name","type":"select","required":true},
                                {"dataKey":"viat_city_zone","data":[],"title":"Cust Zip Name","field":"cust_zip_id","type":"select","required":true}],
@@ -61,11 +61,11 @@
                               [{"title":"Modifier","field":"modified_username","disabled":true},
                                {"title":"Modified Date","field":"modified_date","disabled":true}]]);
             const searchFormFields = ref({"bid_no":"","cust_name":"","start_date":"","status":""});
-            const searchFormOptions = ref([[{"title":"Bid No","field":"bid_no"},{"title":"Cust Name","field":"cust_name"}],[{"dataKey":"Apply_status","data":[],"title":"Status","field":"status","type":"select"},{"title":"Apply Date","field":"start_date"}]]);
+            const searchFormOptions = ref([[{"title":"Bid No","field":"bid_no"},{"title":"Cust Name","field":"cust_name"}],[{"dataKey":"ApprovalStatus","data":[],"title":"Status","field":"status","type":"select"},{"title":"Apply Date","field":"start_date"}]]);
             const columns = ref([{field:'bid_no',title:'Bid No',"link":true,type:'string',width:110,align:'left',sort:true},
                        {field:'cust_name',title:'Cust Name',type:'string',width:120,align:'left'},
                        {field:'cust_id',title:'Cust ID',type:'string',width:110,align:'left'},
-                       {field:'apply_type',title:'Apply Type',type:'string',bind:{ key:'Apply_type',data:[]},width:110,align:'left'},
+                       {field:'apply_type',title:'Apply Type',type:'string',bind:{ key:'ApprovalType',data:[]},width:110,align:'left'},
                        {field:'start_date',title:'Apply Date',type:'datetime',width:110,align:'left',sort:true},
                         {field:'created_username',title:'Creator',type:'string',width:110,align:'left'},
                        {field:'cust_city_name',title:'Cust City Name',type:'string',bind:{ key:'viat_city',data:[]},width:110,hidden:true,align:'left'},
@@ -121,7 +121,7 @@
                        {field:'modified_clientusername',title:'列名modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
 
                        {field:'end_date',title:'列名end_date',type:'datetime',width:110,hidden:true,align:'left',sort:true},
-                       {field:'status',title:'Status',type:'string',bind:{ key:'Apply_status',data:[]},width:110,align:'left'},
+                       {field:'status',title:'Status',type:'string',bind:{ key:'ApprovalStatus',data:[]},width:110,align:'left'},
                        {field:'own_hospital_cust_name',title:'Own Hospital Cust_name',type:'string',width:120,hidden:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
