@@ -11,9 +11,9 @@
     <div style="padding-bottom: 10px">
       <span style="margin-right: 20px"></span>
 
-      <el-select v-model="pricestretagyValue" placeholder="Select price stretagy" style="width: 200px; padding-left: 5px">
+      <el-select v-model="contstretagyValue" placeholder="Select price stretagy" style="width: 200px; padding-left: 5px">
         <el-option
-                v-for="item in pricestretagyData"
+                v-for="item in contstretagyData"
                 :key="item.key"
                 :label="item.value"
                 :value="item.key"
@@ -40,8 +40,8 @@
       :max-height="420"
       :url="url"
       :index="true"
-      :single="single"
-      :defaultLoadPage="defaultLoadPage"
+      :single=single
+      :defaultLoadPage=defaultLoadPage
       @loadBefore="loadTableBefore"
       @loadAfter="loadTableAfter"
       @rowClick="rowClick"
@@ -82,10 +82,13 @@ export default {
       cust_name: "", //查询条件字段
       cust_id:"",
       zip_id: "",
-      pricestretagyValue:"",
-      pricestretagyData:[],
+      contstretagyValue:"",
+      contstretagyData:[],
       url: "api/View_wk_cont_stretagy_detail_main/GetPageData",//加载数据的接口
-      columns : [{field:'prod_id',title:'列名prod_id',type:'string',width:110,require:true,align:'left',sort:true},
+      columns : [
+        {field:'cont_stretagy_id',title:'Stretagy ID',type:'string',width:110,require:true,align:'left',sort:true},
+        {field:'cont_stretagy_name',title:'Stretagy Name',type:'string',width:110,require:true,align:'left',sort:true},
+        {field:'prod_id',title:'列名prod_id',type:'string',width:110,require:true,align:'left',sort:true},
         {field:'prod_ename',title:'Product Ename',type:'string',width:110,align:'left'},
         {field:'prod_cname',title:'Product Cname ',type:'string',width:120,align:'left'},
         {field:'nhi_price',title:'NHI Price',type:'decimal',width:110,align:'left'},
@@ -115,7 +118,7 @@ export default {
     getPricestretagyData(){
       //健保渠道
       this.http.post('/api/Sys_Dictionary/GetVueDictionary', ['Viat_wk_contract_stretagy']).then((dic) => {
-        this.pricestretagyData=dic[0].data;
+        this.contstretagyData=dic[0].data;
       });
     },
     openModel(single,flag,returnType) {
@@ -124,14 +127,18 @@ export default {
       this.model = true;
       this.flag = flag;
       this.returnType = returnType
-      //打开弹出框时，加载table数据
+     /* //打开弹出框时，加载table数据
       this.$nextTick(() => {
         this.$refs.mytable.load();
-      });
+      });*/
 
     },
 
     search() {
+      if(!this.contstretagyValue){
+        this.$Message.error("Please Select contract stretagy")
+        return false;
+      }
       //点击搜索
       this.$refs.mytable.load();
     },
@@ -165,12 +172,14 @@ export default {
     },
     loadTableBefore(params) {
       //查询前，设置查询条件
-
-      params.wheres.push({ name: "status", value: 'Y' });
-      if(this.pricestretagyValue){
-        params.wheres.push({ name: "prodstret_dbid", value: this.pricestretagyValue });
+      if(this.contstretagyValue){
+        params.wheres.push({ name: "contstret_dbid", value: this.contstretagyValue });
+        return true;
+      }else{
+        this.$Message.error("Please Select contract stretagy")
+        return false;
       }
-      return true;
+
     },
   },
 };
