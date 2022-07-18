@@ -392,6 +392,6 @@ let viewgird = [
         path: '/View_wk_bid_price_apply_main',
         name: 'View_wk_bid_price_apply_main',
         component: () => import('@/views/workflow/bid/View_wk_bid_price_apply_main.vue')
-    }]
+    }   ]
 
 export default viewgird

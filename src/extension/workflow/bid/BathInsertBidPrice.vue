@@ -35,7 +35,7 @@
           <el-input-number v-model="formModel.min_qty"  style="width:200px;" ></el-input-number>
         </el-form-item>
         <el-form-item   label="Bid Price:" style="width: 35%">
-          <el-input v-model="formModel.bid_price" style="width:200px;" ></el-input>
+          <el-input v-model="formModel.bid_price" style="width:200px;" @change="caculator()"></el-input>
         </el-form-item>
         <el-form-item   label="Reserv Price:" style="width: 50%">
           <el-input v-model="formModel.reserv_price" style="width:200px;" ></el-input>
@@ -58,7 +58,7 @@
       <el-button
               type="warning"
               icon="el-icon-zoom-in"
-              @click=""
+              @click="openPriceStretageModel()"
       >Add By prod stretagy</el-button>
     </div>
 
@@ -118,14 +118,17 @@
 
 
     <view_com_prod_pop_query ref="View_com_prod_pop_query" @onSelect="onSelectPop"></view_com_prod_pop_query>
+    <Viat_wk_cont_stretagy_detail_pickup ref="Viat_wk_cont_stretagy_detail_pickup" @onSelect="onSelectPriceStretagyPop"></Viat_wk_cont_stretagy_detail_pickup>
 </template>
 <script>
 import VolBox from "@/components/basic/VolBox.vue";
 import VolTable from "@/components/basic/VolTable.vue";
 import View_com_prod_pop_query from "../../basic/prod/View_com_prod_pop_query.vue";
+import Viat_wk_cont_stretagy_detail_pickup from "../pricestretagy/Viat_wk_cont_stretagy_detail_pickup";
 
 export default {
   components: {
+    Viat_wk_cont_stretagy_detail_pickup,
     View_com_prod_pop_query,
     VolBox: VolBox,
     VolTable: VolTable,
@@ -161,8 +164,8 @@ export default {
       fieldName:"",//編輯字段,用於回傳設置值
       formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields
       url: "",//加载数据的接口
-      table1Url: "api/Viat_app_power_contract_cust/GetPageData",//?bidmast_dbid=" , //table1获取数据的接口
-      table2Url: "api/Viat_app_power_contract_purchase_prod/GetPageData",//?bidmast_dbid=" , //table1获取数据的接口 待補充
+      table1Url: "api/Viat_wk_bid_detail/GetPageData",//?bidmast_dbid=" , //table1获取数据的接口
+      table2Url: "api/Viat_wk_ord_detail/GetPageData",//?bidmast_dbid=" , //table1获取数据的接口 待補充
 
       priceTableRowData:"",
       orderTableRowData:"",
@@ -170,15 +173,15 @@ export default {
         { field: "bidetail_dbid", title: "主键ID", type: "guid", width: 80, hidden: true,isKey: true },
         { field: "bidmast_dbid", title: "外键ID", type: "guid", width: 80, hidden: true,isKey: true },
         {field:'prod_id',title:'Product Id',type:'string',width:110,require:true,align:'left'},
-        {field:'prod_ename',title:'Product Name',type:'string',width:110,align:'left'},
-        {field:'nhi_price',title:'NHI Price',type:'decimal',width:110,readonly:true,require:true,align:'left'},
-        {field:'invoice_price',title:'Invoice Price',type:'decimal',width:110,require:true,align:'left'},
-        {field:'net_price',title:'Net Price',type:'decimal',width:110,require:true,align:'left'},
-        {field:'bid_price',title:'Bid Price',type:'decimal',width:110,require:true,align:'left'},
-        {field:'reserv_price',title:'Reser Price',type:'decimal',width:110,align:'left'},
-        {field:'fg',title:'FG%',type:'decimal',width:110,align:'left'},
-        {field:'dis',title:'DIS%',type:'decimal',width:110,align:'left'},
-        {field:'min_qty',title:'Min Qty',type:'int',width:110,require:true,align:'left'},
+        {field:'prod_ename',title:'Product Name',type:'string',width:220,align:'left'},
+        {field:'nhi_price',title:'NHI Price',type:'decimal',width:100,readonly:true,require:true,align:'left'},
+        {field:'invoice_price',title:'Invoice Price',edit: { type: "number",keep:true },width:100,require:true,align:'left'},
+        {field:'net_price',title:'Net Price',type:'decimal',width:100,require:true,align:'left'},
+        {field:'bid_price',title:'Bid Price',edit: { type: "number" ,keep:true},width:100,require:true,align:'left'},
+        {field:'reserv_price',title:'Reser Price',edit: { type: "number",keep:true },require:true,width:100,align:'left'},
+        {field:'fg',title:'FG%',type:'decimal',width:50,align:'left'},
+        {field:'dis',title:'DIS%',type:'decimal',width:50,align:'left'},
+        {field:'min_qty',title:'Min Qty',edit: { type: "number",keep:true },width:80,require:true,align:'left'},
 
         ],
 
@@ -188,7 +191,7 @@ export default {
         {field:'prod_dbid',title:'Product dbId',type:'string', hidden: true},
         {field:'prod_id',title:'Product Id',type:'string',width:110,require:true,align:'left',readonly:true},
         {field:'prod_ename',title:'Product Name',type:'string',width:110,align:'left',readonly:true},
-        {field:'min_qty',title:'Min Qty', edit: { type: "number" },width:110,require:true,align:'left'},
+        {field:'qty',title:'Qty', edit: { type: "number" ,keep:true},width:110,require:true,align:'left'},
 
       ],
 
@@ -210,6 +213,8 @@ export default {
       this.formModel.net_price=''
       this.formModel.bid_price=''
       this.formModel.min_qty=1
+      this.formModel.fg=1
+      this.formModel.ds=1
       let $parent;
       //获取生成页面viewgrid的对象
       this.$emit("parentCall", ($this) => {
@@ -224,7 +229,47 @@ export default {
         this.$refs.priceTable.load();
         this.$refs.orderTable.load();
       }
+
+
+
+      //onInited方法设置从表编辑时实时计算值
+      this.columns.forEach(x => {
+        //設定可編輯狀態打開，不用雙擊
+        if (x.field == 'fg') {
+          //将eidt设置为null不开启编辑
+          x.edit = null;
+          x.formatter = (row) => {
+            let bid_price=row.bid_price;
+            let nhi_price=row.nhi_price;
+            let dis = (100-(bid_price-nhi_price)/nhi_price*100).toFixed(2);
+            let fg = (100-dis).toFixed(2);
+            return fg
+          }
+        }
+        if (x.field == 'dis') {
+          //将eidt设置为null不开启编辑
+          x.edit = null;
+          x.formatter = (row) => {
+            let bid_price=row.bid_price;
+            let nhi_price=row.nhi_price;
+            let dis = (100-(bid_price-nhi_price)/nhi_price*100).toFixed(2);
+            return dis;
+          }
+        }
+      })
+
     },
+
+    caculator(){
+      let bid_price=this.formModel.bid_price;
+      let nhi_price=this.formModel.nhi_price;
+      let dis = (100-(bid_price-nhi_price)/nhi_price*100).toFixed(2);
+      let fg = 100-dis;
+      this.formModel.dis=dis;
+      this.formModel.fg=fg;
+    },
+
+
 
     prodKeyPress(){
       let  prod_id = this.formModel.prod_id
@@ -254,8 +299,11 @@ export default {
       this.$refs.View_com_prod_pop_query.openModel(true,"prod_dbid","onSelect")
     },
 
-    onSelectPop(fieldName,rows){
+    openPriceStretageModel(val){
+      this.$refs.Viat_wk_cont_stretagy_detail_pickup.openModel(true,"stretagy","onSelect")
+    },
 
+    onSelectPop(fieldName,rows){
         if(fieldName=='prod_dbid'){
           if(rows.length!=1){
             return this.$message.error("Please select a record first.");
@@ -268,6 +316,8 @@ export default {
           this.formModel.net_price='';
           this.formModel.bid_price='';
           this.formModel.reserv_price='';
+          this.formModel.dis='';
+          this.formModel.fg='';
         }else if(fieldName=='AddOrders'){
 
           //返回指定字段  prod_id,prod_ename,qty,amt
@@ -297,6 +347,39 @@ export default {
         }
 
     },
+
+    onSelectPriceStretagyPop(fieldName,rows){
+      let _rows = rows.map((row)=>{
+        return{
+          bidetail_dbid:this.bidetail_dbid,
+          contstretail_dbid:row.contstretail_dbid,
+          prod_id:row.prod_id,
+          prod_dbid:row.prod_dbid,
+          prod_ename:row.prod_ename,
+          min_qty:row.min_qty,
+          nhi_price:row.nhi_price,
+          invoice_price:row.invoice_price,
+          net_price:row.net_price,
+          bid_price:row.bid_price,
+          reserv_price:row.reserv_price
+        }
+      })
+
+      this.$refs.priceTable.rowData=[];
+      _rows.forEach(x => {
+        let idx =  this.$refs.priceTable.rowData.some(item => {
+          // 判断项应为获取的变量
+          if(item.prod_dbid == x.prod_dbid) {
+            return true;
+          }
+        })
+        if(!idx){
+          this.$refs.priceTable.rowData.push(x);
+        }
+      })
+      this.priceTableRowData = this.$refs.priceTable.rowData;
+    },
+
     clearPop(val){
         this.formModel.prod_id="";
         this.formModel.prod_dbid="";
@@ -498,6 +581,8 @@ export default {
           min_qty:this.formModel.min_qty,
           bid_price:this.formModel.bid_price,
           reserv_price:this.formModel.reserv_price,
+          fg:this.formModel.fg,
+          dis:this.formModel.dis,
         }
         this.$refs.priceTable.rowData.push(addData);
 

@@ -8,7 +8,6 @@
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
 import PriceGroupModelBody from "../../price/price/PriceGroupModelBody";
 import Viat_com_custModelBody from "../../basic/cust/Viat_com_custModelBody";
-//import BidPrice_Common_ModelBody from "./BidPrice_Common_ModelBody";
 import BathInsertBidPrice from "./BathInsertBidPrice";
 let extension = {
   components: {
