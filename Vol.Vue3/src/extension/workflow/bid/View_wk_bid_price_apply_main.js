@@ -33,6 +33,37 @@ let extension = {
       this.boxOptions.labelWidth=150;
       this.setFiexdSearchForm(true);
       this.load=false;
+      //
+      this.buttons.push({  //也可以用push或者splice方法来修改buttons数组
+        name: 'Submit', //按钮名称
+        icon: 'el-icon-circle-check', //按钮图标vue2版本见iview文档icon，vue3版本见element ui文档icon(注意不是element puls文档)
+        type: 'success', //按钮样式vue2版本见iview文档button，vue3版本见element ui文档button
+        value:'submit',
+        onClick: function () {
+
+        }
+      });
+      this.buttons.push({  //也可以用push或者splice方法来修改buttons数组
+        name: 'Back', //按钮名称
+        icon: 'el-icon-back', //按钮图标vue2版本见iview文档icon，vue3版本见element ui文档icon(注意不是element puls文档)
+        type: 'danger', //按钮样式vue2版本见iview文档button，vue3版本见element ui文档button
+        value:'back',
+        onClick: function () {
+
+        }
+      });
+
+      this.boxButtons.splice(1, 0,{
+        name: 'Save and Submit',
+        icon: 'el-icon-check',
+        type: 'danger',
+        disabled: false,
+        value: 'save',
+        onClick() {
+          this.save();
+        }
+      })
+
       var editform_cust_id = this.getFormOption("cust_id");
       var editform_group_id = this.getFormOption("group_id");
       var isgroup = this.getFormOption("isgroup");
