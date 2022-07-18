@@ -148,6 +148,26 @@ let buttons = [{
             this.openEditShareTable()
         }
     },
+    {
+        name: "Submit",
+        icon: 'el-icon-circle-check',
+        type:'danger',
+        plain:true,
+        value: 'Submit',
+        onClick: function () {
+            this.SubmitData();
+        }
+    },
+    {
+        name: "Back",
+        icon: 'el-icon-back',
+        type:'danger',
+        plain:true,
+        value: 'Back',
+        onClick: function () {
+            this.BackData();
+        }
+    },
 
 // , {
 //     name: "数据结构",
