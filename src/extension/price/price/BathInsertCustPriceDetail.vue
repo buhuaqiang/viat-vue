@@ -275,9 +275,26 @@ export default {
 
     },
 
-    openDemo() {
+    openModel() {
       this.model = true;
       this.pushData=[];
+      this.formModel.bid_no=''
+      this.formModel.start_date=new Date()
+      this.formModel.end_date=new Date('2099-12-31')
+      this.formModel.cust_id=''
+      this.formModel.cust_name=''
+      this.formModel.cust_dbid=''
+      this.formModel.prod_id=''
+      this.formModel.prod_ename=''
+      this.formModel.prod_dbid=''
+      this.formModel.nhi_price=''
+      this.formModel.invoice_price=''
+      this.formModel.gross_price=''
+      this.formModel.net_price=''
+      this.formModel.status='Y'
+      this.formModel.min_qty=1
+      this.formModel.nhi_id=''
+      this.formModel.remarks=''
     },
     custShowData(reslut){
       debugger
@@ -444,7 +461,7 @@ export default {
         //如果是通路商客戶,還需要判斷 gross prices  小於 net price,若小於需要確認提示框
         if(this.formModel.gross_price){
           if(this.isDecimal(this.formModel.gross_price) || this.isNumber(this.formModel.gross_price)){
-            if(this.formModel.gross_price<this.formModel.net_price){
+            if(Number(this.formModel.gross_price)<Number(this.formModel.net_price)){
               message1="Gross Price < Net Price,Do you want to add?"
               grossPass=false;
             }
@@ -458,18 +475,18 @@ export default {
       }
       let pass=true;
       let message="";
-      if(this.formModel.invoice_price<this.formModel.net_price){
+      if(Number(this.formModel.invoice_price)< Number(this.formModel.net_price)){
         message="Invoice Price < Net Price,";
-        if(this.formModel.invoice_price>this.formModel.nhi_price){
+        if(Number(this.formModel.invoice_price) > Number(this.formModel.nhi_price)){
           message+="Invoice Price >NHI Price,";
         }
         message+="can’t be saved. Please check."
         this.$message.error(message);
         return false;
-      } else if (this.formModel.invoice_price > this.formModel.nhi_price ||
+      } else if (Number(this.formModel.invoice_price) > Number(this.formModel.nhi_price) ||
               (this.formModel.nhi_price != this.formModel.net_price && this.formModel.net_price == this.formModel.invoice_price)) {
         message = "";
-        if (this.formModel.invoice_price > this.formModel.nhi_price){
+        if (Number(this.formModel.invoice_price) > Number(this.formModel.nhi_price)){
           message += "Invoice Price > NHI Price. ";
         }
         if ((this.formModel.nhi_price != this.formModel.invoice_price && this.formModel.net_price == this.formModel.invoice_price)) {
@@ -561,6 +578,7 @@ export default {
                   this.formModel.invoice_price=''
                   this.formModel.gross_price=''
                   this.formModel.net_price=''
+                  this.formModel.remarks=''
                 });
 
       }else{

@@ -282,7 +282,7 @@ export default {
 
     },
 
-    openDemo() {
+    openModel() {
       this.getChannel();
       this.model = true;
     },

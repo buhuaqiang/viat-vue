@@ -190,7 +190,7 @@ let extension = {
                 value:this.getPickName(searchType)
               }
           )
-          /*,h(
+          ,h(
               "a",
               {
                 props: {},
@@ -213,7 +213,7 @@ let extension = {
               },
               [h("i",{class:"el-icon-zoom-out"})],
               "Clean"
-          ),*/
+          ),
         ]);
       };
     },
@@ -340,7 +340,7 @@ let extension = {
         // this.boxOptions.labelWidth = 150;
       this.boxOptions.labelWidth = 180;
       this.boxOptions.height=460
-      this.boxOptions.width=1400
+      this.boxOptions.width=1600
       //显示查询全部字段
       this.setFiexdSearchForm(true);
       //设置查询表单的标签文字宽度
