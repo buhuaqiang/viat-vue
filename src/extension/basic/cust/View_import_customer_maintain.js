@@ -225,7 +225,7 @@ let extension = {
             }
           })
         }
-        if (rowState != '2'){
+        if (rowState == '0'){
           this.buttons.forEach(x => {
             debugger
             if (x.name == "Ignore") {
