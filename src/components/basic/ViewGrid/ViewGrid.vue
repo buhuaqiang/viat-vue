@@ -427,6 +427,7 @@ var vueParam = {
       pickEditFormProductName:"",
       pickEditFormLoginUser:"",
       pickEditFormDeputyUser:"",
+      pickEditFormHospital:"",
 
 
 
