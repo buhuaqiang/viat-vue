@@ -339,7 +339,7 @@ let extension = {
         //示例：设置修改新建、编辑弹出框字段标签的长度
         // this.boxOptions.labelWidth = 150;
       this.boxOptions.labelWidth = 180;
-      this.boxOptions.height=460
+      this.boxOptions.height=500
       this.boxOptions.width=1600
       //显示查询全部字段
       this.setFiexdSearchForm(true);

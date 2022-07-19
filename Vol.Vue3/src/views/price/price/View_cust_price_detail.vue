@@ -43,6 +43,7 @@
                               [{"title":"Gross Price","field":"gross_price","type":"decimal"}],
                               [{"title":"Reserv Price","field":"reserv_price","type":"decimal"},
                                {"title":"Remarks","field":"remarks","type":"textarea"}],
+                                [{"title":"Update User","field":"modified_username",disabled: true}],
                               [{"title":"","field":"prod_dbid"},
                                {"title":"","field":"cust_dbid"}]]);
             const searchFormFields = ref({"cust_id":"","start_date":"","end_date":"","modified_date":"","prods":[],"cust_dbid":"","QueryStatus":"","ShowInvalidProd":[]});
