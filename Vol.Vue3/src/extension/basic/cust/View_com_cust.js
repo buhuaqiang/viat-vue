@@ -359,6 +359,9 @@ let extension = {
       }
 
       let ownHospital = this.getOption("own_hospital_cust_id");
+      ownHospital.extra = {
+        render: this.getPopRender("f_own_hospital")
+      }
 
       ownHospital.onKeyPress= ($event) => {
         if($event.keyCode==13){
@@ -382,6 +385,9 @@ let extension = {
       }
 
       let med_group = this.getOption("med_group_cust_id");
+      med_group.extra = {
+        render: this.getPopRender("f_med_group")
+      }
 
       med_group.onKeyPress= ($event) => {
         if($event.keyCode==13){
@@ -405,7 +411,9 @@ let extension = {
       }
 
       let delv_group = this.getOption("delv_group_cust_id");
-
+      delv_group.extra = {
+        render: this.getPopRender("f_delv_group")
+      }
       delv_group.onKeyPress= ($event) => {
         if($event.keyCode==13){
           let  cust_id = this.editFormFields['delv_group_cust_id']
@@ -581,20 +589,12 @@ let extension = {
       //看不懂就把输出看：console.log(this.editFormOptions)
       this.getOption("cust_id").disabled = this.currentAction == this.const.EDIT || this.currentAction==this.const.VIEW;
       this.getOption("cust_id").hidden = this.currentAction ==this.const.ADD;
-
+debugger
 
       let ownHospital = this.getOption("own_hospital_cust_id");
       let delv_group = this.getOption("delv_group_cust_id");
       let med_group = this.getOption("med_group_cust_id");
-      ownHospital.extra = {
-        render: this.getPopRender("f_own_hospital")
-      }
-      med_group.extra = {
-        render: this.getPopRender("f_med_group")
-      }
-      delv_group.extra = {
-        render: this.getPopRender("f_delv_group")
-      }
+
       if (this.currentAction ==this.const.ADD){
         this.editFormFields.status='Y';//設置狀態默認值
         this.editFormFields.is_contract='Y';//
