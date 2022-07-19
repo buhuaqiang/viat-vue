@@ -44,7 +44,7 @@
                                {"title":"Min Qty","field":"min_qty","type":"number"}],
                               [{"title":"Reser Price","field":"reserv_price","type":"decimal"},
                                {"title":"Remarks","field":"remarks","type":"textarea"}],
-                                [{"title":"NHI Code","field":"nhi_id"}]]);
+                                [{"title":"NHI Code","field":"nhi_id"},{"title":"Update User","field":"modified_username",disabled: true}]]);
             const searchFormFields = ref({"group_id":"","pricegroup_dbid":"","start_date":"","end_date":"","modified_date":"","prods":[],"QueryStatus":"","ShowInvalidProd":[]});
             const searchFormOptions = ref([[{"title":"Group Id","field":"group_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"}],
                 [{"dataKey":"price_book_query_status","data":[],"title":"Status","field":"QueryStatus","type":"select"},{"title":"Modified Date","field":"updated_date","type":"date"}],
