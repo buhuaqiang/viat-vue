@@ -69,7 +69,7 @@
                        {field:'status',title:'status',type:'string',bind:{ key:'Status_YN',data:[]},width:80,require:true,align:'left'},
                        {field:'start_date',title:'Start Date',type:'datetime',width:110,align:'left',sort:true},
                        {field:'end_date',title:'End Date',type:'datetime',width:110,align:'left',sort:true},
-                       {field:'update_date',title:'Modified Date',type:'date',width:110,align:'left',sort:true},
+                       {field:'updated_date',title:'Modified Date',type:'date',width:110,align:'left',sort:true},
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:110,align:'left',sort:true,hidden:true},
                        {field:'remarks',title:'Remarks',type:'string',width:150,align:'left'},
                        {field:'state',title:'state',type:'string',width:110,hidden:true,align:'left'},
