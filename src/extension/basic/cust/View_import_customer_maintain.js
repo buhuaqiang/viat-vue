@@ -213,6 +213,9 @@ let extension = {
             if (x.name == "View"){
               x.hidden=true;
             }
+            if (x.name == "Ignore") {
+              x.hidden=false;
+            }
           })
         }else {
           this.buttons.forEach(x => {
@@ -223,26 +226,12 @@ let extension = {
             if (x.name == "View"){
               x.hidden=false;
             }
-          })
-        }
-        if (rowState == '0'){
-          this.buttons.forEach(x => {
-            debugger
-            if (x.name == "Ignore") {
-              x.hidden=false;
-            }
-          })
-        }else{
-          this.buttons.forEach(x => {
-            debugger
             if (x.name == "Ignore") {
               x.hidden=true;
             }
           })
         }
       }
-//測試SVN提交老余反應SVN卡住無法提交
-
     },
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
