@@ -43,7 +43,7 @@
                               [{"dataKey":"mul_select_for_pop","data":[],"title":"Product Name","field":"prod_ename","type":"selectList"}],
                               [{"dataKey":"mul_select_for_pop","data":[],"title":"Group Name","field":"group_name","type":"selectList"}],
                               [{"dataKey":"mul_select_for_pop","data":[],"title":"Customer Name","field":"cust_name","type":"selectList"}],
-                              [{"dataKey":"mul_select_for_pop","data":[],"title":"Product ID","required":true,"field":"prod_id","type":"selectList"}],
+                              [{"dataKey":"mul_select_for_pop","data":[],"title":"Product ID","field":"prod_id","type":"selectList"}],
                               [{"dataKey":"mul_select_for_pop","data":[],"title":"Group ID","field":"group_id","type":"selectList"}],
                               [{"dataKey":"mul_select_for_pop","data":[],"title":"Customer ID","field":"cust_id","type":"selectList"}]]);
             const searchFormFields = ref({"prods":[],"prod_dbid":"","cust_dbid":"","pricegroup_dbid":"","prod_id":"","prod_ename":"","group_id":"","group_name":"","cust_id":"","cust_name":"","i_dist_id":"","start_date":"","end_date":"","status":""});
@@ -64,7 +64,7 @@
                        {field:'created_date',title:'created_date',type:'datetime',width:110,hidden:true,align:'left',sort:true},
                        {field:'modified_user',title:'modified_user',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_username',title:'modified_username',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'prod_id',title:'Product ID',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:125,require:true,align:'left',sort:true},
+                       {field:'prod_id',title:'Product ID',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:125,align:'left',sort:true},
                        {field:'prod_ename',title:'Product Name',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,align:'left'},
                        {field:'modified_client',title:'modified_client',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
@@ -84,9 +84,9 @@
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:150,align:'left',sort:true},
                        {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,require:true,align:'left'},
                        {field:'remarks',title:'Remarks',type:'string',width:220,align:'left'},
-                       {field:'cust_dbidname',title:'Customer',type:'string',width:220,hidden:true,require:true,align:'left'},
-                       {field:'prod_dbidname',title:'Product',type:'string',width:180,hidden:true,require:true,align:'left'},
-                       {field:'pricegroup_dbidname',title:'Group ID',type:'string',width:180,hidden:true,require:true,align:'left'}]);
+                       {field:'cust_dbidname',title:'Customer',type:'string',width:220,hidden:true,align:'left'},
+                       {field:'prod_dbidname',title:'Product',type:'string',width:180,hidden:true,align:'left'},
+                       {field:'pricegroup_dbidname',title:'Group ID',type:'string',width:180,hidden:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
