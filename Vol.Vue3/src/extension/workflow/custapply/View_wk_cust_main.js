@@ -48,6 +48,9 @@ let extension = {
       this.boxOptions.labelWidth=260;
       this.boxOptions.width=1200;
 
+
+
+
       let comCity = this.getOption("cust_city_name");
       let invoiceCity = this.getOption("invoice_city_name");
       let delivery = this.getOption("delivery_city_name");
@@ -69,6 +72,9 @@ let extension = {
       }
 
       let ownHospital = this.getOption("own_hospital_cust_id");
+      ownHospital.extra={
+        render:this.getFormRender("editSearchHospital")
+      }
       ownHospital.onKeyPress= ($event) => {
         if($event.keyCode==13){
           let  cust_id = this.editFormFields['own_hospital_cust_id']
@@ -77,12 +83,12 @@ let extension = {
               if(reslut !=null){
                 this.editFormFields['own_hospital'] =reslut.cust_dbid;
                 this.editFormFields['own_hospital_cust_id'] =reslut.cust_id ;
-                document.getElementById("f_own_hospital").value=reslut.cust_name;
+                this.pickEditFormHospital = reslut.cust_name;
                 return;
               }else{
                 this.$message.error("Customer Id Is Not Exists.");
                 this.editFormFields['own_hospital_cust_id']=''
-                document.getElementById("f_own_hospital").value=''
+                this.pickEditFormHospital = ''
                 return;
               }
             })
@@ -132,7 +138,6 @@ let extension = {
     onInited() {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
-      //this.detailOptions.columns.forEach(column=>{ });
     },
     //根據城市名稱獲取區域列表
     async getCityZoneData(cityName, comZipId, extData) {
@@ -166,20 +171,20 @@ let extension = {
     //选择客户Pick 回填字段
     handleCustomerSelected(flag,rows){
       debugger
-      if(flag=='f_own_hospital'){
+      if(flag=='editSearchHospital'){
         this.editFormFields['own_hospital_cust_id'] = rows[0].cust_id;
         this.editFormFields['own_hospital'] = rows[0].cust_dbid;
-        document.getElementById("f_own_hospital").value=rows[0].cust_name
-      }
-      if(flag=='own_hospital'){
-        this.searchFormFields['own_hospital_cust_id'] = rows[0].cust_id;
-        this.searchFormFields['own_hospital'] = rows[0].cust_dbid;
-        this.extend.own_hospital=rows[0].cust_name;
-        document.getElementById("own_hospital").value=rows[0].cust_name
+        this.pickEditFormHospital = rows[0].cust_name
       }
 
     },
-    getPopRender(searchType) {//
+    getPickName(searchType){
+      if(searchType=="editSearchHospital"){
+        return this.pickEditFormHospital
+      }
+
+    },
+    getFormRender(searchType) {//
       return (h, { row, column, index }) => {
         return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
           h(
@@ -187,9 +192,9 @@ let extension = {
               {
                 class:"el-input__inner",
                 type:"text",
-                id:searchType,
                 style:{width:"70%","background-color":"#f5f7fb"},
-                readonly:"true"
+                readonly:"true",
+                value:this.getPickName(searchType)
               }
           ),
           h(
@@ -198,8 +203,8 @@ let extension = {
                 props: {},
                 style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
-                  if(searchType.startsWith('f')){
-                    this.$refs.modelBody.openModel(true, searchType)
+                  if(searchType=="editSearchHospital"){
+                    this.$refs.modelBody.openModel(true,searchType);
                   }
                 }
               },
@@ -212,16 +217,11 @@ let extension = {
                 props: {},
                 style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
-                  if(searchType=='f_own_hospital'){
+                  if(searchType=='editSearchHospital'){
                     this.editFormFields['own_hospital_cust_id'] = "";
                     this.editFormFields['own_hospital'] = "";
-                    document.getElementById("f_own_hospital").value=''
+                    this.pickEditFormHospital = "";
                   }
-                /*  if(searchType=='own_hospital'){
-                    this.searchFormFields['own_hospital_cust_id'] = "";
-                    this.searchFormFields['own_hospital'] = "";
-                    document.getElementById("own_hospital").value=''
-                  }*/
                 }
               },
               [h("i",{class:"el-icon-zoom-out"})],
@@ -272,24 +272,18 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
-      let ownHospital = this.getOption("own_hospital_cust_id");
-      ownHospital.extra = {
-        render: this.getPopRender("f_own_hospital")
-      }
       if (this.currentAction=='Add'){
         this.editFormFields.apply_type='01';
         this.getOption("cust_id").hidden=true;
         this.getOption("cust_name").disabled=false;
         this.getOption("delivery_tel_no").disabled=false;
-        document.getElementById("f_own_hospital").value=''
 
       }else {
         this.editFormFields.apply_type='02';
         this.getOption("cust_id").hidden=false;
         this.getOption("cust_name").disabled=true;
         this.getOption("delivery_tel_no").disabled=true;
-
-        document.getElementById("f_own_hospital").value=row.own_hospital_cust_name
+        this.pickEditFormHospital = row.own_hospital_cust_name;
       }
     }
   }
