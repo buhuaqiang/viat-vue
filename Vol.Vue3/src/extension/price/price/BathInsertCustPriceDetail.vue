@@ -55,11 +55,14 @@
         <el-form-item   label="Min Qty:" style="width: 35%">
           <el-input-number v-model="formModel.min_qty"  style="width:200px;" ></el-input-number>
         </el-form-item>
+        <el-form-item   label="Reserv Price:" style="width: 35%">
+          <el-input v-model="formModel.reserv_price" style="width:200px;" ></el-input>
+        </el-form-item>
         <el-form-item v-show="grossFlag"  label="Gross Price:" style="width: 35%">
           <el-input v-model="formModel.gross_price" style="width:200px;"  ></el-input>
         </el-form-item>
         <el-form-item label="Remark:" style="width: 60%">
-          <el-input type="textarea" v-model="formModel.remark" style="width:250px;"></el-input>
+          <el-input type="textarea" v-model="formModel.remarks" style="width:250px;"></el-input>
         </el-form-item>
       </el-form>
       <el-button
@@ -295,6 +298,7 @@ export default {
       this.formModel.min_qty=1
       this.formModel.nhi_id=''
       this.formModel.remarks=''
+      this.formModel.reserv_price=''
     },
     custShowData(reslut){
       debugger
@@ -558,7 +562,9 @@ export default {
                     status:'Y',
                     min_qty:this.formModel.min_qty,
                     start_date:this.formModel.start_date,
-                    end_date:this.formModel.end_date
+                    end_date:this.formModel.end_date,
+                    remarks:this.formModel.remarks,
+                    reserv_price:this.formModel.reserv_price
                   }
                   this.pushData.push(addData);
                   //清除form數據
@@ -579,6 +585,7 @@ export default {
                   this.formModel.gross_price=''
                   this.formModel.net_price=''
                   this.formModel.remarks=''
+                  this.formModel.reserv_price=''
                 });
 
       }else{
