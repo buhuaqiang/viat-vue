@@ -80,6 +80,7 @@
             :url=table1Url
             :defaultLoadPage="false"
             @loadBefore="loadTableBefore1"
+            @loadAfter="loadTableAfter1"
             :index="true"
             @rowClick = "priceRowClick"
     ></vol-table>
@@ -118,6 +119,7 @@
           :url=table2Url
           :defaultLoadPage="false"
           @loadBefore="loadTableBefore2"
+          @loadAfter="loadTableAfter2"
           :index="true"
           @rowClick = "orderRowClick"
   ></vol-table>
@@ -177,6 +179,8 @@ export default {
 
       priceTableRowData:"",
       orderTableRowData:"",
+      delPriceTableRowData:[],
+      delOrderTableRowData:[],
       columns: [
         { field: "bidetail_dbid", title: "主键ID", type: "guid", width: 80, hidden: true,isKey: true },
         { field: "bidmast_dbid", title: "外键ID", type: "guid", width: 80, hidden: true,isKey: true },
@@ -412,6 +416,21 @@ export default {
       param.wheres.push({ name: "bidmast_dbid", value: this.bidmast_dbid });
       callBack(true);
     },
+
+    //从后台加载从表1数据后
+    loadTableAfter1(data, callBack) {
+      //数据加载后，赋给对像，用于编辑用
+      this.priceTableRowData = data;
+      this.delPriceTableRowData=[];
+      return true;
+    },
+    //从后台加载从表1数据后
+    loadTableAfter2(data, callBack) {
+      //数据加载后，赋给对像，用于编辑用
+      this.orderTableRowData = data;
+      this.delOrderTableRowData= [];
+      return true;
+    },
     parseTime(time,cFormat){
       const format=cFormat||'{y}-{m}-{d} {h}:{i}:{s}'
       let date
@@ -624,11 +643,21 @@ export default {
       if (rows.length == 0) {
         return this.$Message.error("Please Select need Delete Rows");
       }
+      //数据记录
+      rows.forEach(x=>{
+        this.delPriceTableRowData.push(x);
+      })
       this.$refs.priceTable.delRow();
 
     },
     deletePriceAllRow(){
+      let rows =  this.$refs.priceTable.rowData;
+      //数据记录
+      rows.forEach(x=>{
+        this.delPriceTableRowData.push(x);
+      })
       this.$refs.priceTable.rowData=[];
+      this.priceTableRowData=[];
       this.cont_stretagy_id="";
       this.cont_stretagy_name="";
     },
@@ -637,6 +666,10 @@ export default {
       if (rows.length == 0) {
         return this.$Message.error("Please Select need Delete Rows");
       }
+      //数据记录
+      rows.forEach(x=>{
+        this.delOrderTableRowData.push(x);
+      })
       this.$refs.orderTable.delRow();
 
     },
