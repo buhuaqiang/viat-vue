@@ -42,7 +42,7 @@
                                {"title":"Invoice Price","field":"invoice_price","type":"decimal"}],
                               [{"title":"Net Price","field":"net_price","type":"decimal"},
                                {"title":"Min Qty","field":"min_qty","type":"number"}],
-                              [{"title":"Reser Price","field":"reserv_price","type":"decimal"},
+                              [{"title":"Reserve Price","field":"reserv_price","type":"decimal"},
                                {"title":"Remarks","field":"remarks","type":"textarea"}],
                                 [{"title":"NHI Code","field":"nhi_id"},{"title":"Update User","field":"modified_username",disabled: true}]]);
             const searchFormFields = ref({"group_id":"","pricegroup_dbid":"","start_date":"","end_date":"","modified_date":"","prods":[],"QueryStatus":"","ShowInvalidProd":[]});
