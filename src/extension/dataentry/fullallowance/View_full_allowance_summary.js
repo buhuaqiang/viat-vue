@@ -20,6 +20,10 @@ let extension = {
   },
   tableAction: 'View_full_allowance_summary', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
+  text: "",
+  extra:"",
+  sum1:0,
+  sum2:0,
   methods: {
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
@@ -35,6 +39,21 @@ let extension = {
 
         //示例：设置修改新建、编辑弹出框字段标签的长度
         // this.boxOptions.labelWidth = 150;
+
+      this.extend.extra= {
+        render:this.getSUMRender("")
+      }
+      this.extend.sum1=10000;
+      this.extend.sum2=20000;
+      this.singleSearch = null;
+      this.setFiexdSearchForm(false);
+
+      this.buttons.splice(0,1);
+      this.buttons.forEach(x => {
+        if (x.name == "Inquire") {
+          x.hidden=true
+        }
+      })
     },
     onInited() {
       //框架初始化配置后
@@ -43,9 +62,51 @@ let extension = {
       this.setFiexdSearchForm(false);
       this. singleSearch = null;
     },
+    getSUMRender() {//
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+          h(
+              "span",
+              {
+                style:{width:"10%","font-weight":"bolder"},
+                innerHTML:"&nbsp;&nbsp;SUM:"
+              }
+          ),
+          h(
+              "input",
+              {
+                class:"el-input__inner",
+                type:"text",
+                style:{width:"40%"},
+                disabled:"true",
+                value:this.extend.sum1
+              }
+          ),
+          h(
+              "span",
+              {
+                style:{width:"10%","font-weight":"bolder"},
+                innerHTML:"&nbsp;&nbsp;&nbsp;&nbsp;SUM(W/T):"
+              }
+          ),
+          h(
+              "input",
+              {
+                class:"el-input__inner",
+                type:"text",
+                style:{width:"40%"},
+                disabled:"true",
+                value:this.extend.sum2
+              }
+          ),
+        ]);
+      };
+    },
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
+      let hpcont_dbid = this.$store.getters.data().hpcont_dbid;
+      param.wheres.push({name:"hpcont_dbid",value:hpcont_dbid})
       return true;
     },
     searchAfter(result) {

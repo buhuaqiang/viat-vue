@@ -22,9 +22,9 @@
     export default defineComponent({
         setup() {
             const table = ref({
-                key: 'allw_sum_dbid',
+                key: 'hpallw_dbid',
                 footer: "Foots",
-                cnName: 'Full Allowance Summary',
+                cnName: '',
                 name: 'fullallowance/View_full_allowance_summary',
                 url: "/View_full_allowance_summary/",
                 sortName: "created_date"
@@ -38,7 +38,7 @@
                        {field:'cust_name',title:'Customer',type:'string',width:120,align:'left'},
                        {field:'prod_id',title:'Product ID',type:'string',width:110,align:'left'},
                        {field:'prod_ename',title:'Product',type:'string',width:110,align:'left'},
-                       {field:'allw_sum_dbid',title:'列名allw_sum_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
+                       {field:'hpallw_dbid',title:'列名hpallw_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'amount',title:'Amount(W/T)',type:'decimal',width:110,align:'left'},
                        {field:'entity',title:'列名entity',type:'string',width:110,hidden:true,align:'left'},
                        {field:'division',title:'列名division',type:'string',width:110,hidden:true,align:'left'},

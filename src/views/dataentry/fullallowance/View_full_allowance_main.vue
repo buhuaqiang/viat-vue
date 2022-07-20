@@ -29,7 +29,7 @@
                 url: "/View_full_allowance_main/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"contract_no":""});
+            const editFormFields = ref({"contract_no":"","hpcont_dbid":""});
             const editFormOptions = ref([[{"title":"Contract No","field":"contract_no","readonly":"true"}],
                [ { title: "Remark", field: "contract_term", type: "textarea","readonly":"true"}],
                 [{"title":"Contract No","field":"contract_no",hidden:true}],[{"title":"Contract No","field":"contract_no",hidden:true}]]);

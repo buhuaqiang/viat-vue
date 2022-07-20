@@ -20,7 +20,7 @@
     export default defineComponent({
         setup() {
             const table = ref({
-                key: 'sum_hpcont_dbid',
+                key: 'hpallw_dbid',
                 footer: "Foots",
                 cnName: '',
                 name: 'fullallowance/View_full_allowance_sharing',
@@ -32,7 +32,7 @@
             const columns = ref([{field:'K1',title:'K1',type:'guid',width:110,hidden:true,align:'left'},
                        {field:'K2',title:'K2',type:'guid',width:110,hidden:true,align:'left'},
                        {field:'A1',title:'A1',type:'decimal',width:110,hidden:true,align:'left'},
-                       {field:'sum_hpcont_dbid',title:'sum_hpcont_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
+                       {field:'hpallw_dbid',title:'hpallw_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'cust_id',title:'Customer ID',type:'string',width:110,align:'left',sort:true},
                        {field:'cust_name',title:'Customer',type:'string',width:120,align:'left'},
                        {field:'status',title:'status',type:'string',width:110,hidden:true,align:'left'},

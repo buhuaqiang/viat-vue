@@ -6,7 +6,8 @@
 **后台操作见：http://v2.volcore.xyz/document/netCoreDev
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
-
+import customers from "@/extension/basic/cust/Viat_com_custModelBody"
+import prodPop from "@/extension/basic/prod/View_com_prod_pop_query.vue"
 let extension = {
   components: {
     //查询界面扩展组件
@@ -15,11 +16,21 @@ let extension = {
     gridFooter: '',
     //新建、编辑弹出框扩展组件
     modelHeader: '',
-    modelBody: '',
-    modelFooter: ''
+    modelBody: customers,
+    modelFooter: prodPop
   },
   tableAction: 'View_full_allowance_adjustment', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
+  text: "",
+  extra:"",
+  sum1:0,
+  sum2:0,
+    data() {
+        return {
+            editFormSearchCustomer:"editFormSearchCustomer",
+            editFormSearchProd:"editFormSearchProd",
+        };
+    },
   methods: {
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
@@ -34,18 +45,199 @@ let extension = {
         //   });
 
         //示例：设置修改新建、编辑弹出框字段标签的长度
-        // this.boxOptions.labelWidth = 150;
+         this.boxOptions.labelWidth = 150;
+        //編輯框寬度
+        this.boxOptions.width=1200;
+
       this.setFiexdSearchForm(false);
       this. singleSearch = null;
+      //設置單選
+        this.single=true;
+      this.extend.extra= {
+        render:this.getSUMRender("")
+      }
+      this.extend.sum1=10000;
+      this.extend.sum2=20000;
+
+        //编辑页面
+        let editform_cust_id=this.getFormOption("cust_id");
+        editform_cust_id.extra = {
+            render:this.getFormRender("editFormSearchCustomer")
+        }
+        editform_cust_id.onKeyPress=($event)=>{
+            if($event.keyCode == 13){
+                let  cust_id = this.editFormFields['cust_id']
+                if(cust_id) {
+                    this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+                        if(reslut !=null){
+                            this.editFormFields['cust_dbid'] =reslut.cust_dbid;
+                            this.editFormFields['cust_id'] =reslut.cust_id ;
+                            this.pickEditFormCustomerName=reslut.cust_name;
+                            return;
+                        }else{
+                            this.$message.error("Customer Id Is Not Exists.");
+                            return;
+                        }
+                    })
+                }
+            }
+        }
+        let editform_prod_id=this.getFormOption("prod_id");
+        editform_prod_id.extra = {
+            render:this.getFormRender("editFormSearchProd")
+        }
+        editform_prod_id.onKeyPress=($event)=>{
+            if($event.keyCode == 13){
+                let  prod_id = this.editFormFields['prod_id']
+                if(prod_id) {
+                    this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+                        if(reslut !=null){
+                            this.editFormFields['prod_dbid'] =reslut.prod_dbid;
+                            this.editFormFields['prod_id'] =reslut.prod_id ;
+                            this.pickEditFormProductName=reslut.prod_ename;
+                            return;
+                        }else{
+                            this.$message.error("product Id Is Not Exists.");
+                            return;
+                        }
+                    })
+                }
+            }
+        }
     },
     onInited() {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
     },
+      getFormOption (field) {
+          let option;
+          this.editFormOptions.forEach(x => {
+              x.forEach(item => {
+                  if (item.field == field) {
+                      option = item;
+                  }
+              })
+          })
+          return option;
+      },
+    getSUMRender() {//
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+          h(
+              "span",
+              {
+                style:{width:"10%","font-weight":"bolder"},
+                innerHTML:"&nbsp;&nbsp;SUM:"
+              }
+          ),
+          h(
+              "input",
+              {
+                class:"el-input__inner",
+                type:"text",
+                style:{width:"40%"},
+                disabled:"true",
+                value:this.extend.sum1
+              }
+          ),
+          h(
+              "span",
+              {
+                style:{width:"10%","font-weight":"bolder"},
+                innerHTML:"&nbsp;&nbsp;&nbsp;&nbsp;SUM(W/T):"
+              }
+          ),
+          h(
+              "input",
+              {
+                class:"el-input__inner",
+                type:"text",
+                style:{width:"40%"},
+                disabled:"true",
+                value:this.extend.sum2
+              }
+          ),
+        ]);
+      };
+    },
+      getFormRender(searchType) {//
+              return (h, { row, column, index }) => {
+                  return h("div", { class:"el-input el-input--medium el-input--suffix"}, [
+                      h(
+                          "input",
+                          {
+                              class:"el-input__inner",
+                              type:"text",
+                              style:{width:"65%","background-color":"#f5f7fb"},
+                              readonly:"true",
+                              value:this.getPickName(searchType)
+                          }
+                      ),
+                      h(
+                          "a",
+                          {
+                              props: {},
+                              style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                              onClick: (e) => {
+                                  if(searchType=="editFormSearchCustomer"){
+                                      this.$refs.modelBody.openModel(true,searchType);
+                                  }
+                                  if(searchType=="editFormSearchProd"){
+                                      this.$refs.modelFooter.openModel(true,searchType);
+                                  }
+                              }
+                          },
+                          [h("i",{class:"el-icon-zoom-in"})],
+                          "Pick"
+                      ),
+                      h(
+                          "a",
+                          {
+                              props: {},
+                              style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                              onClick: (e) => {
+                                  if(searchType=="editFormSearchCustomer"){
+                                      this.editFormFields['cust_dbid'] = "";
+                                      this.editFormFields['cust_id'] = "";
+                                      this.pickEditFormCustomerName="";
+                                  }
+                                  if(searchType=="editFormSearchProd"){
+                                      this.editFormFields['prod_dbid'] = "";
+                                      this.editFormFields['prod_id'] = "";
+                                      this.pickEditFormProductName="";
+                                  }
+                              }
+                          },
+                          [h("i",{class:"el-icon-zoom-out"})],
+                          "Clean"
+                      ),
+                  ]);
+          }
+      },
+      getPickName(searchType){
+          if(searchType=="editFormSearchCustomer"){
+              return this.pickEditFormCustomerName
+          }else if(searchType=="editFormSearchProd"){
+              return this.pickEditFormProductName
+          }
+      },
+      //选择客户Pick 回填字段
+      handleCustomerSelected(flag,rows){
+          this.editFormFields["cust_dbid"] = rows[0].cust_dbid;
+          this.editFormFields["cust_id"] =rows[0].cust_id;
+          this.pickEditFormCustomerName=rows[0].cust_name;
+      },
+      handleProdSelected(flag,rows){
+          this.editFormFields["prod_dbid"] = rows[0].prod_dbid;
+          this.editFormFields["prod_id"] =rows[0].prod_id;
+          this.pickEditFormProductName=rows[0].prod_ename;
+      },
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
+      let hpcont_dbid = this.$store.getters.data().hpcont_dbid;
+      param.wheres.push({name:"hpcont_dbid",value:hpcont_dbid})
       return true;
     },
     searchAfter(result) {
@@ -62,7 +254,7 @@ let extension = {
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
-      // this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
+       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
@@ -71,6 +263,16 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+        let hpcont_dbid = this.$store.getters.data().hpcont_dbid;
+        if(this.currentAction=='Add'){
+            this.pickEditFormCustomerName = ""
+            this.pickEditFormProductName = ""
+            this.editFormFields.hpcont_dbid=hpcont_dbid;
+        }else{
+            this.pickEditFormCustomerName = row.cust_name
+            this.pickEditFormProductName = row.prod_ename
+        }
+
     }
   }
 };

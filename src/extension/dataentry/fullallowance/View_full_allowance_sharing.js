@@ -139,6 +139,8 @@ let extension = {
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
+        let hpcont_dbid = this.$store.getters.data().hpcont_dbid;
+        param.wheres.push({name:"hpcont_dbid",value:hpcont_dbid})
       return true;
     },
     searchAfter(result) {
