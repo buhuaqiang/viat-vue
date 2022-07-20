@@ -472,11 +472,62 @@ let extension = {
       return true;
     },
     addBefore(formData) {
+      //编辑保存前formData为对象，包括明细表、删除行的Id
+      //選擇客戶List table1
+      let priceTableRowData = this.$refs.modelBody.priceTableRowData;
+
+      //table2數據回填到 formData
+      let orderTableRowData = this.$refs.modelBody.orderTableRowData;
+
+
+      let detailData = [
+        {
+          key: "priceTableRowData",
+          value: priceTableRowData,
+        },
+        {
+          key: "orderTableRowData",
+          value: orderTableRowData,
+        }
+      ]
+      formData.detailData = detailData;
+
       //新建保存前formData为对象，包括明细表，可以给给表单设置值，自己输出看formData的值
       return true;
     },
     updateBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
+      //選擇客戶List table1
+      let priceTableRowData = this.$refs.modelBody.priceTableRowData;
+
+      //table2數據回填到 formData
+      let orderTableRowData = this.$refs.modelBody.orderTableRowData;
+
+      //删除数据回传
+      let delPriceTableRowData = this.$refs.modelBody.delPriceTableRowData;
+
+      //table2數據回填到 formData
+      let delOrderTableRowData = this.$refs.modelBody.delOrderTableRowData;
+
+      let detailData = [
+        {
+          key: "priceTableRowData",
+          value: priceTableRowData,
+        },
+        {
+          key: "orderTableRowData",
+          value: orderTableRowData,
+        },
+        {
+          key: "delPriceTableRowData",
+          value: delPriceTableRowData,
+        },
+        {
+          key: "delOrderTableRowData",
+          value: delOrderTableRowData,
+        }
+      ]
+      formData.detailData = detailData;
       return true;
     },
     rowClick({ row, column, event }) {
