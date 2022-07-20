@@ -75,6 +75,7 @@ let serviceFilter = {
     return true;
   },
   modelOpenBefore (row){
+    debugger
     //隱藏保存按鈕
     let saveBtn = this.boxButtons.find((x) => x.value == 'save');
     if(saveBtn){
