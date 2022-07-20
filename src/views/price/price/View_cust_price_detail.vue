@@ -64,7 +64,7 @@
                        {field:'invoice_price',title:'Invoice Price',type:'decimal',width:80,align:'left'},
                        {field:'net_price',title:'Net Price',type:'decimal',width:80,align:'left'},
                        {field:'gross_price',title:'Gross Price',type:'decimal',width:80,align:'left'},
-                       {field:'reserv_price',title:'reserv_price',type:'decimal',width:110,align:'left'},
+                       {field:'reserv_price',title:'Reserve Price',type:'decimal',width:110,align:'left'},
                        {field:'min_qty',title:'Min Qty',type:'int',width:80,align:'left'},
                        {field:'status',title:'status',type:'string',bind:{ key:'Status_YN',data:[]},width:80,require:true,align:'left'},
                        {field:'start_date',title:'Start Date',type:'datetime',width:110,align:'left',sort:true},
