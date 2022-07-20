@@ -1,7 +1,7 @@
 <template>
   <div class="vol-tabs">
     <el-tabs type="border-card" style="
-        min-height: 370px;
+        height: 500px;
         box-shadow: none;
         border-bottom: 0;
         border-top: 1px solid #eee;
@@ -55,6 +55,9 @@ import allowanceSummary from "@/views/dataentry/fullallowance/View_full_allowanc
 export default {
   components: {allowanceSharing,allowanceReverse,allowanceAdjustment,allowanceSummary},
   data() {
+    return{
+      hpcont_dbid:""
+    }
 
   },
   methods: {
@@ -67,8 +70,17 @@ export default {
       this.$emit("parentCall", ($this) => {
         $parent = $this;
       });
-      $parent.boxOptions.height=600;
+      $parent.boxOptions.height=900;
       $parent.boxOptions.width=1500;
+      this.hpcont_dbid = $parent.editFormFields.hpcont_dbid;
+      if(this.hpcont_dbid){
+        this.$store.getters.data().hpcont_dbid=this.hpcont_dbid;
+        //執行查詢
+        this.$refs.allowanceSharing.$refs.grid.search();
+        this.$refs.allowanceReverse.$refs.grid.search();
+        this.$refs.allowanceAdjustment.$refs.grid.search();
+        this.$refs.allowanceSummary.$refs.grid.search();
+      }
       //this.$refs.table1.load();
       //this.$refs.table2.load();
     }

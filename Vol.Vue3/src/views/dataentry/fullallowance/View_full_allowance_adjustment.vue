@@ -22,22 +22,22 @@
     export default defineComponent({
         setup() {
             const table = ref({
-                key: 'allw_sum_dbid',
+                key: 'hpallw_dbid',
                 footer: "Foots",
-                cnName: 'Full Allowance Adjustment',
+                cnName: '',
                 name: 'fullallowance/View_full_allowance_adjustment',
                 url: "/View_full_allowance_adjustment/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"cust_id":"","trans_date":"","prod_id":"","amount":"","remarks":""});
-            const editFormOptions = ref([[{"title":"Customer ID","field":"cust_id"}],
-                              [{"title":"TransDate","required":true,"field":"trans_date"}],
-                              [{"title":"Product ID","field":"prod_id"}],
-                              [{"title":"Amount(W/T)","field":"amount","type":"decimal"}],
-                              [{"title":"Remarks","field":"remarks"}]]);
+            const editFormFields = ref({"cust_dbid":"","cust_id":"","trans_date":"","prod_dbid":"","prod_id":"","amount":"","remarks":"","action_type":"","hpcont_dbid":""});
+            const editFormOptions = ref([[{"title":"Customer ID","field":"cust_id","required":true},{"title":"TransDate","required":true,"field":"trans_date","type":"date"}],
+                             // [{"title":"TransDate","required":true,"field":"trans_date","type":"date"}],
+                              [{"title":"Product ID","field":"prod_id","required":true},{"title":"Amount(W/T)","field":"amount","type":"decimal","required":true}],
+                             // [{"title":"Amount(W/T)","field":"amount","type":"decimal"}],
+                              [{"title":"Remarks","field":"remarks","type":"textarea"}]]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([]);
-            const columns = ref([{field:'cust_id',title:'Customer ID',type:'string',width:110,align:'left',sort:true},
+            const columns = ref([{field:'cust_id',title:'Customer ID',type:'string',link:true,width:110,align:'left',sort:true},
                        {field:'cust_name',title:'Customer',type:'string',width:120,align:'left'},
                        {field:'prod_id',title:'Product ID',type:'string',width:110,align:'left'},
                        {field:'prod_ename',title:'Product',type:'string',width:110,align:'left'},
@@ -45,10 +45,10 @@
                        {field:'remarks',title:'Remarks',type:'string',width:220,align:'left'},
                        {field:'modified_user',title:'Modify User',type:'int',width:110,align:'left'},
                        {field:'modified_date',title:'Modify Date',type:'datetime',width:110,align:'left',sort:true},
-                       {field:'allw_sum_dbid',title:'列名allw_sum_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
+                       {field:'hpallw_dbid',title:'列名hpallw_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'entity',title:'列名entity',type:'string',width:110,hidden:true,align:'left'},
                        {field:'division',title:'列名division',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'action_type',title:'列名action_type',type:'string',width:110,hidden:true,require:true,align:'left'},
+                       {field:'action_type',title:'列名action_type',type:'string',width:110,hidden:true,align:'left'},
                        {field:'allw_type',title:'列名allw_type',type:'int',width:110,hidden:true,align:'left'},
                        {field:'year',title:'列名year',type:'int',width:110,hidden:true,align:'left'},
                        {field:'period',title:'列名period',type:'int',width:110,hidden:true,align:'left'},

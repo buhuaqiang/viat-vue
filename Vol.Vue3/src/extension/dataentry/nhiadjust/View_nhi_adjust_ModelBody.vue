@@ -43,7 +43,6 @@ export default {
       //设置查询 条件
       var _row;
       //获取主表选中的行
-      alert("11")
       //设置查询条件，用主表id加载明细表数据(如果是自己定义的接口，这里条件自己处理)
       params.value =$parent.editFormFields.nhiadjustm_dbid;
       return callback(true);

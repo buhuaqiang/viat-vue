@@ -22,15 +22,17 @@
     export default defineComponent({
         setup() {
             const table = ref({
-                key: 'allw_sum_dbid',
+                key: 'hpallw_dbid',
                 footer: "Foots",
                 cnName: '全額折讓分配交易',
                 name: 'fullallowance/Viat_app_hp_contract_allw_sum',
                 url: "/Viat_app_hp_contract_allw_sum/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"action_type":"","allw_type":"","year":"","period":"","hpcont_dbid":"","prod_dbid":"","cust_dbid":"","dist_id":"","invoice_date":"","invoice_no":"","trans_date":"","qty":"","amount":"","remarks":""});
-            const editFormOptions = ref([[{"title":"折讓類別(1:By Amount;2:By Qty)","field":"allw_type","type":"number"},
+            const editFormFields = ref({"entity":"","division":"","action_type":"","allw_type":"","year":"","period":"","hpcont_dbid":"","prod_dbid":"","cust_dbid":"","dist_id":"","invoice_date":"","invoice_no":"","trans_date":"","qty":"","amount":"","remarks":"","status":"","o_contract_no":""});
+            const editFormOptions = ref([[{"title":"公司別","field":"entity"},
+                               {"title":"所屬事業單位,01:PH;03:AH;05:CH;06:NU","field":"division"},
+                               {"title":"折讓類別(1:By Amount;2:By Qty)","field":"allw_type","type":"number"},
                                {"title":"年度","field":"year","type":"number"},
                                {"title":"Period","field":"period","type":"number"},
                                {"title":"PKID","field":"hpcont_dbid"},
@@ -42,12 +44,13 @@
                                {"title":"銷售數量","field":"qty","type":"decimal"},
                                {"title":"金額","field":"amount","type":"decimal"},
                                {"title":"備註","field":"remarks"},
+                               {"title":"是否結案,True:結案/False:未結案","field":"status"},
+                               {"title":"LocalAddon Contractno","field":"o_contract_no","type":"number"},
                                {"title":"動作類別 (1: Sharing 2:Reverse 3:Adjust)","required":true,"field":"action_type"},
                                {"title":"交易日期","required":true,"field":"trans_date"}]]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([]);
-            const columns = ref([{field:'allw_sum_dbid',title:'PKID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
-                       {field:'entity',title:'公司別',type:'string',width:110,align:'left',sort:true},
+            const columns = ref([{field:'entity',title:'公司別',type:'string',width:110,align:'left',sort:true},
                        {field:'division',title:'所屬事業單位,01:PH;03:AH;05:CH;06:NU',type:'string',width:110,align:'left'},
                        {field:'action_type',title:'動作類別 (1: Sharing 2:Reverse 3:Adjust)',type:'string',width:110,require:true,align:'left'},
                        {field:'allw_type',title:'折讓類別(1:By Amount;2:By Qty)',type:'int',width:110,align:'left'},
@@ -74,7 +77,7 @@
                        {field:'modified_username',title:'modified_username',type:'string',width:110,align:'left'},
                        {field:'modified_client',title:'最後修改者的委託人',type:'int',width:110,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,align:'left'},
-                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,align:'left',sort:true}]);
+                       {field:'hpallw_dbid',title:'PKID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

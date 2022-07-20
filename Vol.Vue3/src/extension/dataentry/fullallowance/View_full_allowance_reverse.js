@@ -48,10 +48,12 @@ let extension = {
         //   });
 
         //示例：设置修改新建、编辑弹出框字段标签的长度
-        // this.boxOptions.labelWidth = 150;
+         this.boxOptions.labelWidth = 150;
       //显示查询全部字段
       //this.setFiexdSearchForm(true);
       this.setFiexdSearchForm(false);
+        //表格设置为单选
+        this.single=true;
       this. singleSearch = null;
       this.boxOptions.width=1200;
         this.buttons.splice(0,1);
@@ -328,6 +330,8 @@ let extension = {
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
+        let hpcont_dbid = this.$store.getters.data().hpcont_dbid;
+        param.wheres.push({name:"hpcont_dbid",value:hpcont_dbid})
       return true;
     },
     searchAfter(result) {
@@ -353,6 +357,10 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+        let hpcont_dbid = this.$store.getters.data().hpcont_dbid;
+        this.editFormFields.hpcont_dbid=hpcont_dbid;
+        this.pickEditFormCustomerName = row.cust_name;
+        this.pickEditFormProductName = row.prod_ename;
     }
   }
 };
