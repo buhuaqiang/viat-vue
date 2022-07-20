@@ -40,8 +40,9 @@
             const searchFormOptions = ref([[{"dataKey":"distributor_Drop","data":[],"title":"Distributor","field":"dist_id","type":"select"}]]);
             const columns = ref([{field:'dist_dbid',title:'dist_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'entity',title:'Entity',type:'string',bind:{ key:'entity',data:[]},width:110,align:'left',sort:true},
-                       {field:'division',title:'Dist ID',type:'string',width:110,align:'left'},
+                       {field:'division',title:'division',type:'string',width:110,hidden:true,align:'left'},
                        {field:'dist_id',title:'Distributor',type:'string',bind:{ key:'distributor_Drop',data:[]},width:110,hidden:true,require:true,align:'left'},
+                       {field:'dist_id2',title:'Distributor ID',type:'string',width:110,require:true,align:'left'},
                        {field:'sys_value',title:'Dist Name',type:'string',width:220,align:'left'},
                        {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,hidden:true,require:true,align:'left'},
                        {field:'cust_dbid',title:'cust_dbid',type:'guid',width:220,hidden:true,require:true,align:'left'},
@@ -57,7 +58,8 @@
                        {field:'created_client',title:'created_client',type:'int',width:80,hidden:true,align:'left'},
                        {field:'created_username',title:'created_username',type:'string',width:110,hidden:true,align:'left'},
                        {field:'created_user',title:'created_user',type:'int',width:80,hidden:true,align:'left'},
-                       {field:'modified_client',title:'modified_client',type:'int',width:80,hidden:true,align:'left'}]);
+                       {field:'modified_client',title:'modified_client',type:'int',width:80,hidden:true,align:'left'},
+                       {field:'dbid',title:'dbid',type:'int',width:80,hidden:true,require:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
