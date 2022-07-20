@@ -44,7 +44,7 @@
                 [{"title":"NHI Fact/Dis Percent","field":"pack_size","disabled":true,"type":"decimal"},
                     {"title":"Pack Size(Pricing)","field":"pack_size_pri","disabled":true,"type":"decimal"}],
                 [{"title":"NHI Price","field":"nhi_price","disabled":true,"type":"decimal"}],
-                [{"dataKey":"division","data":[],"title":"Division","field":"division","disabled":true},
+                [{"dataKey":"division","data":[],"title":"Division","field":"division","disabled":true,"type":"select"},
                     {"title":"Product Short Name","field":"prod_short_name"}],
                 [{"title":"License Product Name","field":"license_name"},
                     {"title":"License Product No","field":"license_no"}],
