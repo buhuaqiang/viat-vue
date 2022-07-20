@@ -169,9 +169,13 @@ export default {
         {field:'invoice_price',title:'Invoice Price',type:'decimal',width:110,require:true,align:'left'},
         {field:'net_price',title:'Net Price',type:'decimal',width:110,require:true,align:'left'},
         {field:'gross_price',title:'Gross Price',type:'decimal',width:110,require:true,align:'left'},
+        {field:'reserv_price',title:'Reserve Price',type:'decimal',width:110,align:'left'},
         {field:'min_qty',title:'Min Qty',type:'int',width:110,require:true,align:'left'},
         {field:'start_date',title:'Start Date',type:'date',width:110,require:true,align:'left',sort:true},
         {field:'end_date',title:'End Date',type:'date',width:110,require:true,align:'left',sort:true},
+
+        {field:'status',title:'Status',bind:{ key:'Status_YN',data:[]},type:'string',width:110,align:'left'},
+        {field:'remarks',title:'Remarks',type:'string',width:110,align:'left'},
         ],
 
       pagination: {}, //分页配置，见voltable组件api
