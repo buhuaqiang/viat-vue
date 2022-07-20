@@ -86,11 +86,11 @@ let extension = {
 
       s_group_name.hidden = true
       s_group_name.readonly;
+      let pricegroup_dbid = this.getSearchOption("pricegroup_dbid");
+      pricegroup_dbid.hidden = true
       this.getSearchOption("group_id").extra = {
         render: this.getFormRender('searchPriceGroup', 'f', 'footer')
       }
-      let pricegroup_dbid = this.getSearchOption("pricegroup_dbid");
-      pricegroup_dbid.hidden = true
 
       s_cust_id.onKeyPress = ($event) => {
         if ($event.keyCode === 13) {
@@ -289,6 +289,7 @@ let extension = {
           this.searchFormFields["cust_dbid"] = "";
           this.searchFormFields["cust_id"] = "";
           this.searchFormFields["cust_name"] = "";
+          this.searchFormFields["custs"] = [];
           this.pickCustomerName = ""
         }
         if (body === 'body') {
@@ -299,13 +300,14 @@ let extension = {
           this.pickProductName = ""
         }
         if (body === 'footer') {
-          this.searchFormFields["group_dbid"] = "";
+          this.searchFormFields["pricegroup_dbid"] = "";
           this.searchFormFields["group_id"] = "";
           this.searchFormFields["group_name"] = "";
+          this.searchFormFields["groups"] = [];
           this.pickPriceGroupName = ""
         }
       }
-      if (formType === 's') {
+      /*if (formType === 's') {
         if (body === 'header') {
           this.editFormFields["cust_dbid"] = "";
           this.editFormFields["cust_id"] = "";
@@ -321,13 +323,13 @@ let extension = {
           this.pickEditFormProductName = ""
         }
         if (body === 'footer') {
-          this.editFormFields["group_dbid"] = "";
+          this.editFormFields["pricegroup_dbid"] = "";
           this.editFormFields["group_id"] = "";
           this.editFormFields["group_name"] = "";
-          this.editFormFields["pricegroups"] = [];
+          this.editFormFields["groups"] = [];
           this.pickEditFormPriceGroupName = ""
         }
-      }
+      }*/
     },
     getPickName(searchType) {
       switch (searchType) {
@@ -360,7 +362,7 @@ let extension = {
         this.clearData("s", "footer");
         let selectrows = [];//将勾选值设置成数组
         rows.forEach(row => {
-          selectrows.push({"key": row.cust_id, "value": row.prod_ename});
+          selectrows.push({"key": row.cust_id, "value": row.cust_name});
           this.editFormFields.custs.push(row.cust_id)
         })
         this.editFormFields.custs.data = selectrows;
@@ -400,10 +402,10 @@ let extension = {
         this.clearData("s", "header");
         let selectrows = [];//将勾选值设置成数组
         rows.forEach(row => {
-          selectrows.push({"key": row.group_id, "value": row.prod_ename});
-          this.editFormFields.pricegroups.push(row.group_id)
+          selectrows.push({"key": row.group_id, "value": row.group_name});
+          this.editFormFields.groups.push(row.group_id)
         })
-        this.editFormFields.pricegroups.data = selectrows;
+        this.editFormFields.groups.data = selectrows;
         this.model = false;
       } else {
         this.searchFormFields["pricegroup_dbid"] = rows[0].pricegroup_dbid;
@@ -480,16 +482,16 @@ let extension = {
 
       let custs = this.getEditOption("custs");
       let prods = this.getEditOption("prods");
-      let pricegroups = this.getEditOption("pricegroups");
+      let groups = this.getEditOption("groups");
       let s_prods = this.getSearchOption("prods");
       custs = []
       prods = []
       s_prods = []
-      pricegroups = []
+      groups = []
       custs.data = [];
       prods.data = [];
       s_prods.data = [];
-      pricegroups.data = [];
+      groups.data = [];
       this.pickEditFormCustomerName = []
       this.pickEditFormProductName = []
       this.pickEditFormPriceGroupName = []
@@ -511,7 +513,7 @@ let extension = {
             this.$refs.gridBody.openModel(false,"editProdM");
           }
         }
-        this.getEditOption("pricegroups").extra = {
+        this.getEditOption("groups").extra = {
           icon: "el-icon-zoom-in",
           text: "Pick",
           style: "color:#409eff;font-size: 12px;cursor: pointer;",
@@ -520,12 +522,25 @@ let extension = {
           }
         }
       } else if (this.currentAction === this.const.EDIT) {
+        console.log("editFormFields:" + JSON.stringify(this.editFormFields));
+        if (this.editFormFields.prod_id !== ""){
+          this.editFormFields.prods = []
+          this.editFormFields.prods.push(this.editFormFields.prod_id)
+        }
+        if (this.editFormFields.group_id !== ""){
+          this.editFormFields.groups = []
+          this.editFormFields.groups.push(this.editFormFields.group_id)
+        }
+        if (this.editFormFields.cust_id !== ""){
+          this.editFormFields.custs = []
+          this.editFormFields.custs.push(this.editFormFields.cust_id)
+        }
         this.getEditOption("custs").disabled = true;
         this.getEditOption("prods").disabled = true;
-        this.getEditOption("pricegroups").disabled = true;
+        this.getEditOption("groups").disabled = true;
         this.getEditOption("custs").extra = {};
         this.getEditOption("prods").extra = {};
-        this.getEditOption("pricegroups").extra = {};
+        this.getEditOption("groups").extra = {};
       }
     }
   }
