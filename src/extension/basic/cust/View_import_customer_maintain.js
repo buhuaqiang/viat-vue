@@ -117,7 +117,6 @@ let extension = {
 
       //一進入Search畫面兩個按鈕隱藏
       this.buttons.forEach(x => {
-        debugger
         if (x.name == "Edit" || x.name == "Ignore") {
           x.hidden=true;
         }
@@ -210,12 +209,10 @@ let extension = {
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
-      debugger
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
       //沒選到任何數據時隱藏Edit, Ignore 顯示View按鈕
       if (!this.$refs.table.getSelected()[0] ){
         this.buttons.forEach(x => {
-          debugger
           if (x.name == "Edit" || x.name == "Ignore") {
             x.hidden=true;
           }
@@ -228,7 +225,6 @@ let extension = {
         let rowState = this.$refs.table.getSelected()[0].state;
         if (rowState == '0'){
           this.buttons.forEach(x => {
-            debugger
             if (x.name == "Edit") {
               x.hidden=false;
             }
@@ -241,7 +237,6 @@ let extension = {
           })
         }else {
           this.buttons.forEach(x => {
-            debugger
             if (x.name == "Edit") {
               x.hidden=true;
             }
@@ -260,7 +255,6 @@ let extension = {
       //(1)判断是编辑还是新建操作： this.currentAction=='Add';
       //(2)给弹出框设置默认值
       //(3)this.editFormFields.字段='xxx';
-      debugger
 
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
