@@ -86,9 +86,9 @@ export default {
       contstretagyData:[],
       url: "api/View_wk_cont_stretagy_detail_main/GetPageData",//加载数据的接口
       columns : [
-        {field:'cont_stretagy_id',title:'Stretagy ID',type:'string',width:110,require:true,align:'left',sort:true},
-        {field:'cont_stretagy_name',title:'Stretagy Name',type:'string',width:110,require:true,align:'left',sort:true},
-        {field:'prod_id',title:'列名prod_id',type:'string',width:110,require:true,align:'left',sort:true},
+        {field:'cont_stretagy_id',title:'Contract Stretagy ID',type:'string',width:110,require:true,align:'left',sort:true},
+        {field:'cont_stretagy_name',title:'Contract Stretagy Name',type:'string',width:110,require:true,align:'left',sort:true},
+        {field:'prod_id',title:'Product ID',type:'string',width:110,require:true,align:'left',sort:true},
         {field:'prod_ename',title:'Product Ename',type:'string',width:110,align:'left'},
         {field:'prod_cname',title:'Product Cname ',type:'string',width:120,align:'left'},
         {field:'nhi_price',title:'NHI Price',type:'decimal',width:110,align:'left'},
