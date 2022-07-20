@@ -63,7 +63,7 @@
                        {field:'nhi_price',title:'NHI Price',type:'decimal',width:100,readonly:true,align:'left'},
                        {field:'invoice_price',title:'Invoice Price',type:'decimal',width:110,align:'left'},
                        {field:'net_price',title:'Net Price',type:'decimal',width:100,align:'left'},
-                       {field:'reserv_price',title:'Reser Price',type:'decimal',width:110,align:'left'},
+                       {field:'reserv_price',title:'Reserve Price',type:'decimal',width:110,align:'left'},
                        {field:'min_qty',title:'Min Qty',type:'int',width:80,align:'left'},
                        {field:'start_date',title:'Start Date',type:'datetime',width:110,require:true,align:'left',sort:true},
                        {field:'end_date',title:'End Date',type:'datetime',width:110,require:true,align:'left',sort:true},
