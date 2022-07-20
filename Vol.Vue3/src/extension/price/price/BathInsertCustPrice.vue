@@ -71,7 +71,7 @@
             </el-form-item>
           </li>
           <li>
-            <el-form-item   label="Reserv Price:" style="width: 35%">
+            <el-form-item   label="Reserve Price:" style="width: 35%">
               <el-input v-model="formModel.reserv_price" style="width:200px;" ></el-input>
             </el-form-item>
             <el-form-item label="Remarks:" style="width: 60%">

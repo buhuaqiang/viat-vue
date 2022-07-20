@@ -364,6 +364,9 @@ export default {
         this.groupShowFlag=false;
       }
 
+      this.$refs.mytable.rowData=[];
+      this.$refs.table2.rowData=[];
+
       this.invalidModel.group_id="";
       this.invalidModel.group_name="";
       this.invalidModel.pricegroup_dbid="";

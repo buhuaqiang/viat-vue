@@ -41,7 +41,7 @@
                               [{"title":"Net Price","field":"net_price","type":"decimal"},
                                {"title":"Min Qty","field":"min_qty","type":"number"}],
                               [{"title":"Gross Price","field":"gross_price","type":"decimal"}],
-                              [{"title":"Reserv Price","field":"reserv_price","type":"decimal"},
+                              [{"title":"Reserve Price","field":"reserv_price","type":"decimal"},
                                {"title":"Remarks","field":"remarks","type":"textarea"}],
                                 [{"title":"Update User","field":"modified_username",disabled: true}],
                               [{"title":"","field":"prod_dbid"},

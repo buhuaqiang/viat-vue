@@ -55,7 +55,7 @@
         <el-form-item   label="Min Qty:" style="width: 35%">
           <el-input-number v-model="formModel.min_qty"  style="width:200px;" ></el-input-number>
         </el-form-item>
-        <el-form-item   label="Reserv Price:" style="width: 35%">
+        <el-form-item   label="Reserve Price:" style="width: 35%">
           <el-input v-model="formModel.reserv_price" style="width:200px;" ></el-input>
         </el-form-item>
         <el-form-item v-show="grossFlag"  label="Gross Price:" style="width: 35%">
