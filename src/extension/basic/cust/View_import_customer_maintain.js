@@ -106,6 +106,14 @@ let extension = {
       //編輯時只讀
       var custID = this.getFormOption('cust_id');
       custID.readonly =true;
+      var createdUser = this.getFormOption('created_user');
+      createdUser.hidden = true;
+      var updateUser = this.getFormOption('modified_username');
+      updateUser.hidden=true;
+      var updateDate = this.getFormOption('modified_date');
+      updateDate.hidden=true;
+      var createdDate = this.getFormOption('created_date');
+      createdDate.hidden=true;
       //一進入Search畫面兩個按鈕隱藏
       this.buttons.forEach(x => {
         debugger
