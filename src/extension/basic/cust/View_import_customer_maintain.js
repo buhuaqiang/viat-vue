@@ -103,7 +103,9 @@ let extension = {
       this.load=false;
       //表格设置为单选
       this.single=true;
-
+      //編輯時只讀
+      var custID = this.getFormOption('cust_id');
+      custID.readonly =true;
       //一進入Search畫面兩個按鈕隱藏
       this.buttons.forEach(x => {
         debugger
@@ -168,6 +170,17 @@ let extension = {
       })
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
+    },
+    getFormOption (field) {
+      let option;
+      this.editFormOptions.forEach(x => {
+        x.forEach(item => {
+          if (item.field == field) {
+            option = item;
+          }
+        })
+      })
+      return option;
     },
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
