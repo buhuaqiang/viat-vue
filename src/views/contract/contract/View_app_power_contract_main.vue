@@ -272,7 +272,7 @@ export default defineComponent({
         type: "decimal",
         width: 110,
         hidden: true,
-        align: "left",
+        align: "right",
       },
       {
         field: "sales_amt",
@@ -280,7 +280,7 @@ export default defineComponent({
         type: "decimal",
         width: 110,
         hidden: true,
-        align: "left",
+        align: "right",
       },
       {
         field: "contract_term",
@@ -346,7 +346,7 @@ export default defineComponent({
         type: "decimal",
         width: 110,
         hidden: true,
-        align: "left",
+        align: "right",
       },
       {
         field: "total_fg_amount",
@@ -354,7 +354,7 @@ export default defineComponent({
         type: "decimal",
         width: 110,
         hidden: true,
-        align: "left",
+        align: "right",
       },
       {
         field: "group_name",

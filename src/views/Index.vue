@@ -499,7 +499,7 @@ export default defineComponent({
       Object.assign(_config.$tabs, { open: open, close: close });
 
       http.get("api/menu/getTreeMenu", {}, true).then((data) => {
-        data.push({ id: '1', name: "首頁", url: "/home" });// 為了獲取選中id使用
+        data.push({ id: '1', name: "Home", url: "/home" });// 為了獲取選中id使用
         data.forEach((d) => {
           d.path = (d.url || "").replace("/Manager", "");
           d.to = (d.url || "").replace("/Manager", "");
