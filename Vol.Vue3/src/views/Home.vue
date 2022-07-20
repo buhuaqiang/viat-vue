@@ -1,60 +1,64 @@
 <template>
-  <div class="home-contianer">
-    <div class="h-top">
-      <div class="h-top-left" id="h-chart1">left</div>
-      <div class="h-top-center">
-        <div class="n-item">
-          <div
-            @click="open(item)"
-            class="item"
-            :class="'item' + (index + 1)"
-            v-for="(item, index) in center"
-            :key="index"
-          >
-            <i
-              style="font-size: 30px; padding-bottom: 10px"
-              :class="item.icon"
-              :size="20"
-            ></i>
-            <br />
-            {{ item.title }}
-          </div>
+  <!--
+<div class="home-contianer">
+  <div class="h-top">
+    <div class="h-top-left" id="h-chart1">left</div>
+    <div class="h-top-center">
+      <div class="n-item">
+        <div
+          @click="open(item)"
+          class="item"
+          :class="'item' + (index + 1)"
+          v-for="(item, index) in center"
+          :key="index"
+        >
+          <i
+            style="font-size: 30px; padding-bottom: 10px"
+            :class="item.icon"
+            :size="20"
+          ></i>
+          <br />
+          {{ item.title }}
         </div>
       </div>
-      <div class="h-top-right task-table">
-        <h3 class="h3">通知公告</h3>
-        <table border="0" cellspacing="0" cellpadding="0">
-          <tr v-for="(row, index) in list" :key="index">
-            <td>{{ index + 1 }}</td>
-            <td>{{ row.desc }}</td>
-          </tr>
-        </table>
-      </div>
     </div>
-    <div class="h-chart">
-      <div class="h-left-grid">
-        <div class="item" v-for="(item, index) in grid" :key="index">
-          <div class="icon-text">
-            <i :class="item.icon"></i>
-            <span class="name">{{ item.name }}</span>
-          </div>
-          <div class="desc">{{ item.desc }}</div>
-        </div>
-      </div>
-      <div id="h-chart2"></div>
-      <div id="h-chart3"></div>
-    </div>
-    <div style="display: flex;">
-      <div
-        id="h-chart4"
-        style="height: 350px; background: white; flex: 1;padding-top:15px;"
-      ></div>
-      <div
-        id="h-chart5"
-        style="height: 350px; background: white; flex: 1;padding-top:15px;"
-      ></div>
+    <div class="h-top-right task-table">
+      <h3 class="h3">通知公告</h3>
+      <table border="0" cellspacing="0" cellpadding="0">
+        <tr v-for="(row, index) in list" :key="index">
+          <td>{{ index + 1 }}</td>
+          <td>{{ row.desc }}</td>
+        </tr>
+      </table>
     </div>
   </div>
+
+  <div class="h-chart">
+    <div class="h-left-grid">
+      <div class="item" v-for="(item, index) in grid" :key="index">
+        <div class="icon-text">
+          <i :class="item.icon"></i>
+          <span class="name">{{ item.name }}</span>
+        </div>
+        <div class="desc">{{ item.desc }}</div>
+      </div>
+    </div>
+    <div id="h-chart2"></div>
+    <div id="h-chart3"></div>
+  </div>
+  <div style="display: flex;">
+    <div
+      id="h-chart4"
+      style="height: 350px; background: white; flex: 1;padding-top:15px;"
+    ></div>
+    <div
+      id="h-chart5"
+      style="height: 350px; background: white; flex: 1;padding-top:15px;"
+    ></div>
+  </div>
+
+</div>
+-->
 </template>
 <script>
 // import * as echarts from "echarts";
@@ -159,6 +163,7 @@ export default {
       ],
     };
   },
+  /*
   setup() {
     let open = (item) => {
       window.open(item.url, "_blank");
@@ -201,6 +206,7 @@ export default {
     });
     return { open };
   },
+  */
   destroyed() {
     $chart2 = null;
   },

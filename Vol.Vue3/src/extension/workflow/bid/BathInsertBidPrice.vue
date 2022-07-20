@@ -74,7 +74,7 @@
             :loadKey="true"
             :clickEdit="false"
             :columns="columns"
-            :pagination-hide="false"
+            :pagination-hide="true"
             :single="false"
             :height="400"
             :url=table1Url
@@ -112,7 +112,7 @@
           :loadKey="true"
           :clickEdit="true"
           :columns="orderTableColumns"
-          :pagination-hide="false"
+          :pagination-hide="true"
           :single="false"
           :height="400"
           :url=table2Url
@@ -182,11 +182,11 @@ export default {
         { field: "bidmast_dbid", title: "外键ID", type: "guid", width: 80, hidden: true,isKey: true },
         {field:'prod_id',title:'Product Id',type:'string',width:110,require:true,align:'left'},
         {field:'prod_ename',title:'Product Name',type:'string',width:220,align:'left'},
-        {field:'nhi_price',title:'NHI Price',type:'decimal',width:100,readonly:true,require:true,align:'left'},
-        {field:'invoice_price',title:'Invoice Price',edit: { type: "number",keep:true },width:100,require:true,align:'left'},
-        {field:'net_price',title:'Net Price',type:'decimal',width:100,require:true,align:'left'},
-        {field:'bid_price',title:'Bid Price',edit: { type: "number" ,keep:true},width:100,require:true,align:'left'},
-        {field:'reserv_price',title:'Reser Price',edit: { type: "number",keep:true },require:true,width:100,align:'left'},
+        {field:'nhi_price',title:'NHI Price',type:'decimal',width:100,readonly:true,require:true,align:'right'},
+        {field:'invoice_price',title:'Invoice Price',edit: { type: "number",keep:true },width:100,require:true,align:'right'},
+        {field:'net_price',title:'Net Price',type:'decimal',width:100,require:true,align:'right'},
+        {field:'bid_price',title:'Bid Price',edit: { type: "number" ,keep:true},width:100,require:true,align:'right'},
+        {field:'reserv_price',title:'Reser Price',edit: { type: "number",keep:true },require:true,width:100,align:'right'},
         {field:'fg',title:'FG%',type:'decimal',width:50,align:'left'},
         {field:'dis',title:'DIS%',type:'decimal',width:50,align:'left'},
         {field:'min_qty',title:'Min Qty',edit: { type: "number",keep:true },width:80,require:true,align:'left'},
