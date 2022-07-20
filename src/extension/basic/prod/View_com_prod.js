@@ -1,3 +1,4 @@
+
 /*****************************************************************************************
 **  Author:jxx 2022
 **  QQ:283591387
@@ -6,7 +7,6 @@
 **后台操作见：http://v2.volcore.xyz/document/netCoreDev
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
-
 let extension = {
   components: {
     //查询界面扩展组件
@@ -123,24 +123,8 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
-      if(this.currentAction=='Add'){
-        this.getOption("entity").disabled=false;
-        this.getOption("prod_id").disabled=false;
-        this.getOption("prod_sname").disabled=false;
-        this.getOption("prod_ename").disabled=false;
-        this.getOption("unit_stock").disabled=false;
-        this.getOption("unit_sale").disabled=false;
-        this.getOption("global_mpg").disabled=false;
-        this.getOption("localmpg_dbid").disabled=false;
-        this.getOption("nhi_id").disabled=false;
-        this.getOption("pack_size").disabled=false;
-        this.getOption("pack_size_pri").disabled=false;
-        this.getOption("nhi_price").disabled=false;
-        this.getOption("division").disabled=false;
-        this.getOption("status_stock_pfizer").disabled=false;
-
-
-      }else{
+      let path =this.$route.path;
+      if(path!="/View_com_prod_main"){
         this.getOption("entity").disabled=true;
         this.getOption("prod_id").disabled=true;
         this.getOption("prod_sname").disabled=true;
@@ -156,6 +140,7 @@ let extension = {
         this.getOption("division").disabled=true;
         this.getOption("status_stock_pfizer").disabled=true;
       }
+
     }
   }
 };

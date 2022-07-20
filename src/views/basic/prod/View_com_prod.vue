@@ -41,8 +41,9 @@
                // [{"dataKey":"sales_mpg","data":[],"title":"localmpg_dbid","field":"localmpg_dbid","type":"select"}]
                 [{"title":"NHI Product Code","field":"nhi_id","disabled":true},
                     {"dataKey":"distributor","data":[],"title":"Default Distributor","field":"default_dist_id","type":"select"}],
-                [{"title":"NHI Fact/Dis Percent","field":"pack_size","disabled":true,"type":"decimal"},
-                    {"title":"Pack Size(Pricing)","field":"pack_size_pri","disabled":true,"type":"decimal"}],
+               /* [{"title":"NHI Fact/Dis Percent","field":"pack_size","disabled":true,"type":"decimal"},
+                    {"title":"Pack Size(Pricing)","field":"pack_size_pri","disabled":true,"type":"decimal"}],*/
+                [{"title":"Pack Size(Pricing)","field":"pack_size_pri","type":"decimal","disabled":true}],
                 [{"title":"NHI Price","field":"nhi_price","disabled":true,"type":"decimal"}],
                 [{"dataKey":"division","data":[],"title":"Division","field":"division","disabled":true,"type":"select"},
                     {"title":"Product Short Name","field":"prod_short_name"}],
@@ -52,10 +53,12 @@
                     {"title":"Strength","field":"prod_strength"}],
                 [{"title":"Packed","field":"prod_packed"},
                     {"dataKey":"SunLocalPerform","data":[],"title":"Is Control Drug","field":"is_ctrl_drug","type":"select"}],
-                [{"title":"Sample Safty Stock","field":"safty_stock","type":"number"},
+                [{"dataKey":"prod_status","data":[],"title":"Status","field":"state","type":"select","required":true},
+                    {"dataKey":"SunLocalPerform","data":[],"title":"Bids Permited","field":"status_bid","type":"select"}],
+                /*[{"title":"Sample Safty Stock","field":"safty_stock","type":"number"},
                     {"dataKey":"prod_status","data":[],"title":"Status","field":"state","type":"select","required":true}],
                 [{"dataKey":"SunLocalPerform","data":[],"title":"Samples Prohibited","field":"status_sample","type":"select"},
-                    {"dataKey":"SunLocalPerform","data":[],"title":"Bids Prohibited","field":"status_bid","type":"select"}],
+                    {"dataKey":"SunLocalPerform","data":[],"title":"Bids Prohibited","field":"status_bid","type":"select"}],*/
                 [{"dataKey":"SunLocalPerform","data":[],"title":"No Stock(Viatris)","field":"status_stock_pfizer","disabled":true,"type":"radio"},
                     {"dataKey":"SunLocalPerform","data":[],"title":"No Stock(Dist)","field":"status_stock_dist","type":"radio"}]]);
             const searchFormFields = ref({"entity":"","division":"","localmpg_dbid":"","global_mpg":"","prod_id":"","prod_sname":"","prod_ename":"","inv_type":"","state":""});
