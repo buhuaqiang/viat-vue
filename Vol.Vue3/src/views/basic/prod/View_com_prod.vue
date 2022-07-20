@@ -56,7 +56,7 @@
                     {"dataKey":"prod_status","data":[],"title":"Status","field":"state","type":"select","required":true}],
                 [{"dataKey":"SunLocalPerform","data":[],"title":"Samples Prohibited","field":"status_sample","type":"select"},
                     {"dataKey":"SunLocalPerform","data":[],"title":"Bids Prohibited","field":"status_bid","type":"select"}],
-                [{"dataKey":"SunLocalPerform","data":[],"title":"No Stock(Pfizer)","field":"status_stock_pfizer","disabled":true,"type":"radio"},
+                [{"dataKey":"SunLocalPerform","data":[],"title":"No Stock(Viatris)","field":"status_stock_pfizer","disabled":true,"type":"radio"},
                     {"dataKey":"SunLocalPerform","data":[],"title":"No Stock(Dist)","field":"status_stock_dist","type":"radio"}]]);
             const searchFormFields = ref({"entity":"","division":"","localmpg_dbid":"","global_mpg":"","prod_id":"","prod_sname":"","prod_ename":"","inv_type":"","state":""});
             //const searchFormOptions = ref([[{"dataKey":"entity","data":[],"title":"Entity","field":"entity","type":"select"},{"dataKey":"division","data":[],"title":"Division","field":"division","type":"select"}],[{"title":"Item Description(Chinese)","field":"prod_sname","type":"like"},{"title":"Item Description(English)","field":"prod_ename","type":"like"}],[{"title":"Item Code","field":"prod_id","type":"like"},{"dataKey":"prod_status","data":[],"title":"Status","field":"state","type":"select"}],[{"dataKey":"sales_mpg","data":[],"title":"Sales MPG","field":"lmpg_mpg_id","type":"select"},{"dataKey":"finance_mpg","data":[],"title":"Finance MPG","field":"global_mpg","type":"select"}],[{"dataKey":"inv_type","data":[],"title":"Inv Type","field":"inv_type","type":"select"}]]);
@@ -89,7 +89,7 @@
                        {field:'state',title:'Status',type:'string',bind:{ key:'prod_status',data:[]},width:80,align:'left'},
                        {field:'status_sample',title:'Samples Prohibited',type:'string',bind:{ key:'SunLocalPerform',data:[]},width:110,align:'left'},
                        {field:'status_bid',title:'Bids Prohibited',type:'string',bind:{ key:'SunLocalPerform',data:[]},width:80,align:'left'},
-                       {field:'status_stock_pfizer',title:'No Stock(Pfizer)',type:'string',bind:{ key:'SunLocalPerform',data:[]},width:110,hidden:true,readonly:true,align:'left'},
+                       {field:'status_stock_pfizer',title:'No Stock(Viatris)',type:'string',bind:{ key:'SunLocalPerform',data:[]},width:110,hidden:true,readonly:true,align:'left'},
                        {field:'status_stock_dist',title:'No Stock(Dist)',type:'string',bind:{ key:'SunLocalPerform',data:[]},width:110,hidden:true,align:'left'},
                        {field:'default_dist_id',title:'Default Distributor',type:'string',bind:{ key:'distributor',data:[]},width:110,hidden:true,align:'left'},
                        {field:'prod_short_name',title:'Product Short Name',type:'string',width:110,hidden:true,align:'left'},
