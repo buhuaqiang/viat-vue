@@ -217,7 +217,7 @@ export default defineComponent({
     const userInfo = ref({});
     const visibleItem = reactive({ left: false, right: false, all: false, other: false });
     const userImg = ref("");
-    const navigation = reactive([{ orderNo: '0', id: '1', name: "首頁", path: "/home" }]);
+    const navigation = reactive([{ orderNo: '0', id: '1', name: "Home", path: "/home" }]);
     const logo = ref(imgUrl);
     const theme = ref("blue2");
     const menuOptions = ref([]);
