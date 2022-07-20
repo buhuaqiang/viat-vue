@@ -189,7 +189,7 @@ let extension = {
       let bid_date=this.getColumnsOption("bid_date");
       bid_date.formatter = (row) => {
         //对单元格的数据格式化处理
-        if (!row.close_date) {
+        if (!row.bid_date) {
           return;
         }
         return row.bid_date.substr(0,10);

@@ -56,10 +56,16 @@
               @click="deletePriceRow()"
       >Delete</el-button>
       <el-button
+              type="danger"
+              icon="el-icon-delete"
+              @click="deletePriceAllRow()"
+      >Delete All</el-button>
+      <el-button
               type="warning"
               icon="el-icon-zoom-in"
               @click="openPriceStretageModel()"
       >Add By prod stretagy</el-button>
+      <el-tag type="success" size="medium" style="padding-left: 10px;" v-if="cont_stretagy_id">Contract Stretagy Name:{{cont_stretagy_name}}</el-tag>
     </div>
 
     <!-- vol-table配置的这些属性见VolTable组件api文件 -->
@@ -137,6 +143,8 @@ export default {
     return {
       model: false,
       bidmast_dbid:"",
+      cont_stretagy_id:"",
+      cont_stretagy_name:"",
       formModel:{
         bid_no:'',
         group_id:'',
@@ -221,6 +229,9 @@ export default {
         $parent = $this;
       });
       this.bidmast_dbid= $parent.editFormFields.bidmast_dbid;
+      this.cont_stretagy_id= $parent.editFormFields.cont_stretagy_id;
+      this.cont_stretagy_name= $parent.editFormFields.cont_stretagy_name;
+
       this.clear();
       //当前如果是新建重置两个表格数据
       if ($parent.currentAction == "Add") {
@@ -361,7 +372,10 @@ export default {
           invoice_price:row.invoice_price,
           net_price:row.net_price,
           bid_price:row.bid_price,
-          reserv_price:row.reserv_price
+          reserv_price:row.reserv_price,
+          cont_stretagy_id:row.cont_stretagy_id,
+          cont_stretagy_name:row.cont_stretagy_name
+
         }
       })
 
@@ -377,6 +391,8 @@ export default {
           this.$refs.priceTable.rowData.push(x);
         }
       })
+      this.cont_stretagy_id = _rows[0].cont_stretagy_id;
+      this.cont_stretagy_name = _rows[0].cont_stretagy_name;
       this.priceTableRowData = this.$refs.priceTable.rowData;
     },
 
@@ -611,6 +627,11 @@ export default {
       this.$refs.priceTable.delRow();
 
     },
+    deletePriceAllRow(){
+      this.$refs.priceTable.rowData=[];
+      this.cont_stretagy_id="";
+      this.cont_stretagy_name="";
+    },
     deleteOrderRow(){
       let rows = this.$refs.orderTable.getSelected();
       if (rows.length == 0) {
@@ -661,6 +682,12 @@ export default {
 
   .el-form-item {
     margin-bottom: 10px;
+  }
+
+  .el-tag {
+    --el-tag-font-size: 20px;
+    --el-tag-border-radius: 4px;
+    --el-tag-padding: 0 10px;
   }
 
 </style>
