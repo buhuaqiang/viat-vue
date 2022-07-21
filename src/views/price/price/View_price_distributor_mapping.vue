@@ -85,7 +85,7 @@
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:150,align:'left',sort:true},
                        {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,require:true,align:'left'},
                        {field:'remarks',title:'Remarks',type:'string',width:220,align:'left'},
-                       {field:'dbid',title:'dbid',type:'int',width:80,require:true,align:'left'}]);
+                       {field:'dbid',title:'dbid',type:'int',width:80,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

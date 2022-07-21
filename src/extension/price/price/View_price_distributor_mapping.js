@@ -55,8 +55,9 @@ let extension = {
       var e_prod_id = this.getEditOption("prod_id");
       var e_group_id = this.getEditOption("group_id");
       var e_cust_id = this.getEditOption("cust_id");
-      //var e_cust_id = this.getEditOption("pricegroup_dbid");
+      var e_pricegroup_dbid = this.getEditOption("pricegroup_dbid");
 
+      e_pricegroup_dbid.hidden = true
       s_cust_name.hidden = true
       s_prod_id.hidden = true
       e_prod_id.hidden = true
@@ -525,14 +526,15 @@ let extension = {
         }
       } else if (this.currentAction === this.const.EDIT) {
         console.log("editFormFields:" + JSON.stringify(this.editFormFields));
+        this.editFormFields.prods = []
+        this.editFormFields.pricegroups = ""
+        this.editFormFields.custs = ""
         if (this.editFormFields.prod_id !== ""){
-          this.editFormFields.prods = []
           this.editFormFields.prods.push(this.editFormFields.prod_id)
         }
         if (this.editFormFields.group_id !== ""){
           this.editFormFields.pricegroups = []
           this.editFormFields.pricegroups.push(this.editFormFields.group_id)
-
         }
         if (this.editFormFields.cust_id !== ""){
           this.editFormFields.custs = []
