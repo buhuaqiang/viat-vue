@@ -75,7 +75,7 @@ let extension = {
       return data;
     },
 
-    getPopRenderText(searchType){
+    getPopRenderText(searchType,sv){
       return (h, { row, column, index }) => {
         return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
           h(
@@ -84,6 +84,7 @@ let extension = {
                 class:"el-input__inner",
                 type:"text",
                 id:searchType,
+                value:sv,
                 style:{width:"70%","background-color":"#f5f7fb"},
                 readonly:"true"
               }
@@ -589,7 +590,6 @@ let extension = {
       //看不懂就把输出看：console.log(this.editFormOptions)
       this.getOption("cust_id").disabled = this.currentAction == this.const.EDIT || this.currentAction==this.const.VIEW;
       this.getOption("cust_id").hidden = this.currentAction ==this.const.ADD;
-debugger
 
       let ownHospital = this.getOption("own_hospital_cust_id");
       let delv_group = this.getOption("delv_group_cust_id");
@@ -621,19 +621,20 @@ debugger
         document.getElementById("f_delv_group").value=row.delv_group_cust_name
         document.getElementById("f_own_hospital").value=row.own_hospital_cust_name
       }else  if (this.currentAction ==this.const.VIEW){
+        debugger
         ownHospital.extra = {
-          render: this.getPopRenderText("f_own_hospital")
+          render: this.getPopRenderText("f_own_hospital",row.own_hospital_cust_name)
         }
         med_group.extra = {
-          render: this.getPopRenderText("f_med_group")
+          render: this.getPopRenderText("f_med_group",row.med_group_cust_name)
         }
         delv_group.extra = {
-          render: this.getPopRenderText("f_delv_group")
+          render: this.getPopRenderText("f_delv_group",row.delv_group_cust_name)
         }
         //回顯值
-        document.getElementById("f_med_group").value=row.med_group_cust_name;
-        document.getElementById("f_delv_group").value=row.delv_group_cust_name
-        document.getElementById("f_own_hospital").value=row.own_hospital_cust_name
+        // document.getElementById("f_med_group").value=row.med_group_cust_name;
+        // document.getElementById("f_delv_group").value=row.delv_group_cust_name
+        // document.getElementById("f_own_hospital").value=row.own_hospital_cust_name
 
 
       }
