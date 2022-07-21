@@ -29,10 +29,11 @@
                 url: "/View_wk_cust_main/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"bid_no":"","apply_type":"","cust_name":"","cust_id":"","cust_city_name":"","cust_zip_id":"","cust_address":"","invoice_name":"","invoice_city_name":"","invoice_zip_id":"","invoice_address":"","delivery_city_name":"","delivery_zip_id":"","delivery_addr":"","delivery_contact":"","delivery_tel_no":"","doh_type":"","doh_institute_no":"","is_private":"","owner":"","tax_id":"","email":"","fax_no":"",own_hospital_cust_id:"","own_hospital":"","ctrl_drug_no":"","ctrl_drug_contact":"","remarks":"","created_username":"","created_date":"","modified_username":"","modified_date":""});
+            const editFormFields = ref({"bid_no":"","apply_type":"","cust_name":"","cust_id":"","cust_dbid":"","cust_city_name":"","cust_zip_id":"","cust_address":"","invoice_name":"","invoice_city_name":"","invoice_zip_id":"","invoice_address":"","delivery_city_name":"","delivery_zip_id":"","delivery_addr":"","delivery_contact":"","delivery_tel_no":"","doh_type":"","doh_institute_no":"","is_private":"","owner":"","tax_id":"","email":"","fax_no":"",own_hospital_cust_id:"","own_hospital":"","ctrl_drug_no":"","ctrl_drug_contact":"","remarks":"","created_username":"","created_date":"","modified_username":"","modified_date":""});
             const editFormOptions = ref([[{"title":"Bid No","field":"bid_no","disabled":true},
                                {"dataKey":"ApprovalType","data":[],"title":"Apply Type","field":"apply_type","type":"select","required":true}],
-                              [{"title":"Cust Name","field":"cust_name","required":true},{"title":"Cust Code","field":"cust_id","disabled":true,hidden: true}],
+                              [{"title":"Cust Name","field":"cust_name",},{"title":"Cust Code","field":"cust_id"}],
+                                [{"title":"Customer","field":"cust_id","colSize":8}],
                               [{"dataKey":"viat_city","data":[],"title":"Cust City Name","field":"cust_city_name","type":"select","required":true},
                                {"dataKey":"viat_city_zone","data":[],"title":"Cust Zip Name","field":"cust_zip_id","type":"select","required":true}],
                               [{"title":"Cust Address","field":"cust_address","colSize":8,"required":true}],
@@ -96,6 +97,7 @@
                        {field:'modified_username',title:'Modifier',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:110,hidden:true,align:'left',sort:true},
                        {field:'wkcust_dbid',title:'列名wkcust_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
+                        {field:'cust_dbid',title:'列名cust_dbid',type:'guid',width:110,hidden:true,align:'left'},
                        {field:'bidmast_dbid',title:'列名bidmast_dbid',type:'guid',width:110,hidden:true,align:'left'},
                        {field:'ctype',title:'列名ctype',type:'string',width:110,hidden:true,align:'left'},
                        {field:'territory_id',title:'列名territory_id',type:'string',width:110,hidden:true,align:'left'},
