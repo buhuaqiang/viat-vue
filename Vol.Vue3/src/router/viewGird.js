@@ -404,6 +404,22 @@ let viewgird = [
         path: '/Viat_wk_cust',
         name: 'Viat_wk_cust',
         component: () => import('@/views/workflow/custapply/Viat_wk_cust.vue')
+    }    ,{
+        path: '/Viat_app_cust_price_transfer',
+        name: 'Viat_app_cust_price_transfer',
+        component: () => import('@/views/workflow/bid/Viat_app_cust_price_transfer.vue')
+    }    ,{
+        path: '/View_cust_price_transfer',
+        name: 'View_cust_price_transfer',
+        component: () => import('@/views/workflow/bid/View_cust_price_transfer.vue')
+    }    ,{
+        path: '/Viat_app_cust_order_transfer',
+        name: 'Viat_app_cust_order_transfer',
+        component: () => import('@/views/workflow/bid/Viat_app_cust_order_transfer.vue')
+    }    ,{
+        path: '/View_cust_order_transfer',
+        name: 'View_cust_order_transfer',
+        component: () => import('@/views/workflow/bid/View_cust_order_transfer.vue')
     }]
 
 
