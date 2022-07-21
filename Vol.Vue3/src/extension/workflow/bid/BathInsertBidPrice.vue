@@ -1,5 +1,5 @@
 <template>
-
+<div v-if="showPriceDiv">
   <div class=" view-header">
     <div class="desc-text" ><i class="el-icon-s-grid"></i>
       <span class="el-submenu__title">Bid Price Apply</span></div>
@@ -84,7 +84,7 @@
             :index="true"
             @rowClick = "priceRowClick"
     ></vol-table>
-
+</div>
 
   <div class=" view-header">
     <div class="desc-text" ><i class="el-icon-s-grid"></i>
@@ -170,7 +170,7 @@ export default {
         remarks:""
       },
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
-
+      showPriceDiv:true,
       fieldName:"",//編輯字段,用於回傳設置值
       formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields
       url: "",//加载数据的接口

@@ -63,6 +63,8 @@ let extension = {
         }
       })
 
+
+
       var editform_cust_id = this.getFormOption("cust_id");
       var editform_group_id = this.getFormOption("group_id");
       var isgroup = this.getFormOption("isgroup");
@@ -129,6 +131,28 @@ let extension = {
           }
 
         }
+      }
+
+      var editform_apply_type = this.getFormOption("apply_type");
+      editform_apply_type.onChange = (val) => {
+        if(val=='03'){
+          this.getFormOption("start_date").hidden=false;
+          this.getFormOption("end_date").hidden=false;
+          this.getFormOption("start_date").required=true;
+          this.getFormOption("end_date").required=true;
+          this.getFormOption("isgroup").disabled=false;
+          this.$refs.modelBody.showPriceDiv = true;
+        }else if(val=='04'){
+          this.getFormOption("start_date").hidden=true;
+          this.getFormOption("end_date").hidden=true;
+          this.getFormOption("start_date").required=false;
+          this.getFormOption("end_date").required=false;
+          this.editFormFields.isgroup = "0";
+          this.getFormOption("isgroup").disabled=true;
+          this.getFormOption("cust_id").hidden=false;
+          this.$refs.modelBody.showPriceDiv = false;
+        }
+
       }
 
       //查詢條件快捷回填
@@ -464,7 +488,6 @@ let extension = {
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
-      param.wheres.push({ name: "apply_type", value: '03' });
       return true;
     },
     searchAfter(result) {
@@ -563,7 +586,49 @@ let extension = {
         editform_group_id.hidden = true;
       }
 
-      this.editFormFields.apply_type='03'
+
+      //编辑表单，动态设置下拉框选项禁用状态或者隐藏显示
+      this.editFormOptions.forEach((options) => {
+        options.forEach((item) => {
+          if (item.field == 'apply_type') {
+            item.data.forEach((kv) => {
+              //根据字典的值判断
+              if (kv.key == '01' ||kv.key == '02') {
+                // kv.disabled = true; //设置选项禁用
+                 kv.hidden = true; //设置选项隐藏
+              }
+            });
+          }
+        });
+      });
+
+      if (this.currentAction =='Add'){
+        this.editFormFields.apply_type='03'
+        this.getFormOption("apply_type").disabled=false
+        this.getFormOption("isgroup").disabled=false;
+      }else{
+        this.getFormOption("apply_type").disabled=true;
+        this.getFormOption("cust_id").disabled=true;
+        this.getFormOption("group_id").disabled=true;
+        this.getFormOption("isgroup").disabled=true;
+      }
+      let apply_type = this.editFormFields.apply_type;
+      if(apply_type=='03'){
+        this.getFormOption("start_date").hidden=false;
+        this.getFormOption("end_date").hidden=false;
+        this.getFormOption("start_date").required=true;
+        this.getFormOption("end_date").required=true;
+        this.$refs.modelBody.showPriceDiv = true;
+      }else if(apply_type=='04'){
+        this.getFormOption("start_date").hidden=true;
+        this.getFormOption("end_date").hidden=true;
+        this.getFormOption("start_date").required=false;
+        this.getFormOption("end_date").required=false;
+        this.editFormFields.isgroup = "0";
+        this.getFormOption("isgroup").disabled=true;
+        this.getFormOption("cust_id").hidden=false;
+        this.$refs.modelBody.showPriceDiv = false;
+      }
       this.$refs.modelBody.openModel();
     }
   }
