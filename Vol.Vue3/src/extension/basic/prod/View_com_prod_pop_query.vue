@@ -134,6 +134,11 @@
                 this.model = true;
                 this.flag = flag;
                 this.returnType = returnType
+                //打開頁面將查詢條件設為空
+                this.entity = ""
+                this.prod_ename = ""
+                this.prod_id = ""
+                this.prod_sname = ""
                 //打开弹出框时，加载table数据
                 this.$nextTick(() => {
                     this.$refs.prodPop.load();
