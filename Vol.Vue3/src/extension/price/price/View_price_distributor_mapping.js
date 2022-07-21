@@ -55,6 +55,7 @@ let extension = {
       var e_prod_id = this.getEditOption("prod_id");
       var e_group_id = this.getEditOption("group_id");
       var e_cust_id = this.getEditOption("cust_id");
+      //var e_cust_id = this.getEditOption("pricegroup_dbid");
 
       s_cust_name.hidden = true
       s_prod_id.hidden = true
@@ -303,7 +304,7 @@ let extension = {
           this.searchFormFields["pricegroup_dbid"] = "";
           this.searchFormFields["group_id"] = "";
           this.searchFormFields["group_name"] = "";
-          this.searchFormFields["groups"] = [];
+          this.searchFormFields["pricegroups"] = [];
           this.pickPriceGroupName = ""
         }
       }
@@ -326,7 +327,7 @@ let extension = {
           this.editFormFields["pricegroup_dbid"] = "";
           this.editFormFields["group_id"] = "";
           this.editFormFields["group_name"] = "";
-          this.editFormFields["groups"] = [];
+          this.editFormFields["pricegroups"] = [];
           this.pickEditFormPriceGroupName = ""
         }
       }*/
@@ -403,9 +404,9 @@ let extension = {
         let selectrows = [];//将勾选值设置成数组
         rows.forEach(row => {
           selectrows.push({"key": row.group_id, "value": row.group_name});
-          this.editFormFields.groups.push(row.group_id)
+          this.editFormFields.pricegroups.push(row.group_id)
         })
-        this.editFormFields.groups.data = selectrows;
+        this.editFormFields.pricegroups.data = selectrows;
         this.model = false;
       } else {
         this.searchFormFields["pricegroup_dbid"] = rows[0].pricegroup_dbid;
@@ -466,6 +467,7 @@ let extension = {
     },
     updateBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
+      console.log("FORM:" + JSON.stringify(formData));
       return true;
     },
     rowClick({row, column, event}) {
@@ -482,16 +484,16 @@ let extension = {
 
       let custs = this.getEditOption("custs");
       let prods = this.getEditOption("prods");
-      let groups = this.getEditOption("groups");
+      let pricegroups = this.getEditOption("pricegroups");
       let s_prods = this.getSearchOption("prods");
       custs = []
       prods = []
       s_prods = []
-      groups = []
+      pricegroups = []
       custs.data = [];
       prods.data = [];
       s_prods.data = [];
-      groups.data = [];
+      pricegroups.data = [];
       this.pickEditFormCustomerName = []
       this.pickEditFormProductName = []
       this.pickEditFormPriceGroupName = []
@@ -513,7 +515,7 @@ let extension = {
             this.$refs.gridBody.openModel(false,"editProdM");
           }
         }
-        this.getEditOption("groups").extra = {
+        this.getEditOption("pricegroups").extra = {
           icon: "el-icon-zoom-in",
           text: "Pick",
           style: "color:#409eff;font-size: 12px;cursor: pointer;",
@@ -528,8 +530,9 @@ let extension = {
           this.editFormFields.prods.push(this.editFormFields.prod_id)
         }
         if (this.editFormFields.group_id !== ""){
-          this.editFormFields.groups = []
-          this.editFormFields.groups.push(this.editFormFields.group_id)
+          this.editFormFields.pricegroups = []
+          this.editFormFields.pricegroups.push(this.editFormFields.group_id)
+
         }
         if (this.editFormFields.cust_id !== ""){
           this.editFormFields.custs = []
@@ -537,10 +540,10 @@ let extension = {
         }
         this.getEditOption("custs").disabled = true;
         this.getEditOption("prods").disabled = true;
-        this.getEditOption("groups").disabled = true;
+        this.getEditOption("pricegroups").disabled = true;
         this.getEditOption("custs").extra = {};
         this.getEditOption("prods").extra = {};
-        this.getEditOption("groups").extra = {};
+        this.getEditOption("pricegroups").extra = {};
       }
     }
   }
