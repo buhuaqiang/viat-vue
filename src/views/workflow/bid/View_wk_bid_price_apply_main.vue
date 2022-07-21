@@ -30,11 +30,11 @@
                 sortName: "BID_NO"
             });
             const editFormFields = ref({"bidmast_dbid":"","bid_no":"","apply_type":"","cust_id":"","group_id":"","isgroup":"","bid_date":"","start_date":"","end_date":"","upload":"","remarks":""});
-            const editFormOptions = ref([[{"title":"Bid NO","required":true,"field":"bid_no","type":"text"},
+            const editFormOptions = ref([[{"title":"Bid NO","field":"bid_no","type":"text",readonly:true},
                              {"title":"bidmast dbid","field":"bidmast_dbid",hidden:true},
                             {"title":"cont_stretagy_id","field":"cont_stretagy_id",hidden:true},
                             {"title":"cont_stretagy_name","field":"cont_stretagy_name",hidden:true},
-                               {"dataKey":"ApprovalType","data":[],"title":"Apply Type","required":true,"field":"apply_type","disabled":true,"type":"select"}],
+                               {"dataKey":"ApprovalType","data":[],"title":"Apply Type","required":true,"field":"apply_type","type":"select"}],
                               [{"dataKey":"CustomerType","data":[],"title":"Is Group","required":true,"field":"isgroup","type":"radio"},
                                {"title":"Customer ID","field":"cust_id","type":"text"},
                                {"title":"Group ID","field":"group_id","type":"text"}],
@@ -59,6 +59,7 @@
                        {field:'pricegroup_dbid',title:'主鍵',type:'guid',width:110,hidden:true,align:'left'},
                        {field:'created_date',title:'Apply Date',type:'datetime',width:150,align:'left',sort:true,hidden:true},
                        {field:'approval_username',title:'Current Approval User',type:'string',width:110,align:'left'},
+                       {field:'apply_type',title:'Apply Type',type:'string',bind:{ key:'ApprovalType',data:[]},width:110,readonly:true,require:true,align:'left'},
                        {field:'status',title:'Approval Status',type:'string',bind:{ key:'ApprovalStatus',data:[]},width:110,align:'left'},
                        {field:'created_username',title:'Requestor',type:'string',width:110,align:'left'},
                        {field:'bid_date',title:'Bid Date',type:'datetime',width:150,require:true,align:'left',sort:true},
@@ -80,7 +81,6 @@
                        {field:'order_date',title:'預留',type:'datetime',width:150,hidden:true,align:'left',sort:true},
                        {field:'territory_id',title:'territory_id',type:'string',width:110,hidden:true,align:'left'},
                        {field:'contstret_dbid',title:'bidprice ',type:'guid',width:110,hidden:true,align:'left'},
-                       {field:'apply_type',title:'Apply Type',type:'string',bind:{ key:'ApprovalType',data:[]},width:110,readonly:true,require:true,align:'left',hidden:true},
                        {field:'po_no',title:'預留',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_date',title:'最後修改時間',type:'datetime',width:150,hidden:true,align:'left',sort:true},
                        {field:'isgroup',title:'Is Group',type:'string',bind:{ key:'CustomerType',data:[]},width:110,require:true,align:'left',hidden:true}]);
