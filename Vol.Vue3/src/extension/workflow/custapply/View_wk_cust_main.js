@@ -23,6 +23,7 @@ let extension = {
   data() {
     return {
       editSearchHospital: "editSearchHospital",
+      editSearchCust: "editSearchCust",
     };
   },
   methods: {
@@ -70,7 +71,52 @@ let extension = {
         this.editFormFields.delivery_zip_id = '';//清除原來選擇的數據
         this.getCityZoneData(val, deliveryZipId);
       }
+      //let editFromCust = this.getOption("cust_id");
+      let custTitle = this.getOption1("Customer");
+      let custCode = this.getOption1("Cust Code");
+      let custName = this.getOption("cust_name");
+      let applyType = this.getOption("apply_type");
+      applyType.onChange = (val) => {
 
+        if(val=='01'){
+          custName.hidden=false;
+          custCode.hidden=true;
+          custTitle.hidden=true;
+          //editFromCust.hidden = true
+        }else if(val=='02'){
+          custName.hidden=true;
+          custCode.hidden=true;
+          custTitle.hidden=false;
+        }
+
+      }
+
+
+
+      custTitle.extra={
+        render:this.getFormRender("editSearchCust")
+      }
+      custTitle.onKeyPress= ($event) => {
+        if($event.keyCode==13){
+          let  cust_id = this.editFormFields['cust_id']
+          if(cust_id) {
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.editFormFields['cust_dbid'] =reslut.cust_dbid;
+                this.editFormFields['cust_id'] =reslut.cust_id ;
+                this.editFormFields['cust_name'] =reslut.cust_name ;
+                this.pickEditFormCustomerName = reslut.cust_name;
+                return;
+              }else{
+                this.$message.error("Customer Id Is Not Exists.");
+                this.editFormFields['cust_id']=''
+                this.pickEditFormCustomerName = ''
+                return;
+              }
+            })
+          }
+        }
+      }
       let ownHospital = this.getOption("own_hospital_cust_id");
       ownHospital.extra={
         render:this.getFormRender("editSearchHospital")
@@ -170,17 +216,25 @@ let extension = {
     },
     //选择客户Pick 回填字段
     handleCustomerSelected(flag,rows){
-      debugger
       if(flag=='editSearchHospital'){
         this.editFormFields['own_hospital_cust_id'] = rows[0].cust_id;
         this.editFormFields['own_hospital'] = rows[0].cust_dbid;
         this.pickEditFormHospital = rows[0].cust_name
+      }
+      if(flag=='editSearchCust'){
+        this.editFormFields['cust_id'] = rows[0].cust_id;
+        this.editFormFields['cust_dbid'] = rows[0].cust_dbid;
+        this.editFormFields['cust_name'] = rows[0].cust_name;
+        this.pickEditFormCustomerName = rows[0].cust_name
       }
 
     },
     getPickName(searchType){
       if(searchType=="editSearchHospital"){
         return this.pickEditFormHospital
+      }
+      if(searchType=="editSearchCust"){
+        return this.pickEditFormCustomerName
       }
 
     },
@@ -203,7 +257,7 @@ let extension = {
                 props: {},
                 style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
-                  if(searchType=="editSearchHospital"){
+                  if(searchType=="editSearchHospital" || searchType=="editSearchCust"){
                     this.$refs.modelBody.openModel(true,searchType);
                   }
                 }
@@ -222,6 +276,12 @@ let extension = {
                     this.editFormFields['own_hospital'] = "";
                     this.pickEditFormHospital = "";
                   }
+                  if(searchType=='editSearchCust'){
+                    this.editFormFields['cust_id'] = "";
+                    this.editFormFields['cust_dbid'] = "";
+                    this.editFormFields['cust_name'] = "";
+                    this.pickEditFormCustomerName = "";
+                  }
                 }
               },
               [h("i",{class:"el-icon-zoom-out"})],
@@ -236,6 +296,17 @@ let extension = {
       this.editFormOptions.forEach(x => {
         x.forEach(item => {
           if (item.field == field) {
+            option = item;
+          }
+        })
+      })
+      return option;
+    },
+    getOption1(field) {//獲取編輯字段的titile用於區分相同的field
+      let option;
+      this.editFormOptions.forEach(x => {
+        x.forEach(item => {
+          if (item.title == field) {
             option = item;
           }
         })
@@ -272,18 +343,35 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+      var apply_type  = this.editFormFields.apply_type;
+
       if (this.currentAction=='Add'){
-        this.editFormFields.apply_type='01';
-        this.getOption("cust_id").hidden=true;
-        this.getOption("cust_name").disabled=false;
+        //this.editFormFields.apply_type='01';
+        this.pickEditFormCustomerName = "";
+        this.pickEditFormHospital = "";
+        //this.getOption("cust_dbid").hidden=true;
+        this.getOption1("Cust Code").hidden=true;
+        this.getOption1("Customer").hidden=true;
+        this.getOption("apply_type").disabled=false;
         this.getOption("delivery_tel_no").disabled=false;
 
       }else {
-        this.editFormFields.apply_type='02';
-        this.getOption("cust_id").hidden=false;
-        this.getOption("cust_name").disabled=true;
+        if(apply_type=='01'){
+          this.getOption("cust_name").hidden=false;
+          this.getOption1("Cust Code").hidden=false;
+          this.getOption1("Cust Code").disabled=true;
+          this.getOption1("Customer").hidden=true;
+         // this.getOption("cust_dbid").hidden=true;
+        }
+        if(apply_type=='02'){
+          this.getOption("cust_name").hidden=true;
+          this.getOption1("Cust Code").hidden=true;
+          this.getOption1("Customer").hidden=false;
+        }
         this.getOption("delivery_tel_no").disabled=true;
+        this.getOption("apply_type").disabled=true;
         this.pickEditFormHospital = row.own_hospital_cust_name;
+        this.pickEditFormCustomerName = row.cust_name;
       }
     }
   }
