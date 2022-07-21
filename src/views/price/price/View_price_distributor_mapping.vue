@@ -51,7 +51,7 @@
             const searchFormOptions = ref([[{"dataKey":"mul_select_for_pop","data":[],"title":"Product","field":"prods","type":"selectList"}],[{"title":"Group ID","field":"group_id"},{"title":"Group Name","field":"group_name"}],[{"title":"Customer ID","field":"cust_id"},{"title":"Customer Name","field":"cust_name"}],[{"dataKey":"distributor_Drop","data":[],"title":"Original Distributor","field":"i_dist_id","type":"select"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],[{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}],[{"title":"","field":"prod_dbid"}],[{"title":"Customer ID","field":"cust_dbid"}],[{"title":"Group ID","field":"pricegroup_dbid"}],[{"title":"Product ID","field":"prod_id"},{"title":"Product Name","field":"prod_ename"}]]);
             const columns = ref([{field:'prods',title:'Product',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,require:true,align:'left'},
                        {field:'custs',title:'Customer',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,align:'left'},
-                       {field:'pricegroups',title:'Group',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,align:'left',sort:true},
+                       {field:'pricegroups',title:'Group',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,align:'left'},
                        {field:'distmapping_dbid',title:'distmapping_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'division',title:'division',type:'string',width:110,hidden:true,align:'left'},
                        {field:'prod_dbid',title:'prod_dbid',type:'guid',width:110,hidden:true,align:'left'},
@@ -63,7 +63,7 @@
                        {field:'created_date',title:'created_date',type:'datetime',width:110,hidden:true,align:'left',sort:true},
                        {field:'modified_user',title:'modified_user',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_username',title:'modified_username',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'prod_id',title:'Product ID',type:'string',width:125,align:'left'},
+                       {field:'prod_id',title:'Product ID',type:'string',width:125,align:'left',sort:true},
                        {field:'prod_ename',title:'Product Name',type:'string',width:250,align:'left'},
                        {field:'modified_client',title:'modified_client',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
@@ -85,7 +85,7 @@
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:150,align:'left',sort:true},
                        {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,require:true,align:'left'},
                        {field:'remarks',title:'Remarks',type:'string',width:220,align:'left'},
-                       {field:'dbid',title:'dbid',type:'int',width:80,align:'left'}]);
+                       {field:'dbid',title:'dbid',type:'int',width:80,hidden:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
