@@ -34,11 +34,31 @@ let extension = {
         this.load = false;
         this.pickCustomerName = ""
         let cust_id = this.getEditFormOption("cust_id");
-        cust_id.readonly = true
         cust_id.extra = {
           render: this.getFormRender()
         }
 
+        cust_id.onKeyPress=($event)=>{
+          if($event.keyCode == 13){
+            let  editCust_dbidname = this.editFormFields['cust_id']
+            if(editCust_dbidname) {
+              this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+editCust_dbidname.replace(/\s/g,""),{} , "loading").then(reslut => {
+                if(reslut !=null){
+                  this.editFormFields['cust_dbid'] =reslut.cust_dbid;
+                  this.editFormFields['cust_id'] =reslut.cust_id
+                  this.pickCustomerName=reslut.cust_name;
+                  return;
+                }else{
+                  this.$message.error("Customer Id Is Not Exists.");
+                  this.editFormFields['cust_dbid'] ='';
+                  this.editFormFields['cust_id'] =''
+                  this.pickCustomerName=''
+                  return;
+                }
+              })
+            }
+          }
+        }
 
         let cust_dbid = this.getEditFormOption("cust_dbid");
         cust_dbid.hidden = true;
