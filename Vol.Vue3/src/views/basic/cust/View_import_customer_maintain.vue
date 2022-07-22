@@ -29,7 +29,7 @@
                 url: "/View_import_customer_maintain/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"division":"","ctrl_drug_contact":"","cust_name":"","cust_id":"","cust_zip_id":"","cust_zip_id_city_name":"","cust_address":"","tax_id":"","invoice_name":"","invoice_zip_id":"","invoice_zip_id_city_name":"","invoice_address":"","territory_id":"","owner":"","contact":"","tel_no":"","fax_no":"","email":"","doh_institute_no":"","ctrl_drug_no":"","doh_type":"","margin_type":"","is_controll":"","is_private":"","status":"","own_by_hospital":"","med_group_cust_id":"","own_hospital_name":"","delv_group_cust_id":"","own_hospital_cust_id":"","created_date":"","created_username":"","modified_username":"","modified_date":"","remarks":""});
+            const editFormFields = ref({"division":"","ctrl_drug_contact":"","cust_name":"","cust_id":"","cust_zip_id":"","cust_zip_id_city_name":"","cust_address":"","tax_id":"","invoice_name":"","invoice_zip_id":"","invoice_zip_id_city_name":"","invoice_address":"","territory_id":"","owner":"","contact":"","tel_no":"","fax_no":"","email":"","doh_institute_no":"","ctrl_drug_no":"","doh_type":"","margin_type":"","is_controll":"","is_private":"","status":"","own_by_hospital":"","med_group_cust_id":"","delv_group_cust_id":"","own_hospital_cust_id":"","own_hospital_name":"","created_date":"","created_username":"","modified_username":"","modified_date":"","remarks":""});
             const editFormOptions = ref([[{"dataKey":"division","data":[],"title":"Division","field":"division","type":"select"}],
                               [{"title":"Controlled Medicine Contact","field":"ctrl_drug_contact","type":"text"}],
                               [{"title":"Customer Code","field":"cust_id","type":"text"},
@@ -57,9 +57,9 @@
                                {"dataKey":"Status2","data":[],"title":"Status","field":"status","type":"select"}],
                               [{"dataKey":"Status3","data":[],"title":"Is Hospital Owned Drug Store","required":true,"field":"own_by_hospital","type":"select"},
                                {"title":"Medical Group","field":"med_group_cust_id","type":"text"}],
+                              [{"title":"Own Hospital","field":"own_hospital_cust_id","type":"text"},
+                               {"title":"Price Group","field":"delv_group_cust_id","type":"text"}],
                               [{"title":"Own Hospital Name","field":"own_hospital_name","type":"text"}],
-                              [{"title":"Price Group","field":"delv_group_cust_id","type":"text"},
-                               {"title":"Own Hospital","field":"own_hospital_cust_id","type":"text"}],
                               [{"title":"Created User","field":"created_username"},
                                {"title":"Transfer Date","field":"created_date","type":"datetime"}],
                               [{"title":"Update User","field":"modified_username","type":"text"},
