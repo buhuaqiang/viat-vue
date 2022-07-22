@@ -354,6 +354,7 @@ let extension = {
       this.load=false;
       //设置查询页面显示6个按钮(默认3个)
       //this.maxBtnLength = 6;
+     this.searchFormFields['QueryStatus']='1'
       //-------------日期字段格式化 start--------------
       let startDate=this.getColumns("start_date");
       let endDate=this.getColumns("end_date");
@@ -378,6 +379,7 @@ let extension = {
       }
       //-------------日期字段格式化 end--------------
       //-------------列表頁搜索框綁定彈窗 start-------------
+
       let searchGroup=this.getSearchOption("group_id");
 
       let searchGroupDBID=this.getSearchOption("pricegroup_dbid");
@@ -490,6 +492,15 @@ let extension = {
 
         }
       }
+
+      ///=======狀態修改為無效時 修改結束日期為當前日期==========
+      let status=this.getFormOption("status");
+      status.onChange=(val, option)=>{
+        if(val=='N'){
+          let dateStrs=this.parseTime(new Date(),'{y}-{m}-{d}')
+          this.editFormFields['end_date']=dateStrs;
+        }
+      }
       //-------------表單輸入框綁定彈窗 end-------------
 
       //在第二个按钮后添加一个新的按钮
@@ -503,6 +514,42 @@ let extension = {
       })*/
       //-------------end-------------
     },
+    parseTime(time,cFormat){
+      const format=cFormat||'{y}-{m}-{d} {h}:{i}:{s}'
+      let date
+      if(typeof time ==='object'){
+        date=time
+      }else {
+        if(typeof time ==='string'){
+          if((/^[0-9]+$/.test(time))){
+            time=parseInt(time)
+          }else{
+            time=time.replace(new RegExp(/-/gm),'/')
+          }
+        }
+        if((typeof time==='number') && (time.toString().length)===10){
+          time=time*1000
+        }
+        date=new Date(time)
+      }
+      const formatObj={
+        y:date.getFullYear(),
+        m:date.getMonth()+1,
+        d:date.getDate(),
+        h:date.getHours(),
+        i:date.getMinutes(),
+        s:date.getSeconds(),
+        a:date.getDay()
+      }
+      const time_str=format.replace(/{([ymdhisa])+}/g,(result,key)=>{
+        const value=formatObj[key]
+        if(key==='a'){
+          return['日','一','二','三','四','五','六'][value]
+        }
+        return  value.toString().padStart(2,'0')
+      })
+      return time_str
+    },
     bathAdd(){
       this.$refs.gridFooter.openBathAddCustPage();
     },
@@ -515,7 +562,7 @@ let extension = {
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
-      param.sort="prod_id";
+
       return true;
     },
     searchAfter(result) {

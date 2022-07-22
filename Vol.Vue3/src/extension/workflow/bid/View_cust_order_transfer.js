@@ -283,11 +283,29 @@ let extension = {
       return true;
     },
     addBefore(formData) {
+      //编辑保存前formData为对象，包括明细表、删除行的Id
+
+
       //新建保存前formData为对象，包括明细表，可以给给表单设置值，自己输出看formData的值
       return true;
     },
     updateBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
+      //table2數據回填到 formData
+      let orderTableRowData = this.$refs.modelFooter.orderTableRowData;
+      // alert(this.$refs.modelFooter.formModel.order_note)
+
+      let detailData = [
+        {
+          key: "orderTableRowData",
+          value: orderTableRowData,
+        },
+        {
+          key:"orderNote",
+          value: this.$refs.modelFooter.formModel.order_note
+        }
+      ]
+      formData.detailData = detailData;
       return true;
     },
     rowClick({ row, column, event }) {
@@ -310,7 +328,6 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
-      debugger
       if (this.currentAction==this.const.EDIT){
         this.pickEditFormCustomerName=row.cust_name;
         let form_cust_id=this.getEditOption("cust_id");

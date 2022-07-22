@@ -354,12 +354,57 @@ let extension = {
           }
         }
       }
+
+      ///=======狀態修改為無效時 修改結束日期為當前日期==========
+      let status=this.getFormOption("status");
+      status.onChange=(val, option)=>{
+        if(val=='N'){
+          let dateStrs=this.parseTime(new Date(),'{y}-{m}-{d}')
+          this.editFormFields['end_date']=dateStrs;
+        }
+      }
+
       //-------------表單輸入框綁定彈窗 end-------------
 
 
     },
 
-
+    parseTime(time,cFormat){
+      const format=cFormat||'{y}-{m}-{d} {h}:{i}:{s}'
+      let date
+      if(typeof time ==='object'){
+        date=time
+      }else {
+        if(typeof time ==='string'){
+          if((/^[0-9]+$/.test(time))){
+            time=parseInt(time)
+          }else{
+            time=time.replace(new RegExp(/-/gm),'/')
+          }
+        }
+        if((typeof time==='number') && (time.toString().length)===10){
+          time=time*1000
+        }
+        date=new Date(time)
+      }
+      const formatObj={
+        y:date.getFullYear(),
+        m:date.getMonth()+1,
+        d:date.getDate(),
+        h:date.getHours(),
+        i:date.getMinutes(),
+        s:date.getSeconds(),
+        a:date.getDay()
+      }
+      const time_str=format.replace(/{([ymdhisa])+}/g,(result,key)=>{
+        const value=formatObj[key]
+        if(key==='a'){
+          return['日','一','二','三','四','五','六'][value]
+        }
+        return  value.toString().padStart(2,'0')
+      })
+      return time_str
+    },
     handleCustFormSelected(rows){
       alert("check the cust is Expfizer ");
       //alert("cust_dbid:"+rows[0].cust_dbid)
@@ -476,6 +521,12 @@ let extension = {
 
       }else if (this.currentAction==this.const.EDIT){
 
+        if(row.status=='Y'){
+          this.getFormOption("status").disabled=false;
+        }else if(row.status=='N'){
+          this.getFormOption("status").disabled=true;
+        }
+        
         if(row.gross_price){
           this.getFormOption("gross_price").hidden=false;
           this.getFormOption("gross_price").disabled=true;

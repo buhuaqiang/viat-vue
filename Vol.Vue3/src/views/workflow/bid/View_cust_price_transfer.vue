@@ -32,11 +32,11 @@
             const editFormFields = ref({"bid_no":"","state":"","cust_id":"","group_id":"","add_group":[],"start_date":"","end_date":"","modified_date":"","created_date":"","pricegroup_dbid":""});
             const editFormOptions = ref([[{"title":"Bid NO","field":"bid_no","disabled":true},
                                {"dataKey":"transfer_status","data":[],"title":"Status","field":"state","type":"select"}],
-                              [{"title":"Cust ID","required":true,"field":"cust_id","disabled":true}],
+                              [{"title":"Cust ID","field":"cust_id","disabled":true}],
                               [{"dataKey":"mul_select_for_pop","data":[],"title":"Group Import","field":"add_group","type":"checkbox"},
                                {"title":"Group ID","field":"group_id"}],
-                              [{"title":"Start Date","field":"start_date","disabled":true},
-                               {"title":"End Date","field":"end_date","disabled":true}],
+                              [{"title":"Start Date","field":"start_date","disabled":true,"type":"date"},
+                               {"title":"End Date","field":"end_date","disabled":true,"type":"date"}],
                               [{"title":"Applied Date","field":"created_date","disabled":true,"type":"date"},
                                {"title":"Modified Date","field":"modified_date","disabled":true,"type":"date"}],
                               [{"title":"","field":"pricegroup_dbid"}]]);
@@ -49,11 +49,11 @@
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:110,readonly:true,align:'left',sort:true},
                        {field:'created_date',title:'Applied Date',type:'datetime',width:110,readonly:true,align:'left',sort:true},
                        {field:'requestor_name',title:'Requestor',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'requestorName',title:'Requestor',type:'string',width:80,require:true,align:'left'},
+                       {field:'requestorName',title:'Requestor',type:'string',width:80,align:'left'},
                        {field:'requestor',title:'Requestor',type:'int',width:110,hidden:true,align:'left'},
                        {field:'group_id',title:'Group ID',type:'string',width:110,align:'left'},
                        {field:'group_name',title:'Group Name',type:'string',width:120,align:'left'},
-                       {field:'cust_id',title:'Cust ID',type:'string',width:110,readonly:true,require:true,align:'left'},
+                       {field:'cust_id',title:'Cust ID',type:'string',width:110,readonly:true,align:'left'},
                        {field:'cust_name',title:'Cust Name',type:'string',width:120,align:'left'},
                        {field:'prod_id',title:'Prod ID',type:'string',width:110,align:'left'},
                        {field:'pricegroup_dbid',title:'pricegroup_dbid',type:'guid',width:110,hidden:true,align:'left'},
@@ -89,7 +89,7 @@
                        {field:'modified_username',title:'modified_username',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_client',title:'modified_client',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'pendingReason',title:'Pending Reason',type:'string',width:150,require:true,align:'left'},
+                       {field:'pendingReason',title:'Pending Reason',type:'string',width:150,align:'left'},
                        {field:'mpg_name',title:'MPG',type:'string',bind:{ key:'LocalMpgCategory',data:[]},width:120,hidden:true,align:'left'},
                        {field:'reserv_price',title:'reserv_price',type:'decimal',width:110,hidden:true,align:'left'}]);
             const detail = ref({
