@@ -27,7 +27,7 @@
                 cnName: 'Group Price Book',
                 name: 'price/View_cust_price',
                 url: "/View_cust_price/",
-                sortName: "prod_id,updated_date"
+                sortName: "prod_id"
             });
             const editFormFields = ref({"bid_no":"","status":"","group_id":"","prod_id":"","prod_dbid":"","pricegroup_dbid":"","start_date":"","end_date":"","nhi_price":"","invoice_price":"","net_price":"","min_qty":"","reserv_price":"","remarks":"","nhi_id":""});
             const editFormOptions = ref([[{"title":"Bid NO","field":"bid_no"},
@@ -46,14 +46,14 @@
                                {"title":"Remarks","field":"remarks","type":"textarea"}],
                                 [{"title":"NHI Code","field":"nhi_id"},{"title":"Update User","field":"modified_username",disabled: true}]]);
             const searchFormFields = ref({"group_id":"","pricegroup_dbid":"","start_date":"","end_date":"","modified_date":"","prods":[],"QueryStatus":"","ShowInvalidProd":[]});
-            const searchFormOptions = ref([[{"title":"Group Id","field":"group_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"selectList"}],
+            const searchFormOptions = ref([[{"title":"Group Id","field":"group_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"text"}],
                 [{"dataKey":"price_book_query_status","data":[],"title":"Status","field":"QueryStatus","type":"select"},{"title":"Modified Date","field":"updated_date","type":"date"}],
                 [{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],
                 [{"title":"","field":"pricegroup_dbid"},{"dataKey":"Show Invalid products","data":[],"title":"","field":"ShowInvalidProd","type":"checkbox"}]]);
             const columns = ref([{field:'group_id',title:'Group Id',type:'string',link:true,width:110,align:'left',sort:true},
-                       {field:'group_name',title:'Group Name',type:'string',width:120,align:'left'},
-                       {field:'prod_id',title:'Product Id',type:'string',width:80,align:'left'},
-                       {field:'prod_ename',title:'Product Name',type:'string',width:110,align:'left'},
+                       {field:'group_name',title:'Group Name',type:'string',width:120,align:'left',sort:true},
+                       {field:'prod_id',title:'Product Id',type:'string',width:80,align:'left',sort:true},
+                       {field:'prod_ename',title:'Product Name',type:'string',width:110,align:'left',sort:true},
                        {field:'custprice_dbid',title:'custprice_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'division',title:'division',type:'string',width:110,hidden:true,align:'left'},
                        {field:'bid_no',title:'Bid NO',type:'string',width:110,hidden:true,align:'left'},
@@ -69,12 +69,12 @@
                        {field:'end_date',title:'End Date',type:'datetime',width:110,require:true,align:'left',sort:true},
                        {field:'updated_date',title:'Modified Date',type:'date',width:110,align:'left',sort:true},
                        {field:'created_date',title:'Created Date',type:'datetime',width:110,align:'left',sort:true,hidden:true},
-                       {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,require:true,align:'left'},
+                       {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,require:true,align:'left',sort:true},
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:110,align:'left',sort:true,hidden:true},
                        {field:'is_used',title:'is_used',type:'string',width:110,hidden:true,align:'left'},
                        {field:'source',title:'source',type:'string',width:110,hidden:true,align:'left'},
                        {field:'nhi_id',title:'nhi_id',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'remarks',title:'Remarks',type:'string',width:180,align:'left'},
+                       {field:'remarks',title:'Remarks',type:'string',width:180,align:'left',sort:true},
                        {field:'sys_end_date',title:'sys_end_date',type:'datetime',width:110,hidden:true,align:'left',sort:true},
                        {field:'org_start_date',title:'org_start_date',type:'datetime',width:110,hidden:true,align:'left',sort:true},
                        {field:'org_end_date',title:'org_end_date',type:'datetime',width:110,hidden:true,align:'left',sort:true},

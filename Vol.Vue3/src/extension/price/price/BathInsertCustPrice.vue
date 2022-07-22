@@ -318,6 +318,7 @@ export default {
       this.formModel.min_qty=1
       this.formModel.nhi_id=''
       this.formModel.remarks=''
+      this.formModel.reserv_price=''
     },
     onSelectPop(fieldName,rows){
         if(rows.length!=1){
@@ -454,10 +455,29 @@ export default {
         this.$message.error("Net price can't be empty.");
         return false;
       }
+      //淨售價
+      if(this.formModel.reserv_price){
+        if(this.isDecimal(this.formModel.reserv_price) || this.isNumber(this.formModel.reserv_price)){
+          if(Number(this.formModel.reserv_price)< Number(this.formModel.net_price)){
+
+          }else{
+            this.$message.error("Net Price >Reserve Price,can’t be saved. Please check.");
+            return false;
+          }
+        }else{
+          this.$message.error("Reserve price invalid.");
+          return false;
+        }
+      }else {
+        // this.$message.error("Reserve price can't be empty.");
+        // return false;
+      }
+
       if(!this.formModel.start_date<=this.formModel.end_date){
         this.$message.error("start date should <= end date");
         return false;
       }
+
       let message="";
       let pass=true;
       debugger
