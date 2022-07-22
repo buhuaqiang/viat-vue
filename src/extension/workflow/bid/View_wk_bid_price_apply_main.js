@@ -596,7 +596,27 @@ let extension = {
         this.$message.error('Only Submit Draft Or RollBack Data')
         return false;
       }
-      //this.$message.success('删除前，选择的Id:' + ids.join(','));
+      let tigger = false;
+      this.$confirm('Are you sure you want to Submit the selected data?', 'Warn', {
+        confirmButtonText: 'confirm',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        if (tigger) return;
+        tigger = true;
+        let url = "api/View_wk_bid_price_apply_main/Submit";
+        this.http.post(url, rows, 'Submit data....').then((x) => {
+          if (!x.status) return this.$error(x.message);
+          this.$success(x.message);
+          this.refresh();
+        });
+      });
+
+     /* let url = "api/View_wk_bid_price_apply_main/Submit";
+      this.http.post(url,  rows, true).then((result) => {
+        return result;
+      });*/
       return true;
     },
 
@@ -668,6 +688,7 @@ let extension = {
         this.editFormFields.apply_type='03'
         this.getFormOption("apply_type").disabled=false
         this.getFormOption("isgroup").disabled=false;
+        this.getFormOption("cust_id").disabled=false;
       }else{
         this.getFormOption("apply_type").disabled=true;
         this.getFormOption("cust_id").disabled=true;

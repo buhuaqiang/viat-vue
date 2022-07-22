@@ -2,7 +2,7 @@
   <VolBox
     v-model="model"
     :lazy="true"
-    title="Pick Customer Data"
+    title="Contract Stretagy Data"
     :height="600"
     :width="1252"
     :padding="15"
@@ -11,7 +11,7 @@
     <div style="padding-bottom: 10px">
       <span style="margin-right: 20px"></span>
 
-      <el-select v-model="contstretagyValue" placeholder="Select price stretagy" style="width: 200px; padding-left: 5px">
+      <el-select v-model="contstretagyValue" placeholder="Select Contract Stretagy" style="width: 200px; padding-left: 5px">
         <el-option
                 v-for="item in contstretagyData"
                 :key="item.key"

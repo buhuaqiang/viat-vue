@@ -605,8 +605,6 @@ let extension = {
       //看不懂就把输出看：console.log(this.editFormOptions)
       var editform_cust_id = this.getFormOption("cust_id");
       var editform_group_id = this.getFormOption("group_id");
-      this.editFormFields.cust_id= this.editFormFields.cust_id;
-      this.editFormFields.group_id= this.editFormFields.group_id;
       this.pickEditFormCustomerName=this.editFormFields.cust_name;
       this.pickEditFormPriceGroupName=this.editFormFields.group_name;
       var isgroup  = this.editFormFields.isgroup;

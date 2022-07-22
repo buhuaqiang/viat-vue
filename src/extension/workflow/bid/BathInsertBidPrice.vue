@@ -64,7 +64,7 @@
               type="warning"
               icon="el-icon-zoom-in"
               @click="openPriceStretageModel()"
-      >Add By prod stretagy</el-button>
+      >Add By contract stretagy</el-button>
       <el-tag type="success" size="medium" style="padding-left: 10px;" v-if="cont_stretagy_id">Contract Stretagy Name:{{cont_stretagy_name}}</el-tag>
     </div>
 
