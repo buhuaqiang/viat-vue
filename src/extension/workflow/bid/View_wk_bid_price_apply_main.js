@@ -39,7 +39,7 @@ let extension = {
         type: 'success', //按钮样式vue2版本见iview文档button，vue3版本见element ui文档button
         value:'submit',
         onClick: function () {
-
+              this.doSubmit();
         }
       });
       this.buttons.push({  //也可以用push或者splice方法来修改buttons数组
@@ -48,7 +48,7 @@ let extension = {
         type: 'danger', //按钮样式vue2版本见iview文档button，vue3版本见element ui文档button
         value:'back',
         onClick: function () {
-
+          this.doRollBack();
         }
       });
 
@@ -480,6 +480,7 @@ let extension = {
       })
       return option;
     },
+
     onInited() {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
@@ -557,6 +558,67 @@ let extension = {
       //查询界面点击行事件
       // this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
+
+    //是否可編輯校驗
+    async modelOpenBeforeAsync(row) {
+      if (this.currentAction==this.const.EDIT){
+        if(row.status!='00'){
+          this.$Message.error(" This row data can not edit.");
+          return false;
+        }
+      }
+      return true;
+    },
+
+    //是否可刪除校驗
+    delBefore(ids, rows) { //查询界面的表删除前 ids为删除的id数组,rows删除的行
+      let status = rows.some(x => { return x.status !='00' });
+      if (status) {
+        this.$message.error('Only delete Draft Data')
+        return false;
+      }
+      //this.$message.success('删除前，选择的Id:' + ids.join(','));
+      return true;
+    },
+
+    //提交審批
+    doSubmit(){
+      let rows = this.$refs.table.getSelected();
+
+      if (!rows || rows.length == 0) return this.$error('Please select the row to submit!');
+      let delKeys = rows.map((x) => {
+        return x[this.table.key];
+      });
+      if (!delKeys || delKeys.length == 0)
+        return this.$error('None Need Submit Data!');
+      let status = rows.some(x => { return (x.status !='00' && x.status !='02')});
+      if (status) {
+        this.$message.error('Only Submit Draft Or RollBack Data')
+        return false;
+      }
+      //this.$message.success('删除前，选择的Id:' + ids.join(','));
+      return true;
+    },
+
+    doRollBack(){
+      debugger;
+      let rows = this.$refs.table.getSelected();
+
+      if (!rows || rows.length == 0) return this.$error('Please select the row to RollBack!');
+      let delKeys = rows.map((x) => {
+        return x[this.table.key];
+      });
+      if (!delKeys || delKeys.length == 0)
+        return this.$error('None Need RollBack Data!');
+      let status = rows.some(x => { return (x.status !='01')});
+      if (status) {
+        this.$message.error('Only RollBack Approving Data')
+        return false;
+      }
+      //this.$message.success('删除前，选择的Id:' + ids.join(','));
+      return true;
+    },
+
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
       //(1)判断是编辑还是新建操作： this.currentAction=='Add';
