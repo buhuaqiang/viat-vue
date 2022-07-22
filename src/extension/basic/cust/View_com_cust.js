@@ -118,8 +118,27 @@ let extension = {
         ]);
       };
     },
+//View 渲染 殼 invoic name
+    getCopyAddRenderText(){
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+          h(
+              "a",
+              {
+                props: {},
 
-    getPopRender(searchType) {//
+                style: { "color":"grey","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px","pointer-events": "none"},
+                onClick: (e) => {
+
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "Copy"
+          ),
+        ]);
+      };
+    },
+    getPopRender(searchType,sv) {//
       return (h, { row, column, index }) => {
         return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
           h(
@@ -128,6 +147,7 @@ let extension = {
                 class:"el-input__inner",
                 type:"text",
                 id:searchType,
+                value:sv,
                 style:{width:"70%","background-color":"#f5f7fb"},
                 readonly:"true"
               }
@@ -210,6 +230,45 @@ let extension = {
               }
           )
 
+        ]);
+      };
+    },
+
+    //渲染 copy地址
+    getCopyAddRender() {
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+          h(
+              "a",
+              {
+                props: {},
+
+                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                onClick: (e) => {
+                  debugger
+                  let invoiceZipId=this.getOption("invoice_zip_id");
+                  if (this.editFormFields.cust_name)
+                    this.editFormFields.invoice_name = this.editFormFields.cust_name;
+                  debugger
+                  if (this.editFormFields.cust_city_name) {
+                    let custCity = this.editFormFields.cust_city_name;
+                    this.editFormFields.invoice_city_name = custCity;
+                    this.editFormFields.invoice_zip_id = '';
+                    this.getCityZoneData(custCity,invoiceZipId);
+                  }
+                  if (this.editFormFields.cust_zip_id){
+                    let custZip = this.editFormFields.cust_zip_id;
+                    this.editFormFields.invoice_zip_id = custZip;
+                  }
+                  if (this.editFormFields.cust_address){
+                    let custAdd = this.editFormFields.cust_address;
+                    this.editFormFields.invoice_address = custAdd;
+                  }
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "Copy"
+          ),
         ]);
       };
     },
@@ -302,6 +361,13 @@ let extension = {
       document.getElementById("delv_group").value=''
       document.getElementById("own_hospital").value=''
     },
+    // onActivated(){
+    //   debugger
+    //   if(!this.LoadPage){//打開頁面執行查詢後在從其他頁簽返回是執行此操作
+    //     this.search();
+    //   }
+    //
+    // },
     //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
       //示例：在按钮的最前面添加一个按钮
@@ -315,6 +381,7 @@ let extension = {
       //   });
       //示例：设置修改新建、编辑弹出框字段标签的长度
       // this.boxOptions.labelWidth = 150;
+      // this.LoadPage = true;
       this.boxOptions.labelWidth = 250;
       //显示查询全部字段
       //this.setFiexdSearchForm(true);
@@ -336,7 +403,7 @@ let extension = {
         document.getElementById("own_hospital").value=''
       }
 
-
+      // let copyAddress = this.getOption('invoice_name');
       let comCity = this.getOption("cust_city_name");
       let invoiceCity = this.getOption("invoice_city_name");
       let comZipId = this.getOption("cust_zip_id");
@@ -357,83 +424,6 @@ let extension = {
       invoiceCity.onChange = (val, option) => {
         this.editFormFields.invoice_zip_id = '';
         this.getCityZoneData(val, invoiceZipId);
-      }
-
-      let ownHospital = this.getOption("own_hospital_cust_id");
-      ownHospital.extra = {
-        render: this.getPopRender("f_own_hospital")
-      }
-
-      ownHospital.onKeyPress= ($event) => {
-        if($event.keyCode==13){
-          let  cust_id = this.editFormFields['own_hospital_cust_id']
-          if(cust_id) {
-            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
-              if(reslut !=null){
-                this.editFormFields['own_hospital'] =reslut.cust_dbid;
-                this.editFormFields['own_hospital_cust_id'] =reslut.cust_id ;
-                document.getElementById("f_own_hospital").value=reslut.cust_name;
-                return;
-              }else{
-                this.$message.error("Customer Id Is Not Exists.");
-                this.editFormFields['own_hospital_cust_id']=''
-                document.getElementById("f_own_hospital").value=''
-                return;
-              }
-            })
-          }
-        }
-      }
-
-      let med_group = this.getOption("med_group_cust_id");
-      med_group.extra = {
-        render: this.getPopRender("f_med_group")
-      }
-
-      med_group.onKeyPress= ($event) => {
-        if($event.keyCode==13){
-          let  cust_id = this.editFormFields['med_group_cust_id']
-          if(cust_id) {
-            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
-              if(reslut !=null){
-                this.editFormFields['med_group'] =reslut.cust_dbid;
-                this.editFormFields['med_group_cust_id'] =reslut.cust_id ;//
-                document.getElementById("f_med_group").value=reslut.cust_name;
-                return;
-              }else{
-                this.$message.error("Customer Id Is Not Exists.");
-                this.editFormFields['med_group_cust_id']=''
-                document.getElementById("f_med_group").value=''
-                return;
-              }
-            })
-          }
-        }
-      }
-
-      let delv_group = this.getOption("delv_group_cust_id");
-      delv_group.extra = {
-        render: this.getPopRender("f_delv_group")
-      }
-      delv_group.onKeyPress= ($event) => {
-        if($event.keyCode==13){
-          let  cust_id = this.editFormFields['delv_group_cust_id']
-          if(cust_id) {
-            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
-              if(reslut !=null){
-                this.editFormFields['delv_group'] =reslut.cust_dbid;
-                this.editFormFields['delv_group_cust_id'] =reslut.cust_id ;//
-                document.getElementById("f_delv_group").value= reslut.cust_name;
-                return;
-              }else{
-                this.$message.error("Customer Id Is Not Exists.");
-                this.editFormFields['delv_group_cust_id']=''
-                document.getElementById("f_delv_group").value=''
-                return;
-              }
-            })
-          }
-        }
       }
 
       let searchdelv_groupname = this.getSearchOption("delv_group_cust_id");
@@ -594,6 +584,7 @@ let extension = {
       let ownHospital = this.getOption("own_hospital_cust_id");
       let delv_group = this.getOption("delv_group_cust_id");
       let med_group = this.getOption("med_group_cust_id");
+      let copyAddShell = this.getOption('invoice_name');
 
       if (this.currentAction ==this.const.ADD){
         this.editFormFields.status='Y';//設置狀態默認值
@@ -616,12 +607,95 @@ let extension = {
         //初始化客户地址和发票地址的区域下拉选择
         this.getCityZoneData(cityName1, comZipId);
         this.getCityZoneData(cityName2, invoiceZipId);
+        let copyAddress = this.getOption('invoice_name');
+        copyAddress.extra = {
+          render: this.getCopyAddRender()
+        }
+        let ownHospital = this.getOption("own_hospital_cust_id");
+        ownHospital.extra = {
+          render: this.getPopRender("f_own_hospital",row.own_hospital_cust_name)
+        }
+
+        ownHospital.onKeyPress= ($event) => {
+          if($event.keyCode==13){
+            let  cust_id = this.editFormFields['own_hospital_cust_id']
+            if(cust_id) {
+              this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+                if(reslut !=null){
+                  this.editFormFields['own_hospital'] =reslut.cust_dbid;
+                  this.editFormFields['own_hospital_cust_id'] =reslut.cust_id ;
+                  document.getElementById("f_own_hospital").value=reslut.cust_name;
+                  return;
+                }else{
+                  this.$message.error("Customer Id Is Not Exists.");
+                  this.editFormFields['own_hospital_cust_id']=''
+                  document.getElementById("f_own_hospital").value=''
+                  return;
+                }
+              })
+            }
+          }
+        }
+
+        let med_group = this.getOption("med_group_cust_id");
+        med_group.extra = {
+          render: this.getPopRender("f_med_group",row.med_group_cust_name)
+        }
+
+        med_group.onKeyPress= ($event) => {
+          if($event.keyCode==13){
+            let  cust_id = this.editFormFields['med_group_cust_id']
+            if(cust_id) {
+              this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+                if(reslut !=null){
+                  this.editFormFields['med_group'] =reslut.cust_dbid;
+                  this.editFormFields['med_group_cust_id'] =reslut.cust_id ;//
+                  document.getElementById("f_med_group").value=reslut.cust_name;
+                  return;
+                }else{
+                  this.$message.error("Customer Id Is Not Exists.");
+                  this.editFormFields['med_group_cust_id']=''
+                  document.getElementById("f_med_group").value=''
+                  return;
+                }
+              })
+            }
+          }
+        }
+
+        let delv_group = this.getOption("delv_group_cust_id");
+        delv_group.extra = {
+          render: this.getPopRender("f_delv_group",row.delv_group_cust_name)
+        }
+        delv_group.onKeyPress= ($event) => {
+          if($event.keyCode==13){
+            let  cust_id = this.editFormFields['delv_group_cust_id']
+            if(cust_id) {
+              this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id.replace(/\s/g,""),{} , "loading").then(reslut => {
+                if(reslut !=null){
+                  this.editFormFields['delv_group'] =reslut.cust_dbid;
+                  this.editFormFields['delv_group_cust_id'] =reslut.cust_id ;//
+                  document.getElementById("f_delv_group").value= reslut.cust_name;
+                  return;
+                }else{
+                  this.$message.error("Customer Id Is Not Exists.");
+                  this.editFormFields['delv_group_cust_id']=''
+                  document.getElementById("f_delv_group").value=''
+                  return;
+                }
+              })
+            }
+          }
+        }
         //回顯值
-        document.getElementById("f_med_group").value=row.med_group_cust_name;
-        document.getElementById("f_delv_group").value=row.delv_group_cust_name
-        document.getElementById("f_own_hospital").value=row.own_hospital_cust_name
+        // document.getElementById("f_med_group").value=row.med_group_cust_name;
+        // document.getElementById("f_delv_group").value=row.delv_group_cust_name
+        // document.getElementById("f_own_hospital").value=row.own_hospital_cust_name
       }else  if (this.currentAction ==this.const.VIEW){
         debugger
+        copyAddShell.extra = {
+          render: this.getCopyAddRenderText()
+        }
         ownHospital.extra = {
           render: this.getPopRenderText("f_own_hospital",row.own_hospital_cust_name)
         }
