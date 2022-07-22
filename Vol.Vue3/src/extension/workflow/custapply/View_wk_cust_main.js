@@ -221,34 +221,9 @@ let extension = {
       if (row.length == 0) {
         return this.$error('Please select the row to submit!');
       }
-      let mainDatas = {
-        bidmast_dbid: row[0].bidmast_dbid,
-        bid_no: row[0].bid_no,
-        apply_type: row[0].apply_type,
-        cust_name: row[0].cust_name,
-        cust_dbid: row[0].cust_dbid,
-        cust_city_name: row[0].cust_city_name,
-        cust_zip_id: row[0].cust_zip_id,
-        cust_address: row[0].cust_address,
-        invoice_name: row[0].invoice_name,
-        invoice_city_name: row[0].invoice_city_name,
-        invoice_zip_id: row[0].invoice_zip_id,
-        invoice_address: row[0].invoice_address,
-        delivery_city_name: row[0].delivery_city_name,
-        delivery_zip_id: row[0].delivery_zip_id,
-        delivery_addr: row[0].delivery_addr,
-        doh_type: row[0].doh_type,
-        own_hospital_cust_id: row[0].own_hospital_cust_id,
-        own_hospital: row[0].own_hospital
-      }
 
-      let formData = {
-        mainData: mainDatas,
-        detailData: null,
-        delKeys: null
-      };
       let url = "api/View_wk_cust_main/Submit";
-      this.http.post(url,  formData, true).then((result) => {
+      this.http.post(url,  row, true).then((result) => {
         return result;
       });
     },
