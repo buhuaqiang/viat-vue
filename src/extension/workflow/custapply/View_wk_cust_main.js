@@ -214,26 +214,55 @@ let extension = {
       comZipId.data = data;
       return data;
     },
+
     //Submit
     SubmitData(){
       let row = this.$refs.table.getSelected();
       if (row.length == 0) {
         return this.$error('Please select the row to submit!');
       }
+      let mainDatas = {
+        bidmast_dbid: row[0].bidmast_dbid,
+        bid_no: row[0].bid_no,
+        apply_type: row[0].apply_type,
+        cust_name: row[0].cust_name,
+        cust_dbid: row[0].cust_dbid,
+        cust_city_name: row[0].cust_city_name,
+        cust_zip_id: row[0].cust_zip_id,
+        cust_address: row[0].cust_address,
+        invoice_name: row[0].invoice_name,
+        invoice_city_name: row[0].invoice_city_name,
+        invoice_zip_id: row[0].invoice_zip_id,
+        invoice_address: row[0].invoice_address,
+        delivery_city_name: row[0].delivery_city_name,
+        delivery_zip_id: row[0].delivery_zip_id,
+        delivery_addr: row[0].delivery_addr,
+        doh_type: row[0].doh_type,
+        own_hospital_cust_id: row[0].own_hospital_cust_id,
+        own_hospital: row[0].own_hospital
+      }
+
+      let formData = {
+        mainData: mainDatas,
+        detailData: null,
+        delKeys: null
+      };
       let url = "api/View_wk_cust_main/Submit";
-      this.http.post(url,  { mainData: row } , true).then((result) => {
+      this.http.post(url,  formData, true).then((result) => {
         return result;
       });
     },
     //Back
     BackData(){
-      let row = this.$refs.table.getSelected();
+      let _rows =  this.getSelectRows();
       let bidmast_dbids=[];
-      if (row.length == 0) {
+      if (_rows.length == 0) {
         return this.$error('Please select the row to back!');
       }
-      debugger
-      bidmast_dbids.push(row.bidmast_dbid)
+      _rows.forEach(r=>{
+        bidmast_dbids.push(r.bidmast_dbid);
+      })
+     // bidmast_dbids.push(_rows[0].bidmast_dbid)
       let url = "api/View_wk_cust_main/processBack";
       this.http.post(url,  bidmast_dbids , true).then((result) => {
         return result;
@@ -354,6 +383,7 @@ let extension = {
       return true;
     },
     updateBefore(formData) {
+      debugger
       //编辑保存前formData为对象，包括明细表、删除行的Id
       return true;
     },
