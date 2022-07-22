@@ -29,7 +29,7 @@
                 url: "/Viat_app_dist_mapping/",
                 sortName: "dbid"
             });
-            const editFormFields = ref({"prod_dbid":"","pricegroup_dbid":"","cust_dbid":"","i_dist_id":"","start_date":"","e_dist_id":"","end_date":"","status":"","modified_date":"","remarks":""});
+            const editFormFields = ref({"prod_dbid":"","pricegroup_dbid":"","cust_dbid":"","i_dist_id":"","start_date":"","e_dist_id":"","end_date":"","status":"","modified_date":"","remarks":"","price_channel":""});
             const editFormOptions = ref([[{"title":"產品表PKID","field":"prod_dbid","type":"text"}],
                               [{"title":"pricegroup主鍵","field":"pricegroup_dbid","type":"text"}],
                               [{"title":"客戶表PKID","field":"cust_dbid","type":"text"}],
@@ -39,7 +39,8 @@
                                {"title":"結束日","required":true,"field":"end_date","type":"datetime"}],
                               [{"title":"是否有效,Y:生效;N:未生效or期滿;C:移除","required":true,"field":"status"},
                                {"title":"最後修改時間","field":"modified_date","type":"datetime"}],
-                              [{"title":"備註","field":"remarks"}]]);
+                              [{"title":"備註","field":"remarks"},
+                               {"title":"","field":"price_channel"}]]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([]);
             const columns = ref([{field:'distmapping_dbid',title:'PKID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
@@ -63,7 +64,8 @@
                        {field:'modified_username',title:'modified_username',type:'string',width:110,align:'left'},
                        {field:'modified_client',title:'最後修改者的委託人',type:'int',width:110,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,align:'left'},
-                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,align:'left',sort:true}]);
+                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,align:'left',sort:true},
+                       {field:'price_channel',title:'price_channel',type:'string',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
