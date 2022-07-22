@@ -50,7 +50,7 @@
                     {"title":"Group ID","field":"group_id","type":"text"},
                     { title: "", field: "pricegroup_dbid",hidden: true },],
                 [{"dataKey":"ApprovalStatus","data":[],"title":"Approval Status","field":"status","type":"select"},{"title":"Apply Date","field":"created_date","type":"date"}]]);
-            const columns = ref([{field:'bid_no',title:'Bid NO',type:'string',sort:true,width:110,require:true,align:'left',sort:true},
+            const columns = ref([{field:'bid_no',title:'Bid NO',type:'string',sort:true,width:110,require:true,align:'left',sort:true,link: true},
                        {field:'cust_id',title:'Customer ID',type:'string',width:110,align:'left'},
                        {field:'cust_name',title:'Customer Name',type:'string',width:110,align:'left'},
                        {field:'group_id',title:'Group ID',type:'string',width:110,align:'left'},
