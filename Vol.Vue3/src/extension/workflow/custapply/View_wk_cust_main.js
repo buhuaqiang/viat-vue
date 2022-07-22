@@ -221,18 +221,21 @@ let extension = {
         return this.$error('Please select the row to submit!');
       }
       let url = "api/View_wk_cust_main/Submit";
-      this.http.post(url,  row , true).then((result) => {
+      this.http.post(url,  { mainData: row } , true).then((result) => {
         return result;
       });
     },
     //Back
     BackData(){
       let row = this.$refs.table.getSelected();
+      let bidmast_dbids=[];
       if (row.length == 0) {
         return this.$error('Please select the row to back!');
       }
+      debugger
+      bidmast_dbids.push(row.bidmast_dbid)
       let url = "api/View_wk_cust_main/processBack";
-      this.http.post(url,  row , true).then((result) => {
+      this.http.post(url,  bidmast_dbids , true).then((result) => {
         return result;
       });
     },
