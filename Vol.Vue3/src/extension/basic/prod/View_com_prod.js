@@ -123,6 +123,7 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+      debugger
       let path =this.$route.path;
       if(path!="/View_com_prod_main"){
         this.getOption("entity").disabled=true;
@@ -139,6 +140,12 @@ let extension = {
         this.getOption("nhi_price").disabled=true;
         this.getOption("division").disabled=true;
         this.getOption("status_stock_pfizer").disabled=true;
+      }
+      if(path=="/View_com_prod_main" && this.currentAction=='Add'){
+        this.getOption("prod_id").disabled=false;
+      }
+      if(this.currentAction=='update'){
+        this.getOption("prod_id").disabled=true;
       }
 
     }
