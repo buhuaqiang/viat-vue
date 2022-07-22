@@ -78,7 +78,7 @@ let extension = {
         render:this.getFormRender("editFormSearchProduct")
       }
       //查詢時輸入正確的customer_id 或prod_id回車時, 系統將智能回填customer和product name
-      search_Prod_id=($event)=>{
+      search_Prod_id.onKeyPress=($event)=>{
         if($event.keyCode == 13){
           let  searchProdId = this.searchFormFields['prod_id']
           if(searchProdId) {

@@ -149,7 +149,10 @@ let viewgird = [
     }    ,{
         path: '/View_com_cust',
         name: 'View_com_cust',
-        component: () => import('@/views/basic/cust/View_com_cust.vue')
+        component: () => import('@/views/basic/cust/View_com_cust.vue'),
+        meta: {
+            keepAlive: false
+        }
     }    ,{
         path: '/View_com_cust_delivery',
         name: 'View_com_cust_delivery',
@@ -318,7 +321,10 @@ let viewgird = [
     }    ,{
         path: '/View_import_customer_maintain',
         name: 'View_import_customer_maintain',
-        component: () => import('@/views/basic/cust/View_import_customer_maintain.vue')
+        component: () => import('@/views/basic/cust/View_import_customer_maintain.vue'),
+        meta: {
+            keepAlive: false
+        }
     }    ,{
         path: '/View_app_cust_delivery_transfer',
         name: 'View_app_cust_delivery_transfer',
