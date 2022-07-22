@@ -478,8 +478,23 @@ export default {
             return false;
           }
         }
+      }
+      //淨售價
+      if(this.formModel.reserv_price){
+        if(this.isDecimal(this.formModel.reserv_price) || this.isNumber(this.formModel.reserv_price)){
+          if(Number(this.formModel.reserv_price)< Number(this.formModel.net_price)){
 
-
+          }else{
+            this.$message.error("Net Price >Reserve Price,can’t be saved. Please check.");
+            return false;
+          }
+        }else{
+          this.$message.error("Reserve price invalid.");
+          return false;
+        }
+      }else {
+        // this.$message.error("Reserve price can't be empty.");
+        // return false;
       }
       let pass=true;
       let message="";

@@ -229,10 +229,12 @@ let extension = {
       if(flag=='prods'){
         let selectrows = [];//将勾选值设置成数组
         rows.forEach(row=>{
-          selectrows.push({"key":row.prod_dbid,"value":row.prod_ename});
-          this.searchFormFields.prods.push(row.prod_dbid)
+          //selectrows.push({"key":row.prod_dbid,"value":row.prod_ename});
+          // this.searchFormFields.prods.push(row.prod_dbid)
+          selectrows.push(row.prod_id)
         })
-        this.getSearchOption("prods").data=selectrows;
+        this.searchFormFields['prods']=selectrows.join(",")
+        // this.getSearchOption("prods").data=selectrows;
       }
     },
     //选择group pick回填字段

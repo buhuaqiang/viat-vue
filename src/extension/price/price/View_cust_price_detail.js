@@ -184,10 +184,9 @@ let extension = {
       if(flag=='prods'){
         let selectrows = [];//将勾选值设置成数组
         rows.forEach(row=>{
-          selectrows.push({"key":row.prod_dbid,"value":row.prod_ename});
-          this.searchFormFields.prods.push(row.prod_dbid)
+          selectrows.push(row.prod_id)
         })
-        this.getSearchOption("prods").data=selectrows;
+        this.searchFormFields['prods']=selectrows.join(",")
       }
     },
     //选择客户Pick 回填字段
@@ -526,7 +525,7 @@ let extension = {
         }else if(row.status=='N'){
           this.getFormOption("status").disabled=true;
         }
-        
+
         if(row.gross_price){
           this.getFormOption("gross_price").hidden=false;
           this.getFormOption("gross_price").disabled=true;
