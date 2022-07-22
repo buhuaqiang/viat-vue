@@ -160,7 +160,8 @@
             },
             search() {
                 //点击搜索
-                this.$refs.userPop.load();
+                this.$refs.empolyPop.load();
+                //this.$refs.userPop.load();
             },
             rowClick({ row, column, event }) {
                 //查询界面点击行事件
