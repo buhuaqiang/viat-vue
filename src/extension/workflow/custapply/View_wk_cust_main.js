@@ -214,6 +214,28 @@ let extension = {
       comZipId.data = data;
       return data;
     },
+    //Submit
+    SubmitData(){
+      let row = this.$refs.table.getSelected();
+      if (row.length == 0) {
+        return this.$error('Please select the row!');
+      }
+      let url = "api/View_wk_cust_main/Submit";
+      this.http.post(url, { mainData: row }, true).then((result) => {
+        return result;
+      });
+    },
+    //Back
+    BackData(){
+      let row = this.$refs.table.getSelected();
+      if (row.length == 0) {
+        return this.$error('Please select the row!');
+      }
+      let url = "api/View_wk_cust_main/processBack";
+      this.http.post(url, { mainData: row }, true).then((result) => {
+        return result;
+      });
+    },
     //选择客户Pick 回填字段
     handleCustomerSelected(flag,rows){
       if(flag=='editSearchHospital'){
