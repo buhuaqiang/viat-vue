@@ -103,7 +103,10 @@
                        {field:'created_username',title:'created_username',type:'string',width:110,align:'left'},
                        {field:'created_clientusername',title:'created_clientusername',type:'string',width:110,align:'left'},
                        {field:'modified_username',title:'modified_username',type:'string',width:110,align:'left'},
-                       {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,align:'left'}]);
+                       {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,align:'left'},
+                       {field:'doh_sub_type',title:'健保類別子類',type:'string',width:110,align:'left'},
+                       {field:'own_hospital_name',title:'隸屬醫院名稱',type:'string',width:110,align:'left'},
+                       {field:'is_controll',title:'是否管控客戶)',type:'string',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "客戶送貨資訊",
                 table: "Viat_com_cust_delivery",
