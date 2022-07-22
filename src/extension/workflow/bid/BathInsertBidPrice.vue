@@ -37,7 +37,7 @@
         <el-form-item   label="Bid Price:" style="width: 35%">
           <el-input v-model="formModel.bid_price" style="width:200px;" @change="caculator()"></el-input>
         </el-form-item>
-        <el-form-item   label="Reserv Price:" style="width: 50%">
+        <el-form-item   label="Reserve Price:" style="width: 50%">
           <el-input v-model="formModel.reserv_price" style="width:200px;" ></el-input>
         </el-form-item>
 
@@ -76,7 +76,7 @@
             :columns="columns"
             :pagination-hide="true"
             :single="false"
-            :height="400"
+            :max-height="400"
             :url=table1Url
             :defaultLoadPage="false"
             @loadBefore="loadTableBefore1"
@@ -115,7 +115,7 @@
           :columns="orderTableColumns"
           :pagination-hide="true"
           :single="false"
-          :height="400"
+          :max-height="400"
           :url=table2Url
           :defaultLoadPage="false"
           @loadBefore="loadTableBefore2"

@@ -35,7 +35,7 @@
                               [{"title":"Cust ID","field":"cust_id","disabled":true}],
                               [{"title":"Apply Date","field":"created_date","disabled":true,"type":"date"},
                                {"title":"Modified Date","field":"modified_date","disabled":true,"type":"date"}]]);
-            const searchFormFields = ref({"state":"","modified_date":"","created_date":"","bid_no":"","cust_id":"","requestor_name":"","cust_dbid":"","transfer_date":"","mpg_name":""});
+            const searchFormFields = ref({"bid_no":"","state":"","modified_date":"","created_date":"","cust_id":"","requestor_name":"","cust_dbid":"","transfer_date":"","mpg_name":""});
             const searchFormOptions = ref([[{"title":"Bid NO","field":"bid_no","type":"like"},{"title":"Cust ID","field":"cust_id"}],[{"title":"Apply Date","field":"created_date","type":"date"},{"dataKey":"LocalMpgCategory","data":[],"title":"Mpg","field":"mpg_name","type":"select"}],[{"title":"Modified Date","field":"modified_date","type":"date"},{"title":"Requstor","field":"requestor_name","type":"like"}],[{"title":"Transfer Date","field":"transfer_date","type":"date"},{"dataKey":"transfer_status","data":[],"title":"Status","field":"state","type":"select"}],[{"title":"","field":"cust_dbid"}]]);
             const columns = ref([{field:'bid_no',title:'Bid NO',type:'string',link:true,width:110,readonly:true,align:'left',sort:true},
                        {field:'state',title:'Status',type:'string',bind:{ key:'transfer_status',data:[]},width:110,align:'left'},
@@ -65,7 +65,7 @@
                        {field:'modified_client',title:'modified_client',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
                        {field:'mpg_name',title:'Mpg',type:'string',bind:{ key:'LocalMpgCategory',data:[]},width:110,hidden:true,align:'left'},
-                       {field:'requestorName',title:'Requstor',type:'string',width:180,require:true,align:'left'}]);
+                       {field:'requestorName',title:'Requstor',type:'string',width:180,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

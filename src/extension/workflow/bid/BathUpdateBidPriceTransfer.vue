@@ -1,45 +1,55 @@
 <template>
 <div style="padding-left: 5px;">
-  <div class=" view-header">
-    <div class="desc-text" ><i class="el-icon-s-grid"></i>
-      <span class="el-submenu__title">Bid Price Transfer</span></div>
-  </div>
-    <!-- vol-table配置的这些属性见VolTable组件api文件 -->
-    <vol-table
-            ref="priceTable"
-            :loadKey="true"
-            :clickEdit="false"
-            :columns="columns"
-            :pagination-hide="true"
-            :single="false"
-            :max-height="400"
-            :url=table1Url
-            :defaultLoadPage="true"
-            @loadBefore="loadTableBefore1"
-            :index="true"
-            @rowClick = "priceRowClick"
-    ></vol-table>
+  <el-form :inline="true" label-position="right" label-width="110px" :model="formModel">
 
+      <div class=" view-header">
+        <div class="desc-text" ><i class="el-icon-s-grid"></i>
+          <span class="el-submenu__title">Bid Price Transfer</span></div>
+      </div>
+        <!-- vol-table配置的这些属性见VolTable组件api文件 -->
+        <vol-table
+                ref="priceTable"
+                :loadKey="true"
+                :clickEdit="false"
+                :columns="columns"
+                :pagination-hide="true"
+                :single="false"
+                :max-height="400"
+                :url=table1Url
+                :defaultLoadPage="true"
+                @loadBefore="loadTableBefore1"
+                @loadAfter="loadTableAfter1"
+                :index="true"
+                @rowClick = "priceRowClick"
+        ></vol-table>
 
-  <div class=" view-header">
-    <div class="desc-text" ><i class="el-icon-s-grid"></i>
-      <span class="el-submenu__title">Bid Order Transfer</span></div>
-  </div>
-  <!-- vol-table配置的这些属性见VolTable组件api文件 -->
-  <vol-table
-          ref="orderTable"
-          :loadKey="true"
-          :clickEdit="true"
-          :columns="orderTableColumns"
-          :pagination-hide="true"
-          :single="false"
-          :max-height="400"
-          :url=table2Url
-          :defaultLoadPage="false"
-          @loadBefore="loadTableBefore2"
-          :index="true"
-          @rowClick = "orderRowClick"
-  ></vol-table>
+      <el-form-item   label="Price Note:" style="padding-top:10px;width: 50%">
+        <el-input type="textarea" v-model="formModel.price_note"  ></el-input>
+      </el-form-item>
+      <div class=" view-header">
+        <div class="desc-text" ><i class="el-icon-s-grid"></i>
+          <span class="el-submenu__title">Bid Order Transfer</span></div>
+      </div>
+      <!-- vol-table配置的这些属性见VolTable组件api文件 -->
+      <vol-table
+              ref="orderTable"
+              :loadKey="true"
+              :clickEdit="true"
+              :columns="orderTableColumns"
+              :pagination-hide="true"
+              :single="false"
+              :max-height="400"
+              :url=table2Url
+              :defaultLoadPage="false"
+              @loadBefore="loadTableBefore2"
+              @loadAfter="loadTableAfter2"
+              :index="true"
+              @rowClick = "orderRowClick"
+      ></vol-table>
+    <el-form-item   label="Order Note:" style="padding-top:10px;width: 50%">
+      <el-input type="textarea" v-model="formModel.order_note"  ></el-input>
+    </el-form-item>
+  </el-form>
 </div>
   <show-price ref="ShowPrice"></show-price>
 </template>
@@ -63,7 +73,10 @@ export default {
       model: false,
       bid_no:"",
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
-
+      formModel:{
+        price_note:"",
+        order_note:""
+      },
       fieldName:"",//編輯字段,用於回傳設置值
       formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields
       url: "",//加载数据的接口
@@ -137,7 +150,8 @@ export default {
         }
 
       })
-
+        // this.orderTableRowData = this.$refs.orderTable.rowData;
+        // this.priceTableRowData=this.$refs.priceTable.rowData;
     },
     openPrice(cust_id,prod_id){
       this.$refs.ShowPrice.openModel(true,cust_id,prod_id);
@@ -160,6 +174,17 @@ export default {
       callBack(true);
     },
 
+      loadTableAfter2(data, callBack) {
+          //数据加载后，赋给对像，用于编辑用
+          this.orderTableRowData = data;
+          return true;
+      },
+      loadTableAfter1(data, callBack) {
+          //数据加载后，赋给对像，用于编辑用
+
+          this.priceTableRowData = data;
+          return true;
+      },
 
     clear() {
       this.$refs.priceTable.reset();

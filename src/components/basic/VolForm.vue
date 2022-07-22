@@ -607,8 +607,15 @@ export default defineComponent({
               };
             }
             x.data.push(...newSource);
+            if(x.type=='select'){
+              x.data.unshift({key:'',value:'All'});
+            }
+
           } else {
             x.data.push(...d.data);
+            if(x.type=='select'){
+              x.data.unshift({key:'',value:'All'});
+            }
           }
         });
       });

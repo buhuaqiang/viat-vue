@@ -81,6 +81,7 @@ let extension = {
         //示例：设置修改新建、编辑弹出框字段标签的长度
         this.boxOptions.labelWidth = 150;
         this.boxOptions.width=1500
+      this.boxOptions.height=1500
       //设置查询表单的标签文字宽度
       this.labelWidth = 150;
       //表格设置为单选
@@ -390,11 +391,40 @@ let extension = {
       return true;
     },
     addBefore(formData) {
+      //编辑保存前formData为对象，包括明细表、删除行的Id
+      //選擇客戶List table1
+
+
       //新建保存前formData为对象，包括明细表，可以给给表单设置值，自己输出看formData的值
       return true;
     },
     updateBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
+      let priceTableRowData = this.$refs.modelFooter.priceTableRowData;
+
+      //table2數據回填到 formData
+      let orderTableRowData = this.$refs.modelFooter.orderTableRowData;
+
+
+      let detailData = [
+        {
+          key: "priceTableRowData",
+          value: priceTableRowData,
+        },
+        {
+          key: "orderTableRowData",
+          value: orderTableRowData,
+        },
+        {
+          key:"orderNote",
+          value: this.$refs.modelFooter.formModel.order_note
+        },
+        {
+          key:"priceNote",
+          value: this.$refs.modelFooter.formModel.price_note
+        }
+      ]
+      formData.detailData = detailData;
       return true;
     },
     rowClick({ row, column, event }) {
