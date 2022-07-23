@@ -281,7 +281,6 @@ let extension = {
     },
     //Back
     BackData(){
-      debugger
       let rows =  this.getSelectRows();
       var bidmast_dbids=[];
       if (!rows || rows.length == 0) {
@@ -308,8 +307,9 @@ let extension = {
         tigger = true;
         let url = "api/View_wk_cust_main/processBack";
         this.http.post(url, delKeys, 'RollBack data....').then((x) => {
-          if (!x.status) return this.$error(x.message);
-          this.$success(x.message);
+          debugger;
+          if (!x.status) return this.$Message.error(x.message);
+          this.$Message.success("RollBack Success")
           this.refresh();
         });
       });
