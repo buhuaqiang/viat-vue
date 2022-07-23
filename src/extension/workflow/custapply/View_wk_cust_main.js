@@ -149,7 +149,7 @@ let extension = {
         disabled: false,
         value: 'save',
         onClick() {
-          this.save();
+          this.saveSubmit();
         }
       })
 
@@ -217,6 +217,7 @@ let extension = {
 
     //Submit
     SubmitData(){
+      debugger
       let row = this.$refs.table.getSelected();
       if (row.length == 0) {
         return this.$error('Please select the row to submit!');
@@ -242,6 +243,15 @@ let extension = {
       this.http.post(url,  bidmast_dbids , true).then((result) => {
         return result;
       });
+    },
+    //save and Submit
+    saveSubmit(){
+      debugger
+      let formData = this.editFormFields;
+      let url = "api/View_wk_cust_main/addSubmit";
+       this.http.post(url,  formData , true).then((result) => {
+         return result;
+       });
     },
     //选择客户Pick 回填字段
     handleCustomerSelected(flag,rows){
