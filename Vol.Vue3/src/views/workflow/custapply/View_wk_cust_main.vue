@@ -44,15 +44,15 @@
                               [{"dataKey":"viat_city","data":[],"title":"Delivery City Name","field":"delivery_city_name","type":"select","required":true},
                                {"dataKey":"viat_city_zone","data":[],"title":"Delivery Zip Id","field":"delivery_zip_id","type":"select","required":true}],
                               [{"title":"Delivery Addr","field":"delivery_addr","colSize":8,"required":true}],
-                              [{"title":"Delivery Contact","field":"delivery_contact","required":true},
+                              [{"title":"Delivery Contact","field":"delivery_contact"},
                                {"title":"Delivery Tel","field":"delivery_tel_no","required":true}],
                               [{"dataKey":"doh_type","data":[],"title":"Doh Type","field":"doh_type","type":"select","required":true},
-                               {"title":"NHI Institute No","field":"doh_institute_no","required":true}],
-                              [{"dataKey":"PublicPrivate","data":[],"title":"Public/Private","field":"is_private","type":"select","required":true}],
+                               {"title":"NHI Institute No","field":"doh_institute_no"}],
+                              [{"dataKey":"PublicPrivate","data":[],"title":"Public/Private","field":"is_private","type":"select"}],
                               [{"title":"Owner","field":"owner","required":true},
-                               {"title":"Tax ID","field":"tax_id","required":true}],
-                              [{"title":"Email","field":"email","required":true},
-                               {"title":"Fax NO","field":"fax_no","required":true}],
+                               {"title":"Tax ID","field":"tax_id"}],
+                              [{"title":"Email","field":"email"},
+                               {"title":"Fax NO","field":"fax_no"}],
                               [{"title":"Own Hospital","field":"own_hospital_cust_id",colSize: 8},{"title":"own_hospital","field":"own_hospital",hidden:true}],
                               [{"title":"Controlled  Mdicine Certificate NO","field":"ctrl_drug_no"},
                                {"title":"Controlled  Medicine Contact","field":"ctrl_drug_contact"}],
@@ -62,12 +62,12 @@
                               [{"title":"Modifier","field":"modified_username","disabled":true},
                                {"title":"Modified Date","field":"modified_date","disabled":true}]]);
             const searchFormFields = ref({"bid_no":"","cust_name":"","start_date":"","status":""});
-            const searchFormOptions = ref([[{"title":"Bid No","field":"bid_no"},{"title":"Cust Name","field":"cust_name"}],[{"dataKey":"ApprovalStatus","data":[],"title":"Status","field":"status","type":"select"},{"title":"Apply Date","field":"start_date"}]]);
+            const searchFormOptions = ref([[{"title":"Bid No","field":"bid_no"},{"title":"Cust Name","field":"cust_name"}],[{"dataKey":"ApprovalStatus","data":[],"title":"Status","field":"status","type":"select"},{"title":"Apply Date","field":"start_date","type":"date"}]]);
             const columns = ref([{field:'bid_no',title:'Bid No',"link":true,type:'string',width:110,align:'left',sort:true},
                        {field:'cust_name',title:'Cust Name',type:'string',width:120,align:'left'},
                        {field:'cust_id',title:'Cust ID',type:'string',width:110,align:'left'},
                        {field:'apply_type',title:'Apply Type',type:'string',bind:{ key:'ApprovalType',data:[]},width:110,align:'left'},
-                       {field:'start_date',title:'Apply Date',type:'datetime',width:110,align:'left',sort:true},
+                       {field:'start_date',title:'Apply Date',type:'datetime',width:90,align:'left',sort:true},
                         {field:'created_username',title:'Creator',type:'string',width:110,align:'left'},
                        {field:'cust_city_name',title:'Cust City Name',type:'string',bind:{ key:'viat_city',data:[]},width:110,hidden:true,align:'left'},
                        {field:'cust_zip_id',title:'Cust Zip Name',type:'string',bind:{ key:'viat_city_zone',data:[]},width:110,hidden:true,align:'left'},
@@ -123,7 +123,7 @@
                        {field:'modified_clientusername',title:'列名modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
 
                        {field:'end_date',title:'列名end_date',type:'datetime',width:110,hidden:true,align:'left',sort:true},
-                       {field:'status',title:'Status',type:'string',bind:{ key:'ApprovalStatus',data:[]},width:110,align:'left'},
+                       {field:'status',title:'Status',type:'string',bind:{ key:'ApprovalStatus',data:[]},width:90,align:'left'},
                        {field:'own_hospital_cust_name',title:'Own Hospital Cust_name',type:'string',width:120,hidden:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
