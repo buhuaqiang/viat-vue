@@ -56,11 +56,6 @@
               @click="deletePriceRow()"
       >Delete</el-button>
       <el-button
-              type="danger"
-              icon="el-icon-delete"
-              @click="deletePriceAllRow()"
-      >Delete All</el-button>
-      <el-button
               type="warning"
               icon="el-icon-zoom-in"
               @click="openPriceStretageModel()"
@@ -619,21 +614,20 @@ export default {
       }
       //数据记录
       rows.forEach(x=>{
-        this.delPriceTableRowData.push(x);
+        if(x.bidetail_dbid){
+          this.delPriceTableRowData.push(x);
+        }
       })
       this.$refs.priceTable.delRow();
+      debugger;
+      rows =  this.$refs.priceTable.rowData;
+      if(rows.length==0){
+        this.contstret_dbid="";
+        this.cont_stretagy_id="";
+        this.cont_stretagy_name="";
+      }
+    },
 
-    },
-    deletePriceAllRow(){
-      let rows =  this.$refs.priceTable.rowData;
-      //数据记录
-      rows.forEach(x=>{
-        this.delPriceTableRowData.push(x);
-      })
-      this.$refs.priceTable.rowData=[];
-      this.cont_stretagy_id="";
-      this.cont_stretagy_name="";
-    },
     deleteOrderRow(){
       let rows = this.$refs.orderTable.getSelected();
       if (rows.length == 0) {
@@ -641,7 +635,9 @@ export default {
       }
       //数据记录
       rows.forEach(x=>{
-        this.delOrderTableRowData.push(x);
+        if(x.ordetail_dbid){
+          this.delOrderTableRowData.push(x);
+        }
       })
       this.$refs.orderTable.delRow();
 
