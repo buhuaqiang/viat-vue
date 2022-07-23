@@ -59,7 +59,7 @@ let extension = {
         disabled: false,
         value: 'save',
         onClick() {
-          this.save();
+          this.saveSubmit();
         }
       })
 
@@ -618,6 +618,79 @@ let extension = {
         return result;
       });*/
       return true;
+    },
+
+    //save and Submit
+    saveSubmit(){
+      debugger;
+      this.$refs.form.validate((result) => {
+        if (result) {
+          this.saveExecute();
+        }
+      });
+
+    },
+    saveExecute(){
+      let formData = {
+        mainData: this.editFormFields,
+        detailData: null,
+        delKeys: null
+      };
+      this.updateBefore(formData);
+      let url = "api/View_wk_bid_price_apply_main/addSubmit";
+
+      let _currentIsAdd = this.currentAction == this.const.ADD;
+      this.http.post(url, formData, true).then((x) => {
+        //保存后
+        if (_currentIsAdd) {
+          if (!this.addAfter(x)) return;
+          //连续添加
+          if (this.continueAdd && x.status) {
+            this.$success(x.message);
+            //新建
+            this.currentAction = this.const.ADD;
+            this.currentRow = {};
+            this.resetAdd();
+            this.refresh();
+            return;
+          }
+        } else {
+          if (!this.updateAfter(x)) return;
+        }
+        if (!x.status) return this.$error(x.message);
+        this.$success(x.message?x.message:"Saved successfully!");
+        //如果保存成功后需要关闭编辑框，直接返回不处理后面
+        if (this.boxOptions.saveClose) {
+          this.boxModel = false;
+          //2020.12.27如果是编辑保存后不重置分页页数，刷新页面时还是显示当前页的数据
+          this.$refs.table.load(null, _currentIsAdd);
+          //this.refresh();
+          return;
+        }
+        let resultRow;
+        if (typeof x.data == 'string' && x.data != '') {
+          resultRow = JSON.parse(x.data);
+        } else {
+          resultRow = x.data;
+        }
+
+        if (this.currentAction == this.const.ADD) {
+          //  this.currentRow=x.data;
+          this.editFormFields[this.table.key] = '';
+          this.currentAction = this.const.EDIT;
+          this.currentRow = resultRow.data;
+        }
+        this.resetEditForm(resultRow.data);
+        // console.log(resultRow);
+        if (this.hasDetail) {
+          this.detailOptions.delKeys = [];
+          if (resultRow.list) {
+            this.$refs.detail.rowData.push(...resultRow.list);
+          }
+        }
+        this.$refs.table.load(null, _currentIsAdd);
+        // this.refresh();
+      });
     },
 
     doRollBack(){
