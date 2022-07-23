@@ -29,12 +29,13 @@
                 url: "/View_wk_bid_price_apply_main/",
                 sortName: "BID_NO"
             });
-            const editFormFields = ref({"bidmast_dbid":"","bid_no":"","apply_type":"","cust_id":"","group_id":"","isgroup":"","bid_date":"","start_date":"","end_date":"","upload":"","remarks":""});
+            const editFormFields = ref({"bidmast_dbid":"","bid_no":"","contstret_dbid":"","cont_stretagy_id":"","cont_stretagy_name":"","apply_type":"","cust_id":"","group_id":"","isgroup":"","bid_date":"","start_date":"","end_date":"","upload":"","remarks":""});
             const editFormOptions = ref([[{"title":"Bid NO","field":"bid_no","type":"text",readonly:true},
                              {"title":"bidmast dbid","field":"bidmast_dbid",hidden:true},
-                            {"title":"cont_stretagy_id","field":"cont_stretagy_id",hidden:true},
-                            {"title":"cont_stretagy_name","field":"cont_stretagy_name",hidden:true},
-                               {"dataKey":"ApprovalType","data":[],"title":"Apply Type","required":true,"field":"apply_type","type":"select"}],
+                             {"title":"contstret_dbid","field":"contstret_dbid",hidden:true},
+                             {"title":"cont_stretagy_id","field":"cont_stretagy_id",hidden:true},
+                             {"title":"cont_stretagy_name","field":"cont_stretagy_name",hidden:true},
+                             {"dataKey":"ApprovalType","data":[],"title":"Apply Type","required":true,"field":"apply_type","type":"select"}],
                               [{"dataKey":"CustomerType","data":[],"title":"Is Group","required":true,"field":"isgroup","type":"radio"},
                                {"title":"Customer ID","field":"cust_id","type":"text"},
                                { title: "Customer Name", field: "cust_name", align: "left",hidden: true},
@@ -82,7 +83,7 @@
                        {field:'invoice_type',title:'預留',type:'string',width:110,hidden:true,align:'left'},
                        {field:'order_date',title:'預留',type:'datetime',width:150,hidden:true,align:'left',sort:true},
                        {field:'territory_id',title:'territory_id',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'contstret_dbid',title:'bidprice ',type:'guid',width:110,hidden:true,align:'left'},
+                       {field:'contstret_dbid',title:'contstret_dbid ',type:'guid',width:110,hidden:true,align:'left'},
                        {field:'po_no',title:'預留',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_date',title:'最後修改時間',type:'datetime',width:150,hidden:true,align:'left',sort:true},
                        {field:'isgroup',title:'Is Group',type:'string',bind:{ key:'CustomerType',data:[]},width:110,require:true,align:'left',hidden:true}]);

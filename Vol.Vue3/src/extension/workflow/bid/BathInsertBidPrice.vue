@@ -145,6 +145,7 @@ export default {
     return {
       model: false,
       bidmast_dbid:"",
+      contstret_dbid:"",
       cont_stretagy_id:"",
       cont_stretagy_name:"",
       formModel:{
@@ -377,6 +378,7 @@ export default {
           net_price:row.net_price,
           bid_price:row.bid_price,
           reserv_price:row.reserv_price,
+          contstret_dbid:row.contstret_dbid,
           cont_stretagy_id:row.cont_stretagy_id,
           cont_stretagy_name:row.cont_stretagy_name
 
@@ -395,9 +397,18 @@ export default {
           this.$refs.priceTable.rowData.push(x);
         }
       })
+      this.contstret_dbid  =_rows[0].contstret_dbid;
       this.cont_stretagy_id = _rows[0].cont_stretagy_id;
       this.cont_stretagy_name = _rows[0].cont_stretagy_name;
       this.priceTableRowData = this.$refs.priceTable.rowData;
+      let $parent;
+      //获取生成页面viewgrid的对象
+      this.$emit("parentCall", ($this) => {
+        $parent = $this;
+      });
+      $parent.editFormFields.contstret_dbid =this.contstret_dbid;
+      $parent.editFormFields.cont_stretagy_id=this.cont_stretagy_id;
+      $parent.editFormFields.cont_stretagy_name=this.cont_stretagy_name;
     },
 
     clearPop(val){
