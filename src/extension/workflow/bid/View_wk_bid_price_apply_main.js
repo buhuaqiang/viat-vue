@@ -625,12 +625,12 @@ let extension = {
       debugger;
       this.$refs.form.validate((result) => {
         if (result) {
-          this.saveExecute();
+          this.saveSubmitExecute();
         }
       });
 
     },
-    saveExecute(){
+    saveSubmitExecute(){
       let formData = {
         mainData: this.editFormFields,
         detailData: null,
