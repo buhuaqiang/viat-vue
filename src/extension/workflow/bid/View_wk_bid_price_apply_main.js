@@ -502,10 +502,10 @@ let extension = {
       this.editFormFields.contstret_dbid = this.$refs.modelBody.contstret_dbid;
       let priceTableRowData = this.$refs.modelBody.getPriceTableRowData();
       let orderTableRowData = this.$refs.modelBody.getOrderTableRowData();
-      if(this.editFormFields.apply_type='03' && priceTableRowData.length==0){
+      if(this.editFormFields.apply_type=='03' && priceTableRowData.length==0){
         this.$Message.error("Please Input Bid Pirce List ")
         return  false;
-      }else if(this.editFormFields.apply_type='04' && orderTableRowData.length==0){
+      }else if(this.editFormFields.apply_type=='04' && orderTableRowData.length==0){
         this.$Message.error("Please Input Bid Order List ")
         return  false;
       }
