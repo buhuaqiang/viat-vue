@@ -45,12 +45,23 @@ let extension = {
       this.setFiexdSearchForm(true)
       //表格设置为单选
       this.single=true;
+      //设置查询表单的标签文字宽度
+      this.labelWidth=180;
       //设置编辑表单标签文字宽度
       this.boxOptions.labelWidth=260;
-      this.boxOptions.width=1200;
+      this.boxOptions.width=1500;
 
 
 
+      //日期格式化 formatter
+      let start_date=this.getColumnsOption("start_date");
+      start_date.formatter = (row) => {
+        //对单元格的数据格式化处理
+        if (!row.start_date) {
+          return;
+        }
+        return row.start_date.substr(0,10);
+      }
 
       let comCity = this.getOption("cust_city_name");
       let invoiceCity = this.getOption("invoice_city_name");
@@ -154,7 +165,7 @@ let extension = {
       })
 
       this.columns.push({
-        title: '操作', width: 165, render: (h, { row, column, index }) => {
+        title: '操作', width: 110, render: (h, { row, column, index }) => {
           return h(
               "div",
               { style: {} },
@@ -243,8 +254,8 @@ let extension = {
         tigger = true;
         let url = "api/View_wk_cust_main/Submit";
         this.http.post(url, row, 'Submit data....').then((x) => {
-          if (!x.status) return this.$error(x.message);
-          this.$success(x.message);
+          if (!x.status) return this.$Message.error(x.message);
+          this.$Message.success("Submit Success")
           this.refresh();
         });
       });
@@ -268,8 +279,9 @@ let extension = {
       let url = "api/View_wk_cust_main/addSubmit";
       let _currentIsAdd = this.currentAction == this.const.ADD;
       this.http.post(url, formData, true).then((x) => {
+
         if (!x.status) return this.$error(x.message);
-        this.$success(x.message?x.message:"Saved successfully!");
+        this.$Message.success(x.message?x.message:"Saved successfully!");
         if (this.boxOptions.saveClose) {
           this.boxModel = false;
           //2020.12.27如果是编辑保存后不重置分页页数，刷新页面时还是显示当前页的数据
@@ -413,6 +425,15 @@ let extension = {
       })
       return option;
     },
+    getColumnsOption (field) {
+      let option;
+      this.columns.forEach(x => {
+        if (x.field == field) {
+          option = x;
+        }
+      })
+      return option;
+    },
 
 
     searchBefore(param) {
@@ -446,8 +467,22 @@ let extension = {
       //看不懂就把输出看：console.log(this.editFormOptions)
       var apply_type  = this.editFormFields.apply_type;
 
+      //编辑表单，动态设置下拉框选项禁用状态或者隐藏显示
+      this.editFormOptions.forEach((options) => {
+        options.forEach((item) => {
+          if (item.field == 'apply_type') {
+            item.data.forEach((kv) => {
+              //根据字典的值判断
+              if (kv.key == '03' ||kv.key == '04') {
+                kv.hidden = true; //设置选项隐藏
+              }
+            });
+          }
+        });
+      });
+
       if (this.currentAction=='Add'){
-        //this.editFormFields.apply_type='01';
+        this.editFormFields.apply_type='01';
         this.pickEditFormCustomerName = "";
         this.pickEditFormHospital = "";
         //this.getOption("cust_dbid").hidden=true;
