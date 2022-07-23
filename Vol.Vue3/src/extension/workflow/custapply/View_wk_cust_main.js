@@ -50,6 +50,7 @@ let extension = {
       //设置编辑表单标签文字宽度
       this.boxOptions.labelWidth=260;
       this.boxOptions.width=1500;
+      this.load=false;
 
 
 
@@ -453,7 +454,7 @@ let extension = {
     async modelOpenBeforeAsync(row) {
       debugger
       if (this.currentAction==this.const.EDIT){
-        if(row.status!='00'){
+        if(row.status!='00' && row.status!='02'){
           this.$Message.error(" This row data can not edit.");
           return false;
         }
@@ -508,6 +509,7 @@ let extension = {
         this.pickEditFormCustomerName = "";
         this.pickEditFormHospital = "";
         //this.getOption("cust_dbid").hidden=true;
+        this.getOption("cust_name").hidden=false;
         this.getOption1("Cust Code").hidden=true;
         this.getOption1("Customer").hidden=true;
         this.getOption("apply_type").disabled=false;
