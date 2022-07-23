@@ -449,6 +449,28 @@ let extension = {
       //新建保存前formData为对象，包括明细表，可以给给表单设置值，自己输出看formData的值
       return true;
     },
+    //是否可編輯校驗
+    async modelOpenBeforeAsync(row) {
+      debugger
+      if (this.currentAction==this.const.EDIT){
+        if(row.status!='00'){
+          this.$Message.error(" This row data can not edit.");
+          return false;
+        }
+      }
+      return true;
+    },
+
+    //是否可刪除校驗
+    delBefore(ids, rows) { //查询界面的表删除前 ids为删除的id数组,rows删除的行
+      let status = rows.some(x => { return x.status !='00' });
+      if (status) {
+        this.$message.error('Only delete Draft Data')
+        return false;
+      }
+      //this.$message.success('删除前，选择的Id:' + ids.join(','));
+      return true;
+    },
     updateBefore(formData) {
       debugger
       //编辑保存前formData为对象，包括明细表、删除行的Id
