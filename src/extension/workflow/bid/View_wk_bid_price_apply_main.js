@@ -607,16 +607,12 @@ let extension = {
         tigger = true;
         let url = "api/View_wk_bid_price_apply_main/Submit";
         this.http.post(url, rows, 'Submit data....').then((x) => {
-          if (!x.status) return this.$error(x.message);
-          this.$success(x.message);
+          if (!x.status) return this.$Message.error(x.message);
+          this.$Message.success("Submit Success");
           this.refresh();
         });
       });
 
-     /* let url = "api/View_wk_bid_price_apply_main/Submit";
-      this.http.post(url,  rows, true).then((result) => {
-        return result;
-      });*/
       return true;
     },
 
@@ -646,7 +642,7 @@ let extension = {
           if (!this.addAfter(x)) return;
           //连续添加
           if (this.continueAdd && x.status) {
-            this.$success(x.message);
+            this.$Message.success(x.message?x.message:"Saved successfully!");
             //新建
             this.currentAction = this.const.ADD;
             this.currentRow = {};
@@ -658,7 +654,7 @@ let extension = {
           if (!this.updateAfter(x)) return;
         }
         if (!x.status) return this.$error(x.message);
-        this.$success(x.message?x.message:"Saved successfully!");
+        this.$Message.success(x.message?x.message:"Saved successfully!");
         //如果保存成功后需要关闭编辑框，直接返回不处理后面
         if (this.boxOptions.saveClose) {
           this.boxModel = false;
@@ -720,8 +716,8 @@ let extension = {
         tigger = true;
         let url = "api/View_wk_bid_price_apply_main/doRollBack";
         this.http.post(url, delKeys, 'RollBack data....').then((x) => {
-          if (!x.status) return this.$error(x.message);
-          this.$success(x.message);
+          if (!x.status) return this.$Message.error(x.message);
+          this.$Message.success("RollBack Success");
           this.refresh();
         });
       });
