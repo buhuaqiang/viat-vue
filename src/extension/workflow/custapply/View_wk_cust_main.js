@@ -219,39 +219,100 @@ let extension = {
     SubmitData(){
       debugger
       let row = this.$refs.table.getSelected();
-      if (row.length == 0) {
+      if (!row || row.length == 0) {
         return this.$error('Please select the row to submit!');
       }
-
-      let url = "api/View_wk_cust_main/Submit";
-      this.http.post(url,  row, true).then((result) => {
-        return result;
+      let delKeys = row.map((x) => {
+        return x[this.table.key];
       });
-    },
-    //Back
-    BackData(){
-      let _rows =  this.getSelectRows();
-      let bidmast_dbids=[];
-      if (_rows.length == 0) {
-        return this.$error('Please select the row to back!');
+      if (!delKeys || delKeys.length == 0)
+        return this.$error('None Need Submit Data!');
+      let status = row.some(x => { return (x.status !='00' && x.status !='02')});
+      if (status) {
+        this.$message.error('Only Submit Draft Or RollBack Data')
+        return false;
       }
-      _rows.forEach(r=>{
-        bidmast_dbids.push(r.bidmast_dbid);
-      })
-     // bidmast_dbids.push(_rows[0].bidmast_dbid)
-      let url = "api/View_wk_cust_main/processBack";
-      this.http.post(url,  bidmast_dbids , true).then((result) => {
-        return result;
+      let tigger = false;
+      this.$confirm('Are you sure you want to Submit the selected data?', 'Warn', {
+        confirmButtonText: 'confirm',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        if (tigger) return;
+        tigger = true;
+        let url = "api/View_wk_cust_main/Submit";
+        this.http.post(url, row, 'Submit data....').then((x) => {
+          if (!x.status) return this.$error(x.message);
+          this.$success(x.message);
+          this.refresh();
+        });
       });
     },
     //save and Submit
     saveSubmit(){
-      debugger
+      this.$refs.form.validate((result) => {//校验必输字段
+        if (result) {
+          this.saveSubmitExecute();
+        }
+      });
+      /*debugger
       let formData = this.editFormFields;
       let url = "api/View_wk_cust_main/addSubmit";
        this.http.post(url,  formData , true).then((result) => {
          return result;
-       });
+       });*/
+    },
+    saveSubmitExecute(){
+      let formData = this.editFormFields;
+      let url = "api/View_wk_cust_main/addSubmit";
+      let _currentIsAdd = this.currentAction == this.const.ADD;
+      this.http.post(url, formData, true).then((x) => {
+        if (!x.status) return this.$error(x.message);
+        this.$success(x.message?x.message:"Saved successfully!");
+        if (this.boxOptions.saveClose) {
+          this.boxModel = false;
+          //2020.12.27如果是编辑保存后不重置分页页数，刷新页面时还是显示当前页的数据
+          this.$refs.table.load(null, _currentIsAdd);
+          //this.refresh();
+          return;
+        }
+      });
+    },
+    //Back
+    BackData(){
+      debugger
+      let rows =  this.getSelectRows();
+      var bidmast_dbids=[];
+      if (!rows || rows.length == 0) {
+        return this.$error('Please select the row to back!');
+      }
+      let delKeys = rows.map((x) => {
+        return x[this.table.key];
+      });
+      if (!delKeys || delKeys.length == 0)
+        return this.$error('None Need RollBack Data!');
+      let status = rows.some(x => { return (x.status !='01')});
+      if (status) {
+        this.$message.error('Only RollBack Approving Data')
+        return false;
+      }
+      let tigger = false;
+      this.$confirm('Are you sure you want to RollBack the selected data?', 'Warn', {
+        confirmButtonText: 'confirm',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        if (tigger) return;
+        tigger = true;
+        let url = "api/View_wk_cust_main/processBack";
+        this.http.post(url, delKeys, 'RollBack data....').then((x) => {
+          if (!x.status) return this.$error(x.message);
+          this.$success(x.message);
+          this.refresh();
+        });
+      });
     },
     //选择客户Pick 回填字段
     handleCustomerSelected(flag,rows){
