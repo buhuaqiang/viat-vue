@@ -708,7 +708,23 @@ let extension = {
         this.$message.error('Only RollBack Approving Data')
         return false;
       }
-      //this.$message.success('删除前，选择的Id:' + ids.join(','));
+
+      let tigger = false;
+      this.$confirm('Are you sure you want to RollBack the selected data?', 'Warn', {
+        confirmButtonText: 'confirm',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        if (tigger) return;
+        tigger = true;
+        let url = "api/View_wk_bid_price_apply_main/doRollBack";
+        this.http.post(url, delKeys, 'RollBack data....').then((x) => {
+          if (!x.status) return this.$error(x.message);
+          this.$success(x.message);
+          this.refresh();
+        });
+      });
       return true;
     },
 
