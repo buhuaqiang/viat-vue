@@ -83,32 +83,28 @@ let extension = {
         this.editFormFields.delivery_zip_id = '';//清除原來選擇的數據
         this.getCityZoneData(val, deliveryZipId);
       }
-      //let editFromCust = this.getOption("cust_id");
-      let custTitle = this.getOption1("Customer");
-      let custCode = this.getOption1("Cust Code");
+      let cust_id = this.getOption("cust_id");
       let custName = this.getOption("cust_name");
       let applyType = this.getOption("apply_type");
       applyType.onChange = (val) => {
 
         if(val=='01'){
           custName.hidden=false;
-          custCode.hidden=true;
-          custTitle.hidden=true;
-          //editFromCust.hidden = true
+          cust_id.hidden=true;
         }else if(val=='02'){
           custName.hidden=true;
-          custCode.hidden=true;
-          custTitle.hidden=false;
+          cust_id.hidden=false;
+
         }
 
       }
 
 
 
-      custTitle.extra={
+      cust_id.extra={
         render:this.getFormRender("editSearchCust")
       }
-      custTitle.onKeyPress= ($event) => {
+      cust_id.onKeyPress= ($event) => {
         if($event.keyCode==13){
           let  cust_id = this.editFormFields['cust_id']
           if(cust_id) {
@@ -415,17 +411,6 @@ let extension = {
       })
       return option;
     },
-    getOption1(field) {//獲取編輯字段的titile用於區分相同的field
-      let option;
-      this.editFormOptions.forEach(x => {
-        x.forEach(item => {
-          if (item.title == field) {
-            option = item;
-          }
-        })
-      })
-      return option;
-    },
     getColumnsOption (field) {
       let option;
       this.columns.forEach(x => {
@@ -508,25 +493,19 @@ let extension = {
         this.editFormFields.apply_type='01';
         this.pickEditFormCustomerName = "";
         this.pickEditFormHospital = "";
-        //this.getOption("cust_dbid").hidden=true;
         this.getOption("cust_name").hidden=false;
-        this.getOption1("Cust Code").hidden=true;
-        this.getOption1("Customer").hidden=true;
+        this.getOption("cust_id").hidden=true;
         this.getOption("apply_type").disabled=false;
         this.getOption("delivery_tel_no").disabled=false;
 
       }else {
         if(apply_type=='01'){
           this.getOption("cust_name").hidden=false;
-          this.getOption1("Cust Code").hidden=false;
-          this.getOption1("Cust Code").disabled=true;
-          this.getOption1("Customer").hidden=true;
-         // this.getOption("cust_dbid").hidden=true;
+          this.getOption("cust_id").hidden=true;
         }
         if(apply_type=='02'){
           this.getOption("cust_name").hidden=true;
-          this.getOption1("Cust Code").hidden=true;
-          this.getOption1("Customer").hidden=false;
+          this.getOption("cust_id").hidden=false;
         }
         this.getOption("delivery_tel_no").disabled=true;
         this.getOption("apply_type").disabled=true;
