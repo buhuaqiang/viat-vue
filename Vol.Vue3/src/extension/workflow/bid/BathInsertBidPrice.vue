@@ -359,7 +359,6 @@ export default {
               this.$refs.orderTable.rowData.push(x);
             }
           })
-          this.orderTableRowData = this.$refs.orderTable.rowData;
         }
 
     },
@@ -400,7 +399,6 @@ export default {
       this.contstret_dbid  =_rows[0].contstret_dbid;
       this.cont_stretagy_id = _rows[0].cont_stretagy_id;
       this.cont_stretagy_name = _rows[0].cont_stretagy_name;
-      this.priceTableRowData = this.$refs.priceTable.rowData;
       let $parent;
       //获取生成页面viewgrid的对象
       this.$emit("parentCall", ($this) => {
@@ -486,10 +484,11 @@ export default {
     },
     addPrice(){
       //頁面數據校驗
-
-      if(this.formModel.prod_dbid){
-
-      }else {
+      if(this.cont_stretagy_id){
+        this.$message.error("The Contract stretagy has been selected, So a single product price cannot be added. You can Click [Delete all] Then try again");
+        return false;
+      }
+      if(!this.formModel.prod_dbid){
         this.$message.error("Please input product.");
         return false;
       }
@@ -575,42 +574,6 @@ export default {
       }
     },
 
-    priceCheck(){
-      if (this.formModel.invoice_price < this.formModel.net_price) {
-        let message="Invoice Price < Net Price,can't be saved.Please check."
-        if(this.formModel.invoice_price > this.formModel.nhi_price){
-          message+="Invoice Price > NHI Price."
-        }
-        return false;
-      }
-      else if ( this.formModel.invoice_price  >this.formModel.nhi_price) {
-        let message="Invoice Price > NHI Price,do you want to save data anyway?"
-        //
-      } else {
-
-      }
-    },
-    draftPriceCheck(){
-      if (this.formModel.invoice_price < this.formModel.net_price) {
-        let message="Invoice Price < Net Price,can't be saved.Please check."
-        if(this.formModel.invoice_price > this.formModel.formModel.nhi_price){
-          message+="Invoice Price > NHI Price."
-        }
-        return false;
-      }else if (this.formModel.invoice_price > this.formModel.formModel.nhi_price ||
-              (this.formModel.formModel.nhi_price != this.formModel.net_price && this.formModel.net_price == this.formModel.invoice_price)) {
-         let tmp_msg = "";
-        if (this.formModel.invoice_price > this.formModel.formModel.nhi_price)
-          tmp_msg += "Invoice Price > NHI Price. ";
-        if ((this.formModel.nhi_price != this.formModel.invoice_price && this.formModel.net_price == this.formModel.invoice_price))
-          tmp_msg += "Invoice Price ≠ NHI Price but Invoice Price = Net Price.";
-          tmp_msg +="Do you want to add?."
-
-      } else {
-
-      }
-    },
-
     checkData(){
       //重複判斷 group+prod 判斷
       let index=this.$refs.priceTable.rowData.findIndex((f) =>  f.prod_dbid==this.formModel.prod_dbid);
@@ -668,7 +631,6 @@ export default {
         this.delPriceTableRowData.push(x);
       })
       this.$refs.priceTable.rowData=[];
-      this.priceTableRowData=[];
       this.cont_stretagy_id="";
       this.cont_stretagy_name="";
     },
