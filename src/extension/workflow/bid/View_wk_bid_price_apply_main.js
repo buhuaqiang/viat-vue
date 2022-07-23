@@ -498,10 +498,16 @@ let extension = {
     addBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
       //選擇客戶List table1
-      let priceTableRowData = this.$refs.modelBody.priceTableRowData;
-
-      //table2數據回填到 formData
-      let orderTableRowData = this.$refs.modelBody.orderTableRowData;
+     debugger;
+      let priceTableRowData = this.$refs.modelBody.$refs.priceTable.rowData;
+      let orderTableRowData = this.$refs.modelBody.$refs.orderTable.rowData;
+      if(this.editFormFields.apply_type='03' && priceTableRowData.length==0){
+        this.$Message.error("Please Input Bid Pirce List ")
+        return  false;
+      }else if(this.editFormFields.apply_type='04' && orderTableRowData.length==0){
+        this.$Message.error("Please Input Bid Order List ")
+        return  false;
+      }
 
 
       let detailData = [
@@ -774,6 +780,7 @@ let extension = {
         this.getFormOption("apply_type").disabled=false
         this.getFormOption("isgroup").disabled=false;
         this.getFormOption("cust_id").disabled=false;
+        this.editFormFields.end_date='2099-12-31';
       }else{
         this.getFormOption("apply_type").disabled=true;
         this.getFormOption("cust_id").disabled=true;
