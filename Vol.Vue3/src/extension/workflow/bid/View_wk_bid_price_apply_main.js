@@ -498,9 +498,10 @@ let extension = {
     addBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
       //選擇客戶List table1
+      debugger;
       this.editFormFields.contstret_dbid = this.$refs.modelBody.contstret_dbid;
-      let priceTableRowData = this.$refs.modelBody.$refs.priceTable.rowData;
-      let orderTableRowData = this.$refs.modelBody.$refs.orderTable.rowData;
+      let priceTableRowData = this.$refs.modelBody.getPriceTableRowData();
+      let orderTableRowData = this.$refs.modelBody.getOrderTableRowData();
       if(this.editFormFields.apply_type='03' && priceTableRowData.length==0){
         this.$Message.error("Please Input Bid Pirce List ")
         return  false;
@@ -526,12 +527,8 @@ let extension = {
       return true;
     },
     updateBefore(formData) {
-      this.editFormFields.contstret_dbid = this.$refs.modelBody.contstret_dbid;
-      let priceTableRowData = this.$refs.modelBody.priceTableRowData;
-
-      //table2數據回填到 formData
-      let orderTableRowData = this.$refs.modelBody.orderTableRowData;
-
+      let priceTableRowData = this.$refs.modelBody.getPriceTableRowData();
+      let orderTableRowData = this.$refs.modelBody.getOrderTableRowData();
       //删除数据回传
       let delPriceTableRowData = this.$refs.modelBody.delPriceTableRowData;
 
@@ -637,7 +634,12 @@ let extension = {
         detailData: null,
         delKeys: null
       };
-      this.updateBefore(formData);
+      if (this.currentAction==this.const.ADD){
+        this.addBefore(formData);
+      }else{
+        this.updateBefore(formData);
+      }
+debugger;
       let url = "api/View_wk_bid_price_apply_main/addSubmit";
 
       let _currentIsAdd = this.currentAction == this.const.ADD;

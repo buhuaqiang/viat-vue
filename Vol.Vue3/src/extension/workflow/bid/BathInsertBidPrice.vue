@@ -173,8 +173,8 @@ export default {
       table1Url: "api/Viat_wk_bid_detail/GetPageData",//?bidmast_dbid=" , //table1获取数据的接口
       table2Url: "api/Viat_wk_ord_detail/GetPageData",//?bidmast_dbid=" , //table1获取数据的接口 待補充
 
-      priceTableRowData:"",
-      orderTableRowData:"",
+      priceTableRowData:[],
+      orderTableRowData:[],
       delPriceTableRowData:[],
       delOrderTableRowData:[],
       columns: [
@@ -311,7 +311,14 @@ export default {
     },
 
     openPriceStretageModel(val){
-      this.$refs.Viat_wk_cont_stretagy_detail_pickup.openModel(true,"stretagy","onSelect")
+      let rows = this.$refs.priceTable.rowData;
+      if(rows.length>0){
+        this.$Message.error("Please Delete All Price Date");
+        return false;
+      }else{
+        this.$refs.Viat_wk_cont_stretagy_detail_pickup.openModel(true,"stretagy","onSelect")
+      }
+
     },
 
     onSelectPop(fieldName,rows){
@@ -379,7 +386,6 @@ export default {
         }
       })
 
-      this.$refs.priceTable.rowData=[];
       _rows.forEach(x => {
         let idx =  this.$refs.priceTable.rowData.some(item => {
           // 判断项应为获取的变量
@@ -395,13 +401,19 @@ export default {
       this.cont_stretagy_id = _rows[0].cont_stretagy_id;
       this.cont_stretagy_name = _rows[0].cont_stretagy_name;
       let $parent;
-      //获取生成页面viewgrid的对象
       this.$emit("parentCall", ($this) => {
         $parent = $this;
       });
       $parent.editFormFields.contstret_dbid =this.contstret_dbid;
       $parent.editFormFields.cont_stretagy_id=this.cont_stretagy_id;
       $parent.editFormFields.cont_stretagy_name=this.cont_stretagy_name;
+    },
+
+    getPriceTableRowData(){
+      return this.$refs.priceTable.rowData
+    },
+    getOrderTableRowData(){
+      return this.$refs.orderTable.rowData
     },
 
     clearPop(val){
@@ -618,13 +630,21 @@ export default {
           this.delPriceTableRowData.push(x);
         }
       })
+
+      let $parent;
+      //获取生成页面viewgrid的对象
+      this.$emit("parentCall", ($this) => {
+        $parent = $this;
+      });
       this.$refs.priceTable.delRow();
-      debugger;
       rows =  this.$refs.priceTable.rowData;
       if(rows.length==0){
         this.contstret_dbid="";
         this.cont_stretagy_id="";
         this.cont_stretagy_name="";
+       $parent.editFormFields.contstret_dbid="";
+       $parent.editFormFields.cont_stretagy_id="";
+       $parent.editFormFields.cont_stretagy_name="";
       }
     },
 
