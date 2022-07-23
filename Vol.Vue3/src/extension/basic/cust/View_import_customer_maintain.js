@@ -561,7 +561,7 @@ debugger
         this.getCityZoneData(cityName2, invoiceZipId);
 
           invoiceNmae.extra = {
-              render: this.getPopRender()
+              render: this.getCopyAddRender()
           }
           ownHospital.extra = {
               render: this.getPopRender("f_own_hospital",row.own_hospital_custname)
