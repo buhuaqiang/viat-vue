@@ -498,7 +498,7 @@ let extension = {
     addBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
       //選擇客戶List table1
-     debugger;
+      this.editFormFields.contstret_dbid = this.$refs.modelBody.contstret_dbid;
       let priceTableRowData = this.$refs.modelBody.$refs.priceTable.rowData;
       let orderTableRowData = this.$refs.modelBody.$refs.orderTable.rowData;
       if(this.editFormFields.apply_type='03' && priceTableRowData.length==0){
@@ -526,8 +526,7 @@ let extension = {
       return true;
     },
     updateBefore(formData) {
-      //编辑保存前formData为对象，包括明细表、删除行的Id
-      //選擇客戶List table1
+      this.editFormFields.contstret_dbid = this.$refs.modelBody.contstret_dbid;
       let priceTableRowData = this.$refs.modelBody.priceTableRowData;
 
       //table2數據回填到 formData
