@@ -500,7 +500,11 @@ let extension = {
       //選擇客戶List table1
       debugger;
       this.editFormFields.contstret_dbid = this.$refs.modelBody.contstret_dbid;
-      let priceTableRowData = this.$refs.modelBody.getPriceTableRowData();
+      let priceTableRowData="";
+      if(this.editFormFields.apply_type=='03'){
+        priceTableRowData= this.$refs.modelBody.getPriceTableRowData();
+      }
+
       let orderTableRowData = this.$refs.modelBody.getOrderTableRowData();
       if(this.editFormFields.apply_type=='03' && priceTableRowData.length==0){
         this.$Message.error("Please Input Bid Pirce List ")
@@ -527,7 +531,10 @@ let extension = {
       return true;
     },
     updateBefore(formData) {
-      let priceTableRowData = this.$refs.modelBody.getPriceTableRowData();
+      let priceTableRowData="";
+      if(this.editFormFields.apply_type=='03'){
+        priceTableRowData= this.$refs.modelBody.getPriceTableRowData();
+      }
       let orderTableRowData = this.$refs.modelBody.getOrderTableRowData();
       //删除数据回传
       let delPriceTableRowData = this.$refs.modelBody.delPriceTableRowData;
