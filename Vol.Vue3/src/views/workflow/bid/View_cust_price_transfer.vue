@@ -44,7 +44,7 @@
             const searchFormOptions = ref([[{"title":"Bid NO","field":"bid_no","type":"like"},{"title":"Cust ID","field":"cust_id"}],[{"title":"Applied Date","field":"created_date","type":"date"},{"title":"Group ID","field":"group_id"}],[{"title":"Modified Date","field":"modified_date","type":"date"},{"dataKey":"LocalMpgCategory","data":[],"title":"MPG","field":"mpg_name","type":"select"}],[{"title":"Transfer Date","field":"transfer_date","type":"date"},{"dataKey":"transfer_status","data":[],"title":"Status","field":"state","type":"select"}],[{"title":"Requestor","field":"requestor_name","type":"like"}],[{"title":"","field":"pricegroup_dbid"},{"title":"","field":"cust_dbid"}]]);
             const columns = ref([{field:'price_transfer_dbid',title:'price_transfer_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'division',title:'division',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'bid_no',title:'Bid NO',type:'string',link:true,width:110,readonly:true,align:'left',sort:true},
+                       {field:'bid_no',title:'Bid NO',type:'string',link:true,width:120,readonly:true,align:'left',sort:true},
                        {field:'state',title:'Status',type:'string',bind:{ key:'transfer_status',data:[]},width:80,align:'left'},
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:110,readonly:true,align:'left',sort:true},
                        {field:'created_date',title:'Applied Date',type:'datetime',width:110,readonly:true,align:'left',sort:true},

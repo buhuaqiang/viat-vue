@@ -116,15 +116,15 @@ export default {
   },
   methods: {
 
-    openModel() {
-      this.model = true;
+    openModel(param_bid_no) {
+        debugger
       this.ck=false
       let $parent;
       //获取生成页面viewgrid的对象
       this.$emit("parentCall", ($this) => {
         $parent = $this;
       });
-      this.bid_no= $parent.editFormFields.bid_no;
+      this.bid_no= param_bid_no
 
       this.clear();
       //当前如果是新建重置两个表格数据
