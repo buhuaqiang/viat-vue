@@ -48,6 +48,7 @@
                   suffix-icon="el-icon-date"
                   v-model="invalidModel.invalid_date"
                   type="date"
+                  value-format="yyyy-MM-dd"
                   placeholder="" >
           </el-date-picker>
         </el-form-item>
