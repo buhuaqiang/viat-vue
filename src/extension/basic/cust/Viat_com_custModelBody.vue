@@ -22,9 +22,18 @@
               style="width: 200px; padding-left: 5px"
               v-model="zip_id"
       />
-      <el-select v-model="channelValue" placeholder="Select channel" style="width: 200px; padding-left: 5px">
+      <!--<el-select v-model="channelValue" placeholder="Select channel" style="width: 200px; padding-left: 5px">
         <el-option
                 v-for="item in channelData"
+                :key="item.key"
+                :label="item.value"
+                :value="item.key"
+        >
+        </el-option>
+      </el-select>-->
+      <el-select v-model="dohValue" placeholder="Select DOH Type" style="width: 200px; padding-left: 5px">
+        <el-option
+                v-for="item in dohData"
                 :key="item.key"
                 :label="item.value"
                 :value="item.key"
@@ -93,7 +102,9 @@ export default {
       cust_id:"",
       zip_id: "",
       channelValue:"",
+      dohValue:"",
       channelData:[],
+      dohData:[],
       url: "api/View_com_cust/GetPopPageData",//加载数据的接口
       columns: [
         {
@@ -179,8 +190,15 @@ export default {
         this.channelData=dic[0].data;
       });
     },
+    getDoh(){
+      //健保渠道
+      this.http.post('/api/Sys_Dictionary/GetVueDictionary', ['doh_type']).then((dic) => {
+        this.dohData=dic[0].data;
+      });
+    },
     openModel(single,flag,returnType) {
-      this.getChannel();
+      // this.getChannel();
+      this.getDoh();
       this.single=single;
       this.model = true;
       this.flag = flag;
@@ -257,6 +275,9 @@ export default {
       params.wheres.push({ name: "status", value: 'Y' });
       if(this.channelValue){
         params.wheres.push({ name: "channelValue", value: this.channelValue });
+      }
+      if(this.dohValue){
+        params.wheres.push({ name: "doh_type", value: this.dohValue });
       }
       return true;
     },
