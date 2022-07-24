@@ -361,12 +361,10 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
-      if (this.currentAction==this.const.EDIT){
-        this.pickEditFormCustomerName=row.cust_name;
-        let form_cust_id=this.getEditOption("cust_id");
-        form_cust_id.extra={
-          render:this.getPopShowRender("formCustomer")
-        }
+      this.pickEditFormCustomerName=row.cust_name;
+      let form_cust_id=this.getEditOption("cust_id");
+      form_cust_id.extra={
+        render:this.getPopShowRender("formCustomer")
       }
       this.$refs.modelFooter.openModel();
     }

@@ -524,53 +524,29 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+      this.pickEditFormCustomerName=row.cust_name;
+      this.pickEditFormPriceGroupName=row.group_name
+      //获取当前数据的产品和客户dbid
+      this.prod_dbid=row.prod_dbid
+      this.cust_dbid=row.cust_dbid
 
-      if (this.currentAction==this.const.EDIT){
-        this.pickEditFormCustomerName=row.cust_name;
-        this.pickEditFormPriceGroupName=row.group_name
-        this.editFormFields['add_group']='N'
-
-        //获取当前数据的产品和客户dbid
-        this.prod_dbid=row.prod_dbid
-        this.cust_dbid=row.cust_dbid
-
-        let form_cust_id=this.getEditOption("cust_id");
-        form_cust_id.extra={
-          render:this.getPopShowRender("formCustomer")
-        }
-
-        let form_group_id=this.getEditOption("group_id");
-        form_group_id.disabled=true
-        let form_group_dbid=this.getEditOption("pricegroup_dbid");
-        form_group_dbid.hidden=true
-        form_group_id.extra={
-          render:this.getPopShowRender("formPriceGroup")
-        }
-        form_group_id.onKeyPress=($event)=>{
-          if($event.keyCode == 13){
-            let  group_id = this.editFormFields['group_id']
-            if(group_id) {
-              this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
-                if(reslut!==null){
-                  this.editFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
-                  this.editFormFields['group_id'] =reslut.group_id ;
-                  this.pickEditFormPriceGroupName=reslut.group_name
-                }else {
-                  this.$message.error("Group Id Is Not Exists.");
-                  this.editFormFields['group_id']=''
-                  this.editFormFields['pricegroup_dbid']=''
-                  this.pickEditFormPriceGroupName=''
-                }
-
-                return;
-              })
-            }
-
-          }
-        }
-
+      let form_cust_id=this.getEditOption("cust_id");
+      form_cust_id.extra={
+        render:this.getPopShowRender("formCustomer")
       }
-      this.$refs.modelFooter.openModel();
+
+      let form_group_id=this.getEditOption("group_id");
+      form_group_id.disabled=true
+      let form_group_dbid=this.getEditOption("pricegroup_dbid");
+      form_group_dbid.hidden=true
+      form_group_id.extra={
+        render:this.getPopShowRender("formPriceGroup")
+      }
+      if (this.currentAction==this.const.EDIT){
+        this.editFormFields['add_group']='N'
+      }
+      debugger
+      this.$refs.modelFooter.openModel(row.bid_no);
     }
   }
 };
