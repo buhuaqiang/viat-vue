@@ -416,13 +416,71 @@ let extension = {
       return true;
     },
     updateBefore(formData) {
+
       //编辑保存前formData为对象，包括明细表、删除行的Id
       let priceTableRowData = this.$refs.modelFooter.priceTableRowData;
-
+      let invalidProd=[];//产品状态无效
+      let priceInvalid=[];//发票价格输入不合理
+      //价格列表只判断产品状态
+      priceTableRowData.forEach(x=>{
+        if(x.prodStatus=='1'){
+            //判断输入的发票价格是否合规
+          if(Number(x.price_close)>Number(x.invoice_price)){
+            priceInvalid.push(x.prod_id);
+          }
+        }else {
+          invalidProd.push(x.prod_id);
+        }
+      })
+      if(invalidProd.length>0){
+        this.$Message.error("Price List Invalid Product "+invalidProd.join(",")+" ");
+        return false;
+      }
+      if(priceInvalid.length>0){
+        this.$Message.error("  Price List  Product "+priceInvalid.join(",")+", Invoice Price <Approved Price,can't be saved ,Please check");
+        return false;
+      }
       //table2數據回填到 formData
       let orderTableRowData = this.$refs.modelFooter.orderTableRowData;
+      let orderInvalidProd=[];//产品状态无效
+      let notExistProd=[];//不存在价格产品price book
+      let lessThanMinQty=[];//购买数量小于price book设定的最小数量
+      //订单列表需要判断产品状态和产品价格状态以及最小数量
+      orderTableRowData.forEach(x=>{
+        if(x.prodStatus=='1'){
+          if(x.min_qty !=null){
+              if(Number(x.qty)<Number(x.min_qty)){
+                lessThanMinQty.push(x.prod_id);
+              }
+          }else{
+            //数据库查询不到产品价格,看是否存在当前申请列表内
+            priceTableRowData.forEach(p=>{
+              if(p.prod_id==x.prod_id){
+                if(Number(p.qty)<Number(x.min_qty)){
+                  lessThanMinQty.push(x.prod_id);
+                }
+              }else{
+                notExistProd.push(x.prod_id);
+              }
+            })
+          }
+        }else {
+          orderInvalidProd.push(x.prod_id);
+        }
+      })
 
-
+      if(orderInvalidProd.length>0){
+        this.$Message.error("Order List Invalid Product "+invalidProd.join(",")+" ");
+        return false;
+      }
+      if(notExistProd.length>0){
+        this.$Message.error("Price not exist  "+notExistProd.join(",")+" ");
+        return false;
+      }
+      if(lessThanMinQty.length>0){
+        this.$Message.error("Order List  Product "+lessThanMinQty.join(",")+" ,Qty less than Min Qty ");
+        return false;
+      }
       let detailData = [
         {
           key: "priceTableRowData",
