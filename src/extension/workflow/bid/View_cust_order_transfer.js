@@ -290,10 +290,43 @@ let extension = {
       return true;
     },
     updateBefore(formData) {
+      debugger
       //编辑保存前formData为对象，包括明细表、删除行的Id
       //table2數據回填到 formData
       let orderTableRowData = this.$refs.modelFooter.orderTableRowData;
       // alert(this.$refs.modelFooter.formModel.order_note)
+      //table2數據回填到 formData
+      let orderInvalidProd=[];//产品状态无效
+      let notExistProd=[];//不存在价格产品price book
+      let lessThanMinQty=[];//购买数量小于price book设定的最小数量
+      //订单列表需要判断产品状态和产品价格状态以及最小数量
+      orderTableRowData.forEach(x=>{
+        if(x.prodStatus=='1'){
+          if(x.min_qty !=null){
+            if(Number(x.qty)<Number(x.min_qty)){
+              lessThanMinQty.push(x.prod_id);
+            }
+          }else{
+            //数据库查询不到产品价格
+            notExistProd.push(x.prod_id);
+          }
+        }else {
+          orderInvalidProd.push(x.prod_id);
+        }
+      })
+
+      if(orderInvalidProd.length>0){
+        this.$Message.error("Order List Invalid Product "+invalidProd.join(",")+" ");
+        return false;
+      }
+      if(notExistProd.length>0){
+        this.$Message.error("Price not exist  "+notExistProd.join(",")+" ");
+        return false;
+      }
+      if(lessThanMinQty.length>0){
+        this.$Message.error("Order List  Product "+lessThanMinQty.join(",")+" ,Qty less than Min Qty ");
+        return false;
+      }
 
       let detailData = [
         {

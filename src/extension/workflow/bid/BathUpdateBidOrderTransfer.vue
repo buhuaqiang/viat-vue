@@ -76,7 +76,6 @@ export default {
   methods: {
 
     openModel() {
-        debugger
       this.model = true;
       this.ck=false
       let $parent;
