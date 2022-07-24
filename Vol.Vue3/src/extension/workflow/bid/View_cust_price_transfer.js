@@ -21,6 +21,8 @@ let extension = {
     modelBody: PriceGroupModelBody,
     modelFooter: BathUpdateBidPriceTransfer
   },
+  cust_dbid:'',
+  prod_dbid:'',
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
   methods: {
@@ -212,15 +214,15 @@ let extension = {
                 type:"checkbox",
                 style:{width:"20%"},
                 onClick: (e) => {
-                  debugger
                   let checkflag=e.currentTarget.checked
                   let form_group_id=this.getEditOption("group_id");
-                  form_group_id.disabled=!checkflag;
+                  //form_group_id.disabled=!checkflag;
                   if(checkflag){
                     this.editFormFields.add_group='Y';
                     form_group_id.extra={
-                      render:this.getSearchRender("formPriceGroup")
+                      render:this.getPopShowRender("formPriceGroup")
                     }
+                    this.showGroupInfo()
                   }else{
                     this.editFormFields.nhi_id='N';
                     form_group_id.extra={
@@ -235,6 +237,21 @@ let extension = {
           )
         ]);
       };
+    },
+
+    showGroupInfo(){
+      this.http.get("api/Viat_app_cust_price_group/getPriceGroupByCustAndProd?prod_dbid="+this.prod_dbid+"&cust_dbid="+this.cust_dbid,{} , "loading").then(reslut => {
+            if(reslut!==null){
+              this.editFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
+              this.editFormFields['group_id'] =reslut.group_id ;
+              this.pickEditFormPriceGroupName=reslut.group_name
+            }else {
+              this.$message.error("Group Id Is Not Exists.");
+              this.editFormFields['group_id']=''
+              this.editFormFields['pricegroup_dbid']=''
+              this.pickEditFormPriceGroupName=''
+            }
+    })
     },
     getPickName(searchType){
       if(searchType=="searchCustomer"){
@@ -453,6 +470,11 @@ let extension = {
       if (this.currentAction==this.const.EDIT){
         this.pickEditFormCustomerName=row.cust_name;
         this.pickEditFormPriceGroupName=row.group_name
+        this.editFormFields['add_group']='N'
+
+        //获取当前数据的产品和客户dbid
+        this.prod_dbid=row.prod_dbid
+        this.cust_dbid=row.cust_dbid
 
         let form_cust_id=this.getEditOption("cust_id");
         form_cust_id.extra={
@@ -464,7 +486,7 @@ let extension = {
         let form_group_dbid=this.getEditOption("pricegroup_dbid");
         form_group_dbid.hidden=true
         form_group_id.extra={
-          render:this.getSearchRender("formPriceGroup")
+          render:this.getPopShowRender("formPriceGroup")
         }
         form_group_id.onKeyPress=($event)=>{
           if($event.keyCode == 13){
