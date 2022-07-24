@@ -345,7 +345,7 @@ export default {
               prod_id:row.prod_id,
               prod_dbid:row.prod_dbid,
               prod_ename:row.prod_ename,
-              qty:row.qty
+              qty:1
             }
           })
 
@@ -377,8 +377,8 @@ export default {
           nhi_price:row.nhi_price,
           invoice_price:row.invoice_price,
           net_price:row.net_price,
-          bid_price:row.bid_price,
-          reserv_price:row.reserv_price,
+          bid_price:row.net_price,
+          reserv_price:row.net_price,
           contstret_dbid:row.contstret_dbid,
           cont_stretagy_id:row.cont_stretagy_id,
           cont_stretagy_name:row.cont_stretagy_name
@@ -415,7 +415,10 @@ export default {
     getOrderTableRowData(){
       return this.$refs.orderTable.rowData
     },
-
+    clearTableDetail(){
+      this.$refs.priceTable.rowData=[]
+      this.$refs.orderTable.rowData=[]
+    },
     clearPop(val){
         this.formModel.prod_id="";
         this.formModel.prod_dbid="";

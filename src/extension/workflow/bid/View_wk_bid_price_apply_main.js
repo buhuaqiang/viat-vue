@@ -27,7 +27,7 @@ let extension = {
     onInit() {  //框架初始化配置前，
       this.labelWidth=180;
       this.boxOptions.height=1500;
-      this.boxOptions.width=2000;
+      this.boxOptions.width=2400;
       //设置编辑表单标签文字宽度
       this.boxOptions.labelWidth=150;
       this.setFiexdSearchForm(true);
@@ -100,6 +100,7 @@ let extension = {
                 this.editFormFields['cust_dbid'] =reslut.cust_dbid;
                 this.editFormFields['cust_id'] =reslut.cust_id ;
                 this.pickEditFormCustomerName=reslut.cust_name;
+                this.initCustomerGroup(reslut.cust_dbid);
                 return;
               }else{
                 this.$message.error("Customer Id Is Not Exists.");
@@ -420,6 +421,7 @@ let extension = {
         this.editFormFields["cust_dbid"] = rows[0].cust_dbid;
         this.editFormFields["cust_id"] =rows[0].cust_id;
         this.pickEditFormCustomerName=rows[0].cust_name;
+        this.initCustomerGroup(rows[0].cust_dbid);
       }
 
     },
@@ -571,7 +573,7 @@ let extension = {
     //是否可編輯校驗
     async modelOpenBeforeAsync(row) {
       if (this.currentAction==this.const.EDIT){
-        if(row.status!='00'){
+        if(row.status!='00' && row.status!='02'){
           this.$Message.error(" This row data can not edit.");
           return false;
         }
@@ -703,6 +705,7 @@ debugger;
       });
     },
 
+
     doRollBack(){
       debugger;
       let rows = this.$refs.table.getSelected();
@@ -736,6 +739,19 @@ debugger;
         });
       });
       return true;
+    },
+
+    initCustomerGroup(cust_dbid){
+      debugger;
+      let url = "api/Viat_app_cust_group/getCustGroupIDAndANmeByCustDBID?cust_dbid="+cust_dbid;
+      this.http.get(url, {}, 'Get data....').then((x) => {
+        if (!x.status) return this.$Message.error(x.message);
+        debugger
+        this.editFormFields.cust_exists_group_id=x.group_id;
+        this.editFormFields.cust_exists_group_name=x.group_name;
+        this.getFormOption("cust_exists_group_id").hidden=false;
+        this.getFormOption("cust_exists_group_name").hidden=false;
+      });
     },
 
     modelOpenAfter(row) {
@@ -782,18 +798,24 @@ debugger;
           }
         });
       });
-
+      this.getFormOption("cust_exists_group_id").hidden=true;
+      this.getFormOption("cust_exists_group_name").hidden=true;
       if (this.currentAction =='Add'){
         this.editFormFields.apply_type='03'
         this.getFormOption("apply_type").disabled=false
         this.getFormOption("isgroup").disabled=false;
         this.getFormOption("cust_id").disabled=false;
         this.editFormFields.end_date='2099-12-31';
+        this.$refs.modelBody.clearTableDetail();
       }else{
         this.getFormOption("apply_type").disabled=true;
         this.getFormOption("cust_id").disabled=true;
         this.getFormOption("group_id").disabled=true;
         this.getFormOption("isgroup").disabled=true;
+        let cust_dbid = this.editFormFields.cust_dbid;
+        if(cust_dbid){
+          this.initCustomerGroup(cust_dbid);
+        }
       }
       let apply_type = this.editFormFields.apply_type;
       if(apply_type=='03'){
