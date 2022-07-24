@@ -426,6 +426,11 @@ let viewgird = [
         path: '/View_cust_order_transfer',
         name: 'View_cust_order_transfer',
         component: () => import('@/views/workflow/bid/View_cust_order_transfer.vue')
+    },{
+
+        path: '/pricebookTabs',
+        name: 'pricebookTabs',
+        component: () => import('@/extension/price/price/pricebookTabs.vue')
     }]
 
 
