@@ -44,7 +44,7 @@
                                {"title":"Group ID","field":"group_id","type":"text"},
                                { title: "Group Name", field: "group_name", align: "left",hidden: true},],
                               [{"title":"Customer In Group ID ","field":"cust_exists_group_id","type":"input",readonly: true,hidden: true},
-                               {"title":"Customer In Group Name","field":"cust_exists_group_Name","type":"input",readonly: true,hidden: true}],
+                               {"title":"Customer In Group Name","field":"cust_exists_group_name","type":"input",readonly: true,hidden: true}],
                               [{"title":"Bid Date","required":true,"field":"bid_date","type":"date"}],
                               [{"title":"Start Date","required":true,"field":"start_date","type":"date"},
                                {"title":"End Date","required":true,"field":"end_date","type":"date"}],
