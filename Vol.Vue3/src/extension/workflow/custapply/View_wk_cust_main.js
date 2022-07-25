@@ -508,10 +508,14 @@ let extension = {
         if(apply_type=='01'){
           this.getOption("cust_name").hidden=false;
           this.getOption("cust_id").hidden=true;
+          this.getOption("cust_name").required=true;
+          this.getOption("cust_id").required=false;
         }
         if(apply_type=='02'){
           this.getOption("cust_name").hidden=true;
           this.getOption("cust_id").hidden=false;
+          this.getOption("cust_name").required=false;
+          this.getOption("cust_id").required=true;
         }
         this.getOption("delivery_tel_no").disabled=true;
         this.getOption("apply_type").disabled=true;
