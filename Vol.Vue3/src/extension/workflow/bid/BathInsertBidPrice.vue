@@ -238,13 +238,19 @@ export default {
       this.cont_stretagy_name= $parent.editFormFields.cont_stretagy_name;
       this.cust_dbid = $parent.editFormFields.cust_dbid;
       this.edit_pricegroup_dbid = $parent.editFormFields.pricegroup_dbid;
+      let apply_type = $parent.editFormFields.apply_type;
 
-      this.clear();
+      if(apply_type=='03'){
+        this.$refs.priceTable.reset();
+      }
+      this.$refs.orderTable.reset();
       //当前如果是新建重置两个表格数据
       if ($parent.currentAction == "Add") {
         //add 默認不查詢
       } else {
-        this.$refs.priceTable.load();
+        if(apply_type=='03'){
+          this.$refs.priceTable.load();
+        }
         this.$refs.orderTable.load();
       }
 
@@ -314,6 +320,7 @@ export default {
             this.formModel.prod_ename=reslut.prod_ename;
             this.formModel.nhi_price=reslut.nhi_price;
             this.formModel.prod_dbidname=reslut.prod_id + " " + reslut.prod_ename;
+            this.initCurrentPrice(reslut.prod_id);
           }else {
             this.$message.error("Product Id Is Not Exists.");
             this.formModel.prod_id="";
@@ -326,6 +333,43 @@ export default {
     },
     handleProdFormSelected(rows){
 
+    },
+    initCurrentPrice(prod_id){
+      let $parent;
+      this.$emit("parentCall", ($this) => {
+        $parent = $this;
+      });
+
+      let cust_id = $parent.editFormFields.cust_id;
+      let pricegroup_dbid = $parent.editFormFields.pricegroup_dbid;
+      if(cust_id) {
+       let params ={
+          "page": 1,
+                "rows": 30,
+                "order": "desc",
+                "wheres": "[{\"name\":\"status\",\"value\":\"Y\"},{\"name\":\"prod_id\",\"value\":\""+prod_id+"\"},{\"name\":\"cust_id\",\"value\":\""+cust_id+"\"}]"
+        }
+        let url = "api/View_cust_price_detail/GetPriceDataForTransfer";
+        this.http.post(url, params, 'Get data....').then((x) => {
+          if (!x) return;
+          if (x.rows.length > 0) {
+            this.formModel.net_price = x.rows[0].net_price;
+          } else {
+            this.formModel.net_price = "";
+          }
+        });
+      }
+      if(pricegroup_dbid){
+        let url = "api/View_wk_bid_price_apply_main/ProductPrice?pricegroup_dbid="+pricegroup_dbid+"&prod_id="+prod_id;
+        this.http.get(url, {}, 'Get data....').then((x) => {
+          if (!x) return;
+          if (x.rows.length > 0) {
+            this.formModel.net_price = rows[0].net_price;
+          } else {
+            this.formModel.net_price = "";
+          }
+        });
+      }
     },
     openProdModel(val){
       this.$refs.View_com_prod_pop_query.openModel(true,"prod_dbid","onSelect")
@@ -447,6 +491,7 @@ export default {
     },
     loadTableBefore1(param, callBack) {
       //获取当前编辑主键id值
+      debugger;
       param.wheres.push({ name: "bidmast_dbid", value: this.bidmast_dbid });
       callBack(true);
     },
@@ -686,10 +731,7 @@ export default {
       this.$refs.orderTable.delRow();
 
     },
-    clear() {
-      this.$refs.priceTable.reset();
-      this.$refs.orderTable.reset();
-    },
+
   addOrder(){
     this.$refs.View_com_prod_pop_query.openModel(false,"AddOrders","onSelect");
   },
