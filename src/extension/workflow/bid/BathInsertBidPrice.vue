@@ -320,7 +320,7 @@ export default {
             this.formModel.prod_ename=reslut.prod_ename;
             this.formModel.nhi_price=reslut.nhi_price;
             this.formModel.prod_dbidname=reslut.prod_id + " " + reslut.prod_ename;
-            this.initCurrentPrice(reslut.prod_id);
+            this.initCurrentPrice(reslut.prod_dbid,reslut.prod_id);
           }else {
             this.$message.error("Product Id Is Not Exists.");
             this.formModel.prod_id="";
@@ -334,7 +334,7 @@ export default {
     handleProdFormSelected(rows){
 
     },
-    initCurrentPrice(prod_id){
+    initCurrentPrice(prod_dbid,prod_id){
       let $parent;
       this.$emit("parentCall", ($this) => {
         $parent = $this;
@@ -360,14 +360,10 @@ export default {
         });
       }
       if(pricegroup_dbid){
-        let url = "api/View_wk_bid_price_apply_main/ProductPrice?pricegroup_dbid="+pricegroup_dbid+"&prod_id="+prod_id;
+        let url = "api/View_wk_bid_price_apply_main/ProductPrice?pricegroup_dbid="+pricegroup_dbid+"&prod_dbid="+prod_dbid;
         this.http.get(url, {}, 'Get data....').then((x) => {
           if (!x) return;
-          if (x.rows.length > 0) {
-            this.formModel.net_price = rows[0].net_price;
-          } else {
-            this.formModel.net_price = "";
-          }
+          this.formModel.net_price = x.net_price;
         });
       }
     },
@@ -401,6 +397,7 @@ export default {
           this.formModel.reserv_price='';
           this.formModel.dis='';
           this.formModel.fg='';
+          this.initCurrentPrice(rows[0].prod_dbid,rows[0].prod_id);
         }else if(fieldName=='AddOrders'){
 
           //返回指定字段  prod_id,prod_ename,qty,amt
