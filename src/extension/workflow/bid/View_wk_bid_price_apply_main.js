@@ -567,7 +567,7 @@ let extension = {
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
-      // this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
+       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
 
     //是否可編輯校驗
@@ -745,7 +745,7 @@ debugger;
       debugger;
       let url = "api/Viat_app_cust_group/getCustGroupIDAndANmeByCustDBID?cust_dbid="+cust_dbid;
       this.http.get(url, {}, 'Get data....').then((x) => {
-        if (!x.status) return this.$Message.error(x.message);
+        if (!x) return ;
         debugger
         this.editFormFields.cust_exists_group_id=x.group_id;
         this.editFormFields.cust_exists_group_name=x.group_name;
@@ -834,7 +834,11 @@ debugger;
         this.getFormOption("cust_id").hidden=false;
         this.$refs.modelBody.showPriceDiv = false;
       }
-      this.$refs.modelBody.openModel();
+      //this.$refs.modelBody.openModel();
+      this.$nextTick(
+          ()=>{
+            this.$refs.modelBody.openModel()
+          });
     }
   }
 };
