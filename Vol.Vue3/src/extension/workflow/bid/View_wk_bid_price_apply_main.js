@@ -500,7 +500,6 @@ let extension = {
     addBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
       //選擇客戶List table1
-      debugger;
       this.editFormFields.contstret_dbid = this.$refs.modelBody.contstret_dbid;
       let priceTableRowData="";
       if(this.editFormFields.apply_type=='03'){
@@ -538,6 +537,15 @@ let extension = {
         priceTableRowData= this.$refs.modelBody.getPriceTableRowData();
       }
       let orderTableRowData = this.$refs.modelBody.getOrderTableRowData();
+
+      if(this.editFormFields.apply_type=='03' && priceTableRowData.length==0){
+        this.$Message.error("Please Input Bid Pirce List ")
+        return  false;
+      }else if(this.editFormFields.apply_type=='04' && orderTableRowData.length==0){
+        this.$Message.error("Please Input Bid Order List ")
+        return  false;
+      }
+
       //删除数据回传
       let delPriceTableRowData = this.$refs.modelBody.delPriceTableRowData;
 
