@@ -22,7 +22,7 @@ let extension = {
     modelBody: Viat_com_custModelBody,
     modelFooter: ''
   },
-  tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
+  tableAction: 'View_cust_price_detail', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
   methods: {
     getFormOption(field) {
@@ -233,6 +233,7 @@ let extension = {
       this.load=false;
       //设置查询页面显示6个按钮(默认3个)
       //this.maxBtnLength = 6;
+      this.searchFormFields['QueryStatus']='1'
       //-------------日期字段格式化 start--------------
       let startDate=this.getColumns("start_date");
       let endDate=this.getColumns("end_date");
@@ -359,7 +360,7 @@ let extension = {
       status.onChange=(val, option)=>{
         if(val=='N'){
           let dateStrs=this.parseTime(new Date(),'{y}-{m}-{d}')
-          this.editFormFields['end_date']=dateStrs;
+          this.editFormFields['end_date']=dateStrs+" 00:00:00";
         }
       }
 
