@@ -113,7 +113,7 @@
                 columns: [
                     {field:'entity',title:'Entity',type:'string',width:90,align:'left',sort:true},
                     //{field:'mpg_id',title:'Mpg',type:'string',width:90,align:'left',sort:true},
-                    {field:'global_mpg',title:'Global Mpg',type:'string',width:110,align:'left',sort:true},
+                    {field:'global_mpg',title:'Global Mpg',type:'string',width:110,hidden:true,align:'left',sort:true},
                     {field:'localmpg_dbid',title:'localmpg_dbid',type:'guid',width:110,hidden:true,align:'left'},
                     {field:'prod_id',title:'PID',type:'string',width:90,require:true,align:'left'},
                     {field:'prod_ename',title:'E-Name',type:'string',width:130,align:'left'},
@@ -121,7 +121,7 @@
                     {field:'prod_sname',title:'C-Name',type:'string',width:130,align:'left'},
                     {field:'nhi_price',title:'NHI Price',type:'decimal',width:90,align:'left'},
                     {field:'pack_size',title:'Pack Size',type:'decimal',width:90,align:'left'},
-                    {field:'prod_type',title:'Prod Type',type:'string',width:90,align:'left'},
+                    {field:'prod_type',title:'Prod Type',type:'string',width:90,hidden:true,align:'left'},
                     {field:'globalmpg_dbid',title:'globalmpg_dbid',type:'guid',width:110,hidden:true,align:'left'},
                     {field:'created_date',title:'created_date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
                     {field:'prod_dbid',title:'prod_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'}],
