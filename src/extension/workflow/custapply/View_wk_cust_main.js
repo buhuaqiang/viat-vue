@@ -90,9 +90,13 @@ let extension = {
 
         if(val=='01'){
           custName.hidden=false;
+          custName.required=true;
+          cust_id.required=false;
           cust_id.hidden=true;
         }else if(val=='02'){
           custName.hidden=true;
+          custName.required=false;
+          cust_id.required=true;
           cust_id.hidden=false;
 
         }
@@ -491,6 +495,8 @@ let extension = {
 
       if (this.currentAction=='Add'){
         this.editFormFields.apply_type='01';
+        this.getOption("cust_name").required=true;
+        this.getOption("cust_id").required=false;
         this.pickEditFormCustomerName = "";
         this.pickEditFormHospital = "";
         this.getOption("cust_name").hidden=false;

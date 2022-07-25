@@ -32,8 +32,8 @@
             const editFormFields = ref({"bid_no":"","apply_type":"","cust_name":"","cust_id":"","cust_dbid":"","cust_city_name":"","cust_zip_id":"","cust_address":"","invoice_name":"","invoice_city_name":"","invoice_zip_id":"","invoice_address":"","delivery_city_name":"","delivery_zip_id":"","delivery_addr":"","delivery_contact":"","delivery_tel_no":"","doh_type":"","doh_institute_no":"","is_private":"","owner":"","tax_id":"","email":"","fax_no":"","own_hospital_cust_id":"","own_hospital":"","ctrl_drug_no":"","ctrl_drug_contact":"","remarks":"","bidmast_dbid":"","wkcust_dbid":"","created_username":"","created_date":"","modified_username":"","modified_date":"","status":""});
             const editFormOptions = ref([[{"title":"Bid No","field":"bid_no","disabled":true},
                                {"dataKey":"ApprovalType","data":[],"title":"Apply Type","field":"apply_type","type":"select","required":true}],
-                              [{"title":"Cust Name","field":"cust_name",}],
-                                [{"title":"Cust Name","field":"cust_id","colSize":8}],
+                              [{"title":"Cust Name","field":"cust_name","required":true}],
+                                [{"title":"Cust Name","field":"cust_id","colSize":8,"required":true}],
                               [{"dataKey":"viat_city","data":[],"title":"Cust City Name","field":"cust_city_name","type":"select","required":true},
                                {"dataKey":"viat_city_zone","data":[],"title":"Cust Zip Name","field":"cust_zip_id","type":"select","required":true}],
                               [{"title":"Cust Address","field":"cust_address","colSize":8,"required":true}],
