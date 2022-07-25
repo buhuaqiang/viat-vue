@@ -117,6 +117,7 @@ export default {
       }
       return false;
     },
+
     upload() {
       let _url = this.url;
       if (!_url) {
@@ -133,20 +134,41 @@ export default {
       }
       this.loadingStatus = true;
       this.http.post(_url, formData).then(
-        (x) => {
-          // this.$refs.uploadFile.clearFiles();
-          this.loadingStatus = false;
-          this.file = null;
-          if (x.status) {
-            this.$emit("importExcelAfter", x);
-          }
+              (x) => {
+                if(x.code=="-2")
+                {
+                  this.$confirm(x.message + "Do you want to import data?", "Confirm", {
+                    confirmButtonText: "OK",
+                    cancelButtonText: "Cancel",
+                    type: "warning",
+                    center: true,
+                  }).then(() => {
+                    this.http.post(x.url, x.data).then((d) =>
+                    {
+                      this.loadingStatus = false;
+                      this.file = null;
+                      if (d.status) {
+                        this.$emit("importExcelAfter", d);
+                      }
+                      this.message = d.message;
+                      this.resultClass = d.status ? "v-r-success" : "v-r-error";
+                    });
+                  });
+                }
+                else {
+                  this.loadingStatus = false;
+                  this.file = null;
+                  if (x.status) {
+                    this.$emit("importExcelAfter", x);
+                  }
 
-          this.message = x.message;
-          this.resultClass = x.status ? "v-r-success" : "v-r-error";
-        },
-        (error) => {
-          this.loadingStatus = false;
-        }
+                  this.message = x.message;
+                  this.resultClass = x.status ? "v-r-success" : "v-r-error";
+                }
+              },
+              (error) => {
+                this.loadingStatus = false;
+              }
       );
     },
     dowloadTemplate() {
