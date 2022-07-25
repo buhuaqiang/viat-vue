@@ -106,7 +106,6 @@ let serviceFilter = {
   },
 
   viewModelOpenBefore (row) {
-    debugger
     this.bakEditFormOptions=JSON.parse(JSON.stringify(this.editFormOptions))
     this.editFormOptions.forEach(x => {
       x.forEach(item => {

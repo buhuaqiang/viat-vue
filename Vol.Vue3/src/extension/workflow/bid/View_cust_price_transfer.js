@@ -9,6 +9,7 @@
 import PriceGroupModelBody from "../../price/price/PriceGroupModelBody";
 import Viat_com_custModelBody from "../../basic/cust/Viat_com_custModelBody";
 import BathUpdateBidPriceTransfer from "./BathUpdateBidPriceTransfer";
+import confirmJoinGroup from "./confirmJoinGroup";
 
 let extension = {
   components: {
@@ -17,12 +18,13 @@ let extension = {
     gridBody: PriceGroupModelBody,
     gridFooter: Viat_com_custModelBody,
     //新建、编辑弹出框扩展组件
-    modelHeader: '',
+    modelHeader: confirmJoinGroup,
     modelBody: PriceGroupModelBody,
     modelFooter: BathUpdateBidPriceTransfer
   },
   cust_dbid:'',
   prod_dbid:'',
+  joinGroupList:[],//加入价格群组的客户集合
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
   methods: {
@@ -474,8 +476,8 @@ let extension = {
         return false;
       }
       if(notExistProd.length>0){
-        this.$Message.error("Price not exist  "+notExistProd.join(",")+" ");
-        return false;
+        //this.$Message.error("Order List Price not exist  "+notExistProd.join(",")+" ");
+        //return false;
       }
       if(lessThanMinQty.length>0){
         this.$Message.error("Order List  Product "+lessThanMinQty.join(",")+" ,Qty less than Min Qty ");
@@ -499,8 +501,29 @@ let extension = {
           value: this.$refs.modelFooter.formModel.price_note
         }
       ]
+
+      //校验当前群组内的其他客户是否有该产品的单一价格
+      let priceDetailListUser=[ {
+        "cust_dbid": "ec4cff11-b7f5-4d58-90c3-fce27d81c3b6",
+        "cust_id": "C0080324",
+        "cust_name": "test0003",
+      }, {
+        "cust_dbid": "886d74bc-f795-4bbc-6133-08da6cc6a260",
+        "cust_id": "C0080323",
+        "cust_name": "jjjj",
+      }];
+      if(priceDetailListUser.length>0){
+        this.$refs.modelHeader.openModel(priceDetailListUser);
+        detailData.push({key:"joinGroupList",value:this.joinGroupList})
+      }
+
       formData.detailData = detailData;
+
       return true;
+    },
+
+    handleConfirmJoinGroup(){
+
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
@@ -545,8 +568,10 @@ let extension = {
       if (this.currentAction==this.const.EDIT){
         this.editFormFields['add_group']='N'
       }
-      debugger
-      this.$refs.modelFooter.openModel(row.bid_no);
+      this.$nextTick(
+          ()=>{
+            this.$refs.modelFooter.openModel(row.bid_no)
+          });
     }
   }
 };

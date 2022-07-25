@@ -51,6 +51,7 @@ export default {
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
       formModel:{
         order_note:""
+
       },
       fieldName:"",//編輯字段,用於回傳設置值
       formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields
@@ -75,16 +76,18 @@ export default {
   },
   methods: {
 
-    openModel() {
+    openModel(param_bid_no) {
       this.model = true;
       this.ck=false
+        this.formModel.order_note=""
+
       let $parent;
       //获取生成页面viewgrid的对象
       this.$emit("parentCall", ($this) => {
         $parent = $this;
       });
-      this.bid_no= $parent.editFormFields.bid_no;
-
+      // this.bid_no= $parent.editFormFields.bid_no;
+        this.bid_no=param_bid_no
       this.clear();
       //当前如果是新建重置两个表格数据
       if ($parent.currentAction == "Add") {
@@ -117,8 +120,12 @@ export default {
     loadTableBefore2(param, callBack) {
       //添加从表的查询参数(条件)
       param.rows=100
-      param.wheres.push({ name: "bid_no", value: this.bid_no });
-      callBack(true);
+        if(this.bid_no){
+            param.wheres.push({ name: "bid_no", value: this.bid_no });
+            callBack(true);
+        }else {
+            callBack(false);
+        }
     },
 
 

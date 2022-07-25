@@ -121,9 +121,9 @@
                        {field:'med_group_cust_id',title:'Medical Group',type:'string',width:110,hidden:true,align:'left'},
                        {field:'med_group_cust_name',title:'med_group_cust_name',type:'string',width:110,hidden:true,align:'left'},
                        {field:'delv_group_cust_id',title:'Price Group',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'last_deal_date',title:'last_deal_date',type:'datetime',width:150,align:'left',sort:true},
-                       {field:'doh_sub_type',title:'doh_sub_type',type:'string',width:110,align:'left'},
-                       {field:'dbid',title:'dbid',type:'int',width:80,require:true,align:'left'}]);
+                       {field:'last_deal_date',title:'last_deal_date',type:'datetime',width:150,align:'left',sort:true,hidden:true},
+                       {field:'doh_sub_type',title:'doh_sub_type',type:'string',width:110,align:'left',hidden:true},
+                       {field:'dbid',title:'dbid',type:'int',width:80,require:true,align:'left',hidden:true}]);
             const detail = ref({
                 cnName: "Delivery Address",
                 table: "View_com_cust_delivery",
