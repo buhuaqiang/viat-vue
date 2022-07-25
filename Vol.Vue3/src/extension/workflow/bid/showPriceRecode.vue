@@ -49,9 +49,10 @@ export default {
       prod_dbid:"",
       fieldName:"",//編輯字段,用於回傳設置值
       formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields,ext-自定義擴展
-      url: "",//加载数据的接口GetPriceDataForTransfer
+      url: "api/View_wk_bid_price_apply_main/RecentOrder?prod_dbid="+ this.prod_dbid+"&cust_dbid="+this.cust_dbid+"&pricegroup_dbid="+this.pricegroup_dbid,//加载数据的接口GetPriceDataForTransfer
       columns: [
-        {field:'cust_id',title:'Cust ID',type:'string',width:110,require:true,align:'left',sort:true},
+        {field:'order_dbid',title:'order_dbid',type:'string',width:110,hidden:true,align:'left',sort:true},
+        {field:'cust_id',title:'Cust ID',type:'string',width:110,require:true,align:'left'},
         {field:'cust_name',title:'Cust Name',type:'string',width:120,align:'left'},
         {field:'prod_id',title:'Prod ID',type:'string',width:110,align:'left',sort:true},
         {field:'prod_ename',title:'Prod Name',type:'string',width:160,align:'left'},
@@ -66,26 +67,41 @@ export default {
       debugger
       this.single=single;
       this.model = true;
-      this.cust_dbid = cust_dbid;
-      this.pricegroup_dbid = pricegroup_dbid;
+      this.cust_dbid = cust_dbid==""? null:cust_dbid;
+      this.pricegroup_dbid = pricegroup_dbid==""? null:pricegroup_dbid;
       this.prod_dbid = prod_dbid;
+
       //this.cust_id=cust_id
       //this.prod_id=prod_id
       //this.url = "api/View_wk_bid_price_apply_main/RecentOrder?prod_dbid="+ this.prod_dbid+"cust_dbid="+this.cust_dbid+"pricegroup_dbid"+this.pricegroup_dbid;
 
-      this.http.get("api/View_wk_bid_price_apply_main/RecentOrder?prod_dbid="+ this.prod_dbid.replace(/\s/g,"")+"&cust_dbid="+this.cust_dbid.replace(/\s/g,"")+"&pricegroup_dbid"+this.pricegroup_dbid,{} , "loading").then(reslut => {
-        let cust_id = reslut.cust_id;
-        let cust_name = reslut.cust_name;
-        let prod_id = reslut.prod_id;
-        let prod_ename = reslut.prod_ename;
+      this.http.get("api/View_wk_bid_price_apply_main/RecentOrder?prod_dbid="+ this.prod_dbid.replace(/\s/g,"")+"cust_dbid="+this.cust_dbid.replace(/\s/g,"")+"pricegroup_dbid="+this.pricegroup_dbid.replace(/\s/g,""),{} , "loading").then(reslut => {
+        let _rows = reslut.map((row)=>{
+          return{
+            cust_id:row.cust_id,
+            cust_name:row.cust_name,
+            prod_id:row.prod_id,
+            prod_ename:row.prod_ename,
+            order_no:row.order_no,
+            qty:row.qty
+          }
+        })
 
-          /*this.editFormFields['med_group'] =reslut.cust_dbid;
-          this.editFormFields['med_group_cust_id'] =reslut.cust_id ;//
-          document.getElementById("f_med_group").value=reslut.cust_name;*/
-          return;
+        /*_rows.forEach(x => {
+          let idx =  this.$refs.mytable.some(item => {
+            // 判断项应为获取的变量
+            if(item.order_dbid == x.order_dbid) {
+              return true;
+            }
+          })
+          if(!idx){
+            this.$refs.mytable.push(x);
+          }
+        })*/
+
       })
       //打开弹出框时，加载table数据
-     /* this.$nextTick(() => {
+      /*this.$nextTick(() => {
         this.$refs.mytable.load();
       });*/
     },

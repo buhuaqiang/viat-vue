@@ -19,26 +19,24 @@
         <el-form-item   label="NHI Price:" style="width: 35%">
           <el-input v-model="formModel.nhi_price" style="width:200px;" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item   label="Net Price:" style="width: 50%">
+        <el-form-item   label="Invoice Price:" style="width: 50%">
+          <el-input v-model="formModel.invoice_price" style="width:200px;" ></el-input>
+        </el-form-item>
+
+        <el-form-item   label="Current Price:" style="width: 35%">
           <el-input v-model="formModel.net_price" style="width:200px;" ></el-input>
         </el-form-item>
-        <el-form-item   label="FG%:" style="width: 35%">
-          <el-input v-model="formModel.fg" style="width:200px;" :disabled="true"></el-input>
+        <el-form-item   label="Bid Price:" style="width: 50%">
+          <el-input v-model="formModel.bid_price" style="width:200px;" @change="caculator()"></el-input>
+        </el-form-item>
+        <el-form-item   label="Min Qty:" style="width: 35%">
+          <el-input-number v-model="formModel.min_qty"  style="width:200px;" ></el-input-number>
         </el-form-item>
         <el-form-item   label="DIS%:" style="width: 50%">
           <el-input v-model="formModel.dis" style="width:200px;" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item   label="Invoice Price:" style="width: 35%">
-          <el-input v-model="formModel.invoice_price" style="width:200px;" ></el-input>
-        </el-form-item>
-        <el-form-item   label="Min Qty:" style="width: 50%">
-          <el-input-number v-model="formModel.min_qty"  style="width:200px;" ></el-input-number>
-        </el-form-item>
-        <el-form-item   label="Bid Price:" style="width: 35%">
-          <el-input v-model="formModel.bid_price" style="width:200px;" @change="caculator()"></el-input>
-        </el-form-item>
-        <el-form-item   label="Reserve Price:" style="width: 50%">
-          <el-input v-model="formModel.reserv_price" style="width:200px;" ></el-input>
+        <el-form-item   label="FG%:" style="width: 35%">
+          <el-input v-model="formModel.fg" style="width:200px;" :disabled="true"></el-input>
         </el-form-item>
 
       </el-form>
@@ -185,17 +183,17 @@ export default {
         { field: "bidetail_dbid", title: "主键ID", type: "guid", width: 80, hidden: true,isKey: true },
         { field: "bidmast_dbid", title: "外键ID", type: "guid", width: 80, hidden: true,isKey: true },
         { field: "prod_dbid", title: "prod_dbid", type: "guid", width: 80, hidden: true },
-        {field:'prod_id',title:'Product Id',type:'string',width:110,require:true,align:'left'},
+        {field:'prod_id',title:'Product Id',type:'string',width:80,require:true,align:'left'},
         {field:'prod_ename',title:'Product Name',type:'string',width:220,align:'left'},
-        {field:'nhi_price',title:'NHI Price',type:'decimal',width:100,readonly:true,require:true,align:'right'},
+        {field:'nhi_price',title:'NHI Price',type:'decimal',width:80,readonly:true,require:true,align:'right'},
         {field:'invoice_price',title:'Invoice Price',edit: { type: "number",keep:true },width:100,require:true,align:'right'},
-        {field:'net_price',title:'Net Price',type:'decimal',width:100,require:true,align:'right'},
+        {field:'net_price',title:'Current Price',type:'decimal',width:100,require:true,align:'right'},
         {field:'bid_price',title:'Bid Price',edit: { type: "number" ,keep:true},width:100,require:true,align:'right'},
-        {field:'reserv_price',title:'Reser Price',edit: { type: "number",keep:true },require:true,width:100,align:'right'},
-        {field:'fg',title:'FG%',type:'decimal',width:50,align:'left'},
-        {field:'dis',title:'DIS%',type:'decimal',width:50,align:'left'},
         {field:'min_qty',title:'Min Qty',edit: { type: "number",keep:true },width:80,require:true,align:'left'},
-        {field:'record',title:'record',width:50,align:'left'},
+        {field:'dis',title:'DIS%',type:'decimal',width:50,align:'left'},
+        {field:'fg',title:'FG%',type:'decimal',width:50,align:'left'},
+        {field:'reserv_price',title:'Reser Price',edit: { type: "number",keep:true },hidden:true,width:100,align:'right'},
+        {field:'view',title:'Order History',width:80,align:'left'},
         ],
 
       orderTableColumns: [
@@ -281,10 +279,10 @@ export default {
           }
         }
 
-        if (x.field == 'record') {//查看近一年的记录
+        if (x.field == 'view') {//查看近一年的记录
           //将eidt设置为null不开启编辑
           x.formatter = (row) => {
-            return "<a style='cursor:pointer;color: #409eff'>record</a>"
+            return "<a style='cursor:pointer;color: #409eff'>view</a>"
           }
           x.click = (row, column, event) => {
             this.openRecord(row.prod_dbid);
@@ -598,17 +596,7 @@ export default {
         this.$message.error("Bid  price can't be empty.");
         return false;
       }
-      if(this.formModel.reserv_price){
-        if(this.isDecimal(this.formModel.reserv_price) || this.isNumber(this.formModel.reserv_price)){
 
-        }else{
-          this.$message.error("Reserv price invalid.");
-          return false;
-        }
-      }else {
-        this.$message.error("Reserv price can't be empty.");
-        return false;
-      }
 
       let message="";
       let pass=true;

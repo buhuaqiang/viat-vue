@@ -43,7 +43,7 @@ let extension = {
         }
       });
       this.buttons.push({  //也可以用push或者splice方法来修改buttons数组
-        name: 'Back', //按钮名称
+        name: 'Call Back', //按钮名称
         icon: 'el-icon-back', //按钮图标vue2版本见iview文档icon，vue3版本见element ui文档icon(注意不是element puls文档)
         type: 'danger', //按钮样式vue2版本见iview文档button，vue3版本见element ui文档button
         value:'back',
@@ -761,6 +761,43 @@ debugger;
         this.getFormOption("cust_exists_group_name").hidden=false;
       });
     },
+    //格式化日期时间
+    parseTime(time,cFormat){
+      const format=cFormat||'{y}-{m}-{d} {h}:{i}:{s}'
+      let date
+      if(typeof time ==='object'){
+        date=time
+      }else {
+        if(typeof time ==='string'){
+          if((/^[0-9]+$/.test(time))){
+            time=parseInt(time)
+          }else{
+            time=time.replace(new RegExp(/-/gm),'/')
+          }
+        }
+        if((typeof time==='number') && (time.toString().length)===10){
+          time=time*1000
+        }
+        date=new Date(time)
+      }
+      const formatObj={
+        y:date.getFullYear(),
+        m:date.getMonth()+1,
+        d:date.getDate(),
+        h:date.getHours(),
+        i:date.getMinutes(),
+        s:date.getSeconds(),
+        a:date.getDay()
+      }
+      const time_str=format.replace(/{([ymdhisa])+}/g,(result,key)=>{
+        const value=formatObj[key]
+        if(key==='a'){
+          return['日','一','二','三','四','五','六'][value]
+        }
+        return  value.toString().padStart(2,'0')
+      })
+      return time_str
+    },
 
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
@@ -769,6 +806,7 @@ debugger;
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+
       var editform_cust_id = this.getFormOption("cust_id");
       var editform_group_id = this.getFormOption("group_id");
       this.editFormFields.cust_id= this.editFormFields.cust_id;
@@ -813,6 +851,8 @@ debugger;
         this.getFormOption("apply_type").disabled=false
         this.getFormOption("isgroup").disabled=false;
         this.getFormOption("cust_id").disabled=false;
+        let dateStrs=this.parseTime(new Date(),'{y}-{m}-{d}')
+        this.editFormFields.bid_date=dateStrs;
         this.editFormFields.end_date='2099-12-31';
         this.$refs.modelBody.clearTableDetail();
       }else{
