@@ -26,7 +26,7 @@ let extension = {
     modelBody: PriceGroupModelBody,
     modelFooter: ''
   },
-  tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
+  tableAction: 'View_cust_price', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
   methods: {
     getFormOption(field) {
@@ -500,7 +500,7 @@ let extension = {
       status.onChange=(val, option)=>{
         if(val=='N'){
           let dateStrs=this.parseTime(new Date(),'{y}-{m}-{d}')
-          this.editFormFields['end_date']=dateStrs;
+          this.editFormFields['end_date']=dateStrs +" 00:00:00";
         }
       }
       //-------------表單輸入框綁定彈窗 end-------------

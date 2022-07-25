@@ -161,17 +161,27 @@ export default {
     },
 
     loadTableBefore1(param, callBack) {
+        debugger
       //获取当前编辑主键id值
       param.rows=100
-      param.wheres.push({ name: "bid_no", value: this.bid_no });
-      callBack(true);
+        if(this.bid_no){
+            param.wheres.push({ name: "bid_no", value: this.bid_no });
+            callBack(true);
+        }else {
+            callBack(false);
+        }
+
     },
     //从表2加载数据数前(操作与上面一样的,增加查询条件)
     loadTableBefore2(param, callBack) {
       //添加从表的查询参数(条件)
       param.rows=100
-      param.wheres.push({ name: "bid_no", value: this.bid_no });
-      callBack(true);
+        if(this.bid_no){
+            param.wheres.push({ name: "bid_no", value: this.bid_no });
+            callBack(true);
+        }else {
+            callBack(false);
+        }
     },
 
       loadTableAfter2(data, callBack) {
