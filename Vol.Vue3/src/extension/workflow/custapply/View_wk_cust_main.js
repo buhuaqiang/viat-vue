@@ -6,7 +6,7 @@
 **后台操作见：http://v2.volcore.xyz/document/netCoreDev
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
-import Viat_com_custModelBody from "@/extension/basic/cust/Viat_com_custModelBody";
+import Viat_com_custApplyModelBody from "./Viat_com_custApplyModelBody";
 let extension = {
   components: {
     //查询界面扩展组件
@@ -15,7 +15,7 @@ let extension = {
     gridFooter: '',
     //新建、编辑弹出框扩展组件
     modelHeader: '',
-    modelBody: Viat_com_custModelBody,
+    modelBody: Viat_com_custApplyModelBody,
     modelFooter: ''
   },
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
@@ -88,12 +88,12 @@ let extension = {
       let applyType = this.getOption("apply_type");
       applyType.onChange = (val) => {
 
-        if(val=='01'){
+        if(val=='01'){//Add Customer
           custName.hidden=false;
           custName.required=true;
           cust_id.required=false;
           cust_id.hidden=true;
-        }else if(val=='02'){
+        }else if(val=='02'){//Edit Customer
           custName.hidden=true;
           custName.required=false;
           cust_id.required=true;
