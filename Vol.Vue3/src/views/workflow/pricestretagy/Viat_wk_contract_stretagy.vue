@@ -32,14 +32,14 @@
             const editFormFields = ref({"cont_stretagy_id":"","cont_stretagy_name":"","amount":"","status":""});
             const editFormOptions = ref([[{"title":"Stretagy ID","required":true,"field":"cont_stretagy_id"},
                                {"title":"Stretagy Name","required":true,"field":"cont_stretagy_name"}],
-                              [{"title":"Amount","required":true,"field":"amount","type":"decimal"},
+                              [{"title":"rang","required":true,"field":"amount","type":"decimal"},
                                {"dataKey":"wf_status","data":[],"title":"Status","required":true,"field":"status","type":"select"}]]);
             const searchFormFields = ref({"cont_stretagy_id":"","cont_stretagy_name":""});
             const searchFormOptions = ref([[{"title":"Stretagy ID","field":"cont_stretagy_id"},{"title":"Stretagy Name","field":"cont_stretagy_name"}]]);
             const columns = ref([{field:'contstret_dbid',title:'PKID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
                        {field:'cont_stretagy_id',title:'Stretagy ID',link:true,type:'string',width:110,require:true,align:'left',sort:true},
                        {field:'cont_stretagy_name',title:'Stretagy Name',type:'string',width:120,require:true,align:'left'},
-                       {field:'amount',title:'Amount',type:'decimal',width:110,require:true,align:'left'},
+                       {field:'amount',title:'rang',type:'decimal',width:110,require:true,align:'left'},
                        {field:'status',title:'Status',type:'string',bind:{ key:'wf_status',data:[]},width:110,require:true,align:'left'},
                        {field:'created_user',title:'建立用戶',type:'int',width:110,hidden:true,align:'left'},
                        {field:'created_username',title:'列created_username',type:'string',width:110,hidden:true,align:'left'},

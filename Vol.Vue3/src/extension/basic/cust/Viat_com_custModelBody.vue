@@ -137,6 +137,7 @@ export default {
           type: "string",
           width: 110,
           align: "left",
+          hidden: true,
         },
         {field:'cust_zip_id',title:'Zip ID',type:'string',width:110,align:'left',sort:true},
         {
@@ -161,6 +162,7 @@ export default {
           bind: { key: "doh_type", data: [] },
           width: 110,
           align: "left",
+          hidden: true,
         },
         // {
         //   field: "status",

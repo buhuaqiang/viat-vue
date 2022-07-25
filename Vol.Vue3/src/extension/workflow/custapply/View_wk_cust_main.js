@@ -117,6 +117,20 @@ let extension = {
                 this.editFormFields['cust_dbid'] =reslut.cust_dbid;
                 this.editFormFields['cust_id'] =reslut.cust_id ;
                 this.editFormFields['cust_name'] =reslut.cust_name ;
+                this.editFormFields['cust_zip_id'] =reslut.cust_zip_id ;
+                this.editFormFields['cust_address'] =reslut.cust_address ;
+                this.editFormFields['invoice_name'] =reslut.invoice_name ;
+                this.editFormFields['invoice_zip_id'] =reslut.invoice_zip_id ;
+                this.editFormFields['invoice_address'] =reslut.invoice_address ;
+                this.editFormFields['is_private'] = reslut.is_private;
+                this.editFormFields['owner'] = reslut.owner;
+                //this.editFormFields['tax_id'] = rows[0].tax_id;
+                this.editFormFields['email'] = reslut.email;
+                this.editFormFields['fax_no'] = reslut.fax_no;
+                this.editFormFields['own_hospital'] = reslut.own_hospital;
+                this.editFormFields['ctrl_drug_no'] = reslut.ctrl_drug_no;
+                this.editFormFields['ctrl_drug_contact'] = reslut.ctrl_drug_contact;
+                this.editFormFields['remarks'] = reslut.remarks;
                 this.pickEditFormCustomerName = reslut.cust_name;
                 return;
               }else{
@@ -141,6 +155,7 @@ let extension = {
               if(reslut !=null){
                 this.editFormFields['own_hospital'] =reslut.cust_dbid;
                 this.editFormFields['own_hospital_cust_id'] =reslut.cust_id ;
+
                 this.pickEditFormHospital = reslut.cust_name;
                 return;
               }else{
@@ -229,7 +244,6 @@ let extension = {
 
     //Submit
     SubmitData(){
-      debugger
       let row = this.$refs.table.getSelected();
       if (!row || row.length == 0) {
         return this.$error('Please select the row to submit!');
@@ -320,7 +334,6 @@ let extension = {
         tigger = true;
         let url = "api/View_wk_cust_main/processBack";
         this.http.post(url, delKeys, 'RollBack data....').then((x) => {
-          debugger;
           if (!x.status) return this.$Message.error(x.message);
           this.$Message.success("RollBack Success")
           this.refresh();
@@ -338,6 +351,29 @@ let extension = {
         this.editFormFields['cust_id'] = rows[0].cust_id;
         this.editFormFields['cust_dbid'] = rows[0].cust_dbid;
         this.editFormFields['cust_name'] = rows[0].cust_name;
+        this.editFormFields['cust_city_name'] = rows[0].cust_city_name;
+        this.editFormFields['cust_zip_id'] = rows[0].cust_zip_id;
+        this.editFormFields['cust_address'] = rows[0].cust_address;
+        this.editFormFields['invoice_name'] = rows[0].invoice_name;
+        this.editFormFields['invoice_city_name'] = rows[0].invoice_city_name;
+        this.editFormFields['invoice_zip_id'] = rows[0].invoice_zip_id;
+        this.editFormFields['invoice_address'] = rows[0].invoice_address;
+        this.editFormFields['delivery_contact'] = rows[0].contact;
+        this.editFormFields['delivery_tel_no'] = rows[0].tel_no;
+        this.editFormFields['doh_type'] = rows[0].doh_type;
+        //this.editFormFields['doh_institute_no'] = rows[0].doh_institute_no;
+        this.editFormFields['is_private'] = rows[0].is_private;
+        this.editFormFields['owner'] = rows[0].owner;
+        //this.editFormFields['tax_id'] = rows[0].tax_id;
+        this.editFormFields['email'] = rows[0].email;
+        this.editFormFields['fax_no'] = rows[0].fax_no;
+        this.editFormFields['own_hospital'] = rows[0].own_hospital;
+        this.editFormFields['own_hospital_cust_id'] = rows[0].own_hospital_cust_id;
+        this.pickEditFormHospital = rows[0].own_hospital_cust_name;
+
+         this.editFormFields['ctrl_drug_no'] = rows[0].ctrl_drug_no;
+         this.editFormFields['ctrl_drug_contact'] = rows[0].ctrl_drug_contact;
+         this.editFormFields['remarks'] = rows[0].remarks;
         this.pickEditFormCustomerName = rows[0].cust_name
       }
 
