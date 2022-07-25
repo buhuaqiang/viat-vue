@@ -119,7 +119,7 @@
           @rowClick = "orderRowClick"
   ></vol-table>
 
-
+    <price-recode ref="priceRecode"></price-recode>
     <view_com_prod_pop_query ref="View_com_prod_pop_query" @onSelect="onSelectPop"></view_com_prod_pop_query>
     <Viat_wk_cont_stretagy_detail_pickup ref="Viat_wk_cont_stretagy_detail_pickup" @onSelect="onSelectPriceStretagyPop"></Viat_wk_cont_stretagy_detail_pickup>
 </template>
@@ -128,6 +128,7 @@ import VolBox from "@/components/basic/VolBox.vue";
 import VolTable from "@/components/basic/VolTable.vue";
 import View_com_prod_pop_query from "../../basic/prod/View_com_prod_pop_query.vue";
 import Viat_wk_cont_stretagy_detail_pickup from "../pricestretagy/Viat_wk_cont_stretagy_detail_pickup";
+import priceRecode from "./showPriceRecode";
 
 export default {
   components: {
@@ -135,6 +136,7 @@ export default {
     View_com_prod_pop_query,
     VolBox: VolBox,
     VolTable: VolTable,
+    priceRecode: priceRecode,
   },
   data() {
     return {
@@ -143,6 +145,8 @@ export default {
       contstret_dbid:"",
       cont_stretagy_id:"",
       cont_stretagy_name:"",
+      cust_dbid:"",
+      edit_pricegroup_dbid:"",
       formModel:{
         bid_no:'',
         group_id:'',
@@ -180,6 +184,7 @@ export default {
       columns: [
         { field: "bidetail_dbid", title: "主键ID", type: "guid", width: 80, hidden: true,isKey: true },
         { field: "bidmast_dbid", title: "外键ID", type: "guid", width: 80, hidden: true,isKey: true },
+        { field: "prod_dbid", title: "prod_dbid", type: "guid", width: 80, hidden: true },
         {field:'prod_id',title:'Product Id',type:'string',width:110,require:true,align:'left'},
         {field:'prod_ename',title:'Product Name',type:'string',width:220,align:'left'},
         {field:'nhi_price',title:'NHI Price',type:'decimal',width:100,readonly:true,require:true,align:'right'},
@@ -190,7 +195,7 @@ export default {
         {field:'fg',title:'FG%',type:'decimal',width:50,align:'left'},
         {field:'dis',title:'DIS%',type:'decimal',width:50,align:'left'},
         {field:'min_qty',title:'Min Qty',edit: { type: "number",keep:true },width:80,require:true,align:'left'},
-
+        {field:'record',title:'record',width:50,align:'left'},
         ],
 
       orderTableColumns: [
@@ -231,6 +236,8 @@ export default {
       this.bidmast_dbid= $parent.editFormFields.bidmast_dbid;
       this.cont_stretagy_id= $parent.editFormFields.cont_stretagy_id;
       this.cont_stretagy_name= $parent.editFormFields.cont_stretagy_name;
+      this.cust_dbid = $parent.editFormFields.cust_dbid;
+      this.edit_pricegroup_dbid = $parent.editFormFields.pricegroup_dbid;
 
       this.clear();
       //当前如果是新建重置两个表格数据
@@ -267,8 +274,23 @@ export default {
             return dis;
           }
         }
+
+        if (x.field == 'record') {//查看近一年的记录
+          //将eidt设置为null不开启编辑
+          x.formatter = (row) => {
+            return "<a style='cursor:pointer;color: #409eff'>record</a>"
+          }
+          x.click = (row, column, event) => {
+            this.openRecord(row.prod_dbid);
+          };
+        }
+
+
       })
 
+    },
+    openRecord(prod_dbid){
+      this.$refs.priceRecode.openModel(true,this.cust_dbid,this.edit_pricegroup_dbid,prod_dbid);
     },
 
     caculator(){
@@ -292,7 +314,6 @@ export default {
             this.formModel.prod_ename=reslut.prod_ename;
             this.formModel.nhi_price=reslut.nhi_price;
             this.formModel.prod_dbidname=reslut.prod_id + " " + reslut.prod_ename;
-
           }else {
             this.$message.error("Product Id Is Not Exists.");
             this.formModel.prod_id="";
