@@ -4,7 +4,9 @@
 
       <div class=" view-header">
         <div class="desc-text" ><i class="el-icon-s-grid"></i>
-          <span class="el-submenu__title">Bid Price Transfer</span></div>
+          <span class="el-submenu__title">Bid Price Transfer</span>
+            <span class="el-tag el-tag--success" v-show="stretagyShow">Stretagy Name:{{this.strategyName}}</span>
+        </div>
       </div>
         <!-- vol-table配置的这些属性见VolTable组件api文件 -->
         <vol-table
@@ -23,8 +25,11 @@
                 @rowClick = "priceRowClick"
         ></vol-table>
 
-      <el-form-item   label="Price Note:" style="padding-top:10px;width: 50%">
+      <el-form-item   label="Price Note:" style="padding-top:10px;width: 48%">
         <el-input type="textarea" v-model="formModel.price_note"  ></el-input>
+      </el-form-item>
+      <el-form-item   label="Remarks" style="padding-top:10px;width: 48%">
+          <el-input type="textarea" v-model="remarks"  disabled></el-input>
       </el-form-item>
       <div class=" view-header">
         <div class="desc-text" ><i class="el-icon-s-grid"></i>
@@ -46,7 +51,7 @@
               :index="true"
               @rowClick = "orderRowClick"
       ></vol-table>
-    <el-form-item   label="Order Note:" style="padding-top:10px;width: 50%">
+    <el-form-item   label="Order Note:" style="padding-top:10px;width: 48%">
       <el-input type="textarea" v-model="formModel.order_note"  ></el-input>
     </el-form-item>
   </el-form>
@@ -72,6 +77,10 @@ export default {
     return {
       model: false,
       bid_no:"",
+        stretagyShow:false,
+        strategyDBID:"",
+        strategyName:'test',//價格策略名稱
+       remarks:"",//viat_wk_master.Remark
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
       formModel:{
         price_note:"",
@@ -92,10 +101,10 @@ export default {
         {field:'prod_ename',title:'Product Name',type:'string',width:120,align:'left'},
         {field:'nhi_price',title:'NHI Price',type:'decimal',width:80,readonly:true,require:true,align:'right'},
         {field:'invoice_price',title:'Invoice Price',edit: { type: "decimal",keep:true },width:80,require:true,align:'right'},
-        {field:'net_price',title:'Old Price',width:80,require:true,align:'right'},
-        {field:'price_bid',title:'Apply Price',width:80,require:true,align:'right'},
-        {field:'min_qty',title:'Min Qty',edit: { type: "number",keep:true },width:80,require:true,align:'right'},
+        {field:'net_price',title:'Current Price',width:80,require:true,align:'right'},
+        {field:'price_bid',title:'Bid Price',width:80,require:true,align:'right'},
         {field:'price_close',title:'Approved Price',width:80,require:true,align:'right'},
+          {field:'min_qty',title:'Min Qty',edit: { type: "number",keep:true },width:80,require:true,align:'right'},
         {field:'final_fg',title:'FG%',type:'decimal',width:50,align:'right'},
         {field:'final_discount',title:'DIS%',type:'decimal',width:50,align:'right'},
       ],
@@ -117,9 +126,10 @@ export default {
   methods: {
 
     openModel(param_bid_no) {
-        debugger
       this.ck=false
       let $parent;
+        this.formModel.price_note=""
+        this.formModel.order_note=""
       //获取生成页面viewgrid的对象
       this.$emit("parentCall", ($this) => {
         $parent = $this;
@@ -152,6 +162,29 @@ export default {
       })
         // this.orderTableRowData = this.$refs.orderTable.rowData;
         // this.priceTableRowData=this.$refs.priceTable.rowData;
+        //加載viat_wk_master.Remark ，viat_wk_master.Stretagy Name
+        this.http.get("api/View_wk_bid_price_apply_main/getWkApplyMainByBidNO?bid_no="+param_bid_no,{} , "loading").then(reslut => {
+            debugger
+            if (reslut !== null) {
+                if(reslut.contstret_dbid){
+                    this.stretagyShow=true
+                    this.strategyName=reslut.cont_stretagy_name
+                    this.strategyDBID=reslut.contstret_dbid
+                }else{
+                    this.stretagyShow=false
+                    this.strategyName=""
+                    this.strategyDBID=""
+                }
+
+                this.remarks=reslut.remarks
+
+            } else {
+                this.stretagyShow=false
+                this.strategyName=""
+                this.remarks=""
+                this.strategyDBID=""
+            }
+        })
     },
     openPrice(cust_id,prod_id){
       this.$refs.ShowPrice.openModel(true,cust_id,prod_id);
@@ -161,7 +194,6 @@ export default {
     },
 
     loadTableBefore1(param, callBack) {
-        debugger
       //获取当前编辑主键id值
       param.rows=100
         if(this.bid_no){
