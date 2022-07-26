@@ -24,6 +24,7 @@ let extension = {
   },
   cust_dbid:'',
   prod_dbid:'',
+  isFirstValid:true,//是否是第一次校驗
   joinGroupList:[],//加入价格群组的客户集合
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
@@ -438,7 +439,6 @@ let extension = {
       return true;
     },
     updateBefore(formData) {
-
       //编辑保存前formData为对象，包括明细表、删除行的Id
       let priceTableRowData = this.$refs.modelFooter.priceTableRowData;
       let invalidProd=[];//产品状态无效
@@ -446,7 +446,7 @@ let extension = {
       //价格列表只判断产品状态
       priceTableRowData.forEach(x=>{
         if(x.prodStatus=='1'){
-            //判断输入的发票价格是否合规
+          //判断输入的发票价格是否合规
           if(Number(x.price_close)>Number(x.invoice_price)){
             priceInvalid.push(x.prod_id);
           }
@@ -471,9 +471,9 @@ let extension = {
       orderTableRowData.forEach(x=>{
         if(x.prodStatus=='1'){
           if(x.min_qty !=null){
-              if(Number(x.qty)<Number(x.min_qty)){
-                lessThanMinQty.push(x.prod_id);
-              }
+            if(Number(x.qty)<Number(x.min_qty)){
+              lessThanMinQty.push(x.prod_id);
+            }
           }else{
             //数据库查询不到产品价格,看是否存在当前申请列表内
             priceTableRowData.forEach(p=>{
@@ -521,12 +521,25 @@ let extension = {
           value: this.$refs.modelFooter.formModel.price_note
         }
       ]
-      //校验当前群组内的其他客户是否有该产品的单一价格 ?
+
+      /*if(this.isFirstValid){
+        formData.mainData.isFirstValid='Y'
+        //第一次提交
+
+        //查詢當前群組內其他產品的單一價格列表
+        let data=[];
+        this.$refs.modelHeader.openModel()
 
 
+
+
+        this.isFirstValid=false
+        return false
+      }else{
+        formData.mainData.isFirstValid='N'
+      }*/
 
       formData.detailData = detailData;
-
       return true;
     },
 
@@ -574,7 +587,9 @@ let extension = {
         render:this.getPopShowRender("formPriceGroup")
       }
       if (this.currentAction==this.const.EDIT){
+        this.isFirstValid=true//
 
+        this.getEditOption("add_group").disabled=false
         this.editFormFields['add_group']='N'
         if(row.pricegroup_dbid){
           this.getEditOption("add_group").hidden=true
