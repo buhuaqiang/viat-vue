@@ -108,6 +108,7 @@
                 prod_id: "", //查询条件字段
                 prod_ename: "", //查询条件字段
                 prod_sname: "", //查询条件字段
+                path1:"",
                 entitys:[{"key":'TWD',"value":'TWD'},{"key":'WAL',"value":'WAL'},{"key":'WTC',"value":'WTC'},{"key":'5U1',"value":'5U1'},{"key":'5U2',"value":'5U2'}],
                 url: "api/View_com_prod_pop_query/GetProdPageData",//加载数据的接口
                 columns: [
@@ -139,6 +140,7 @@
                 this.prod_ename = ""
                 this.prod_id = ""
                 this.prod_sname = ""
+                this.path1 = this.$route.path;
                 //打开弹出框时，加载table数据
                 this.$nextTick(() => {
                     this.$refs.prodPop.load();
@@ -176,9 +178,14 @@
                 this.$refs.prodPop.$refs.table.toggleRowSelection(row);//单击行时选中当前行;
             },
             loadTableBefore(params) {
+
+
                 if (!params.sort) {//設置排序
                     params.sort = "created_date";
                     //params.sort = "prod_ename,created_date";
+                }
+                if(this.path1!="/View_prod_entity_period"){//过滤掉状态未上市的产品
+                    params.wheres.push({ name: "state", value: "1"});
                 }
                 if(this.entity){
                     params.wheres.push({ name: "entity", value: this.entity});
