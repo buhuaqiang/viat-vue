@@ -29,18 +29,18 @@
                 url: "/View_price_distributor_mapping/",
                 sortName: "prod_dbid"
             });
-            const editFormFields = ref({"prods":[],"pricegroups":[],"custs":[],"i_dist_id":"","start_date":"","e_dist_id":"","end_date":"","price_channel":"","modified_date":"","status":"","remarks":"","prod_ename":"","group_name":"","cust_name":"","prod_id":"","group_id":"","cust_id":"","pricegroup_dbid":""});
+            const editFormFields = ref({"prods":[],"price_channel":"","custs":[],"pricegroups":[],"start_date":"","i_dist_id":"","end_date":"","e_dist_id":"","modified_date":"","status":"","remarks":"","prod_ename":"","group_name":"","cust_name":"","prod_id":"","group_id":"","cust_id":"","pricegroup_dbid":""});
             const editFormOptions = ref([[{"dataKey":"mul_select_for_pop","data":[],"title":"Product","required":true,"field":"prods","type":"selectList"}],
-                              [{"dataKey":"mul_select_for_pop","data":[],"title":"Group","field":"pricegroups","type":"selectList"}],
+                              [{"dataKey":"group_price_channel","data":[],"title":"Group Channel","field":"price_channel","type":"select"}],
                               [{"dataKey":"mul_select_for_pop","data":[],"title":"Customer","field":"custs","type":"selectList"}],
-                              [{"dataKey":"distributor_Drop","data":[],"title":"Original Distributor","required":true,"field":"i_dist_id","type":"select"},
+                              [{"dataKey":"mul_select_for_pop","data":[],"title":"Group","field":"pricegroups","type":"selectList"},
                                {"title":"Start Date","required":true,"field":"start_date","type":"date"}],
-                              [{"dataKey":"distributor_Drop","data":[],"title":"Assign Distributor","field":"e_dist_id","type":"select"},
+                              [{"dataKey":"distributor_Drop","data":[],"title":"Original Distributor","required":true,"field":"i_dist_id","type":"select"},
                                {"title":"End Date","required":true,"field":"end_date","type":"date"}],
-                              [{"dataKey":"group_price_channel","data":[],"title":"Group Channel","field":"price_channel","type":"select"},
+                              [{"dataKey":"distributor_Drop","data":[],"title":"Assign Distributor","field":"e_dist_id","type":"select"},
                                {"title":"Modified Date","field":"modified_date","type":"date"}],
-                              [{"dataKey":"Status_YN","data":[],"title":"Status","required":true,"field":"status","type":"select"}],
-                              [{"title":"Remarks","field":"remarks"}],
+                              [{"dataKey":"Status_YN","data":[],"title":"Status","required":true,"field":"status","type":"select"},
+                               {"title":"Remarks","field":"remarks"}],
                               [{"title":"Product Name","field":"prod_ename"}],
                               [{"title":"Group Name","field":"group_name"}],
                               [{"title":"Customer Name","field":"cust_name"}],
@@ -48,8 +48,8 @@
                               [{"title":"Group ID","field":"group_id"}],
                               [{"title":"Customer ID","field":"cust_id"}],
                               [{"title":"Group ID","field":"pricegroup_dbid"}]]);
-            const searchFormFields = ref({"prods":[],"prod_dbid":"","prod_id":"","prod_ename":"","pricegroup_dbid":"","group_id":"","group_name":"","cust_dbid":"","cust_id":"","cust_name":"","i_dist_id":"","start_date":"","end_date":"","status":"","price_channel":""});
-            const searchFormOptions = ref([[{"dataKey":"mul_select_for_pop","data":[],"title":"Product","field":"prods","type":"selectList"}],[{"title":"Group ID","field":"group_id"},{"title":"Group Name","field":"group_name"},{"dataKey":"group_price_channel","data":[],"title":"Group Channel","field":"price_channel","type":"select"}],[{"title":"Customer ID","field":"cust_id"},{"title":"Customer Name","field":"cust_name"}],[{"dataKey":"distributor_Drop","data":[],"title":"Original Distributor","field":"i_dist_id","type":"select"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],[{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}],[{"title":"","field":"prod_dbid"}],[{"title":"Customer ID","field":"cust_dbid"}],[{"title":"Group ID","field":"pricegroup_dbid"}],[{"title":"Product ID","field":"prod_id"},{"title":"Product Name","field":"prod_ename"}]]);
+            const searchFormFields = ref({"prods":[],"prod_dbid":"","prod_id":"","prod_ename":"","pricegroup_dbid":"","group_id":"","group_name":"","price_channel":"","cust_dbid":"","cust_id":"","cust_name":"","i_dist_id":"","start_date":"","end_date":"","status":""});
+            const searchFormOptions = ref([[{"dataKey":"mul_select_for_pop","data":[],"title":"Product","field":"prods","type":"selectList"},{"dataKey":"distributor_Drop","data":[],"title":"Original Distributor","field":"i_dist_id","type":"select"}],[{"title":"Customer ID","field":"cust_id"},{"title":"Customer Name","field":"cust_name"},{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}],[{"title":"Group ID","field":"group_id"},{"title":"Group Name","field":"group_name"},{"dataKey":"group_price_channel","data":[],"title":"Group Channel","field":"price_channel","type":"select"}],[{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],[{"title":"","field":"prod_dbid"}],[{"title":"Customer ID","field":"cust_dbid"}],[{"title":"Group ID","field":"pricegroup_dbid"}],[{"title":"Product ID","field":"prod_id"},{"title":"Product Name","field":"prod_ename"}]]);
             const columns = ref([{field:'prods',title:'Product',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,require:true,align:'left'},
                        {field:'custs',title:'Customer',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,align:'left'},
                        {field:'pricegroups',title:'Group',type:'string',bind:{ key:'mul_select_for_pop',data:[]},width:110,hidden:true,align:'left'},
