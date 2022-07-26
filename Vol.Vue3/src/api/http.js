@@ -15,12 +15,12 @@ if (process.env.NODE_ENV == 'development') {
     axios.defaults.baseURL = 'http://localhost:9991/';
 }
 else if (process.env.NODE_ENV == 'debug') {
-    axios.defaults.baseURL = 'http://192.168.2.18:9991/';
+    axios.defaults.baseURL = 'http://localhost:9991/';
 }
 
 else if (process.env.NODE_ENV == 'production') {
     //生產模式通過代理轉發到接口
-    axios.defaults.baseURL = "/viat-api"
+    axios.defaults.baseURL = "/viat-api/"
 }
 let ipAddress = axios.defaults.baseURL;
 

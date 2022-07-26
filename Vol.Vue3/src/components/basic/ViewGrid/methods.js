@@ -1150,7 +1150,13 @@ let methods = {
           d.type == 'file' ||
           d.columnType == 'img'
         ) {
-          d.url = this.http.ipAddress + 'api' + this.table.url + 'Upload';
+
+          if(process.env.NODE_ENV == 'production'){
+            d.url = 'api' + this.table.url + 'Upload';  //代理模式 /viat-api/ modify bt buhuaqiang 20220726
+          }else{
+            d.url = this.http.ipAddress + 'api' + this.table.url + 'Upload';  //非代理模式
+          }
+
           this.uploadfiled.push(d.field);
         }
         if (!d.dataKey) return true;
