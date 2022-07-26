@@ -30,7 +30,7 @@
                 sortName: "entity"
             });
             const editFormFields = ref({"globalmpg_dbid":"","mpg_id":"","mpg_name":"","category":"","bu_id":"","ta":"","maUserName":"","supervisorUserName":"","status":""});
-            const editFormOptions = ref([[{"title":"Mpg ID","required":true,"field":"mpg_id"},
+            const editFormOptions = ref([[{"title":"Mpg ID","field":"mpg_id"},
                                {"dataKey":"GlobalMpgSelect","data":[],"title":"Global Mpg","field":"globalmpg_dbid","type":"select"}],
                               [{"title":"Mpg Name","field":"mpg_name"},
                                {"dataKey":"LocalMpgCategory","data":[],"title":"Category","field":"category","type":"select"}],
@@ -44,7 +44,7 @@
             const columns = ref([{field:'localmpg_dbid',title:'localmpg_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'globalmpg_dbid',title:'Global Mpg',type:'guid',bind:{ key:'GlobalMpgSelect',data:[]},width:110,hidden:true,align:'left'},
                        {field:'entity',title:'Entity',type:'string',width:110,align:'left',sort:true},
-                       {field:'mpg_id',title:'Mpg ID',type:'string',link:true,width:110,require:true,align:'left'},
+                       {field:'mpg_id',title:'Mpg ID',type:'string',link:true,width:110,align:'left'},
                        {field:'mpg_name',title:'Mpg Name',type:'string',width:110,align:'left'},
                        {field:'bu_id',title:'Bu ID',type:'string',bind:{ key:'LocalBu',data:[]},width:110,align:'left'},
                        {field:'category',title:'Category',type:'string',bind:{ key:'LocalMpgCategory',data:[]},width:110,align:'left'},
@@ -65,12 +65,12 @@
                        {field:'modified_client',title:'modified_client',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:110,align:'left',sort:true},
-                       {field:'ma_id',title:'ma_id',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'pm_id',title:'pm_id',type:'string',width:110,align:'left'},
-                       {field:'ma_name',title:'ma_name',type:'string',width:120,align:'left'},
-                       {field:'pm_name',title:'pm_name',type:'string',width:120,align:'left'},
-                       {field:'medica_reviewe_id',title:'medica_reviewe_id',type:'string',width:110,align:'left'},
-                       {field:'medica_reviewe_name',title:'medica_reviewe_name',type:'string',width:120,align:'left'}]);
+                       {field:'ma_id',title:'Ma ID',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'pm_id',title:'Pm ID',type:'string',width:110,align:'left'},
+                       {field:'ma_name',title:'Ma Name',type:'string',width:120,align:'left'},
+                       {field:'pm_name',title:'PM Name',type:'string',width:120,align:'left'},
+                       {field:'medical_reviewe_id',title:'Medical ID',type:'string',width:110,align:'left'},
+                       {field:'medical_reviewe_name',title:'Medical Name',type:'string',width:120,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
