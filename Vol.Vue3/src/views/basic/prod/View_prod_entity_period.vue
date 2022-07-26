@@ -34,7 +34,7 @@
                                {"dataKey":"entity","data":[],"title":"Entity","field":"entity","type":"select"}],
                               [{"title":"Start Date","required":true,"field":"start_date","type":"date"},
                                {"title":"End Date","required":true,"field":"end_date","type":"date"}],
-                              [{"dataKey":"duputy_status","data":[],"title":"Status","field":"status","type":"select"},
+                              [{"dataKey":"duputy_status","data":[],"title":"Status","field":"status","required":true,"type":"select"},
                                {"title":"Last Modified","field":"emp_ename","type":"text"}],
                               [{"title":"Modified Date","field":"modified_date","type":"datetime"}],
                               [{"title":"","field":"prod_ename","type":"text"}],
