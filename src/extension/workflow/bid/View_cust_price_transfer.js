@@ -211,6 +211,7 @@ let extension = {
           this.editFormFields["group_id"]=""
           this.editFormFields["pricegroup_dbid"]=""
           this.pickEditFormPriceGroupName=""
+          this.joinGroupList=[]
         }else{
           this.showGroupInfo()
         }
@@ -258,9 +259,8 @@ let extension = {
     },
 
     showGroupInfo(){
-      if(this.prod_dbid && this.cust_dbid){
-
-        this.http.get("api/Viat_app_cust_price_group/getPriceGroupByCustAndProd?prod_dbid="+this.prod_dbid+"&cust_dbid="+this.cust_dbid,{} , "loading").then(reslut => {
+      if(this.cust_dbid){
+        this.http.get("api/Viat_app_cust_group/getCustGroupIDAndANmeByCustDBID?cust_dbid="+this.cust_dbid,{} , "loading").then(reslut => {
           if(reslut!==null){
             this.editFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
             this.editFormFields['group_id'] =reslut.group_id ;
@@ -531,6 +531,7 @@ debugger
         if(allProdDBIDS.length>0 && formData.mainData.pricegroup_dbid){
           this.http.get("api/View_cust_price_transfer/CustPriceDetailData?pricegroup_dbid="+formData.mainData.pricegroup_dbid+"&prod_dbid="+allProdDBIDS,{} , "loading").then(reslut => {
             debugger
+            this.isFirstValid=false
             if(reslut!==null){
               debugger
               //查詢當前群組內其他產品的單一價格列表
@@ -547,16 +548,21 @@ debugger
                 });
               }
             }else {
-
+              formData.detailData = detailData;
+              return true;
             }
           })
+        }else{
+          formData.detailData = detailData;
+          return true;
         }
-        this.isFirstValid=false
+
       }else{
+        detailData.push({key:"joinGroupList",value:this.joinGroupList})
+        formData.detailData = detailData;
+        return true;
       }
-      detailData.push({key:"joinGroupList",value:this.joinGroupList})
-      formData.detailData = detailData;
-      return false;
+
     },
 
     handleConfirmJoinGroup(){
@@ -604,6 +610,7 @@ debugger
       }
       if (this.currentAction==this.const.EDIT){
         this.isFirstValid=true//
+        this.joinGroupList=[]
 
         this.getEditOption("add_group").disabled=false
         this.editFormFields['add_group']='N'

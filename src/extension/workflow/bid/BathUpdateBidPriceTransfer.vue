@@ -164,7 +164,6 @@ export default {
         // this.priceTableRowData=this.$refs.priceTable.rowData;
         //加載viat_wk_master.Remark ，viat_wk_master.Stretagy Name
         this.http.get("api/View_wk_bid_price_apply_main/getWkApplyMainByBidNO?bid_no="+param_bid_no,{} , "loading").then(reslut => {
-            debugger
             if (reslut !== null) {
                 if(reslut.contstret_dbid){
                     this.stretagyShow=true

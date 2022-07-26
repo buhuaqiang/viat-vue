@@ -14,6 +14,7 @@
     <vol-table
       ref="mytable"
       :loadKey="true"
+      :tableData="selectedData"
       :columns="columns"
       :pagination="pagination"
       :pagination-hide="true"
@@ -51,13 +52,22 @@ export default {
     return {
       model: false,
       single: false,//默認單選
+      selectedData:[],//被選中的數據
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
       url: "",//加载数据的接口GetPriceDataForTransfer
       columns: [
         {field:'cust_dbid',title:'Cust ID',type:'string',width:110,require:true,align:'left',hidden:true},
+        {field:'status',title:'Is Join',bind:{ key:'Status3',data:[]},type:'string',width:110,align:'left',edit: { type: "select",keep:true }},
         {field:'cust_id',title:'Cust ID',type:'string',width:110,require:true,align:'left',sort:true},
         {field:'cust_name',title:'Cust Name',type:'string',width:120,align:'left'},
-        {field:'status',title:'Is Join',type:'string',bind:{ key:'Status3',data:[]},align:'left',edit: { type: "radio",keep:true }},
+        {field:'prod_id',title:'Product ID',type:'string',width:110,require:true,align:'left',sort:true},
+        {field:'prod_ename',title:'Product Name',type:'string',width:120,align:'left'},
+        {field:'invoice_price',title:'Invoice Price',type:'decimal',width:120,align:'right'},
+        {field:'net_price',title:'Net Price',type:'decimal',width:120,align:'right'},
+        {field:'min_qty',title:'Min Qty',type:'decimal',width:120,align:'right'},
+        {field:'start_date',title:'Start Date',type:'date',width:120,align:'center'},
+        {field:'end_date',title:'End Date',type:'date',width:120,align:'center'},
+        {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},align:'left'},
         ],
       pagination: {}, //分页配置，见voltable组件api
     };
@@ -67,7 +77,7 @@ export default {
       debugger
       this.model = true;
       //打开弹出框时，加载table数据
-      this.$refs.mytable.rowData=data;
+      this.selectedData=data;
     },
 
     confirmJoinGroup(){
@@ -84,9 +94,9 @@ export default {
         this.$emit("parentCall", ($this) => {
           $parent = $this;
         });
-        $parent.joinGroupList=this.$refs.mytable.rowData;
+        $parent.joinGroupList=this.$refs.mytable.getSelected();
+        $parent.save();
         this.model = false
-
       });
 
     },
