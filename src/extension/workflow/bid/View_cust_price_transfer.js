@@ -198,10 +198,25 @@ let extension = {
       //-------------- pick 渲染 end-----------------
 
       //==========================
+
       let isGroupImport=this.getEditOption("add_group")
-      isGroupImport.extra={
-        render:this.groupImport()
+      let form_group_id=this.getEditOption("group_id");
+      form_group_id.extra={
+        render:this.getPopShowRender("formPriceGroup")
       }
+      isGroupImport.onChange=(val, option)=>{
+
+        if(val=='N'){
+          this.editFormFields["group_id"]=""
+          this.editFormFields["pricegroup_dbid"]=""
+          this.pickEditFormPriceGroupName=""
+        }else{
+          this.showGroupInfo()
+        }
+      }
+      /*isGroupImport.extra={
+        render:this.groupImport()
+      }*/
       //==========================
     },
     groupImport(){
@@ -242,18 +257,23 @@ let extension = {
     },
 
     showGroupInfo(){
-      this.http.get("api/Viat_app_cust_price_group/getPriceGroupByCustAndProd?prod_dbid="+this.prod_dbid+"&cust_dbid="+this.cust_dbid,{} , "loading").then(reslut => {
-            if(reslut!==null){
-              this.editFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
-              this.editFormFields['group_id'] =reslut.group_id ;
-              this.pickEditFormPriceGroupName=reslut.group_name
-            }else {
-              this.$message.error("Group Id Is Not Exists.");
-              this.editFormFields['group_id']=''
-              this.editFormFields['pricegroup_dbid']=''
-              this.pickEditFormPriceGroupName=''
-            }
-    })
+      if(this.prod_dbid && this.cust_dbid){
+
+        this.http.get("api/Viat_app_cust_price_group/getPriceGroupByCustAndProd?prod_dbid="+this.prod_dbid+"&cust_dbid="+this.cust_dbid,{} , "loading").then(reslut => {
+          if(reslut!==null){
+            this.editFormFields['pricegroup_dbid'] =reslut.pricegroup_dbid;
+            this.editFormFields['group_id'] =reslut.group_id ;
+            this.pickEditFormPriceGroupName=reslut.group_name
+          }else {
+            this.$message.error("User not in the Group Data.");
+            this.editFormFields['group_id']=''
+            this.editFormFields['pricegroup_dbid']=''
+            this.pickEditFormPriceGroupName=''
+            this.editFormFields['add_group']='N'
+          }
+        })
+      }
+
     },
     getPickName(searchType){
       if(searchType=="searchCustomer"){
@@ -476,8 +496,8 @@ let extension = {
         return false;
       }
       if(notExistProd.length>0){
-        //this.$Message.error("Order List Price not exist  "+notExistProd.join(",")+" ");
-        //return false;
+        this.$Message.error("Order List Price not exist  "+notExistProd.join(",")+" ");
+        return false;
       }
       if(lessThanMinQty.length>0){
         this.$Message.error("Order List  Product "+lessThanMinQty.join(",")+" ,Qty less than Min Qty ");
@@ -501,21 +521,9 @@ let extension = {
           value: this.$refs.modelFooter.formModel.price_note
         }
       ]
+      //校验当前群组内的其他客户是否有该产品的单一价格 ?
 
-      //校验当前群组内的其他客户是否有该产品的单一价格
-      let priceDetailListUser=[ {
-        "cust_dbid": "ec4cff11-b7f5-4d58-90c3-fce27d81c3b6",
-        "cust_id": "C0080324",
-        "cust_name": "test0003",
-      }, {
-        "cust_dbid": "886d74bc-f795-4bbc-6133-08da6cc6a260",
-        "cust_id": "C0080323",
-        "cust_name": "jjjj",
-      }];
-      if(priceDetailListUser.length>0){
-        this.$refs.modelHeader.openModel(priceDetailListUser);
-        detailData.push({key:"joinGroupList",value:this.joinGroupList})
-      }
+
 
       formData.detailData = detailData;
 
@@ -566,7 +574,13 @@ let extension = {
         render:this.getPopShowRender("formPriceGroup")
       }
       if (this.currentAction==this.const.EDIT){
+
         this.editFormFields['add_group']='N'
+        if(row.pricegroup_dbid){
+          this.getEditOption("add_group").hidden=true
+        }else{
+          this.getEditOption("add_group").hidden=false
+        }
       }
       this.$nextTick(
           ()=>{

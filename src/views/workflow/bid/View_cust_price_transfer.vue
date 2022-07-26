@@ -34,7 +34,7 @@
                                {"dataKey":"transfer_status","data":[],"title":"Status","field":"state","type":"select"}],
                               [{"title":"Cust ID","field":"cust_id","disabled":true}],
                               [{"title":"Group ID","field":"group_id"},
-                                {"dataKey":"mul_select_for_pop","data":[],"title":"Group Import","field":"add_group","type":"checkbox"}
+                                {"dataKey":"Status3","data":[],"title":"Group Import","field":"add_group","type":"radio"}
                                ],
                               [{"title":"Start Date","field":"start_date","disabled":true,"type":"date"},
                                {"title":"End Date","field":"end_date","disabled":true,"type":"date"}],

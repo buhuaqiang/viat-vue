@@ -64,6 +64,7 @@ export default {
   },
   methods: {
     openModel(data) {
+      debugger
       this.model = true;
       //打开弹出框时，加载table数据
       this.$refs.mytable.rowData=data;
