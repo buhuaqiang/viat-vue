@@ -52,7 +52,7 @@
                        {field:'maUserName',title:'Ma',type:'string',width:110,hidden:true,readonly:true,align:'left'},
                        {field:'supervisorUserName',title:'Supervisor',type:'string',width:110,hidden:true,readonly:true,align:'left'},
                        {field:'sort',title:'sort',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'globalMpgName',title:'Global Mpg Name',type:'string',width:110,align:'left'},
+                       {field:'globalMpgName',title:'Global Mpg Name',type:'string',width:110,require:true,align:'left'},
                        {field:'status',title:'status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'},
                        {field:'main_prod',title:'main_prod',type:'string',width:110,hidden:true,align:'left'},
                        {field:'created_user',title:'created_user',type:'int',width:110,hidden:true,align:'left'},
@@ -66,7 +66,11 @@
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:110,align:'left',sort:true},
                        {field:'ma_id',title:'ma_id',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'supervisor_id',title:'supervisor_id',type:'string',width:110,hidden:true,align:'left'}]);
+                       {field:'pm_id',title:'pm_id',type:'string',width:110,align:'left'},
+                       {field:'ma_name',title:'ma_name',type:'string',width:120,align:'left'},
+                       {field:'pm_name',title:'pm_name',type:'string',width:120,align:'left'},
+                       {field:'medica_reviewe_id',title:'medica_reviewe_id',type:'string',width:110,align:'left'},
+                       {field:'medica_reviewe_name',title:'medica_reviewe_name',type:'string',width:120,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
