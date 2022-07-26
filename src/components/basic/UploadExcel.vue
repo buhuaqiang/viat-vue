@@ -137,7 +137,7 @@ export default {
               (x) => {
                 if(x.code=="-2")
                 {
-                  this.$confirm(x.message + "Do you want to import data?", "Confirm", {
+                  this.$confirm(x.message, "Confirm", {
                     confirmButtonText: "OK",
                     cancelButtonText: "Cancel",
                     type: "warning",
@@ -153,7 +153,9 @@ export default {
                       this.message = d.message;
                       this.resultClass = d.status ? "v-r-success" : "v-r-error";
                     });
-                  });
+                  }).catch(()=>{
+                    this.loadingStatus = false;
+                  })
                 }
                 else {
                   this.loadingStatus = false;
