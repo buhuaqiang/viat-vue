@@ -26,7 +26,7 @@
                 footer: "Foots",
                 cnName: 'Product',
                 name: 'prod/View_com_prod_maintenance',
-                url: "/View_com_prod/",
+                url: "/View_com_prod_maintenance/",
                 sortName: "created_date"
             });
             const editFormFields = ref({"entity":"","prod_id":"","prod_sname":"","prod_ename":"","unit_stock":"","unit_sale":"","lmpg_mpg_id":"","global_mpg":"","nhi_id":"","default_dist_id":"","pack_size":"","pack_size_pri":"","nhi_price":"","division":"","prod_short_name":"","license_no":"","license_name":"","prod_form":"","prod_strength":"","is_ctrl_drug":"","prod_packed":"","safty_stock":"","state":"","status_sample":"","status_bid":"","status_stock_pfizer":"","status_stock_dist":""});
