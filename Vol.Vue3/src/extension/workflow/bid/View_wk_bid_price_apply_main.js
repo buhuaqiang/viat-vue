@@ -602,7 +602,7 @@ let extension = {
     //提交審批
     doSubmit(){
       let rows = this.$refs.table.getSelected();
-
+debugger
       if (!rows || rows.length == 0) return this.$error('Please select the row to submit!');
       let delKeys = rows.map((x) => {
         return x[this.table.key];
@@ -790,9 +790,9 @@ debugger;
       }
       const time_str=format.replace(/{([ymdhisa])+}/g,(result,key)=>{
         const value=formatObj[key]
-        if(key==='a'){
+       /* if(key==='a'){
           return['日','一','二','三','四','五','六'][value]
-        }
+        }*/
         return  value.toString().padStart(2,'0')
       })
       return time_str

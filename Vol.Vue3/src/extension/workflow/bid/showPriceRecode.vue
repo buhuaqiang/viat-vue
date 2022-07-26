@@ -67,15 +67,17 @@ export default {
       debugger
       this.single=single;
       this.model = true;
-      this.cust_dbid = cust_dbid==""? null:cust_dbid;
-      this.pricegroup_dbid = pricegroup_dbid==""? null:pricegroup_dbid;
+      //this.cust_dbid = cust_dbid==""? null:cust_dbid;
+      //this.pricegroup_dbid = pricegroup_dbid==""? null:pricegroup_dbid;
+      this.cust_dbid = cust_dbid;
+      this.pricegroup_dbid = pricegroup_dbid;
       this.prod_dbid = prod_dbid;
 
       //this.cust_id=cust_id
       //this.prod_id=prod_id
       //this.url = "api/View_wk_bid_price_apply_main/RecentOrder?prod_dbid="+ this.prod_dbid+"cust_dbid="+this.cust_dbid+"pricegroup_dbid"+this.pricegroup_dbid;
 
-      this.http.get("api/View_wk_bid_price_apply_main/RecentOrder?prod_dbid="+ this.prod_dbid.replace(/\s/g,"")+"cust_dbid="+this.cust_dbid.replace(/\s/g,"")+"pricegroup_dbid="+this.pricegroup_dbid.replace(/\s/g,""),{} , "loading").then(reslut => {
+      this.http.get("api/View_wk_bid_price_apply_main/RecentOrder?prod_dbid="+ this.prod_dbid+"&cust_dbid="+this.cust_dbid+"&pricegroup_dbid="+this.pricegroup_dbid,{} , "loading").then(reslut => {
         let _rows = reslut.map((row)=>{
           return{
             cust_id:row.cust_id,
@@ -86,6 +88,8 @@ export default {
             qty:row.qty
           }
         })
+        debugger
+        let a = "11";
 
         /*_rows.forEach(x => {
           let idx =  this.$refs.mytable.some(item => {
