@@ -439,12 +439,14 @@ let extension = {
       return true;
     },
     updateBefore(formData) {
+      let allProdDBIDS=[]//所有價格產品
       //编辑保存前formData为对象，包括明细表、删除行的Id
       let priceTableRowData = this.$refs.modelFooter.priceTableRowData;
       let invalidProd=[];//产品状态无效
       let priceInvalid=[];//发票价格输入不合理
       //价格列表只判断产品状态
       priceTableRowData.forEach(x=>{
+        allProdDBIDS.push(x.prod_dbid)
         if(x.prodStatus=='1'){
           //判断输入的发票价格是否合规
           if(Number(x.price_close)>Number(x.invoice_price)){
@@ -521,26 +523,39 @@ let extension = {
           value: this.$refs.modelFooter.formModel.price_note
         }
       ]
-
-      /*if(this.isFirstValid){
-        formData.mainData.isFirstValid='Y'
+debugger
+      if(this.isFirstValid){
         //第一次提交
+        //調用接口校驗  allProdDBIDS
+        if(allProdDBIDS.length>0 && formData.mainData.pricegroup_dbid){
+          this.http.post("api/View_cust_price_transfer/CustPriceDetailData",{"pricegroup_dbid":formData.mainData.pricegroup_dbid,"prod_dbid":allProdDBIDS} , "loading").then(reslut => {
+            debugger
+            if(reslut!==null){
+              debugger
+              //查詢當前群組內其他產品的單一價格列表
+              let data=reslut;
+              if(data.length>0){
+                this.$confirm('There are other customers in this group ,are you sure these customer join the group?', 'Warn', {
+                  confirmButtonText: 'confirm',
+                  cancelButtonText: 'Cancel',
+                  type: 'warning',
+                  center: true
+                }).then(() => {
+                  this.$refs.modelHeader.openModel(data)
+                  return false
+                });
+              }
+            }else {
 
-        //查詢當前群組內其他產品的單一價格列表
-        let data=[];
-        this.$refs.modelHeader.openModel()
-
-
-
-
+            }
+          })
+        }
         this.isFirstValid=false
-        return false
       }else{
-        formData.mainData.isFirstValid='N'
-      }*/
-
+      }
+      detailData.push({key:"joinGroupList",value:this.joinGroupList})
       formData.detailData = detailData;
-      return true;
+      return false;
     },
 
     handleConfirmJoinGroup(){
