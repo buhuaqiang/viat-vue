@@ -527,8 +527,9 @@ debugger
       if(this.isFirstValid){
         //第一次提交
         //調用接口校驗  allProdDBIDS
+        //{"pricegroup_dbid":formData.mainData.pricegroup_dbid,"prod_dbid":allProdDBIDS}
         if(allProdDBIDS.length>0 && formData.mainData.pricegroup_dbid){
-          this.http.post("api/View_cust_price_transfer/CustPriceDetailData",{"pricegroup_dbid":formData.mainData.pricegroup_dbid,"prod_dbid":allProdDBIDS} , "loading").then(reslut => {
+          this.http.get("api/View_cust_price_transfer/CustPriceDetailData?pricegroup_dbid="+formData.mainData.pricegroup_dbid+"&prod_dbid="+allProdDBIDS,{} , "loading").then(reslut => {
             debugger
             if(reslut!==null){
               debugger
