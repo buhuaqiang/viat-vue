@@ -340,7 +340,7 @@ let extension = {
       let empEname=this.getEditOption('emp_ename');
       let modifiedDate = this.getEditOption('modified_date');
       if(this.currentAction==this.const.ADD){
-          status.hidden = true;
+          status.hidden = false;
           empEname.hidden = true;
           modifiedDate.hidden = true;
       }else if (this.currentAction==this.const.EDIT){
