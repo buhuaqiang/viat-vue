@@ -13,12 +13,12 @@ module.exports = {
            '/yaude-boot': ''  //默认所有请求都加了yaude-boot前缀，需要去掉
          }
        },*/
-      '/viat-api': {
+      '/viat-api/': {
         target: 'http://localhost:9991/', //请求本地 需要yaude-boot后台项目
         ws: false,
         changeOrigin: true,
         pathRewrite: {
-          '^/viat-api': '/'
+          '^/viat-api/': '/'
 
         }
 
