@@ -66,7 +66,7 @@
         calcuateResult:"",
         //从表1 this.$parent.editFormFields.powercont_dbid
        // table1Url: "api/Viat_app_power_contract_purchase_prod/GetPageData",//?powercont_dbid=" , //table1获取数据的接口 待補充
-        table1Url:"api/Viat_wk_cont_stretagy_detail/GetPageData",
+        table1Url:"api/View_wk_cont_stretagy_detail_main/GetPageData",
         //表配置的字段注意要与后台返回的查询字段大小写一致
         //从表2
         //表配置的字段注意要与后台返回的查询字段大小写一致   prod_id,prod_ename,qty,amt
