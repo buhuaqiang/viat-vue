@@ -5,7 +5,7 @@
       <div class=" view-header">
         <div class="desc-text" ><i class="el-icon-s-grid"></i>
           <span class="el-submenu__title">Bid Price Transfer</span>
-            <span class="el-tag el-tag--success" v-show="stretagyShow">Stretagy Name:{{this.strategyName}}</span>
+            <span class="el-tag el-tag--success" v-if="stretagyShow">Stretagy Name:{{this.strategyName}}</span>
         </div>
       </div>
         <!-- vol-table配置的这些属性见VolTable组件api文件 -->
