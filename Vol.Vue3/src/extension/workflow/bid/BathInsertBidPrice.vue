@@ -365,6 +365,7 @@ export default {
         });
       }
     },
+
     openProdModel(val){
       this.$refs.View_com_prod_pop_query.openModel(true,"prod_dbid","onSelect")
     },
@@ -408,7 +409,11 @@ export default {
               qty:1
             }
           })
-
+          let $parent;
+          this.$emit("parentCall", ($this) => {
+            $parent = $this;
+          });
+          let cust_id = $parent.editFormFields.cust_id;
           //push的时候去除已经选择的产品   this.$refs.table2.rowData.push(..._rows);
           _rows.forEach(x => {
             let idx =  this.$refs.orderTable.rowData.some(item => {

@@ -515,7 +515,6 @@ let extension = {
         return  false;
       }
 
-
       let detailData = [
         {
           key: "priceTableRowData",
