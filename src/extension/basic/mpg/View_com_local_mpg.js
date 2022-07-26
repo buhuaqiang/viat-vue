@@ -6,6 +6,7 @@
 **后台操作见：http://v2.volcore.xyz/document/netCoreDev
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
+import employPop from "../../system/Sys_User/sys_employ_pop.vue";
 
 let extension = {
   components: {
@@ -15,7 +16,7 @@ let extension = {
     gridFooter: '',
     //新建、编辑弹出框扩展组件
     modelHeader: '',
-    modelBody: '',
+    modelBody: employPop,
     modelFooter: ''
   },
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
@@ -56,6 +57,42 @@ let extension = {
       this.single=true;
       //設置初始不加載
       this.load=false;
+
+      let emp_dbidname=this.getOption("emp_dbidname");
+      emp_dbidname.extra = {
+        render:this.getFormRender("emp_dbid","f")
+      }
+
+    },
+    getFormRender(fieldName,formType) {//
+      return (h, { row, column, index }) => {
+        return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
+          h(
+            "a",
+            {
+              props: {},
+              style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
+              onClick: (e) => {
+                this.$refs.modelBody.open(fieldName,formType)
+              }
+            },
+            [h("i",{class:"el-icon-zoom-in"})],
+            "Select"
+          ),
+          h(
+            "a",
+            {
+              props: {},
+              style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+              onClick: (e) => {
+                this.$refs.modelBody.clearData(fieldName,formType)
+              }
+            },
+            [h("i",{class:"el-icon-zoom-out"})],
+            "Clean"
+          ),
+        ]);
+      };
     },
     onInited() {
       //框架初始化配置后
