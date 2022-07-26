@@ -499,8 +499,13 @@ let extension = {
       let status=this.getFormOption("status");
       status.onChange=(val, option)=>{
         if(val=='N'){
+          let startStr=this.editFormFields['start_date'].substr(0,10)
           let dateStrs=this.parseTime(new Date(),'{y}-{m}-{d}')
-          this.editFormFields['end_date']=dateStrs +" 00:00:00";
+          if(startStr>dateStrs){
+
+          }else{
+            this.editFormFields['end_date']=dateStrs +" 00:00:00";
+          }
         }
       }
       //-------------表單輸入框綁定彈窗 end-------------
@@ -590,11 +595,12 @@ let extension = {
         this.$Message.error(" Nhi price >= Invoice Price and Invoice Price >= Net Price");
         return false;
       }*/
-      console.log(formData.mainData.start_date.format("yyyyMMdd"));
-      console.log(formData.mainData.end_date | formatDate('yyyy-MM-dd') + 'OK');
-      if(formData.mainData.start_date.toString("yyyyMMdd") <= formData.mainData.end_date.toString("yyyyMMdd")){
+      //console.log(formData.mainData.start_date.format("yyyyMMdd"));
+      //console.log(formData.mainData.end_date | formatDate('yyyy-MM-dd') + 'OK');
+      if(formData.mainData.start_date.substr(0,10)<= formData.mainData.end_date.substr(0,10)){
 
       }else{
+
         this.$Message.error("Start date can't behind end date");
         return false;
       }

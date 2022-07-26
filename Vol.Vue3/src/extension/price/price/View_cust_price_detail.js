@@ -359,8 +359,13 @@ let extension = {
       let status=this.getFormOption("status");
       status.onChange=(val, option)=>{
         if(val=='N'){
+          let startStr=this.editFormFields['start_date'].substr(0,10)
           let dateStrs=this.parseTime(new Date(),'{y}-{m}-{d}')
-          this.editFormFields['end_date']=dateStrs+" 00:00:00";
+          if(startStr>dateStrs){
+
+          }else{
+            this.editFormFields['end_date']=dateStrs +" 00:00:00";
+          }
         }
       }
 
@@ -461,7 +466,7 @@ let extension = {
         this.$Message.error(" Nhi price >= Invoice Price and Invoice Price >= Net Price");
         return false;
       }*/
-      if(formData.mainData.start_date <= formData.mainData.end_date){
+      if(formData.mainData.start_date.substr(0,10) <= formData.mainData.end_date.substr(0,10)){
 
       }else{
         this.$Message.error("Start date can't behind end date");
