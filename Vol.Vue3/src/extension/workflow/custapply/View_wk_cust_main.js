@@ -465,6 +465,22 @@ let extension = {
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
+      let bid_no = this.searchFormFields['bid_no'];
+      let cust_name = this.searchFormFields['cust_name'];
+      if(bid_no!=""){//设置模糊查询
+        for (var i = 0; i < param.wheres.length; i++) {
+          if (param.wheres[i].name == 'bid_no') {
+            param.wheres[i].displayType = "like"
+          }
+        }
+      }
+      if(cust_name!=""){//设置模糊查询
+        for (var i = 0; i < param.wheres.length; i++) {
+          if (param.wheres[i].name == 'cust_name') {
+            param.wheres[i].displayType = "like"
+          }
+        }
+      }
       return true;
     },
     searchAfter(result) {
