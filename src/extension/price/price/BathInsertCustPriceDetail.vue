@@ -9,61 +9,78 @@
   >
     <div style="padding-bottom: 10px">
       <el-form :inline="true" label-position="left" label-width="110px" :model="formModel">
-        <el-form-item  label="Bid NO:" style="width: 70%">
-          <el-input v-model="formModel.bid_no" style="width:200px;" :disabled="true"></el-input>
-        </el-form-item>
-        <el-form-item id="0" label="Cust:" style="width: 40%">
-          <el-input v-model="formModel.cust_id" style="width:120px;" @keyup.enter="custKeyPress"></el-input>
-          <el-input v-model="formModel.cust_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
-          <el-input v-model="formModel.cust_dbid" type="hidden" style="width: 0px"></el-input>
-          <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;
-          <a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
+        <ul>
+          <li>
+            <el-form-item  label="Bid NO:" style="width: 70%">
+              <el-input v-model="formModel.bid_no" style="width:200px;" :disabled="true"></el-input>
+            </el-form-item>
+          </li>
+          <li>
+            <el-form-item id="0" label="Cust:" style="width: 40%">
+              <el-input v-model="formModel.cust_id" style="width:120px;" @keyup.enter="custKeyPress"></el-input>
+              <el-input v-model="formModel.cust_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+              <el-input v-model="formModel.cust_dbid" type="hidden" style="width: 0px"></el-input>
+              <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;
+              <a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
 
-        </el-form-item>
-        <el-form-item label="Product:" style="width: 40%">
-          <el-input v-model="formModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress"></el-input>
-          <el-input v-model="formModel.prod_ename" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
-          <el-input v-model="formModel.prod_dbid"  type="hidden" style="width: 0px"></el-input>
-          <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
+            </el-form-item>
+            <el-form-item label="Product:" style="width: 40%">
+              <el-input v-model="formModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress"></el-input>
+              <el-input v-model="formModel.prod_ename" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+              <el-input v-model="formModel.prod_dbid"  type="hidden" style="width: 0px"></el-input>
+              <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
 
-        </el-form-item>
-        <el-form-item label="Start Date:" style="width: 35%">
-          <el-date-picker
-                  suffix-icon="el-icon-date"
-                  v-model="formModel.start_date"
-                  type="date"
-                  placeholder="" >
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="End Date:" style="width: 35%">
-          <el-date-picker
-                  suffix-icon="el-icon-date"
-                  v-model="formModel.end_date"
-                  type="date"
-                  placeholder="" >
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item   label="NHI Price:" style="width: 35%">
-          <el-input v-model="formModel.nhi_price" style="width:200px;" :disabled="true"></el-input>
-        </el-form-item>
-        <el-form-item   label="Invoice Price:" style="width: 35%">
-          <el-input v-model="formModel.invoice_price" style="width:200px;" ></el-input>
-        </el-form-item>
-        <el-form-item   label="Net Price:" style="width: 35%">
-          <el-input v-model="formModel.net_price" style="width:200px;" ></el-input>
-        </el-form-item>
-        <el-form-item   label="Min Qty:" style="width: 35%">
-          <el-input-number v-model="formModel.min_qty"  style="width:200px;" ></el-input-number>
-        </el-form-item>
-        <el-form-item   label="Reserve Price:" style="width: 35%">
-          <el-input v-model="formModel.reserv_price" style="width:200px;" ></el-input>
-        </el-form-item>
-        <el-form-item v-show="grossFlag"  label="Gross Price:" style="width: 35%">
-          <el-input v-model="formModel.gross_price" style="width:200px;"  ></el-input>
-        </el-form-item>
-        <el-form-item label="Remark:" style="width: 60%">
-          <el-input type="textarea" v-model="formModel.remarks" style="width:250px;"></el-input>
-        </el-form-item>
+            </el-form-item>
+          </li>
+          <li>
+            <el-form-item label="Start Date:" style="width: 35%">
+              <el-date-picker
+                      suffix-icon="el-icon-date"
+                      v-model="formModel.start_date"
+                      type="date"
+                      placeholder="" >
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item label="End Date:" style="width: 35%">
+              <el-date-picker
+                      suffix-icon="el-icon-date"
+                      v-model="formModel.end_date"
+                      type="date"
+                      placeholder="" >
+              </el-date-picker>
+            </el-form-item>
+          </li>
+          <li>
+            <el-form-item   label="NHI Price:" style="width: 35%">
+              <el-input v-model="formModel.nhi_price" style="width:200px;" :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item   label="Invoice Price:" style="width: 35%">
+              <el-input v-model="formModel.invoice_price" style="width:200px;" ></el-input>
+            </el-form-item>
+          </li>
+          <li>
+            <el-form-item   label="Net Price:" style="width: 35%">
+              <el-input v-model="formModel.net_price" style="width:200px;" ></el-input>
+            </el-form-item>
+            <el-form-item   label="Min Qty:" style="width: 35%">
+              <el-input-number v-model="formModel.min_qty"  style="width:200px;" ></el-input-number>
+            </el-form-item>
+          </li>
+          <li>
+            <el-form-item   label="Reserve Price:" style="width: 35%">
+              <el-input v-model="formModel.reserv_price" style="width:200px;" ></el-input>
+            </el-form-item>
+            <el-form-item v-show="grossFlag"  label="Gross Price:" style="width: 35%">
+              <el-input v-model="formModel.gross_price" style="width:200px;"  ></el-input>
+            </el-form-item>
+          </li>
+          <li>
+            <el-form-item label="Remark:" style="width: 60%">
+              <el-input type="textarea" v-model="formModel.remarks" style="width:250px;"></el-input>
+            </el-form-item>
+          </li>
+        </ul>
+
       </el-form>
       <el-button
               type="primary"
@@ -678,6 +695,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+  li{
+    list-style:none;
+  }
   .a-pop {
     color:#0c83ff;border-bottom: 1px solid;margin-left: 9px;font-size:12px;text-decoration:none;cursor: pointer
   }
