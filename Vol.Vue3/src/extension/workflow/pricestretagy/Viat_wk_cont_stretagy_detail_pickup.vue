@@ -75,7 +75,7 @@ export default {
   data() {
     return {
       model: false,
-      single: true,
+      single: false,
       returnType:"",
       flag:"",
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据

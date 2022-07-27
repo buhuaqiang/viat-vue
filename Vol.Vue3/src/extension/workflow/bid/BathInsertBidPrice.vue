@@ -256,7 +256,7 @@ export default {
       this.$nextTick(()=>{
 
         if ($parent.currentAction == "Add") {
-          this.$refs.modelBody.clearTableDetail();
+          this.clearTableDetail();
         } else {
           if(apply_type=='03'){
             this.$refs.priceTable.load();
@@ -392,7 +392,7 @@ export default {
         this.$Message.error("Please Delete All Price Date");
         return false;
       }else{
-        this.$refs.Viat_wk_cont_stretagy_detail_pickup.openModel(true,"stretagy","onSelect")
+        this.$refs.Viat_wk_cont_stretagy_detail_pickup.openModel(false,"stretagy","onSelect")
       }
 
     },
