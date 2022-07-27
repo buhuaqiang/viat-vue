@@ -202,6 +202,28 @@ export default {
 
   },
   methods: {
+    clearData(){
+      this.pushData=[];
+      this.formModel.bid_no=''
+      this.formModel.start_date=new Date()
+      this.formModel.end_date=new Date('2099-12-31')
+      this.formModel.cust_id=''
+      this.formModel.cust_name=''
+      this.formModel.cust_dbid=''
+      this.formModel.prod_id=''
+      this.formModel.prod_ename=''
+      this.formModel.prod_dbid=''
+      this.formModel.nhi_price=''
+      this.formModel.invoice_price=''
+      this.formModel.gross_price=''
+      this.formModel.net_price=''
+      this.formModel.status='Y'
+      this.formModel.min_qty=1
+      this.formModel.nhi_id=''
+      this.formModel.remarks=''
+      this.formModel.reserv_price=''
+      this.grossFlag=false
+    },
     closeWindow(){
       this.$confirm("Are you sure to close?", "Confirm", {
         confirmButtonText: "OK",
@@ -209,6 +231,7 @@ export default {
         type: "warning",
         center: true,
       }).then(() => {
+        this.clearData()
         this.model = false
       });
     },
@@ -301,25 +324,7 @@ export default {
 
     openModel() {
       this.model = true;
-      this.pushData=[];
-      this.formModel.bid_no=''
-      this.formModel.start_date=new Date()
-      this.formModel.end_date=new Date('2099-12-31')
-      this.formModel.cust_id=''
-      this.formModel.cust_name=''
-      this.formModel.cust_dbid=''
-      this.formModel.prod_id=''
-      this.formModel.prod_ename=''
-      this.formModel.prod_dbid=''
-      this.formModel.nhi_price=''
-      this.formModel.invoice_price=''
-      this.formModel.gross_price=''
-      this.formModel.net_price=''
-      this.formModel.status='Y'
-      this.formModel.min_qty=1
-      this.formModel.nhi_id=''
-      this.formModel.remarks=''
-      this.formModel.reserv_price=''
+      this.clearData()
     },
     custShowData(reslut){
       debugger
