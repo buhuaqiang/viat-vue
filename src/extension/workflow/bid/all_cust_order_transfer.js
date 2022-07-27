@@ -84,32 +84,7 @@ let extension = {
       //搜索表单不隐藏
       this.setFiexdSearchForm(true);
 
-      //----------查詢列表格式化 start-----------
-      /*let requestor_name=this.getColumnsOption("requestor_name");
-      requestor_name.formatter = (row) => {
-        //对单元格的数据格式化处理
-        if (!row.requestor_name) {
-          return;
-        }
-        return row.territory_id+"  "+row.requestor_name;
-      }*/
-      let modified_date=this.getColumnsOption("modified_date");
-      modified_date.formatter = (row) => {
-        //对单元格的数据格式化处理
-        if (!row.modified_date) {
-          return;
-        }
-        return row.modified_date.substr(0,10);
-      }
-      let create_date=this.getColumnsOption("created_date");
-      create_date.formatter = (row) => {
-        //对单元格的数据格式化处理
-        if (!row.created_date) {
-          return;
-        }
-        return row.created_date.substr(0,10);
-      }
-      //----------查詢列表格式化 end-----------
+
 
       //-------------- pick 渲染 start-----------------
       let cust_dbid=this.getSearchOption("cust_dbid");
@@ -290,70 +265,13 @@ let extension = {
       return true;
     },
     updateBefore(formData) {
-      debugger
-      //编辑保存前formData为对象，包括明细表、删除行的Id
-      //table2數據回填到 formData
-      let orderTableRowData = this.$refs.modelFooter.orderTableRowData;
-      // alert(this.$refs.modelFooter.formModel.order_note)
-      //table2數據回填到 formData
-      let orderInvalidProd=[];//产品状态无效
-      let notExistProd=[];//不存在价格产品price book
-      let lessThanMinQty=[];//购买数量小于price book设定的最小数量
-      //订单列表需要判断产品状态和产品价格状态以及最小数量
-      orderTableRowData.forEach(x=>{
-        if(x.prodStatus=='1'){
-          if(x.min_qty !=null){
-            if(Number(x.qty)<Number(x.min_qty)){
-              lessThanMinQty.push(x.prod_id);
-            }
-          }else{
-            //数据库查询不到产品价格
-            notExistProd.push(x.prod_id);
-          }
-        }else {
-          orderInvalidProd.push(x.prod_id);
-        }
-      })
 
-      if(orderInvalidProd.length>0){
-        this.$Message.error("Order List Invalid Product "+invalidProd.join(",")+" ");
-        return false;
-      }
-      if(notExistProd.length>0){
-        this.$Message.error("Order List Price not exist  "+notExistProd.join(",")+" ");
-        return false;
-      }
-      if(lessThanMinQty.length>0){
-        this.$Message.error("Order List  Product "+lessThanMinQty.join(",")+" ,Qty less than Min Qty ");
-        return false;
-      }
-
-      let detailData = [
-        {
-          key: "orderTableRowData",
-          value: orderTableRowData,
-        },
-        {
-          key:"orderNote",
-          value: this.$refs.modelFooter.formModel.order_note
-        }
-      ]
-      formData.detailData = detailData;
-      return true;
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
-    async modelOpenBeforeAsync(row) {
-      if (this.currentAction==this.const.EDIT){
-        if(row.state!=0){
-          this.$Message.error(" This  data can not edit.");
-          return false;
-        }
-      }
-      return true;
-    },
+
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
       //(1)判断是编辑还是新建操作： this.currentAction=='Add';
