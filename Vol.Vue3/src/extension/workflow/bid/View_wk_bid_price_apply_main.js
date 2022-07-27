@@ -602,7 +602,6 @@ let extension = {
     //提交審批
     doSubmit(){
       let rows = this.$refs.table.getSelected();
-debugger
       if (!rows || rows.length == 0) return this.$error('Please select the row to submit!');
       let delKeys = rows.map((x) => {
         return x[this.table.key];
@@ -636,7 +635,6 @@ debugger
 
     //save and Submit
     saveSubmit(){
-      debugger;
       this.$refs.form.validate((result) => {
         if (result) {
           this.saveSubmitExecute();
@@ -714,7 +712,6 @@ debugger
 
 
     doRollBack(){
-      debugger;
       let rows = this.$refs.table.getSelected();
 
       if (!rows || rows.length == 0) return this.$error('Please select the row to RollBack!');
@@ -749,11 +746,9 @@ debugger
     },
 
     initCustomerGroup(cust_dbid){
-      debugger;
       let url = "api/Viat_app_cust_group/getCustGroupIDAndANmeByCustDBID?cust_dbid="+cust_dbid;
       this.http.get(url, {}, 'Get data....').then((x) => {
         if (!x) return ;
-        debugger
         this.editFormFields.cust_exists_group_id=x.group_id;
         this.editFormFields.cust_exists_group_name=x.group_name;
         this.getFormOption("cust_exists_group_id").hidden=false;
@@ -858,7 +853,6 @@ debugger
         let dateStrs=this.parseTime(new Date(),'{y}-{m}-{d}')
         this.editFormFields.bid_date=dateStrs;
         this.editFormFields.end_date='2099-12-31';
-        this.$refs.modelBody.clearTableDetail();
       }else if (this.currentAction =='update'){
         this.getFormOption("apply_type").disabled=true;
         this.getFormOption("cust_id").disabled=true;
@@ -890,11 +884,37 @@ debugger
         this.getFormOption("isgroup").disabled=true;
         this.getFormOption("cust_id").hidden=false;
       }
-      //this.$refs.modelBody.openModel();
-      this.$nextTick(
+      this.$refs.modelBody.openModel();
+/*      this.$nextTick(
           ()=>{
-            this.$refs.modelBody.openModel()
-          });
+            if(apply_type=='03'){
+              this.$refs.modelBody.showPriceDiv = true;
+            }else if(apply_type=='04'){
+              this.$refs.modelBody.showPriceDiv = false;
+            }
+
+            if(this.currentAction =='view'){
+              this.$refs.modelBody.showButton = false;
+            }else{
+              this.$refs.modelBody.showButton = true;
+            }
+            if (this.currentAction == "Add") {
+              this.$refs.modelBody.clearTableDetail();
+            } else {
+              this.$refs.modelBody.$refs.orderTable.load();
+              if(apply_type=='03'){
+                this.$refs.modelBody.$refs.priceTable.load();
+              }
+
+            }
+
+            if(this.currentAction =='view'){
+              this.showButton = false;
+            }else{
+              this.showButton = true;
+            }
+
+          });*/
     }
   }
 };
