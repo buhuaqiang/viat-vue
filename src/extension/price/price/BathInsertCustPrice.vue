@@ -2,7 +2,7 @@
   <VolBox
     v-model="model"
     :lazy="true"
-    title="Create [Cust Price]"
+    title="Create [Group Price]"
     :height="700"
     :width="1600"
     :padding="15"
