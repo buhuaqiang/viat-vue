@@ -213,6 +213,7 @@ export default {
         type: "warning",
         center: true,
       }).then(() => {
+        this.clearData();
         this.model = false
       });
     },
@@ -298,9 +299,7 @@ export default {
       }
 
     },
-
-    openModel() {
-      this.model = true;
+    clearData(){
       this.pushData=[];
       this.formModel.bid_no=''
       this.formModel.start_date=new Date()
@@ -319,6 +318,11 @@ export default {
       this.formModel.nhi_id=''
       this.formModel.remarks=''
       this.formModel.reserv_price=''
+      this.nhiGroupFlag=false
+    },
+    openModel() {
+      this.model = true;
+      this.clearData();
     },
     onSelectPop(fieldName,rows){
         if(rows.length!=1){
