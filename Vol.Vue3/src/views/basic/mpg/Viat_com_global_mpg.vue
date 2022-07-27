@@ -29,28 +29,29 @@
                 url: "/Viat_com_global_mpg/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"bu_id":"","status":"","finance_mpg":"","category":"","remarks":"","global_mpg":"","mpg_name":""});
-            const editFormOptions = ref([[{"dataKey":"GlobalBu","data":[],"title":"Bu ID","field":"bu_id","type":"select"},
-                               {"dataKey":"Status_YN","data":[],"title":"Status","required":true,"field":"status","type":"select"}],
-                              [{"dataKey":"GlobalMpgCategory","data":[],"title":"Category","field":"category","type":"select"},
-                               {"title":"Finance mpg","field":"finance_mpg"}],
-                              [{"title":"HFM Description","field":"remarks","colSize":8}],
-                              [{"title":"Mpg Name","required":true,"field":"mpg_name","disabled":true},
-                               {"title":"Mpg ID","required":true,"field":"global_mpg","disabled":true}]]);
-            const searchFormFields = ref({"global_mpg":"","bu_id":"","mpg_name":"","status":""});
-            const searchFormOptions = ref([[{"title":"Mpg ID","field":"global_mpg","type":"like"},{"dataKey":"GlobalBu","data":[],"title":"Bu ID","field":"bu_id","type":"select"}],[{"title":"Mpg Name","field":"mpg_name","type":"like"},{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}]]);
+            const editFormFields = ref({"global_mpg":"","mpg_name":"","bu_id":"","status":"","category":"","ta":"","imt_type":"","remarks":""});
+            const editFormOptions = ref([[{"title":"Global Mpg ID","required":true,"field":"global_mpg","disabled":true},
+                               {"title":"Global Mpg Name","field":"mpg_name","disabled":true}],
+                              [{"dataKey":"Bu","data":[],"title":"Bu ID","field":"bu_id","type":"select"},
+                               {"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}],
+                              [{"dataKey":"Category","data":[],"title":"Category","field":"category","type":"select"},
+                               {"dataKey":"LocalTA","data":[],"title":"Ta","field":"ta","type":"select"}],
+                              [{"dataKey":"IMT_Type","data":[],"title":"IMT Type","field":"imt_type","type":"select"}],
+                              [{"title":"HFM Description","field":"remarks","colSize":8}]]);
+            const searchFormFields = ref({"global_mpg":"","bu_id":"","mpg_name":"","ta":"","status":"","imt_type":""});
+            const searchFormOptions = ref([[{"title":"Global Mpg ID","field":"global_mpg","type":"like"},{"dataKey":"Bu","data":[],"title":"Bu ID","field":"bu_id","type":"select"}],[{"title":"Global Mpg Name","field":"mpg_name","type":"like"},{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}],[{"dataKey":"LocalTA","data":[],"title":"Ta","field":"ta","type":"select"},{"dataKey":"IMT_Type","data":[],"title":"IMT Type","field":"imt_type","type":"select"}]]);
             const columns = ref([{field:'globalmpg_dbid',title:'PKID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
                        {field:'entity',title:'公司別',type:'string',width:110,hidden:true,align:'left'},
                        {field:'division',title:'所屬事業單位,01:PH;03:AH;05:CH;06:NU',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'global_mpg',title:'Mpg ID',type:'string',link:true,width:110,readonly:true,require:true,align:'left',sort:true},
-                       {field:'financempg_dbid',title:'Finance Mpg PKID',type:'guid',width:110,hidden:true,align:'left'},
-                       {field:'bu_id',title:'Bu ID',type:'string',bind:{ key:'GlobalBu',data:[]},width:110,align:'left'},
-                       {field:'finance_mpg',title:'Finance mpg',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'mpg_name',title:'Mpg Name',type:'string',width:110,readonly:true,require:true,align:'left'},
-                       {field:'category',title:'Category',type:'string',bind:{ key:'GlobalMpgCategory',data:[]},width:110,align:'left'},
+                       {field:'global_mpg',title:'Global Mpg ID',type:'string',link:true,width:110,readonly:true,require:true,align:'left',sort:true},
+                       {field:'bu_id',title:'Bu ID',type:'string',bind:{ key:'Bu',data:[]},width:110,align:'left'},
+                       {field:'mpg_name',title:'Global Mpg Name',type:'string',width:110,readonly:true,align:'left'},
+                       {field:'category',title:'Category',type:'string',bind:{ key:'Category',data:[]},width:110,align:'left'},
+                       {field:'ta',title:'Ta',type:'string',bind:{ key:'LocalTA',data:[]},width:110,align:'left'},
+                       {field:'imt_type',title:'IMT Type',type:'string',bind:{ key:'IMT_Type',data:[]},width:110,align:'left'},
                        {field:'remarks',title:'HFM Description',type:'string',width:220,hidden:true,align:'left'},
                        {field:'sort',title:'排序  for finance report HFM',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,require:true,align:'left'},
+                       {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'},
                        {field:'created_user',title:'建立用戶',type:'int',width:110,hidden:true,align:'left'},
                        {field:'created_username',title:'created_username',type:'string',width:110,hidden:true,align:'left'},
                        {field:'created_client',title:'建立者的委託人',type:'int',width:110,hidden:true,align:'left'},
