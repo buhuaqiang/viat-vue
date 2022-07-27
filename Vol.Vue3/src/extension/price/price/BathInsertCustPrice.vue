@@ -476,10 +476,9 @@ export default {
         // this.$message.error("Reserve price can't be empty.");
         // return false;
       }
-
       let date1_unix=Date.parse(this.formModel.start_date)
       let date2_unix=Date.parse(this.formModel.end_date)
-      if(!date1_unix<=date2_unix){
+      if(date1_unix>date2_unix){
         this.$message.error("start date should <= end date");
         return false;
       }
