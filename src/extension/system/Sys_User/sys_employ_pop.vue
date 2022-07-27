@@ -119,16 +119,33 @@
                     this.$refs.empolyPop.load();
                 });
             },
-            clearData(fieldName,formType) {
 
+            clearData(fieldName,formType) {
+              let path =this.$route.path;
+              this.fieldName=fieldName;
                 this.$emit("parentCall", ($parent) => {
-                    if(this.formType=='f'){
-                        $parent.editFormFields[fieldName] = '';
-                        $parent.editFormFields[fieldName+'name'] = '';
-                    }else if(this.formType=='s'){
-                        $parent.searchFormFields[fieldName] = '';
-                        $parent.searchFormFields[fieldName+'name'] ='';
+                  if (path === '/View_com_local_mpg' && this.formType === 'f'){
+                    if (this.fieldName == 'medical_reviewe_id'){
+                      $parent.editFormFields['medical_reviewe_id'] = '';
+                      $parent.editFormFields['medical_reviewe_name'] = '';
                     }
+                    if (this.fieldName == 'ma_id'){
+                      $parent.editFormFields['ma_id'] = '';
+                      $parent.editFormFields['maUserName'] = '';
+                    }
+                    if (this.fieldName == 'pm_id'){
+                      $parent.editFormFields['pm_id'] = '';
+                      $parent.editFormFields['supervisorUserName'] = '';
+                    }
+                  }else{
+                    if(this.formType=='f'){
+                      $parent.editFormFields[fieldName] = '';
+                      $parent.editFormFields[fieldName+'name'] = '';
+                    }else if(this.formType=='s'){
+                      $parent.searchFormFields[fieldName] = '';
+                      $parent.searchFormFields[fieldName+'name'] ='';
+                    }
+                  }
                 })
             },
 
@@ -144,19 +161,31 @@
                      $parent.editFormFields.user_id = selectrow[0].User_Id;
                      this.model=false;
                  })*/
-
+                let path =this.$route.path;
                 //回写数据到表单
                 this.$emit("parentCall", ($parent) => {
                     //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
-                    if(this.formType=='f'){
+                  console.log("JJS:" + JSON.stringify(selectrow[0]));
+                  if (path === '/View_com_local_mpg' && this.formType === 'f'){
+                    if (this.fieldName === 'medical_reviewe_id'){
+                      $parent.editFormFields['medical_reviewe_id'] = selectrow[0].emp_id;
+                      $parent.editFormFields['medical_reviewe_name'] = selectrow[0].emp_ename;
+                    }
+                    if (this.fieldName === 'ma_id'){
+                      $parent.editFormFields['ma_id'] = selectrow[0].emp_id;
+                      $parent.editFormFields['maUserName'] = selectrow[0].emp_ename;
+                    }
+                    if (this.fieldName === 'pm_id'){
+                      $parent.editFormFields['pm_id'] = selectrow[0].emp_id;
+                      $parent.editFormFields['supervisorUserName'] = selectrow[0].emp_ename;
+                    }
+                  }else if(this.formType==='f'){
                         $parent.editFormFields[this.fieldName] = selectrow[0].emp_dbid;
                         $parent.editFormFields[this.fieldName+'name'] =selectrow[0].emp_ename;
                         $parent.editFormFields.UserTrueName = selectrow[0].emp_ename;
                     }
-
                 });
                 this.model=false;
-
             },
             search() {
                 //点击搜索
