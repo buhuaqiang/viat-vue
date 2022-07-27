@@ -1088,21 +1088,21 @@ let methods = {
   audit() {
     //审核弹出框
     let rows = this.$refs.table.getSelected();
-    if (rows.length == 0) return this.$error('请选择要审核的行!');
+    if (rows.length == 0) return this.$error('請選擇要審核的行!');
     let checkStatus = rows.every((x) => {
       return x.AuditStatus > 0;
     });
-    if (checkStatus) return this.$error('只能选择审核中的数据!');
+    if (checkStatus) return this.$error('只能選擇審核中的數據!');
     this.auditParam.rows = rows.length;
     this.auditParam.model = true;
   },
   saveAudit() {
     //保存审核
     let rows = this.$refs.table.getSelected();
-    if (this.auditParam.status == -1) return this.$error('请选择审核结果!');
+    if (this.auditParam.status == -1) return this.$error('請選擇審核結果!');
 
     if (rows.length != this.auditParam.rows)
-      return this.$error('所选数据已发生变化,请重新选择审数据!');
+      return this.$error('所選數據已發生變化,請重新選擇審核數據!');
 
     let keys = rows.map((x) => {
       return x[this.table.key];

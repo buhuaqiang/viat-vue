@@ -2,14 +2,14 @@
     <VolBox
             v-model="model"
             :lazy="true"
-            title="选择数据"
+            title="選擇數據"
             :height="600"
             :width="1150"
             :padding="15"
     >
         <!-- 设置查询条件 -->
         <div style="padding-bottom: 10px">
-            <span style="margin-right: 20px">请选择数据</span>
+            <span style="margin-right: 20px">請選擇數據</span>
             <el-input
 
                     placeholder="名称"
@@ -103,7 +103,7 @@
             addRow() {
                 var rows = this.$refs.mytable.getSelected();
                 if (!rows || rows.length == 0) {
-                    return this.$message.error("请选择行数据");
+                    return this.$message.error("請選擇行數據");
                 }
                 //回写数据到表单
                 this.$emit("parentCall", ($parent) => {

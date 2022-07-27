@@ -126,7 +126,7 @@
                       type="date"
                       :disabled="item.readonly"
                       size="medium"
-                      placeholder="选择日期"
+                      placeholder="選擇日期"
                     >
                     </el-date-picker>
                     <el-radio-group
@@ -271,10 +271,10 @@
       </el-scrollbar>
     </div>
     <div class="drag-right">
-      <div class="left-title">组件属性</div>
+      <div class="left-title">组件屬性</div>
       <div class="attr" v-show="currentIndex != -1">
         <div class="attr-item">
-          <div class="text">字段名称</div>
+          <div class="text">字段名稱</div>
           <el-input size="medium" v-model="currentItem.name" />
         </div>
         <div class="attr-item">
@@ -282,7 +282,7 @@
           <el-input size="medium" v-model="currentItem.field" />
         </div>
         <div class="attr-item" v-show="currentItem.type == 'table'">
-          <div class="text">后台返回数据接口地址</div>
+          <div class="text">後台返回數據接口地址</div>
           <el-input
             size="medium"
             placeholder="例:api/表名/getPageData"
@@ -295,7 +295,7 @@
             currentItem.type != 'table' && currentItem.hasOwnProperty('url')
           "
         >
-          <div class="text">上传接口地址(后台接口)</div>
+          <div class="text">上傳接口地址(後台接口)</div>
           <el-input
             size="medium"
             placeholder="可用框架地址:api/表名/upload"
@@ -303,7 +303,7 @@
           />
           <div class="text" style="margin-top: 10px">文件大小限制(M)</div>
           <el-input size="medium" v-model="currentItem.maxSize" />
-          <div class="text" style="margin-top: 10px">是否多文件上传</div>
+          <div class="text" style="margin-top: 10px">是否多文件上傳</div>
           <el-switch
             v-model="currentItem.multiple"
             style="width: 100%"
@@ -313,7 +313,7 @@
             :inactive-value="false"
           >
           </el-switch>
-          <div class="text" style="margin-top: 10px">是否自动上传</div>
+          <div class="text" style="margin-top: 10px">是否自動上傳</div>
           <el-switch
             v-model="currentItem.autoUpload"
             style="width: 100%"
@@ -325,7 +325,7 @@
           </el-switch>
         </div>
         <div class="attr-item" v-show="currentItem.data">
-          <div class="text">数据源(下拉框绑定设置中维护)</div>
+          <div class="text">數據源(下拉框榜定設置中維護)</div>
 
           <!-- dicList -->
           <el-select
@@ -333,7 +333,7 @@
             v-model="currentItem.key"
             size="medium"
             @change="dicChange"
-            placeholder="请选择数据源字典"
+            placeholder="請選擇數據源字典"
           >
             <el-option
               v-for="item in dicList"
@@ -345,7 +345,7 @@
           </el-select>
         </div>
         <div class="attr-item" v-show="currentItem.type != 'table'">
-          <div class="text">标签宽度</div>
+          <div class="text">標籤寬度</div>
           <el-slider
             style="width: 90%"
             :min="20"

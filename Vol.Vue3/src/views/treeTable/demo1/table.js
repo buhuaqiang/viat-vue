@@ -52,7 +52,7 @@ let extension = {
     addBefore(param) { //保存前
       let treeId = this.$store.getters.data().treeDemo1.treeId;
       if (treeId === undefined) {
-        this.$Message.error("请选择左侧角色")
+        this.$Message.error("請選擇左側角色")
         return false;
       }
       //添加默认新建的值到后台

@@ -128,7 +128,7 @@ let extension = {
         let delv_group=this.getOption("delv_group");
         delv_group.extra = {
           icon: "el-icon-zoom-out",
-          text: "选择数据",
+          text: "選擇數據",
           style: "color:red;font-size: 12px;cursor: pointer;",
           click: item => {
             this.$refs.modelBody.openDemo("delv_group");

@@ -197,10 +197,10 @@ export default {
     },
     delTree() {
       let tableId = this.layOutOptins.fields.table_Id;
-      if (!tableId) return this.$message.error('请选择节点');
+      if (!tableId) return this.$message.error('請選擇節點');
       let tigger = false;
-      this.$confirm('删除警告?', '确认要删除吗', {
-        confirmButtonText: '确定',
+      this.$confirm('刪除警告?', '確認要刪除嗎', {
+        confirmButtonText: '確定',
         cancelButtonText: '取消',
         type: 'warning',
         center: true
@@ -211,7 +211,7 @@ export default {
           .post('/api/builder/delTree?table_Id=' + tableId, {}, true)
           .then((x) => {
             if (!x.status) return this.$message.error(x.message);
-            this.$message.error('删除成功,请刷新页面');
+            this.$message.error('刪除成功,請刷新頁面');
             // for (let index = 0; index < this.tree.length; index++) {
             //   if (this.tree[index].id == tableId) {
             //     this.tree.splice(index, 1);

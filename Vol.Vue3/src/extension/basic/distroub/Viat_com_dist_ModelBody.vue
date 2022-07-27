@@ -9,7 +9,7 @@
     >
         <!-- 设置查询条件 -->
         <div style="padding-bottom: 10px">
-            <span style="margin-right: 20px">请选择数据</span>
+            <span style="margin-right: 20px">請選擇數據</span>
             <el-input
                     placeholder="客戶編號"
                     style="width: 200px"

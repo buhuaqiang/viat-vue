@@ -8,7 +8,7 @@
       :filterable="
         singleSearch.filter || singleSearch.data.length > 10 ? true : false
       "
-      :placeholder="'请选择' + singleSearch.title"
+      :placeholder="'請選擇' + singleSearch.title"
       clearable
     >
       <el-option
