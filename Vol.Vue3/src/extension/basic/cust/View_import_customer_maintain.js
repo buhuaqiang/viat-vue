@@ -51,11 +51,11 @@ debugger
       let params= {
         "page": 1,
         "rows": 30,
-        "sort": "dbid",
-        "order": "desc",
+        "sort": "zip_id",
+        "order": "asc",
         "wheres": "[]"
       }
-      let url="api/Viat_com_zip_city/getPageData";
+      let url="api/Viat_com_zip_city/GetPageDataForSelect";
       params.wheres ="[{\"name\":\"city_name\",\"value\":\""+cityName+"\",\"displayType\":\"=\"}]" ;
       let _result = await this.http.post(url,params, true).then((result) => {
         return result;
