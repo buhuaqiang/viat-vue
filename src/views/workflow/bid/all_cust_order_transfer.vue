@@ -26,7 +26,7 @@
                 footer: "Foots",
                 cnName: 'All Bid Order',
                 name: 'bid/View_cust_order_transfer_all',
-                url: "/allOrderTransfer/",
+                url: "/View_cust_order_transfer_all/",
                 sortName: "created_date"
             });
             const editFormFields = ref({"bid_no":"","state":"","cust_id":"","modified_date":"","created_date":""});

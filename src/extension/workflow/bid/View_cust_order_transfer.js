@@ -316,7 +316,7 @@ let extension = {
       })
 
       if(orderInvalidProd.length>0){
-        this.$Message.error("Order List Invalid Product "+invalidProd.join(",")+" ");
+        this.$Message.error("Order List Invalid Product "+orderInvalidProd.join(",")+" ");
         return false;
       }
       if(notExistProd.length>0){
