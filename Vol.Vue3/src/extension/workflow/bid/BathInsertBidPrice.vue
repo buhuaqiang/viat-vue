@@ -1,5 +1,8 @@
 <template>
-<div v-if="showPriceDiv">
+<div v-if="showPriceDiv
+
+
+">
   <div class=" view-header">
     <div class="desc-text" ><i class="el-icon-s-grid"></i>
       <span class="el-submenu__title">Bid Price Apply</span></div>
@@ -41,6 +44,7 @@
 
       </el-form>
       <el-button
+              v-if="showButton"
               type="primary"
         style="margin-left:10px"
         size="medium"
@@ -49,11 +53,13 @@
         >Add</el-button>
 
       <el-button
+              v-if="showButton"
               type="danger"
               icon="el-icon-delete"
               @click="deletePriceRow()"
       >Delete</el-button>
       <el-button
+              v-if="showButton"
               type="warning"
               icon="el-icon-zoom-in"
               @click="openPriceStretageModel()"
@@ -86,6 +92,7 @@
   <div style="padding-bottom: 10px;padding-left:45px;">
 
     <el-button
+            v-if="showButton"
             type="primary"
             style="margin-left:10px"
             size="medium"
@@ -94,6 +101,7 @@
     >Add </el-button>
 
     <el-button
+            v-if="showButton"
             type="danger"
             icon="el-icon-delete"
             @click="deleteOrderRow()"
@@ -139,6 +147,7 @@ export default {
   data() {
     return {
       model: false,
+      showButton:true,
       bidmast_dbid:"",
       contstret_dbid:"",
       cont_stretagy_id:"",
@@ -240,6 +249,9 @@ export default {
 
       if(apply_type=='03'){
         this.$refs.priceTable.reset();
+        this.showPriceDiv = true;
+      }else if(apply_type=='04'){
+        this.showPriceDiv = false;
       }
       this.$refs.orderTable.reset();
       //当前如果是新建重置两个表格数据
@@ -252,6 +264,12 @@ export default {
         this.$refs.orderTable.load();
       }
 
+
+      if($parent.currentAction =='view'){
+        this.showButton = false;
+      }else{
+        this.showButton = true;
+      }
 
 
       //onInited方法设置从表编辑时实时计算值

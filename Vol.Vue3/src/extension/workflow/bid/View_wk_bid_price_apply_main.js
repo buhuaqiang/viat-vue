@@ -57,7 +57,7 @@ let extension = {
         icon: 'el-icon-check',
         type: 'danger',
         disabled: false,
-        value: 'save',
+        value: 'Save&Submit',
         onClick() {
           this.saveSubmit();
         }
@@ -655,7 +655,7 @@ debugger
       }else{
         this.updateBefore(formData);
       }
-debugger;
+
       let url = "api/View_wk_bid_price_apply_main/addSubmit";
 
       let _currentIsAdd = this.currentAction == this.const.ADD;
@@ -845,6 +845,11 @@ debugger;
       });
       this.getFormOption("cust_exists_group_id").hidden=true;
       this.getFormOption("cust_exists_group_name").hidden=true;
+      this.boxButtons.forEach(x => {
+        if (x.value == "Save&Submit") {
+          x.hidden=false
+        }
+      })
       if (this.currentAction =='Add'){
         this.editFormFields.apply_type='03'
         this.getFormOption("apply_type").disabled=false
@@ -854,7 +859,7 @@ debugger;
         this.editFormFields.bid_date=dateStrs;
         this.editFormFields.end_date='2099-12-31';
         this.$refs.modelBody.clearTableDetail();
-      }else{
+      }else if (this.currentAction =='update'){
         this.getFormOption("apply_type").disabled=true;
         this.getFormOption("cust_id").disabled=true;
         this.getFormOption("group_id").disabled=true;
@@ -863,6 +868,12 @@ debugger;
         if(cust_dbid){
           this.initCustomerGroup(cust_dbid);
         }
+      }else if(this.currentAction =='view'){
+        this.boxButtons.forEach(x => {
+          if (x.value == "Save&Submit") {
+            x.hidden=true
+          }
+        })
       }
       let apply_type = this.editFormFields.apply_type;
       if(apply_type=='03'){
@@ -870,7 +881,6 @@ debugger;
         this.getFormOption("end_date").hidden=false;
         this.getFormOption("start_date").required=true;
         this.getFormOption("end_date").required=true;
-        this.$refs.modelBody.showPriceDiv = true;
       }else if(apply_type=='04'){
         this.getFormOption("start_date").hidden=true;
         this.getFormOption("end_date").hidden=true;
@@ -879,7 +889,6 @@ debugger;
         this.editFormFields.isgroup = "0";
         this.getFormOption("isgroup").disabled=true;
         this.getFormOption("cust_id").hidden=false;
-        this.$refs.modelBody.showPriceDiv = false;
       }
       //this.$refs.modelBody.openModel();
       this.$nextTick(
