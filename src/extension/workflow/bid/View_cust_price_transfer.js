@@ -528,11 +528,12 @@ debugger
         //第一次提交
         //調用接口校驗  allProdDBIDS
         //{"pricegroup_dbid":formData.mainData.pricegroup_dbid,"prod_dbid":allProdDBIDS}
-        if(allProdDBIDS.length>0 && formData.mainData.pricegroup_dbid){
+        if(allProdDBIDS.length>0 && formData.mainData.pricegroup_dbid && formData.mainData.add_group=='Y'){
+
           this.http.get("api/View_cust_price_transfer/CustPriceDetailData?pricegroup_dbid="+formData.mainData.pricegroup_dbid+"&prod_dbid="+allProdDBIDS,{} , "loading").then(reslut => {
             debugger
             this.isFirstValid=false
-            if(reslut!==null){
+            if(reslut!==null && reslut.length>0){
               debugger
               //查詢當前群組內其他產品的單一價格列表
               let data=reslut;
