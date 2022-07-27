@@ -361,10 +361,12 @@ let extension = {
         this.editFormFields['delivery_contact'] = rows[0].contact;
         this.editFormFields['delivery_tel_no'] = rows[0].tel_no;
         this.editFormFields['doh_type'] = rows[0].doh_type;
-        //this.editFormFields['doh_institute_no'] = rows[0].doh_institute_no;
+
+        this.editFormFields['doh_institute_no'] = rows[0].doh_institute_no;
         this.editFormFields['is_private'] = rows[0].is_private;
         this.editFormFields['owner'] = rows[0].owner;
-        //this.editFormFields['tax_id'] = rows[0].tax_id;
+
+        this.editFormFields['tax_id'] = rows[0].tax_id;
         this.editFormFields['email'] = rows[0].email;
         this.editFormFields['fax_no'] = rows[0].fax_no;
         this.editFormFields['own_hospital'] = rows[0].own_hospital;
