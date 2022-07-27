@@ -67,7 +67,7 @@ export default {
         {field:'min_qty',title:'Min Qty',type:'decimal',width:120,align:'right'},
         {field:'start_date',title:'Start Date',type:'date',width:120,align:'center'},
         {field:'end_date',title:'End Date',type:'date',width:120,align:'center'},
-        {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},align:'left'},
+
         ],
       pagination: {}, //分页配置，见voltable组件api
     };

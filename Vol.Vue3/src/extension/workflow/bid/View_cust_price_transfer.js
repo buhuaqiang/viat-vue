@@ -523,18 +523,14 @@ let extension = {
           value: this.$refs.modelFooter.formModel.price_note
         }
       ]
-debugger
       if(this.isFirstValid){
         //第一次提交
         //調用接口校驗  allProdDBIDS
         //{"pricegroup_dbid":formData.mainData.pricegroup_dbid,"prod_dbid":allProdDBIDS}
         if(allProdDBIDS.length>0 && formData.mainData.pricegroup_dbid && formData.mainData.add_group=='Y'){
-
-          this.http.get("api/View_cust_price_transfer/CustPriceDetailData?pricegroup_dbid="+formData.mainData.pricegroup_dbid+"&prod_dbid="+allProdDBIDS,{} , "loading").then(reslut => {
-            debugger
+          this.http.get("api/View_cust_price_transfer/CustPriceDetailData?cust_dbid="+this.cust_dbid+"&pricegroup_dbid="+formData.mainData.pricegroup_dbid+"&prod_dbid="+allProdDBIDS,{} , "loading").then(reslut => {
             this.isFirstValid=false
             if(reslut!==null && reslut.length>0){
-              debugger
               //查詢當前群組內其他產品的單一價格列表
               let data=reslut;
               if(data.length>0){
@@ -550,7 +546,7 @@ debugger
               }
             }else {
               formData.detailData = detailData;
-              return true;
+              this.save()
             }
           })
         }else{

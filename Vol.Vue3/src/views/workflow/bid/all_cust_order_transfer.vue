@@ -25,8 +25,8 @@
                 key: 'order_transfer_dbid',
                 footer: "Foots",
                 cnName: 'All Bid Order',
-                name: 'bid/View_cust_order_transfer',
-                url: "/View_cust_order_transfer/GetAllPageData",
+                name: 'bid/View_cust_order_transfer_all',
+                url: "/allOrderTransfer/",
                 sortName: "created_date"
             });
             const editFormFields = ref({"bid_no":"","state":"","cust_id":"","modified_date":"","created_date":""});
@@ -35,8 +35,14 @@
                               [{"title":"Cust ID","field":"cust_id","disabled":true}],
                               [{"title":"Apply Date","field":"created_date","disabled":true,"type":"date"},
                                {"title":"Modified Date","field":"modified_date","disabled":true,"type":"date"}]]);
-            const searchFormFields = ref({"bid_no":"","state":"","modified_date":"","created_date":"","cust_id":"","requestor_name":"","cust_dbid":"","transfer_date":"","mpg_name":""});
-            const searchFormOptions = ref([[{"title":"Bid NO","field":"bid_no","type":"like"},{"title":"Cust ID","field":"cust_id"}],[{"title":"Apply Date","field":"created_date","type":"date"},{"dataKey":"LocalMpgCategory","data":[],"title":"Mpg","field":"mpg_name","type":"select"}],[{"title":"Modified Date","field":"modified_date","type":"date"},{"title":"Requstor","field":"requestor_name","type":"like"}],[{"title":"Transfer Date","field":"transfer_date","type":"date"},{"dataKey":"transfer_status","data":[],"title":"Status","field":"state","type":"select"}],[{"title":"","field":"cust_dbid"}]]);
+            const searchFormFields = ref({
+                "created_date":"",
+                "cust_id":"",
+                "requestor_name":"","cust_dbid":"","state":"","cust_dbid":""});
+            const searchFormOptions = ref([[{"title":"Requstor","field":"requestor_name","type":"like"},{"title":"Cust ID","field":"cust_id"}],
+                [{"title":"Apply Date","field":"created_date","type":"date"},{"dataKey":"transfer_status","data":[],"title":"Status","field":"state","type":"select"}],
+                [{"title":"","field":"cust_dbid"}]
+               ]);
             const columns = ref([{field:'bid_no',title:'Bid NO',type:'string',link:true,width:110,readonly:true,align:'left',sort:true},
                        {field:'state',title:'Status',type:'string',bind:{ key:'transfer_status',data:[]},width:110,align:'left'},
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:120,readonly:true,align:'left',sort:true},
