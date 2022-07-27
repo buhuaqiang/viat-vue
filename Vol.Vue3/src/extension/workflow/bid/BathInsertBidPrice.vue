@@ -583,11 +583,11 @@ export default {
         if(this.isDecimal(this.formModel.net_price) || this.isNumber(this.formModel.net_price)){
 
         }else{
-          this.$message.error("Net price invalid.");
+          this.$message.error("Current price invalid.");
           return false;
         }
       }else {
-        this.$message.error("Net price can't be empty.");
+        this.$message.error("Current price can't be empty.");
         return false;
       }
       if(this.formModel.bid_price){
@@ -607,7 +607,7 @@ export default {
       let pass=true;
 
       if(this.formModel.invoice_price<this.formModel.bid_price){
-        message="Invoice Price < Net Price,";
+        message="Invoice Price < Current Price,";
         if(this.formModel.invoice_price>this.formModel.nhi_price){
           message+="Invoice Price >NHI Price,";
         }

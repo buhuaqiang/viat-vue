@@ -451,11 +451,11 @@ export default {
         if(this.isDecimal(this.formModel.net_price) || this.isNumber(this.formModel.net_price)){
 
         }else{
-          this.$message.error("Net price invalid.");
+          this.$message.error("Current price invalid.");
           return false;
         }
       }else {
-        this.$message.error("Net price can't be empty.");
+        this.$message.error("Current price can't be empty.");
         return false;
       }
 
@@ -470,7 +470,7 @@ export default {
         if(this.formModel.gross_price){
           if(this.isDecimal(this.formModel.gross_price) || this.isNumber(this.formModel.gross_price)){
             if(Number(this.formModel.gross_price)<Number(this.formModel.net_price)){
-              message1="Gross Price < Net Price,Do you want to add?"
+              message1="Gross Price < Current Price,Do you want to add?"
               grossPass=false;
             }
           }else{
@@ -485,7 +485,7 @@ export default {
           if(Number(this.formModel.reserv_price)< Number(this.formModel.net_price)){
 
           }else{
-            this.$message.error("Net Price >Reserve Price,can’t be saved. Please check.");
+            this.$message.error("Current Price >Reserve Price,can’t be saved. Please check.");
             return false;
           }
         }else{
@@ -499,7 +499,7 @@ export default {
       let pass=true;
       let message="";
       if(Number(this.formModel.invoice_price)< Number(this.formModel.net_price)){
-        message="Invoice Price < Net Price,";
+        message="Invoice Price < Current Price,";
         if(Number(this.formModel.invoice_price) > Number(this.formModel.nhi_price)){
           message+="Invoice Price >NHI Price,";
         }
@@ -513,7 +513,7 @@ export default {
           message += "Invoice Price > NHI Price. ";
         }
         if ((this.formModel.nhi_price != this.formModel.invoice_price && this.formModel.net_price == this.formModel.invoice_price)) {
-          message += "Invoice Price ≠ NHI Price but Invoice Price = Net Price.";
+          message += "Invoice Price ≠ NHI Price but Invoice Price = Current Price.";
         }
         message +="Do you want to add?."
         pass=false;
