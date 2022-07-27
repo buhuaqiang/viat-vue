@@ -152,7 +152,7 @@
             addRow() {
                 let selectrow = this.$refs.empolyPop.getSelected();
                 if(!selectrow.length){
-                    return this.$message.error("请选择数据")
+                    return this.$message.error("請選擇數據")
                 }
                 // //将选取的数据赋值到父页面
                 /* this.$emit('parentCall', $parent => {

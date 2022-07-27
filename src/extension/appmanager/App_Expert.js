@@ -53,7 +53,7 @@ let extension = {
             //给编辑表单设置[选择数据]操作,extra具体配置见volform组件api
             item.extra = {
               icon: "el-icon-zoom-out",
-              text: "选择数据",
+              text: "選擇數據",
               style: "color:red;font-size: 12px;cursor: pointer;",
               click: item => {
                 this.$refs.modelBody.openDemo();
@@ -85,7 +85,7 @@ let extension = {
         }
       }
 
-      //设置界面上最多可显示的按钮数量 
+      //设置界面上最多可显示的按钮数量
       this.maxBtnLength = 6;
 
       // 第2个弹出框操作

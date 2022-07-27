@@ -119,10 +119,10 @@
             addRow() {
                 let rows = this.$refs.invoicePop.getSelected();
                 if(!rows.length){
-                    return this.$message.error("请选择数据")
+                    return this.$message.error("請選擇數據")
                 }
                 if (!rows || rows.length == 0) {
-                    return this.$message.error("请选择行数据");
+                    return this.$message.error("請選擇行數據");
                 }
 
                 if (this.returnType=="onSelect") {//多層級調用

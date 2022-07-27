@@ -140,7 +140,7 @@
             addRow() {
                 let selectrow = this.$refs.deputyPop.getSelected();
                 if(!selectrow.length){
-                    return this.$message.error("请选择数据")
+                    return this.$message.error("請選擇數據")
                 }
 
                 // //将选取的数据赋值到父页面
@@ -186,7 +186,7 @@
                 }
 
                 /*  if (!selectrow || selectrow.length == 0) {
-                      return this.$message.error("请选择行数据");
+                      return this.$message.error("請選擇行數據");
                   }
                   let path =this.$route.path;
                   if(path=='/View_app_power_contract_main'){//多導則調用

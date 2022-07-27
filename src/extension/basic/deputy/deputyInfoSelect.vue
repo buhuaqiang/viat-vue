@@ -87,7 +87,7 @@
             selectRowData() {
                 let selectrow = this.$refs.deputyInfoSelect.getSelected();
                 if (!selectrow.length) {
-                    return this.$message.error("请选择数据")
+                    return this.$message.error("請選擇數據")
                 }
                     this.$parent.SelectedUserNew(selectrow[0].user_name2);
                 this.model = false;

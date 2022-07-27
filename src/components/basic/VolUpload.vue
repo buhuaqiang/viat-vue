@@ -56,7 +56,7 @@
       <slot></slot>
       <div v-if="desc">
         <el-alert
-          :title="getText() + '文件大小不超过' + (maxSize || 3) + 'M'"
+          :title="getText() + '文件大小不超過' + (maxSize || 3) + 'M'"
           type="info"
           show-icon
         >
@@ -242,7 +242,7 @@ export default {
     },
     getFileName(path) {
       if (!path) {
-        return "未定义文件名";
+        return "未定義文件名";
       }
       let _index = path.lastIndexOf("/");
       return path.substring(_index + 1);
@@ -283,7 +283,7 @@ export default {
         return;
       }
       if (!file.path) {
-        this.$message.error("请先上传文件");
+        this.$message.error("請先上傳文件");
         return;
       }
       this.base.dowloadFile(
@@ -297,9 +297,9 @@ export default {
     },
     getText() {
       if (this.img) {
-        return "只能上传图片,";
+        return "只能上傳圖片,";
       } else if (this.excel) {
-        return "只能上传excel文件,";
+        return "只能上傳excel文件,";
       }
     },
     handleClick() {
@@ -355,10 +355,10 @@ export default {
     upload(vail) {
       if (vail && !this.checkFile()) return false;
       if (!this.url) {
-        return this.$message.error("没有配置好Url");
+        return this.$message.error("沒有配置好Url");
       }
       if (!this.files || this.files.length == 0) {
-        return this.$message.error("请选择文件");
+        return this.$message.error("請選擇文件");
       }
       if (!this.uploadBefore(this.files)) {
         return;
@@ -371,9 +371,9 @@ export default {
       });
       // forms.append("fileInput", this.files);
       this.loadingStatus = true;
-      this.loadText = "上传中..";
+      this.loadText = "上傳中..";
       this.http
-        .post(this.url, forms, this.autoUpload ? "正在上传文件" : "")
+        .post(this.url, forms, this.autoUpload ? "正在上傳文件" : "")
         .then(
           (x) => {
             // this.$refs.uploadFile.clearFiles();
@@ -485,10 +485,10 @@ export default {
         files.length + (inputFiles || []).length > (this.maxFile || 5)
       ) {
         this.$message.error(
-          "最多只能选【" +
+          "最多只能選【" +
             (this.maxFile || 5) +
             "】" +
-            (this.img ? "张图片" : "个文件") +
+            (this.img ? "張圖片" : "個文件") +
             ""
         );
         return false;
@@ -506,11 +506,11 @@ export default {
         }
         names.push(file.name);
         if (this.img && !this.format(file, "img")) {
-          this.$message.error("选择的文件【" + file.name + "】只能是图片格式");
+          this.$message.error("選擇的文件【" + file.name + "】只能是圖片格式");
           return false;
         }
         if (this.excel && !this.format(file, "excel")) {
-          this.$message.error("选择的文件【" + file.name + "】只能是excel文件");
+          this.$message.error("選擇的文件【" + file.name + "】只能是excel文件");
           return false;
         }
         if (
@@ -519,7 +519,7 @@ export default {
           !this.format(file, this.fileTypes)
         ) {
           this.$message.error(
-            "选择的文件【" +
+            "選擇的文件【" +
               file.name +
               "】只能是【" +
               this.fileTypes.join(",") +
@@ -529,7 +529,7 @@ export default {
         }
         if (file.size > (this.maxSize || 3) * 1024 * 1024) {
           this.$message.error(
-            "选择的文件【" +
+            "選擇的文件【" +
               file.name +
               "】不能超过:" +
               (this.maxSize || 3) +

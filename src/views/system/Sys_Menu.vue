@@ -196,7 +196,7 @@ export default defineComponent({
     delMenu () {
       //2020.08.07增加菜单删除功能
       if (this.fields.menu_Id == 0) {
-        return this.$Message.error("请选择菜单");
+        return this.$Message.error("請選擇菜單");
       }
 
       let tigger = false;
