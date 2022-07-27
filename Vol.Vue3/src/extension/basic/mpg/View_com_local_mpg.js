@@ -49,6 +49,7 @@ let extension = {
         //示例：设置修改新建、编辑弹出框字段标签的长度
         // this.boxOptions.labelWidth = 150;
       this.boxOptions.labelWidth=180;
+      this.boxOptions.width=1500;
       //显示查询全部字段
       this.setFiexdSearchForm(true);
       //设置查询表单的标签文字宽度
@@ -58,9 +59,21 @@ let extension = {
       //設置初始不加載
       this.load=false;
 
-      let emp_dbidname=this.getOption("emp_dbidname");
-      emp_dbidname.extra = {
-        render:this.getFormRender("emp_dbid","f")
+      this.getOption("medical_reviewe_id").hidden = true;
+      this.getOption("pm_id").hidden = true;
+      this.getOption("ma_id").hidden = true;
+
+      let medical_reviewe_name=this.getOption("medical_reviewe_name");
+      medical_reviewe_name.extra = {
+        render:this.getFormRender("medical_reviewe_id","f")
+      }
+      let maUserName=this.getOption("maUserName");
+      maUserName.extra = {
+        render:this.getFormRender("ma_id","f")
+      }
+      let supervisorUserName=this.getOption("supervisorUserName");
+      supervisorUserName.extra = {
+        render:this.getFormRender("pm_id","f")
       }
 
     },
@@ -130,6 +143,8 @@ let extension = {
       //看不懂就把输出看：console.log(this.editFormOptions)
 
       this.getOption("mpg_id").disabled=this.currentAction=='update';
+
+
     }
   }
 };

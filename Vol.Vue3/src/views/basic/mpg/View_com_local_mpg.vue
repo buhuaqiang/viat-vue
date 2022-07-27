@@ -29,30 +29,35 @@
                 url: "/View_com_local_mpg/",
                 sortName: "entity"
             });
-            const editFormFields = ref({"globalmpg_dbid":"","mpg_id":"","mpg_name":"","category":"","bu_id":"","ta":"","maUserName":"","supervisorUserName":"","status":""});
-            const editFormOptions = ref([[{"title":"Mpg ID","field":"mpg_id"},
+            const editFormFields = ref({"globalmpg_dbid":"","mpg_id":"","mpg_name":"","category":"","bu_id":"","ta":"","maUserName":"","supervisorUserName":"","medical_reviewe_name":"","status":"","medical_reviewe_id":"","pm_id":"","ma_id":""});
+            const editFormOptions = ref([[{"title":"Local Mpg ID","field":"mpg_id"},
                                {"dataKey":"GlobalMpgSelect","data":[],"title":"Global Mpg","field":"globalmpg_dbid","type":"select"}],
-                              [{"title":"Mpg Name","field":"mpg_name"},
+                              [{"title":"Local Mpg Name","field":"mpg_name"},
                                {"dataKey":"LocalMpgCategory","data":[],"title":"Category","field":"category","type":"select"}],
                               [{"dataKey":"LocalBu","data":[],"title":"Bu ID","field":"bu_id","type":"select"},
                                {"dataKey":"LocalTA","data":[],"title":"Ta","field":"ta","type":"select"}],
-                              [{"title":"Supervisor","field":"supervisorUserName","disabled":true,"colSize":6},
-                               {"title":"Ma","field":"maUserName","disabled":true,"colSize":6}],
-                              [{"dataKey":"Status_YN","data":[],"title":"status","field":"status","type":"select"}]]);
+                              [{"title":"PM","field":"supervisorUserName","disabled":true},
+                               {"title":"Ma","field":"maUserName","disabled":true}],
+                              [{"dataKey":"Status_YN","data":[],"title":"status","field":"status","type":"select"},
+                               {"title":"Medical Reviewe Name","field":"medical_reviewe_name","disabled":true}],
+                              [{"title":"Medical Reviewe ID","field":"medical_reviewe_id"}],
+                              [{"title":"Pm ID","field":"pm_id"}],
+                              [{"title":"Ma ID","field":"ma_id"}]]);
             const searchFormFields = ref({"mpg_id":"","mpg_name":"","bu_id":"","category":"","ta":"","status":""});
-            const searchFormOptions = ref([[{"title":"Mpg ID","field":"mpg_id"},{"title":"Mpg Name","field":"mpg_name","type":"like"}],[{"dataKey":"LocalTA","data":[],"title":"Ta","field":"ta","type":"select"},{"dataKey":"Status_YN","data":[],"title":"status","field":"status","type":"select"}],[{"dataKey":"LocalBu","data":[],"title":"Bu ID","field":"bu_id","type":"select"},{"dataKey":"LocalMpgCategory","data":[],"title":"Category","field":"category","type":"select"}]]);
+            const searchFormOptions = ref([[{"title":"Local Mpg ID","field":"mpg_id"},{"title":"Local Mpg Name","field":"mpg_name","type":"like"}],[{"dataKey":"LocalTA","data":[],"title":"Ta","field":"ta","type":"select"},{"dataKey":"Status_YN","data":[],"title":"status","field":"status","type":"select"}],[{"dataKey":"LocalBu","data":[],"title":"Bu ID","field":"bu_id","type":"select"},{"dataKey":"LocalMpgCategory","data":[],"title":"Category","field":"category","type":"select"}]]);
             const columns = ref([{field:'localmpg_dbid',title:'localmpg_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'globalmpg_dbid',title:'Global Mpg',type:'guid',bind:{ key:'GlobalMpgSelect',data:[]},width:110,hidden:true,align:'left'},
                        {field:'entity',title:'Entity',type:'string',width:110,align:'left',sort:true},
-                       {field:'mpg_id',title:'Mpg ID',type:'string',link:true,width:110,align:'left'},
-                       {field:'mpg_name',title:'Mpg Name',type:'string',width:110,align:'left'},
+                       {field:'mpg_id',title:'Local Mpg ID',type:'string',link:true,width:110,align:'left'},
+                       {field:'mpg_name',title:'Local Mpg Name',type:'string',width:120,align:'left'},
                        {field:'bu_id',title:'Bu ID',type:'string',bind:{ key:'LocalBu',data:[]},width:110,align:'left'},
                        {field:'category',title:'Category',type:'string',bind:{ key:'LocalMpgCategory',data:[]},width:110,align:'left'},
                        {field:'ta',title:'Ta',type:'string',bind:{ key:'LocalTA',data:[]},width:110,align:'left'},
                        {field:'maUserName',title:'Ma',type:'string',width:110,hidden:true,readonly:true,align:'left'},
-                       {field:'supervisorUserName',title:'Supervisor',type:'string',width:110,hidden:true,readonly:true,align:'left'},
+                       {field:'supervisorUserName',title:'PM',type:'string',width:110,readonly:true,align:'left'},
+                       {field:'medical_reviewe_name',title:'Medical Reviewe Name',type:'string',width:155,readonly:true,align:'left'},
                        {field:'sort',title:'sort',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'globalMpgName',title:'Global Mpg Name',type:'string',width:110,require:true,align:'left'},
+                       {field:'globalMpgName',title:'Global Mpg Name',type:'string',width:140,require:true,align:'left'},
                        {field:'status',title:'status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'},
                        {field:'main_prod',title:'main_prod',type:'string',width:110,hidden:true,align:'left'},
                        {field:'created_user',title:'created_user',type:'int',width:110,hidden:true,align:'left'},
@@ -64,13 +69,12 @@
                        {field:'modified_username',title:'Last Modified',type:'string',width:110,align:'left'},
                        {field:'modified_client',title:'modified_client',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'modified_date',title:'Modified Date',type:'datetime',width:110,align:'left',sort:true},
+                       {field:'modified_date',title:'Modified Date',type:'datetime',width:130,align:'left',sort:true},
                        {field:'ma_id',title:'Ma ID',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'pm_id',title:'Pm ID',type:'string',width:110,align:'left'},
-                       {field:'ma_name',title:'Ma Name',type:'string',width:120,align:'left'},
-                       {field:'pm_name',title:'PM Name',type:'string',width:120,align:'left'},
-                       {field:'medical_reviewe_id',title:'Medical ID',type:'string',width:110,align:'left'},
-                       {field:'medical_reviewe_name',title:'Medical Name',type:'string',width:120,align:'left'}]);
+                       {field:'pm_id',title:'Pm ID',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'ma_name',title:'Ma Name',type:'string',width:120,hidden:true,align:'left'},
+                       {field:'pm_name',title:'pm_name',type:'string',width:120,hidden:true,align:'left'},
+                       {field:'medical_reviewe_id',title:'Medical Reviewe ID',type:'string',width:110,hidden:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
