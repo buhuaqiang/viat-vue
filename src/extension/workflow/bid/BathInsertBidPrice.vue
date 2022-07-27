@@ -71,7 +71,7 @@
     <vol-table
             ref="priceTable"
             :loadKey="true"
-            :clickEdit="false"
+            :clickEdit="true"
             :columns="columns"
             :pagination-hide="true"
             :single="false"
@@ -181,7 +181,7 @@ export default {
       fieldName:"",//編輯字段,用於回傳設置值
       formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields
       url: "",//加载数据的接口
-      table1Url: "api/Viat_wk_bid_detail/GetPageData",//?bidmast_dbid=" , //table1获取数据的接口
+      table1Url: "api/Viat_wk_bid_detail/getPageData",//?bidmast_dbid=" , //table1获取数据的接口
       table2Url: "api/Viat_wk_ord_detail/GetPageData",//?bidmast_dbid=" , //table1获取数据的接口 待補充
 
       priceTableRowData:[],
@@ -221,6 +221,7 @@ export default {
   created() {
 
   },
+
   methods: {
 
     openModel() {
@@ -248,29 +249,26 @@ export default {
       let apply_type = $parent.editFormFields.apply_type;
 
       if(apply_type=='03'){
-        this.$refs.priceTable.reset();
         this.showPriceDiv = true;
       }else if(apply_type=='04'){
         this.showPriceDiv = false;
       }
-      this.$refs.orderTable.reset();
-      //当前如果是新建重置两个表格数据
-      if ($parent.currentAction == "Add") {
-        //add 默認不查詢
-      } else {
-        if(apply_type=='03'){
-          this.$refs.priceTable.load();
+      this.$nextTick(()=>{
+
+        if ($parent.currentAction == "Add") {
+          this.$refs.modelBody.clearTableDetail();
+        } else {
+          if(apply_type=='03'){
+            this.$refs.priceTable.load();
+          }
+          this.$refs.orderTable.load();
         }
-        this.$refs.orderTable.load();
-      }
-
-
-      if($parent.currentAction =='view'){
-        this.showButton = false;
-      }else{
-        this.showButton = true;
-      }
-
+        if($parent.currentAction =='view'){
+          this.showButton = false;
+        }else{
+          this.showButton = true;
+        }
+      });
 
       //onInited方法设置从表编辑时实时计算值
       this.columns.forEach(x => {
@@ -499,8 +497,10 @@ export default {
       return this.$refs.orderTable.rowData
     },
     clearTableDetail(){
-      this.$refs.priceTable.rowData=[]
-      this.$refs.orderTable.rowData=[]
+   /*   this.$refs.orderTable.rowData=[]
+      this.$refs.priceTable.rowData=[]*/
+      this.$refs.orderTable.reset();
+      this.$refs.priceTable.reset();
     },
     clearPop(val){
         this.formModel.prod_id="";
@@ -509,7 +509,6 @@ export default {
     },
     loadTableBefore1(param, callBack) {
       //获取当前编辑主键id值
-      debugger;
       param.wheres.push({ name: "bidmast_dbid", value: this.bidmast_dbid });
       callBack(true);
     },
