@@ -204,6 +204,11 @@ export default {
       this.single=single;
       this.model = true;
       this.flag = flag;
+      this.cust_id = "";
+      this.cust_name ="";
+      this.zip_id = "";
+      this.dohValue = "";
+
       this.returnType = returnType
       //打开弹出框时，加载table数据
       this.$nextTick(() => {
