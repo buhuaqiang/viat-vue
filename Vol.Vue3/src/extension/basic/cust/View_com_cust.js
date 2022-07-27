@@ -56,7 +56,7 @@ let extension = {
         "order": "asc",
         "wheres": "[]"
       }
-      let url = "api/Viat_com_zip_city/getPageData";
+      let url = "api/Viat_com_zip_city/GetPageDataForSelect";
       params.wheres = "[{\"name\":\"city_name\",\"value\":\"" + cityName + "\",\"displayType\":\"=\"}]";
       let _result = await this.http.post(url, params, true).then((result) => {
         return result;
