@@ -29,7 +29,7 @@
                 url: "/Viat_com_cust/",
                 sortName: "CreateDate"
             });
-            const editFormFields = ref({"cust_id":"","cust_name":"","cust_address":"","invoice_name":"","invoice_address":"","owner":"","tax_id":"","contact":"","tel_no":"","fax_no":"","email":"","territory_id":"","doh_institute_no":"","ctrl_drug_no":"","ctrl_drug_contact":"","margin_type":"","is_contract":"","doh_type":"","is_private":"","own_by_hospital":"","own_hospital":"","cust_zip_id":"","inactive_date":"","status":"","invoice_zip_id":"","med_group":"","delv_group":"","new_cust_id":"","remarks":""});
+            const editFormFields = ref({"cust_id":"","cust_name":"","cust_address":"","invoice_name":"","invoice_address":"","owner":"","tax_id":"","contact":"","tel_no":"","fax_no":"","email":"","territory_id":"","doh_institute_no":"","ctrl_drug_no":"","ctrl_drug_contact":"","margin_type":"","is_contract":"","doh_type":"","is_private":"","own_by_hospital":"","own_hospital":"","cust_zip_id":"","inactive_date":"","status":"","invoice_zip_id":"","med_group":"","delv_group":"","new_cust_id":"","remarks":"","is_controll":"","own_hospital_name":""});
             const editFormOptions = ref([[{"title":"客戶編號","required":true,"field":"cust_id"}],
                               [{"title":"客戶名稱","field":"cust_name","type":"text"}],
                               [{"title":"客戶地址","field":"cust_address","colSize":6,"type":"text"}],
