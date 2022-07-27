@@ -448,11 +448,11 @@ export default {
         if(this.isDecimal(this.formModel.net_price) || this.isNumber(this.formModel.net_price)){
 
         }else{
-          this.$message.error("Net price invalid.");
+          this.$message.error("Current price invalid.");
           return false;
         }
       }else {
-        this.$message.error("Net price can't be empty.");
+        this.$message.error("Current price can't be empty.");
         return false;
       }
       //淨售價
@@ -461,7 +461,7 @@ export default {
           if(Number(this.formModel.reserv_price)< Number(this.formModel.net_price)){
 
           }else{
-            this.$message.error("Net Price >Reserve Price,can’t be saved. Please check.");
+            this.$message.error("Current Price >Reserve Price,can’t be saved. Please check.");
             return false;
           }
         }else{
@@ -482,7 +482,7 @@ export default {
       let pass=true;
       debugger
       if(Number(this.formModel.invoice_price)< Number(this.formModel.net_price)){
-        message="Invoice Price < Net Price,";
+        message="Invoice Price < Current Price,";
         if(Number(this.formModel.invoice_price) > Number(this.formModel.nhi_price)){
           message+="Invoice Price >NHI Price,";
         }
@@ -496,7 +496,7 @@ export default {
           message += "Invoice Price > NHI Price. ";
         }
         if ((this.formModel.nhi_price != this.formModel.invoice_price && this.formModel.net_price == this.formModel.invoice_price)) {
-          message += "Invoice Price ≠ NHI Price but Invoice Price = Net Price.";
+          message += "Invoice Price ≠ NHI Price but Invoice Price = Current Price.";
         }
         message +="Do you want to add?."
         pass=false;
@@ -517,7 +517,7 @@ export default {
 
     priceCheck(){
       if (this.formModel.invoice_price < this.formModel.net_price) {
-        let message="Invoice Price < Net Price,can't be saved.Please check."
+        let message="Invoice Price < Current Price,can't be saved.Please check."
         if(this.formModel.invoice_price > this.formModel.nhi_price){
           message+="Invoice Price > NHI Price."
         }
@@ -532,7 +532,7 @@ export default {
     },
     draftPriceCheck(){
       if (this.formModel.invoice_price < this.formModel.net_price) {
-        let message="Invoice Price < Net Price,can't be saved.Please check."
+        let message="Invoice Price < Current Price,can't be saved.Please check."
         if(this.formModel.invoice_price > this.formModel.formModel.nhi_price){
           message+="Invoice Price > NHI Price."
         }
@@ -543,7 +543,7 @@ export default {
         if (this.formModel.invoice_price > this.formModel.formModel.nhi_price)
           tmp_msg += "Invoice Price > NHI Price. ";
         if ((this.formModel.nhi_price != this.formModel.invoice_price && this.formModel.net_price == this.formModel.invoice_price))
-          tmp_msg += "Invoice Price ≠ NHI Price but Invoice Price = Net Price.";
+          tmp_msg += "Invoice Price ≠ NHI Price but Invoice Price = Current Price.";
           tmp_msg +="Do you want to add?."
 
       } else {
