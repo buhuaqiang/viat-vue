@@ -459,10 +459,13 @@ export default {
         return false;
       }
 
-      if(!this.formModel.start_date<=this.formModel.end_date){
+      let date1_unix=Date.parse(this.formModel.start_date)
+      let date2_unix=Date.parse(this.formModel.end_date)
+      if(!date1_unix<=date2_unix){
         this.$message.error("start date should <= end date");
         return false;
       }
+
       let message1="";
       let grossPass=true;
       if(this.grossFlag){
