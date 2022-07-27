@@ -34,7 +34,7 @@
                 ,{"title":"Bid No","field":"bid_no","disabled":true},
                                {"dataKey":"ApprovalType","data":[],"title":"Apply Type","field":"apply_type","type":"select","required":true}],
                               [{"title":"Cust Name","field":"cust_name","required":true}],
-                                [{"title":"Cust Name","field":"cust_id","colSize":8,"required":true}],
+                                [{"title":"Cust Name","field":"cust_id","colSize":8,"required":true,"disabled":true}],
                               [{"dataKey":"viat_city","data":[],"title":"Cust City Name","field":"cust_city_name","type":"select","required":true},
                                {"dataKey":"viat_city_zone","data":[],"title":"Cust Zip Name","field":"cust_zip_id","type":"select","required":true}],
                               [{"title":"Cust Address","field":"cust_address","colSize":8,"required":true}],
