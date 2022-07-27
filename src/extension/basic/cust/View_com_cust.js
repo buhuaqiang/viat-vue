@@ -52,8 +52,8 @@ let extension = {
       let params = {
         "page": 1,
         "rows": 30,
-        "sort": "dbid",
-        "order": "desc",
+        "sort": "zip_id",
+        "order": "asc",
         "wheres": "[]"
       }
       let url = "api/Viat_com_zip_city/getPageData";
