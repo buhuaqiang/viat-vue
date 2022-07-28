@@ -87,7 +87,7 @@ debugger
                           onClick: (e) => {
                               debugger
                               if(searchType=="editSearchCust"){
-                                  if (this.editFormFields.cust_name){
+                                  if (this.editFormFields.cust_name && this.editFormFields.cust_name.length>=2){
                                       let custNameView = this.editFormFields.cust_name.substring(0,2);
                                       this.$refs.modelHeader.openModel(true,searchType,custNameView);
                                   }
