@@ -498,6 +498,11 @@ let extension = {
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
+      let userInfo = this.$store.getters.getUserInfo();
+      let userName = userInfo.userName;
+
+      param.wheres.push({ name: "created_user", value: userName});
+
       return true;
     },
     searchAfter(result) {
@@ -801,6 +806,7 @@ let extension = {
     },
 
     modelOpenAfter(row) {
+      debugger;
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
       //(1)判断是编辑还是新建操作： this.currentAction=='Add';
       //(2)给弹出框设置默认值
@@ -891,16 +897,15 @@ let extension = {
         this.getFormOption("isgroup").disabled=true;
         this.getFormOption("cust_id").hidden=false;
       }
-      this.$refs.modelBody.openModel();
-/*      this.$nextTick(
-          ()=>{
-            if(apply_type=='03'){
-              this.$refs.modelBody.showPriceDiv = true;
-            }else if(apply_type=='04'){
-              this.$refs.modelBody.showPriceDiv = false;
-            }
 
-            if(this.currentAction =='view'){
+
+
+      //選控制 DIV，渲染完成再控制欄位
+
+      this.$nextTick(
+          ()=>{
+            this.$refs.modelBody.openModel();
+          /*  if(this.currentAction =='view'){
               this.$refs.modelBody.showButton = false;
             }else{
               this.$refs.modelBody.showButton = true;
@@ -920,8 +925,9 @@ let extension = {
             }else{
               this.showButton = true;
             }
+*/
 
-          });*/
+          });
     }
   }
 };
