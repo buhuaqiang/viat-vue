@@ -57,6 +57,12 @@ let extension = {
       var e_cust_id = this.getEditOption("cust_id");
       var e_pricegroup_dbid = this.getEditOption("pricegroup_dbid");
 
+      var e_price_channel = this.getEditOption("price_channel");
+      e_price_channel.onChange = () => {
+        this.editFormFields.pricegroups = [];
+        this.editFormFields.custs = [];
+      }
+
       e_pricegroup_dbid.hidden = true
       s_cust_name.hidden = true
       s_prod_id.hidden = true
@@ -309,29 +315,7 @@ let extension = {
           this.pickPriceGroupName = ""
         }
       }
-      /*if (formType === 's') {
-        if (body === 'header') {
-          this.editFormFields["cust_dbid"] = "";
-          this.editFormFields["cust_id"] = "";
-          this.editFormFields["cust_name"] = "";
-          this.editFormFields["custs"] = [];
-          this.pickEditFormCustomerName = ""
-        }
-        if (body === 'body') {
-          this.editFormFields["prod_dbid"] = "";
-          this.editFormFields["prod_id"] = "";
-          this.editFormFields["prod_ename"] = "";
-          this.editFormFields["prods"] = [];
-          this.pickEditFormProductName = ""
-        }
-        if (body === 'footer') {
-          this.editFormFields["pricegroup_dbid"] = "";
-          this.editFormFields["group_id"] = "";
-          this.editFormFields["group_name"] = "";
-          this.editFormFields["pricegroups"] = [];
-          this.pickEditFormPriceGroupName = ""
-        }
-      }*/
+
     },
     getPickName(searchType) {
       switch (searchType) {
@@ -368,6 +352,8 @@ let extension = {
           this.editFormFields.custs.push(row.cust_id)
         })
         this.editFormFields.custs.data = selectrows;
+        this.editFormFields.pricegroups = [];
+        this.editFormFields.price_channel = "";
       } else {
         this.searchFormFields["cust_dbid"] = rows[0].cust_dbid;
         this.searchFormFields["cust_id"] = rows[0].cust_id;
@@ -408,6 +394,8 @@ let extension = {
           this.editFormFields.pricegroups.push(row.group_id)
         })
         this.editFormFields.pricegroups.data = selectrows;
+        this.editFormFields.price_channel = "";
+        this.editFormFields.custs = [];
         this.model = false;
       } else {
         this.searchFormFields["pricegroup_dbid"] = rows[0].pricegroup_dbid;
@@ -487,6 +475,7 @@ let extension = {
       let prods = this.getEditOption("prods");
       let pricegroups = this.getEditOption("pricegroups");
       let s_prods = this.getSearchOption("prods");
+
       custs = []
       prods = []
       s_prods = []
