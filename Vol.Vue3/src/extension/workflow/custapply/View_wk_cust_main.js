@@ -546,7 +546,7 @@ let extension = {
           }
         });
       });
-
+debugger
       if (this.currentAction=='Add'){
         this.editFormFields.apply_type='01';
         this.getOption("cust_name").required=true;
@@ -575,6 +575,14 @@ let extension = {
         this.getOption("apply_type").disabled=true;
         this.pickEditFormHospital = row.own_hospital_cust_name;
         this.pickEditFormCustomerName = row.cust_name;
+      }
+      //View時隱藏Save& Save and Submit按鈕
+      if (this.currentAction == this.const.VIEW){
+        this.boxButtons.forEach(x => {
+          if (x.name == "Save and Submit") {
+            x.hidden=true;
+          }
+        })
       }
     }
   }
