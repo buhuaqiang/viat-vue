@@ -104,6 +104,7 @@ export default {
         {field:'net_price',title:'Current Price',width:80,require:true,align:'right'},
         {field:'price_bid',title:'Bid Price',width:80,require:true,align:'right'},
         {field:'price_close',title:'Approved Price',width:80,require:true,align:'right'},
+          {field:'reserv_price',title:'Reserve Price',width:80,require:true,align:'right',edit: { type: "decimal",keep:true }},
           {field:'min_qty',title:'Min Qty',edit: { type: "number",keep:true },width:80,require:true,align:'right'},
         {field:'final_fg',title:'FG%',type:'decimal',width:50,align:'right'},
         {field:'final_discount',title:'DIS%',type:'decimal',width:50,align:'right'},

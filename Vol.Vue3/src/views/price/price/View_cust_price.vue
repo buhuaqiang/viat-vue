@@ -40,15 +40,16 @@
                                {"title":"End Date","required":true,"field":"end_date","type":"date"}],
                               [{"title":"NHI Price","field":"nhi_price","disabled":true,"type":"decimal"},
                                {"title":"Invoice Price","field":"invoice_price","type":"decimal"}],
-                              [{"title":"Net Price","field":"net_price","type":"decimal"},
-                               {"title":"Min Qty","field":"min_qty","type":"number"}],
+                              [{"title":"Min Qty","field":"min_qty","type":"number"},{"title":"Net Price","field":"net_price","type":"decimal"}
+                               ],
                               [{"title":"Reserve Price","field":"reserv_price","type":"decimal"},
                                {"title":"Remarks","field":"remarks","type":"textarea"}],
                                 [{"title":"NHI Code","field":"nhi_id"},{"title":"Update User","field":"modified_username",disabled: true}]]);
             const searchFormFields = ref({"group_id":"","pricegroup_dbid":"","start_date":"","end_date":"","modified_date":"","prods":[],"QueryStatus":"","ShowInvalidProd":[]});
-            const searchFormOptions = ref([[{"title":"Group Id","field":"group_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"text"}],
-                [{"dataKey":"price_book_query_status","data":[],"title":"Status","field":"QueryStatus","type":"select"},{"title":"Modified Date","field":"updated_date","type":"date"}],
+            const searchFormOptions = ref([
+                [{"title":"Group Id","field":"group_id"},{"dataKey":"mul_select_for_pop","data":[],"title":"Products","field":"prods","type":"text"}],
                 [{"title":"Start Date","field":"start_date","type":"date"},{"title":"End Date","field":"end_date","type":"date"}],
+                [{"title":"Modified Date","field":"updated_date","type":"date"},{"dataKey":"price_book_query_status","data":[],"title":"Status","field":"QueryStatus","type":"select"}],
                 [{"title":"","field":"pricegroup_dbid"},{"dataKey":"Show Invalid products","data":[],"title":"","field":"ShowInvalidProd","type":"checkbox"}]]);
             const columns = ref([{field:'group_id',title:'Group Id',type:'string',link:true,width:110,align:'left',sort:true},
                        {field:'group_name',title:'Group Name',type:'string',width:120,align:'left',sort:true},

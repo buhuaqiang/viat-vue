@@ -12,24 +12,24 @@
         <ul>
           <li>
             <el-form-item  label="Bid NO:" style="width: 70%">
-              <el-input v-model="formModel.bid_no" style="width:200px;" :disabled="true"></el-input>
+              <el-input clearable v-model="formModel.bid_no" style="width:200px;" :disabled="true"></el-input>
             </el-form-item>
           </li>
           <li>
             <el-form-item id="0" label="Group:" style="width: 50%">
-              <el-input v-model="formModel.group_id" style="width:120px;" @keyup.enter="groupKeyPress"></el-input>
+              <el-input clearable v-model="formModel.group_id" style="width:120px;" @keyup.enter="groupKeyPress"></el-input>
               <el-input v-model="formModel.group_name" style="width:300px;padding-left: 2px" :disabled="true"></el-input>
               <el-input v-model="formModel.pricegroup_dbid" type="hidden" style="width: 0px"></el-input>
               <a @click="openPriceGroup(0)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0)"><i class="el-icon-zoom-out"></i>Clean</a>
             </el-form-item>
             <el-form-item v-show="nhiGroupFlag"  label="NHI Code:" style="">
-              <el-input v-model="formModel.nhi_id" style="width:200px;" ></el-input>
+              <el-input clearable v-model="formModel.nhi_id" style="width:200px;" ></el-input>
               <el-checkbox @change="selfPayChecked"  label="Self Pay" key="Self Pay" size="small" style="padding-left: 10px"/>
             </el-form-item>
           </li>
           <li>
             <el-form-item label="Product:" style="width: 50%">
-              <el-input v-model="formModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress"></el-input>
+              <el-input clearable v-model="formModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress"></el-input>
               <el-input v-model="formModel.prod_ename" style="width:300px;padding-left: 2px" :disabled="true"></el-input>
               <el-input v-model="formModel.prod_dbid"  type="hidden" style="width: 0px"></el-input>
               <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
@@ -56,26 +56,26 @@
           </li>
           <li>
             <el-form-item   label="NHI Price:" style="width: 35%">
-              <el-input v-model="formModel.nhi_price" style="width:200px;" :disabled="true"></el-input>
+              <el-input clearable v-model="formModel.nhi_price" style="width:200px;" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item   label="Invoice Price:" style="width: 35%">
-              <el-input v-model="formModel.invoice_price" style="width:200px;" ></el-input>
+              <el-input clearable v-model="formModel.invoice_price" style="width:200px;" ></el-input>
             </el-form-item>
           </li>
           <li>
             <el-form-item   label="Net Price:" style="width: 35%">
-              <el-input v-model="formModel.net_price" style="width:200px;" ></el-input>
+              <el-input clearable v-model="formModel.net_price" style="width:200px;" ></el-input>
             </el-form-item>
             <el-form-item   label="Min Qty:" style="width: 35%">
-              <el-input-number v-model="formModel.min_qty"  style="width:200px;" ></el-input-number>
+              <el-input-number v-model="formModel.min_qty"  style="width:200px;"  ></el-input-number>
             </el-form-item>
           </li>
           <li>
             <el-form-item   label="Reserve Price:" style="width: 35%">
-              <el-input v-model="formModel.reserv_price" style="width:200px;" ></el-input>
+              <el-input clearable v-model="formModel.reserv_price" style="width:200px;" ></el-input>
             </el-form-item>
             <el-form-item label="Remarks:" style="width: 60%">
-              <el-input type="textarea" v-model="formModel.remarks" style="width:250px;"></el-input>
+              <el-input clearable type="textarea" v-model="formModel.remarks" style="width:250px;"></el-input>
             </el-form-item>
           </li>
         </ul>
@@ -452,20 +452,30 @@ export default {
         if(this.isDecimal(this.formModel.net_price) || this.isNumber(this.formModel.net_price)){
 
         }else{
-          this.$message.error("Current price invalid.");
+          this.$message.error("Net price invalid.");
           return false;
         }
       }else {
-        this.$message.error("Current price can't be empty.");
+        this.$message.error("Net price can't be empty.");
         return false;
       }
+      if(this.formModel.min_qty){
+        if(Number(this.formModel.min_qty)<=0){
+          this.$message.error("Min Qty can't less than zero.");
+          return false;
+        }
+      }else {
+        this.$message.error("Min Qty can't be empty.");
+        return false;
+      }
+
       //淨售價
       if(this.formModel.reserv_price){
         if(this.isDecimal(this.formModel.reserv_price) || this.isNumber(this.formModel.reserv_price)){
           if(Number(this.formModel.reserv_price)< Number(this.formModel.net_price)){
 
           }else{
-            this.$message.error("Current Price >Reserve Price,can’t be saved. Please check.");
+            this.$message.error("Net Price >Reserve Price,can’t be saved. Please check.");
             return false;
           }
         }else{
@@ -487,7 +497,7 @@ export default {
       let pass=true;
       debugger
       if(Number(this.formModel.invoice_price)< Number(this.formModel.net_price)){
-        message="Invoice Price < Current Price,";
+        message="Invoice Price < Net Price,";
         if(Number(this.formModel.invoice_price) > Number(this.formModel.nhi_price)){
           message+="Invoice Price >NHI Price,";
         }
@@ -501,7 +511,7 @@ export default {
           message += "Invoice Price > NHI Price. ";
         }
         if ((this.formModel.nhi_price != this.formModel.invoice_price && this.formModel.net_price == this.formModel.invoice_price)) {
-          message += "Invoice Price ≠ NHI Price but Invoice Price = Current Price.";
+          message += "Invoice Price ≠ NHI Price but Invoice Price = Net Price.";
         }
         message +="Do you want to add?."
         pass=false;
@@ -522,7 +532,7 @@ export default {
 
     priceCheck(){
       if (this.formModel.invoice_price < this.formModel.net_price) {
-        let message="Invoice Price < Current Price,can't be saved.Please check."
+        let message="Invoice Price < Net Price,can't be saved.Please check."
         if(this.formModel.invoice_price > this.formModel.nhi_price){
           message+="Invoice Price > NHI Price."
         }
@@ -537,7 +547,7 @@ export default {
     },
     draftPriceCheck(){
       if (this.formModel.invoice_price < this.formModel.net_price) {
-        let message="Invoice Price < Current Price,can't be saved.Please check."
+        let message="Invoice Price < Net Price,can't be saved.Please check."
         if(this.formModel.invoice_price > this.formModel.formModel.nhi_price){
           message+="Invoice Price > NHI Price."
         }
@@ -548,7 +558,7 @@ export default {
         if (this.formModel.invoice_price > this.formModel.formModel.nhi_price)
           tmp_msg += "Invoice Price > NHI Price. ";
         if ((this.formModel.nhi_price != this.formModel.invoice_price && this.formModel.net_price == this.formModel.invoice_price))
-          tmp_msg += "Invoice Price ≠ NHI Price but Invoice Price = Current Price.";
+          tmp_msg += "Invoice Price ≠ NHI Price but Invoice Price = Net Price.";
           tmp_msg +="Do you want to add?."
 
       } else {

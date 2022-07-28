@@ -11,11 +11,13 @@
     <div style="padding-bottom: 10px">
       <span style="margin-right: 20px"></span>
       <el-input
+              clearable
               placeholder="Input Group ID"
               style="width: 200px"
               v-model="group_id"
       />
       <el-input
+              clearable
         placeholder="Input Group Name"
         style="width: 200px;padding-left: 5px"
         v-model="group_name"
