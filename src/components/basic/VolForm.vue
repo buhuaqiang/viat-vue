@@ -75,9 +75,7 @@
               v-model="formFields[item.field]"
               filterable
               :multiple="item.type == 'select' ? false : true"
-              :placeholder="
-                item.placeholder ? item.placeholder : 'Please Select ' + item.title
-              "
+              placeholder=""
               :allow-create="item.autocomplete"
               @change="item.onChange"
               :remote="item.remote || item.url"
@@ -199,9 +197,7 @@
                 v-model="formFields[item.field]"
                 @change="item.onChange"
                 :type="item.type"
-                :placeholder="
-                  item.placeholder ? item.placeholder : 'Please Select ' + item.title
-                "
+                placeholder=""
                 :disabledDate="(val) => getDateOptions(val, item)"
                 :value-format="getDateFormat(item)"
               >
@@ -298,9 +294,7 @@
                 minRows: item.minRows || 2,
                 maxRows: item.maxRows || 10
               }"
-              :placeholder="
-                item.placeholder ? item.placeholder : 'Please Input ' + item.title
-              "
+              placeholder=""
               :ref="item.field"
             />
             <el-input-number
@@ -322,9 +316,7 @@
               size="medium"
               :disabled="item.readonly || item.disabled"
               v-show="!item.hidden"
-              :placeholder="
-                item.placeholder ? item.placeholder : 'Please Input ' + item.title
-              "
+              placeholder=""
             />
             <!-- 2021.11.18修复el-input没有默认enter事件时回车异常 -->
             <el-input
@@ -332,9 +324,7 @@
               :input-style="item.inputStyle"
               v-else-if="item.onKeyPress"
               size="medium"
-              :placeholder="
-                item.placeholder ? item.placeholder : 'Please Input ' + item.title
-              "
+              placeholder=""
               :disabled="item.readonly || item.disabled"
               v-show="!item.hidden"
               v-model="formFields[item.field]"
@@ -351,9 +341,7 @@
               v-else
               size="medium"
               :input-style="item.inputStyle"
-              :placeholder="
-                item.placeholder ? item.placeholder : 'Please Input ' + item.title
-              "
+              placeholder=""
               :disabled="item.readonly || item.disabled"
               v-show="!item.hidden"
               v-model="formFields[item.field]"
