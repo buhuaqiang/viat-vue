@@ -45,13 +45,13 @@
                ]);
             const columns = ref([{field:'bid_no',title:'Bid NO',type:'string',link:true,width:110,readonly:true,align:'left',sort:true},
                        {field:'state',title:'Status',type:'string',bind:{ key:'transfer_status',data:[]},width:110,align:'left'},
-                       {field:'modified_date',title:'Modified Date',type:'datetime',width:120,readonly:true,align:'left',sort:true},
-                       {field:'created_date',title:'Apply Date',type:'datetime',width:120,readonly:true,align:'left',sort:true},
+                       {field:'modified_date',title:'Modified Date',type:'date',width:120,readonly:true,align:'left',sort:true},
+                       {field:'created_date',title:'Apply Date',type:'date',width:120,readonly:true,align:'left',sort:true},
                        {field:'cust_id',title:'Cust ID',type:'string',width:110,readonly:true,align:'left'},
                        {field:'cust_name',title:'Cust Name',type:'string',width:120,readonly:true,align:'left'},
                        {field:'prod_id',title:'Prod ID',type:'string',width:110,align:'left'},
                        {field:'prod_ename',title:'Prod Name',type:'string',width:110,align:'left'},
-                       {field:'qty',title:'Qty',type:'decimal',width:110,align:'left'},
+                       {field:'qty',title:'Qty',type:'decimal',width:110,align:'right'},
                        {field:'note',title:'Note',type:'string',width:120,align:'left'},
                        {field:'requestorName',title:'Requstor',type:'string',width:180,align:'left'}]);
             const detail = ref({

@@ -71,7 +71,6 @@ export default {
   methods: {
     //可以通过this.$refs.com.$refs.grid访问生成页面里的数据
     onClick(item, index) {
-      debugger
       if (this.index == index) {
         return;
       }

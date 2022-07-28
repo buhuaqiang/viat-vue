@@ -10,11 +10,12 @@ import PriceGroupModelBody from "../../price/price/PriceGroupModelBody";
 import Viat_com_custModelBody from "../../basic/cust/Viat_com_custModelBody";
 import BathUpdateBidPriceTransfer from "./BathUpdateBidPriceTransfer";
 import confirmJoinGroup from "./confirmJoinGroup";
+import View_com_prod_pop_query from "../../basic/prod/View_com_prod_pop_query.vue";
 
 let extension = {
   components: {
     //查询界面扩展组件
-    gridHeader: '',
+    gridHeader: View_com_prod_pop_query,
     gridBody: PriceGroupModelBody,
     gridFooter: Viat_com_custModelBody,
     //新建、编辑弹出框扩展组件
@@ -195,6 +196,34 @@ let extension = {
 
         }
       }
+      let searchProd=this.getSearchOption("prod_id");
+      let prod_dbid=this.getSearchOption("prod_dbid");
+      prod_dbid.hidden=true
+      searchProd.extra={
+        render:this.getSearchRender("searchProd")
+      }
+      searchProd.onKeyPress=($event)=>{
+        if($event.keyCode == 13){
+          let  prod_id = this.searchFormFields['prod_id']
+          if(prod_id) {
+            this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
+              if(reslut!=null){
+                this.searchFormFields['prod_dbid'] =reslut.prod_dbid;
+                this.searchFormFields['prod_id'] =reslut.prod_id ;
+                this.pickProductName=reslut.prod_ename ;
+              }else{
+                this.$Message.error(" Product Id Is Not Exists.");
+                this.searchFormFields['prod_dbid'] ='';
+                this.searchFormFields['prod_id'] ='';
+                this.pickProductName='' ;
+              }
+
+              return;
+            })
+          }
+
+        }
+      }
 
       //-------------- pick 渲染 end-----------------
 
@@ -212,13 +241,18 @@ let extension = {
           this.editFormFields["pricegroup_dbid"]=""
           this.pickEditFormPriceGroupName=""
           this.joinGroupList=[]
+          this.getEditOption("cust_in_id").inputStyle="color:orange";
         }else{
           this.showGroupInfo()
+          this.getEditOption("cust_in_id").inputStyle="";
         }
       }
       /*isGroupImport.extra={
         render:this.groupImport()
       }*/
+
+
+
       //==========================
     },
     groupImport(){
@@ -285,6 +319,8 @@ let extension = {
         return this.pickPriceGroupName
       }else if(searchType=="formPriceGroup"){
         return this.pickEditFormPriceGroupName
+      }else if (searchType=="searchProd"){
+        return this.pickProductName
       }
 
     },
@@ -357,6 +393,9 @@ let extension = {
                   if(searchType=="formPriceGroup"){
                     this.$refs.modelBody.openModel(true,searchType);
                   }
+                  if(searchType=="searchProd"){
+                    this.$refs.gridHeader.openModel(true,searchType);
+                  }
                 }
               },
               [h("i",{class:"el-icon-zoom-in"})],
@@ -382,6 +421,11 @@ let extension = {
                     this.editFormFields["pricegroup_dbid"]=""
                     this.pickEditFormPriceGroupName=""
                   }
+                  if(searchType=="searchProd"){
+                    this.searchFormFields["prod_dbid"] = "";
+                    this.searchFormFields["prod_id"] = "";
+                    this.pickProductName=""
+                  }
                 }
               },
               [h("i",{class:"el-icon-zoom-out"})],
@@ -390,6 +434,15 @@ let extension = {
 
         ]);
       };
+    },
+    //選擇prod回填字段
+    handleProdSelected(flag,rows){
+      if(flag=='searchProd'){
+        this.searchFormFields['prod_dbid'] = rows[0].prod_dbid;
+        this.searchFormFields['prod_id'] = rows[0].prod_id;
+        this.pickProductName=rows[0].prod_ename
+      }
+
     },
 //选择客户Pick 回填字段
     handleCustomerSelected(flag,rows){
@@ -605,12 +658,33 @@ let extension = {
       form_group_id.extra={
         render:this.getPopShowRender("formPriceGroup")
       }
+
+      let cust_in_id=this.getEditOption("cust_in_id");
+      cust_in_id.hidden=true
+      if(row.cust_dbid){
+        this.http.get("api/Viat_app_cust_group/getCustGroupIDAndANmeByCustDBID?cust_dbid="+row.cust_dbid,{} , "loading").then(reslut => {
+          if(reslut!==null){
+
+              cust_in_id.hidden=false
+              this.editFormFields['cust_in_id']=reslut.group_id+" "+reslut.group_name
+              if (this.currentAction==this.const.EDIT){
+                cust_in_id.inputStyle="color: orange;"
+              }else{
+                cust_in_id.inputStyle=""
+              }
+          }else {
+            cust_in_id.hidden=true
+          }
+        })
+      }
+
+
       if (this.currentAction==this.const.EDIT){
         this.isFirstValid=true//
         this.joinGroupList=[]
 
         this.getEditOption("add_group").disabled=false
-        this.editFormFields['add_group']='N'
+        //this.editFormFields['add_group']='N'
         if(row.pricegroup_dbid){
           this.getEditOption("add_group").hidden=true
         }else{

@@ -195,12 +195,44 @@ let extension = {
         this.searchFormFields["cust_dbid"] = rows[0].cust_dbid;
         this.searchFormFields["cust_id"] =rows[0].cust_id;
         this.pickCustomerName=rows[0].cust_name;
+        this.isExpfizer(rows[0].cust_id);
       }else if(flag=='formCustomer'){
         this.editFormFields["cust_dbid"] = rows[0].cust_dbid;
         this.editFormFields["cust_id"] =rows[0].cust_id;
         this.pickEditFormCustomerName=rows[0].cust_name;
       }
 
+    },
+    getPopMultiRender() {//
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                onClick: (e) => {
+                  this.$refs.gridHeader.openModel(false,"prods");
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "Pick"
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                onClick: (e) => {
+                  this.searchFormFields['prods']=""
+                }
+              },
+              [h("i",{class:"el-icon-zoom-out"})],
+              "Clean"
+          ),
+        ]);
+      };
     },
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
@@ -272,6 +304,7 @@ let extension = {
                 this.searchFormFields['cust_dbid'] =reslut.cust_dbid;
                 this.searchFormFields['cust_id'] =reslut.cust_id
                 this.pickCustomerName=reslut.cust_name
+                this.isExpfizer(reslut.cust_id)
                 return;
               }else{
                 this.$message.error("Customer Id Is Not Exists.");
@@ -288,12 +321,8 @@ let extension = {
 
       let searchProdDBIDS=this.getSearchOption("prods");
       searchProdDBIDS.extra = {
-        icon: "el-icon-zoom-in",
-        text: "Pick",
-        style: "color:#409eff;font-size: 12px;cursor: pointer;",
-        click: item => {
-          this.$refs.gridHeader.openModel(false,"prods");
-        }
+        render:this.getPopMultiRender()
+
       }
 
       //-------------列表頁搜索框綁定彈窗 end-------------
@@ -316,6 +345,7 @@ let extension = {
                 this.editFormFields['cust_dbid'] =reslut.cust_dbid;
                 this.editFormFields['cust_id'] =reslut.cust_id ;
                 this.pickEditFormCustomerName= reslut.cust_name;
+
                 return;
               }else{
                 this.$message.error("Customer Id Is Not Exists.");
@@ -373,7 +403,14 @@ let extension = {
 
 
     },
+  //判断是否是经销商客户
+    isExpfizer(cust_id){
+      this.http.get("api/View_cust_price_detail/IsExpfizer?cust_id="+cust_id,{} , "loading").then(reslut => {
+        let startDate=this.getColumns("gross_price");
+        startDate.hidden=!reslut
 
+      })
+    },
     parseTime(time,cFormat){
       const format=cFormat||'{y}-{m}-{d} {h}:{i}:{s}'
       let date
@@ -411,10 +448,13 @@ let extension = {
       return time_str
     },
     handleCustFormSelected(rows){
+
       alert("check the cust is Expfizer ");
       //alert("cust_dbid:"+rows[0].cust_dbid)
+
       if(rows[0].cust_id=='CD15590180'){
         this.getFormOption("gross_price").hidden=false;
+
       }else{
         this.getFormOption("gross_price").hidden=true;
       }
@@ -506,7 +546,10 @@ let extension = {
 
       this.getFormOption("nhi_price").disabled=true;
       //判斷Cust Id是否為Expfizer Cust Id
-      this.getFormOption("gross_price").hidden=true;
+      this.http.get("api/View_cust_price_detail/IsExpfizer?cust_id="+row.cust_id,{} , "loading").then(reslut => {
+        this.getFormOption("gross_price").hidden=!reslut
+      })
+
 
       this.pickEditFormCustomerName=''
       this.pickEditFormProductName=''
@@ -526,18 +569,19 @@ let extension = {
 
       }else if (this.currentAction==this.const.EDIT){
 
+        //如果是无效时 时间不可以修改
         if(row.status=='Y'){
           this.getFormOption("status").disabled=false;
+          this.getFormOption("start_date").disabled=false;
+          this.getFormOption("end_date").disabled=false;
         }else if(row.status=='N'){
           this.getFormOption("status").disabled=true;
+          this.getFormOption("start_date").disabled=true;
+          this.getFormOption("end_date").disabled=true;
         }
 
-        if(row.gross_price){
-          this.getFormOption("gross_price").hidden=false;
-          this.getFormOption("gross_price").disabled=true;
-        }else{
+        this.getFormOption("gross_price").disabled=true;
 
-        }
 
         this.getFormOption("bid_no").disabled=true;
         this.getFormOption("invoice_price").disabled=true;

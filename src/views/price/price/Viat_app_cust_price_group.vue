@@ -34,7 +34,7 @@
                               [{"title":"Group Name","required":true,"field":"group_name"}],
                               [{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}],
                               [{"title":"Remarks","field":"remarks","type":"textarea"}],
-                              [{"dataKey":"doh_type","data":[],"title":"Group Type","field":"group_type","type":"select"}]]);
+                              [{"dataKey":"group_price_channel","data":[],"title":"Price Group Channel","field":"group_type","type":"select"}]]);
             const searchFormFields = ref({"group_id":"","group_name":"","status":""});
             const searchFormOptions = ref([[{"title":"Group ID","field":"group_id"},{"title":"Group Name","field":"group_name","type":"like"},{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}]]);
             const columns = ref([{field:'pricegroup_dbid',title:'主鍵',type:'guid',width:110,hidden:true,require:true,align:'left'},

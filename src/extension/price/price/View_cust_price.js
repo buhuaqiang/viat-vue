@@ -326,6 +326,38 @@ let extension = {
       this.pickProductName=''
       this.pickPriceGroupName=''
     },
+
+    getPopMultiRender() {//
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                onClick: (e) => {
+                  this.$refs.gridHeader.openModel(false,"prods");
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "Pick"
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                onClick: (e) => {
+                  this.searchFormFields['prods']=""
+                }
+              },
+              [h("i",{class:"el-icon-zoom-out"})],
+              "Clean"
+          ),
+        ]);
+      };
+    },
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
         //示例：在按钮的最前面添加一个按钮
@@ -423,12 +455,8 @@ let extension = {
         }
       }
       searchProdDBIDS.extra = {
-        icon: "el-icon-zoom-in",
-        text: "Pick",
-        style: "color:#409eff;font-size: 12px;cursor: pointer;",
-        click: item => {
-          this.$refs.gridHeader.openModel(false,"prods");
-        }
+        render:this.getPopMultiRender()
+
       }
       //-------------列表頁搜索框綁定彈窗 end-------------
       //-------------表單輸入框綁定彈窗 start-------------
@@ -638,11 +666,19 @@ let extension = {
 
       }else if (this.currentAction==this.const.EDIT){
 
+
+        //如果是无效时 时间不可以修改
         if(row.status=='Y'){
           this.getFormOption("status").disabled=false;
+          this.getFormOption("start_date").disabled=false;
+          this.getFormOption("end_date").disabled=false;
         }else if(row.status=='N'){
           this.getFormOption("status").disabled=true;
+          this.getFormOption("start_date").disabled=true;
+          this.getFormOption("end_date").disabled=true;
         }
+
+
         this.getFormOption("bid_no").disabled=true;
         this.getFormOption("invoice_price").disabled=true;
         this.getFormOption("net_price").disabled=true;

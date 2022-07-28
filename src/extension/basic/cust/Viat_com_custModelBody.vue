@@ -10,17 +10,30 @@
     <!-- 设置查询条件 -->
     <div style="padding-bottom: 10px">
       <span style="margin-right: 20px"></span>
-      <el-input placeholder="Input Customer Code" style="width: 200px" v-model="cust_id" />
+      <el-input clearable placeholder="Input Customer Code" style="width: 200px" v-model="searchForm.cust_id" />
       <el-input
+              clearable
         placeholder="Input Customer Name"
         style="width: 200px; padding-left: 5px"
-        v-model="cust_name"
+        v-model="searchForm.cust_name"
       />
       <el-input
-
-              placeholder="Input Zip Code"
+              clearable
+              placeholder="Input Zip Name"
               style="width: 200px; padding-left: 5px"
-              v-model="zip_id"
+              v-model="searchForm.zip_name"
+      />
+      <el-input
+              clearable
+              placeholder="Input Address"
+              style="width: 200px; padding-left: 5px"
+              v-model="searchForm.cust_address"
+      />
+      <el-input
+              clearable
+              placeholder="Input Default Zone"
+              style="width: 200px; padding-left: 5px"
+              v-model="searchForm.territory_id"
       />
       <!--<el-select v-model="channelValue" placeholder="Select channel" style="width: 200px; padding-left: 5px">
         <el-option
@@ -31,7 +44,7 @@
         >
         </el-option>
       </el-select>-->
-      <el-select v-model="dohValue" placeholder="Select DOH Type" style="width: 200px; padding-left: 5px">
+      <el-select clearable v-model="searchForm.dohValue" placeholder="Select DOH Type" style="width: 200px; padding-left: 5px">
         <el-option
                 v-for="item in dohData"
                 :key="item.key"
@@ -42,7 +55,7 @@
       </el-select>
       <el-button
         type="primary"
-        style="margin-left: 10px"
+        style="margin: 10px;"
         size="medium"
         icon="el-icon-zoom-in"
         @click="search"
@@ -98,11 +111,15 @@ export default {
       returnType:"",
       flag:"",
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
-      cust_name: "", //查询条件字段
-      cust_id:"",
-      zip_id: "",
-      channelValue:"",
-      dohValue:"",
+      searchForm:{
+        cust_name: "", //查询条件字段
+        cust_id:"",
+        zip_name: "",
+        channelValue:"",
+        dohValue:"",
+        territory_id:"",
+        cust_address:""
+      },
       channelData:[],
       dohData:[],
       url: "api/View_com_cust/GetPopPageData",//加载数据的接口
@@ -140,6 +157,7 @@ export default {
           hidden: true,
         },
         {field:'cust_zip_id',title:'Zip ID',type:'string',width:110,align:'left',sort:true},
+        {field:'cust_zip_name',title:'Zip Name',type:'string',width:110,align:'left',sort:true},
         {
           field: "territory_id",
           title: "Default Zone",
@@ -172,14 +190,14 @@ export default {
         //   width: 110,
         //   align: "left",
         // },
-        {
-          field: "modified_date",
-          title: "Modified Date",
-          type: "datetime",
-          width: 150,
-          align: "left",
-          sort: true,
-        },
+        // {
+        //   field: "modified_date",
+        //   title: "Modified Date",
+        //   type: "datetime",
+        //   width: 150,
+        //   align: "left",
+        //   sort: true,
+        // },
       ],
 
       pagination: {}, //分页配置，见voltable组件api
@@ -206,7 +224,7 @@ export default {
       this.flag = flag;
       this.cust_id = "";
       this.cust_name ="";
-      this.zip_id = "";
+      this.zip_name = "";
       this.dohValue = "";
 
       this.returnType = returnType
@@ -262,29 +280,35 @@ export default {
     },
     loadTableBefore(params) {
       //查询前，设置查询条件
-      if (this.cust_name) {
+      if (this.searchForm.cust_name) {
         params.wheres.push({
           name: "cust_name",
-          value: this.cust_name,
+          value: this.searchForm.cust_name,
           displayType: "like",
         });
       }
-      if (this.cust_id) {
+      if (this.searchForm.cust_id) {
         params.wheres.push({
           name: "cust_id",
-          value: this.cust_id,
+          value: this.searchForm.cust_id,
           displayType: "like",
         });
       }
-      if (this.zip_id) {
-        params.wheres.push({ name: "cust_zip_id", value: this.zip_id,displayType:'like' });
+      if (this.searchForm.zip_name) {
+        params.wheres.push({ name: "cust_zip_name", value: this.searchForm.zip_name,displayType:'like' });
+      }
+      if (this.searchForm.territory_id) {
+        params.wheres.push({ name: "territory_id", value: this.searchForm.territory_id,displayType:'like' });
+      }
+      if (this.searchForm.cust_address) {
+        params.wheres.push({ name: "cust_address", value: this.searchForm.cust_address,displayType:'like' });
       }
       params.wheres.push({ name: "status", value: 'Y' });
       if(this.channelValue){
-        params.wheres.push({ name: "channelValue", value: this.channelValue });
+        params.wheres.push({ name: "channelValue", value: this.searchForm.channelValue });
       }
       if(this.dohValue){
-        params.wheres.push({ name: "doh_type", value: this.dohValue });
+        params.wheres.push({ name: "doh_type", value: this.searchForm.dohValue });
       }
       return true;
     },
