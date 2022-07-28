@@ -29,7 +29,7 @@
                 url: "/View_price_distributor_mapping/",
                 sortName: "prod_dbid"
             });
-            const editFormFields = ref({"prods":[],"price_channel":"","custs":[],"pricegroups":[],"start_date":"","i_dist_id":"","end_date":"","e_dist_id":"","modified_date":"","status":"","remarks":"","prod_ename":"","group_name":"","cust_name":"","prod_id":"","group_id":"","cust_id":"","pricegroup_dbid":"","prod_dbid":"","cust_dbid":""});
+            const editFormFields = ref({"prods":[],"price_channel":"","custs":[],"pricegroups":[],"start_date":"","i_dist_id":"","end_date":"","e_dist_id":"","modified_date":"","status":"","remarks":"","prod_ename":"","group_name":"","cust_name":"","prod_id":"","group_id":"","cust_id":"","pricegroup_dbid":""});
             const editFormOptions = ref([[{"dataKey":"mul_select_for_pop","data":[],"title":"Product","required":true,"field":"prods","type":"selectList"}],
                               [{"dataKey":"group_price_channel","data":[],"title":"Group Channel","field":"price_channel","type":"select"}],
                               [{"dataKey":"mul_select_for_pop","data":[],"title":"Customer","field":"custs","type":"selectList"}],
