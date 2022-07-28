@@ -576,11 +576,17 @@ debugger
         this.pickEditFormHospital = row.own_hospital_cust_name;
         this.pickEditFormCustomerName = row.cust_name;
       }
-      //View時隱藏Save& Save and Submit按鈕
+      //View時隱藏Save and Submit按鈕
       if (this.currentAction == this.const.VIEW){
         this.boxButtons.forEach(x => {
           if (x.name == "Save and Submit") {
             x.hidden=true;
+          }
+        })
+      }else{
+        this.boxButtons.forEach(x => {
+          if (x.name == "Save and Submit") {
+            x.hidden=false;
           }
         })
       }
