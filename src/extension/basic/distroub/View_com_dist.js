@@ -33,6 +33,7 @@ let extension = {
         //this.single=true;
         this.load = false;
         this.pickCustomerName = ""
+
         let cust_id = this.getEditFormOption("cust_id");
         cust_id.extra = {
           render: this.getFormRender()

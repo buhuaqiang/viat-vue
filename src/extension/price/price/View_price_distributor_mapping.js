@@ -475,7 +475,7 @@ let extension = {
       let prods = this.getEditOption("prods");
       let pricegroups = this.getEditOption("pricegroups");
       let s_prods = this.getSearchOption("prods");
-
+      this.editFormFields['end_date'] = '2099-12-31'
       custs = []
       prods = []
       s_prods = []
