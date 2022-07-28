@@ -644,6 +644,11 @@ debugger
           }
         })
       }else{//其餘時候(New & Edit)放開
+        if (apply_type =='01') {//Add Customer時才渲染
+          custName.extra = {
+            render: this.getViewRender()
+          }
+        }
         this.boxButtons.forEach(x => {
           if (x.name == "Save and Submit") {
             x.hidden=false;
