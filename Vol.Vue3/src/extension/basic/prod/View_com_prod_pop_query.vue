@@ -194,10 +194,10 @@
                     params.wheres.push({ name: "prod_id", value: this.prod_id });
                 }
                 if (this.prod_ename) {
-                    params.wheres.push({ name: "prod_ename", value: this.prod_ename });
+                    params.wheres.push({ name: "prod_ename", value: this.prod_ename , displayType:'like'});
                 }
                 if (this.prod_sname) {
-                    params.wheres.push({ name: "prod_sname", value: this.prod_sname });
+                    params.wheres.push({ name: "prod_sname", value: this.prod_sname , displayType:'like'});
                 }
 
 
