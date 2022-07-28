@@ -7,6 +7,7 @@
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
 import Viat_com_custApplyModelBody from "./Viat_com_custApplyModelBody";
+import Viat_com_custViewModelBody from "./Viat_com_custViewModelBody";
 let extension = {
   components: {
     //查询界面扩展组件
@@ -14,7 +15,7 @@ let extension = {
     gridBody: '',
     gridFooter: '',
     //新建、编辑弹出框扩展组件
-    modelHeader: '',
+    modelHeader: Viat_com_custViewModelBody,
     modelBody: Viat_com_custApplyModelBody,
     modelFooter: ''
   },
@@ -91,6 +92,9 @@ let extension = {
         if(val=='01'){//Add Customer
           custName.hidden=false;
           custName.required=true;
+          custName.extra={
+            render:this.getViewRender("editSearchCust")
+          }
           cust_id.required=false;
           cust_id.hidden=true;
         }else if(val=='02'){//Edit Customer
@@ -389,6 +393,54 @@ let extension = {
       }
 
     },
+
+    //渲染 殼 View cust_name 模糊查詢
+    getViewRenderText(){
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+          h(
+              "a",
+              {
+                props: {},
+
+                style: { "color":"grey","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px","pointer-events": "none"},
+                onClick: (e) => {
+
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "View"
+          ),
+        ]);
+      };
+    },
+
+    //渲染 View cust_name前2字段模糊查詢
+    getViewRender(searchType) {
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                onClick: (e) => {
+                  debugger
+                  if(searchType=="editSearchCust"){
+                    if (this.editFormFields.cust_name){
+                      let custNameView = this.editFormFields.cust_name.substring(0,2);
+                      this.$refs.modelHeader.openModel(true,searchType,custNameView);
+                    }
+                  }
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "View"
+          ),
+        ]);
+      };
+    },
+
     getFormRender(searchType) {//
       return (h, { row, column, index }) => {
         return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
@@ -532,7 +584,7 @@ let extension = {
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
       var apply_type  = this.editFormFields.apply_type;
-
+      let custName = this.getOption("cust_name");
       //编辑表单，动态设置下拉框选项禁用状态或者隐藏显示
       this.editFormOptions.forEach((options) => {
         options.forEach((item) => {
@@ -548,7 +600,10 @@ let extension = {
       });
 debugger
       if (this.currentAction=='Add'){
-        this.editFormFields.apply_type='01';
+        this.editFormFields.apply_type='01';//默認Add
+        custName.extra={
+          render:this.getViewRender("editSearchCust")
+        }
         this.getOption("cust_name").required=true;
         this.getOption("cust_id").required=false;
         this.pickEditFormCustomerName = "";
@@ -578,12 +633,15 @@ debugger
       }
       //View時隱藏Save and Submit按鈕
       if (this.currentAction == this.const.VIEW){
+        custName.extra = {
+          render: this.getViewRenderText()
+        }
         this.boxButtons.forEach(x => {
           if (x.name == "Save and Submit") {
             x.hidden=true;
           }
         })
-      }else{
+      }else{//其餘時候(New & Edit)放開
         this.boxButtons.forEach(x => {
           if (x.name == "Save and Submit") {
             x.hidden=false;
