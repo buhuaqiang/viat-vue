@@ -142,6 +142,8 @@ let extension = {
           this.getFormOption("start_date").required=true;
           this.getFormOption("end_date").required=true;
           this.getFormOption("isgroup").disabled=false;
+          this.getFormOption("cust_id").required=true;
+
           this.$refs.modelBody.showPriceDiv = true;
         }else if(val=='04'){
           this.getFormOption("start_date").hidden=true;
@@ -151,6 +153,11 @@ let extension = {
           this.editFormFields.isgroup = "0";
           this.getFormOption("isgroup").disabled=true;
           this.getFormOption("cust_id").hidden=false;
+          this.getFormOption("cust_id").required=true;
+
+          this.getFormOption("group_id").hidden=true;
+          this.getFormOption("group_id").required=false;
+
           this.$refs.modelBody.showPriceDiv = false;
         }
 
