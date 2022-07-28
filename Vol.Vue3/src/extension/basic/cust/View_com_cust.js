@@ -7,6 +7,7 @@
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
 import Viat_com_custModelBody from "./Viat_com_custModelBody";
+import Viat_com_custViewModelBody from "./Viat_com_custViewModelBody"
 
 let extension = {
   components: {
@@ -15,7 +16,7 @@ let extension = {
     gridBody: Viat_com_custModelBody,
     gridFooter: '',
     //新建、编辑弹出框扩展组件
-    modelHeader: '',
+    modelHeader: Viat_com_custViewModelBody,
     modelBody: Viat_com_custModelBody,
     modelFooter: ''
   },
@@ -119,6 +120,27 @@ let extension = {
       };
     },
 
+    //渲染 殼 View cust_name 模糊查詢
+    getViewRenderText(){
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+          h(
+              "a",
+              {
+                props: {},
+
+                style: { "color":"grey","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px","pointer-events": "none"},
+                onClick: (e) => {
+
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "View"
+          ),
+        ]);
+      };
+    },
+
     //View copy渲染 殼 invoic name
     getCopyAddRenderText(){
       return (h, { row, column, index }) => {
@@ -153,24 +175,50 @@ let extension = {
                 onClick: (e) => {
                   if (this.editFormFields.cust_name) {
                     let custName2char = this.editFormFields.cust_name.substring(0,2);
-                    this.http.get("api/Viat_com_cust/getCustByCustID?cust_id=" + custName2char.replace(/\s/g, ""), {}, "loading").then(reslut => {
-                      if(reslut){
-                        this.editFormFields['own_hospital'] =reslut.cust_dbid;
-                        this.editFormFields['own_hospital_cust_id'] =reslut.cust_id ;
-                        document.getElementById("f_own_hospital").value=reslut.cust_name;
-                        return;
-                      }else{
-                        this.$message.error("Customer Id Is Not Exists.");
-                        this.editFormFields['own_hospital_cust_id']=''
-                        document.getElementById("f_own_hospital").value=''
-                        return;
-                      }
-                    })
+                    // this.http.get("api/Viat_com_cust/getCustByCustID?cust_id=" + custName2char.replace(/\s/g, ""), {}, "loading").then(reslut => {
+                      // if(reslut){
+                      //   this.editFormFields['own_hospital'] =reslut.cust_dbid;
+                      //   this.editFormFields['own_hospital_cust_id'] =reslut.cust_id ;
+                      //   document.getElementById("f_own_hospital").value=reslut.cust_name;
+                      //   return;
+                      // }else{
+                      //   this.$message.error("Customer Id Is Not Exists.");
+                      //   this.editFormFields['own_hospital_cust_id']=''
+                      //   document.getElementById("f_own_hospital").value=''
+                      //   return;
+                      // }
+                    // })
                   }
                 }
               },
               [h("i",{class:"el-icon-zoom-in"})],
-              "Copy"
+              "View"
+          ),
+        ]);
+      };
+    },
+
+    //渲染 View cust_name前2字段模糊查詢
+    getViewRender(searchType) {
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                onClick: (e) => {
+                  debugger
+                  if(searchType=="editSearchCust"){
+                    if (this.editFormFields.cust_name){
+                      let custNameView = this.editFormFields.cust_name.substring(0,2);
+                      this.$refs.modelHeader.openModel(true,searchType,custNameView);
+                    }
+                  }
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "View"
           ),
         ]);
       };
@@ -423,6 +471,9 @@ let extension = {
       //示例：设置修改新建、编辑弹出框字段标签的长度
       // this.boxOptions.labelWidth = 150;
       // this.LoadPage = true;
+      this.pagination.sortName = "cust_id";  //设置排序字段
+      this.pagination.order = "asc" ; //排序方式desc或者asc
+
       this.boxOptions.labelWidth = 250;
       //显示查询全部字段
       //this.setFiexdSearchForm(true);
@@ -709,7 +760,7 @@ let extension = {
       //看不懂就把输出看：console.log(this.editFormOptions)
       this.getOption("cust_id").disabled = this.currentAction == this.const.EDIT || this.currentAction==this.const.VIEW;
       this.getOption("cust_id").hidden = this.currentAction ==this.const.ADD;
-
+      let custName = this.getOption('cust_name');
       let ownHospital = this.getOption("own_hospital_cust_id");
       let delv_group = this.getOption("delv_group_cust_id");
       let med_group = this.getOption("med_group_cust_id");
@@ -721,6 +772,9 @@ let extension = {
         this.editFormFields.is_private='Y';//
         this.editFormFields.own_by_hospital='N';//
         this.editFormFields.cust_id = "C0000";
+        custName.extra = {
+          render: this.getViewRender("editSearchCust")
+        }
         let copyAddress = this.getOption('invoice_name');
         copyAddress.extra = {
           render: this.getCopyAddRender()
@@ -902,6 +956,9 @@ let extension = {
         // document.getElementById("f_own_hospital").value=row.own_hospital_cust_name
       }else  if (this.currentAction ==this.const.VIEW){
         debugger
+        custName.extra = {
+          render: this.getViewRenderText()
+        }
         copyAddShell.extra = {
           render: this.getCopyAddRenderText()
         }

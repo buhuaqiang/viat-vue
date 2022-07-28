@@ -7,6 +7,7 @@
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
 import Viat_com_custModelBody from "./Viat_com_custModelBody";
+import Viat_com_cust_importViewModelBody from  "./Viat_com_cust_importViewModelBody";
 
 let extension = {
   components: {
@@ -15,7 +16,7 @@ let extension = {
     gridBody: Viat_com_custModelBody,
     gridFooter: '',
     //新建、编辑弹出框扩展组件
-    modelHeader: '',
+    modelHeader: Viat_com_cust_importViewModelBody,
     modelBody: Viat_com_custModelBody,
     modelFooter: ''
   },
@@ -74,6 +75,32 @@ debugger
       return data;
     },
 
+      //渲染 View cust_name前2字段模糊查詢
+      getViewRender(searchType) {
+          return (h, { row, column, index }) => {
+              return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+                  h(
+                      "a",
+                      {
+                          props: {},
+                          style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                          onClick: (e) => {
+                              debugger
+                              if(searchType=="editSearchCust"){
+                                  if (this.editFormFields.cust_name){
+                                      let custNameView = this.editFormFields.cust_name.substring(0,2);
+                                      this.$refs.modelHeader.openModel(true,searchType,custNameView);
+                                  }
+                              }
+                          }
+                      },
+                      [h("i",{class:"el-icon-zoom-in"})],
+                      "View"
+                  ),
+              ]);
+          };
+      },
+
     //渲染 View 只有外殼
     getPopRenderText(searchType,sv){
       return (h, { row, column, index }) => {
@@ -118,7 +145,7 @@ debugger
         ]);
       };
     },
-//View 渲染 殼 invoic name
+    //View 渲染 殼 invoic name
     getCopyAddRenderText(){
       return (h, { row, column, index }) => {
         return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
@@ -138,6 +165,27 @@ debugger
         ]);
       };
     },
+
+      //渲染 殼 View cust_name 模糊查詢
+      getViewRenderText(){
+          return (h, { row, column, index }) => {
+              return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+                  h(
+                      "a",
+                      {
+                          props: {},
+
+                          style: { "color":"grey","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px","pointer-events": "none"},
+                          onClick: (e) => {
+
+                          }
+                      },
+                      [h("i",{class:"el-icon-zoom-in"})],
+                      "View"
+                  ),
+              ]);
+          };
+      },
     //渲染 copy地址
     getCopyAddRender() {
       return (h, { row, column, index }) => {
@@ -549,9 +597,12 @@ debugger
       let delv_group = this.getOption("delv_group_cust_id");
       let med_group = this.getOption("med_group_cust_id");
       let invoiceNmae = this.getOption('invoice_name');
+      let custName = this.getOption('cust_name');
+      let custNameShell = this.getOption('cust_name');
 
       if (this.currentAction ==this.const.EDIT){
         debugger
+
         let comZipId = this.getOption("cust_zip_id");
         let invoiceZipId = this.getOption("invoice_zip_id");
         let cityName1 = this.editFormFields.cust_zip_id_city_name;
@@ -559,7 +610,9 @@ debugger
         //初始化客户地址和发票地址的区域下拉选择
         this.getCityZoneData(cityName1, comZipId);
         this.getCityZoneData(cityName2, invoiceZipId);
-
+          custName.extra = {
+              render: this.getViewRender("editSearchCust")
+          }
           invoiceNmae.extra = {
               render: this.getCopyAddRender()
           }
@@ -642,6 +695,9 @@ debugger
       }else if (this.currentAction ==this.const.VIEW){
         debugger
         // this.editFormFields.own_hospital_cust_id = this.editFormFields.own_hospital_cust_id;
+        custName.extra = {
+          render: this.getViewRenderText()
+        }
         invoiceNmae.extra = {
           render: this.getCopyAddRenderText()
         }
