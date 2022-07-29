@@ -137,13 +137,14 @@ let extension = {
       var editform_apply_type = this.getFormOption("apply_type");
       editform_apply_type.onChange = (val) => {
         if(val=='03'){
+          this.editFormFields.isgroup = "0";
           this.getFormOption("start_date").hidden=false;
           this.getFormOption("end_date").hidden=false;
           this.getFormOption("start_date").required=true;
           this.getFormOption("end_date").required=true;
           this.getFormOption("isgroup").disabled=false;
           this.getFormOption("cust_id").required=true;
-
+          this.getFormOption("cust_id").hidden=false;
           this.$refs.modelBody.showPriceDiv = true;
         }else if(val=='04'){
           this.getFormOption("start_date").hidden=true;
@@ -858,10 +859,14 @@ let extension = {
         }
       })
       if (this.currentAction =='Add'){
+        debugger
         this.editFormFields.apply_type='03'
+        this.editFormFields.isgroup = "0";
+        this.getFormOption("cust_id").hidden=false;
+        this.getFormOption("cust_id").required=true;
         this.getFormOption("apply_type").disabled=false
         this.getFormOption("isgroup").disabled=false;
-        this.getFormOption("cust_id").disabled=false;
+        //this.getFormOption("cust_id").disabled=false;
         let dateStrs=this.parseTime(new Date(),'{y}-{m}-{d}')
         this.editFormFields.bid_date=dateStrs;
         this.editFormFields.end_date='2099-12-31';

@@ -27,7 +27,7 @@
         </el-form-item>
 
         <el-form-item   label="Current Price:" style="width: 35%">
-          <el-input v-model="formModel.net_price" style="width:200px;" ></el-input>
+          <el-input v-model="formModel.net_price" style="width:200px;" :disabled="true" ></el-input>
         </el-form-item>
         <el-form-item   label="Bid Price:" style="width: 50%">
           <el-input v-model="formModel.bid_price" style="width:200px;" @change="caculator()"></el-input>
@@ -196,7 +196,7 @@ export default {
         {field:'prod_ename',title:'Product Name',type:'string',width:220,align:'left'},
         {field:'nhi_price',title:'NHI Price',type:'decimal',width:80,readonly:true,require:true,align:'right'},
         {field:'invoice_price',title:'Invoice Price',edit: { type: "number",keep:true },width:100,require:true,align:'right'},
-        {field:'net_price',title:'Current Price',type:'decimal',width:100,require:true,align:'right'},
+        {field:'net_price',title:'Current Price',type:'decimal',disabled:true,width:100,require:true,align:'right'},
         {field:'bid_price',title:'Bid Price',edit: { type: "number" ,keep:true},width:100,require:true,align:'right'},
         {field:'min_qty',title:'Min Qty',edit: { type: "number",keep:true },width:80,require:true,align:'left'},
         {field:'discount',title:'DIS%',type:'decimal',width:50,align:'left'},
@@ -408,7 +408,8 @@ export default {
           this.formModel.nhi_price=rows[0].nhi_price;
           this.formModel.prod_id=rows[0].prod_id;
           this.formModel.prod_ename=rows[0].prod_ename;
-          this.formModel.invoice_price='';
+          //invoice_price的默认值设为和nhi_price一样
+          this.formModel.invoice_price=rows[0].nhi_price;
           this.formModel.net_price='';
           this.formModel.bid_price='';
           this.formModel.reserv_price='';
@@ -424,7 +425,7 @@ export default {
               prod_id:row.prod_id,
               prod_dbid:row.prod_dbid,
               prod_ename:row.prod_ename,
-              qty:1
+              qty:''
             }
           })
           let $parent;
@@ -618,6 +619,16 @@ export default {
         }
       }else {
         this.$message.error("Bid  price can't be empty.");
+        return false;
+      }
+      if(this.formModel.min_qty || this.formModel.min_qty==0){
+
+        if(Number(this.formModel.min_qty)<=0){
+          this.$message.error("Min Qty can't less than zero.");
+          return false;
+        }
+      }else {
+        this.$message.error("Min Qty can't be empty.");
         return false;
       }
 
