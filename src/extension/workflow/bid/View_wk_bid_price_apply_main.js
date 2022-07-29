@@ -499,9 +499,9 @@ let extension = {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
       let userInfo = this.$store.getters.getUserInfo();
-      let userName = userInfo.userName;
-
-      param.wheres.push({ name: "created_user", value: userName});
+      let userId = userInfo.userId;
+      debugger;
+      param.wheres.push({ name: "created_user", value: userId});
 
       return true;
     },

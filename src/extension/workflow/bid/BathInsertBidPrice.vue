@@ -36,10 +36,10 @@
           <el-input-number v-model="formModel.min_qty"  style="width:200px;" ></el-input-number>
         </el-form-item>
         <el-form-item   label="DIS%:" style="width: 50%">
-          <el-input v-model="formModel.dis" style="width:200px;" :disabled="true"></el-input>
+          <el-input v-model="formModel.discount" style="width:200px;" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item   label="FG%:" style="width: 35%">
-          <el-input v-model="formModel.fg" style="width:200px;" :disabled="true"></el-input>
+          <el-input v-model="formModel.allowance" style="width:200px;" :disabled="true"></el-input>
         </el-form-item>
 
       </el-form>
@@ -168,8 +168,8 @@ export default {
         net_price:'',
         status:'Y',
         min_qty:1,
-        fg:'',
-        dis:'',
+        allowance:'',
+        discountcount:'',
         nhi_id:'',
         start_date:new Date(),
         end_date:new Date('2099-12-31'),
@@ -199,8 +199,8 @@ export default {
         {field:'net_price',title:'Current Price',type:'decimal',width:100,require:true,align:'right'},
         {field:'bid_price',title:'Bid Price',edit: { type: "number" ,keep:true},width:100,require:true,align:'right'},
         {field:'min_qty',title:'Min Qty',edit: { type: "number",keep:true },width:80,require:true,align:'left'},
-        {field:'dis',title:'DIS%',type:'decimal',width:50,align:'left'},
-        {field:'fg',title:'FG%',type:'decimal',width:50,align:'left'},
+        {field:'discount',title:'DIS%',type:'decimal',width:50,align:'left'},
+        {field:'allowance',title:'FG%',type:'decimal',width:50,align:'left'},
         {field:'reserv_price',title:'Reser Price',edit: { type: "number",keep:true },hidden:true,width:100,align:'right'},
         {field:'view',title:'Order History',width:80,align:'left'},
         ],
@@ -234,8 +234,8 @@ export default {
       this.formModel.net_price=''
       this.formModel.bid_price=''
       this.formModel.min_qty=1
-      this.formModel.fg=1
-      this.formModel.ds=1
+      this.formModel.allowance=""
+      this.formModel.ds=""
       let $parent;
       //获取生成页面viewgrid的对象
       this.$emit("parentCall", ($this) => {
@@ -273,25 +273,26 @@ export default {
       //onInited方法设置从表编辑时实时计算值
       this.columns.forEach(x => {
         //設定可編輯狀態打開，不用雙擊
-        if (x.field == 'fg') {
+        if (x.field == 'allowance') {
           //将eidt设置为null不开启编辑
           x.edit = null;
           x.formatter = (row) => {
             let bid_price=row.bid_price;
             let nhi_price=row.nhi_price;
-            let dis = (100-(bid_price-nhi_price)/nhi_price*100).toFixed(2);
-            let fg = (100-dis).toFixed(2);
-            return fg
+            let allowance = Math.abs(((nhi_price-bid_price)/bid_price*100).toFixed(2));
+            row.allowance=allowance
+            return allowance
           }
         }
-        if (x.field == 'dis') {
+        if (x.field == 'discount') {
           //将eidt设置为null不开启编辑
           x.edit = null;
           x.formatter = (row) => {
             let bid_price=row.bid_price;
             let nhi_price=row.nhi_price;
-            let dis = (100-(bid_price-nhi_price)/nhi_price*100).toFixed(2);
-            return dis;
+            let discount = Math.abs(((nhi_price-bid_price)/nhi_price*100).toFixed(2));
+            row.discount=discount
+            return discount;
           }
         }
 
@@ -314,12 +315,13 @@ export default {
     },
 
     caculator(){
+      debugger;
       let bid_price=this.formModel.bid_price;
       let nhi_price=this.formModel.nhi_price;
-      let dis = (100-(bid_price-nhi_price)/nhi_price*100).toFixed(2);
-      let fg = 100-dis;
-      this.formModel.dis=dis;
-      this.formModel.fg=fg;
+      let allowance = Math.abs(((nhi_price-bid_price)/bid_price*100).toFixed(2)); //FG
+      let discount = Math.abs(((nhi_price-bid_price)/nhi_price*100).toFixed(2)); // DIS
+      this.formModel.discount=discount;
+      this.formModel.allowance=allowance;
     },
 
 
@@ -410,8 +412,8 @@ export default {
           this.formModel.net_price='';
           this.formModel.bid_price='';
           this.formModel.reserv_price='';
-          this.formModel.dis='';
-          this.formModel.fg='';
+          this.formModel.discount='';
+          this.formModel.allowance='';
           this.initCurrentPrice(rows[0].prod_dbid,rows[0].prod_id);
         }else if(fieldName=='AddOrders'){
 
@@ -673,8 +675,8 @@ export default {
           min_qty:this.formModel.min_qty,
           bid_price:this.formModel.bid_price,
           reserv_price:this.formModel.reserv_price,
-          fg:this.formModel.fg,
-          dis:this.formModel.dis,
+          allowance:this.formModel.allowance,
+          discount:this.formModel.discount,
         }
         this.$refs.priceTable.rowData.push(addData);
 
@@ -686,8 +688,8 @@ export default {
         this.formModel.bid_price=''
         this.formModel.reserv_price=''
         this.formModel.min_qry=1
-        this.formModel.fg=1
-        this.formModel.dis=1
+        this.formModel.allowance=""
+        this.formModel.discount=""
 
       }else{
         this.$message.error("Product Price is already exist in draft.");
