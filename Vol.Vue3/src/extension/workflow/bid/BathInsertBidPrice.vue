@@ -371,7 +371,7 @@ export default {
           if (x.rows.length > 0) {
             this.formModel.net_price = x.rows[0].net_price;
           } else {
-            this.formModel.net_price = "";
+            this.formModel.net_price = "0";
           }
         });
       }
