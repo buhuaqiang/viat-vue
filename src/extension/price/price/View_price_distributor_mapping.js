@@ -452,6 +452,13 @@ let extension = {
     },
     addBefore(formData) {
       //新建保存前formData为对象，包括明细表，可以给给表单设置值，自己输出看formData的值
+      console.log(JSON.stringify(formData.mainData));
+      if(formData.mainData.price_channel == "" &&
+        (formData.mainData.custs =="" || formData.mainData.custs.length == 0 ) &&
+        (formData.mainData.pricegroups == "" || formData.mainData.pricegroups.length ==0)){
+        this.$Message.error("Group Channel , Group , Customer need choose at least 1.");
+        return false;
+      }
       return true;
     },
     updateBefore(formData) {
