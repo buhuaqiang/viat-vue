@@ -219,11 +219,6 @@ debugger
                     let custAdd = this.editFormFields.cust_address;
                     this.editFormFields.invoice_address = custAdd;
                   }
-
-                  // if (this.editFormFields.cust)
-                    // this.editFormFields.invoice_zip_id_city_name = this.editFormFields.cust_zip_id_city_name;
-                  // if (this.editFormFields.cust_zip_id_city_name)
-
                 }
               },
               [h("i",{class:"el-icon-zoom-in"})],

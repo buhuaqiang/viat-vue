@@ -65,13 +65,11 @@ let extension = {
         return row.start_date.substr(0,10);
       }
 
+      //城市 區域 下拉控制
       let comCity = this.getOption("cust_city_name");
       let invoiceCity = this.getOption("invoice_city_name");
-      let delivery = this.getOption("delivery_city_name");
       let comZipId = this.getOption("cust_zip_id");
       let invoiceZipId = this.getOption("invoice_zip_id");
-      let deliveryZipId = this.getOption("delivery_zip_id");
-
       comCity.onChange = (val, option) => {
         this.editFormFields.cust_zip_id = '';//清除原來選擇的數據
         this.getCityZoneData(val, comZipId);
@@ -80,15 +78,14 @@ let extension = {
         this.editFormFields.invoice_zip_id = '';//清除原來選擇的數據
         this.getCityZoneData(val, invoiceZipId);
       }
-      delivery.onChange = (val, option) => {
-        this.editFormFields.delivery_zip_id = '';//清除原來選擇的數據
-        this.getCityZoneData(val, deliveryZipId);
-      }
+
+
       let cust_id = this.getOption("cust_id");
       let custName = this.getOption("cust_name");
       let applyType = this.getOption("apply_type");
+      let ownHospital = this.getOption("own_hospital_cust_id");
+      //ApplyType下拉框改變時(Add Customer, Edit Customer)對應顯示不同欄位 + 改變為Add Customer時渲染View模糊查詢2字段
       applyType.onChange = (val) => {
-
         if(val=='01'){//Add Customer
           custName.hidden=false;
           custName.required=true;
@@ -102,13 +99,11 @@ let extension = {
           custName.required=false;
           cust_id.required=true;
           cust_id.hidden=false;
-
         }
-
       }
 
 
-
+      //Edit > Edit Customer時 , 客戶,own Hospital渲染與迴車查詢
       cust_id.extra={
         render:this.getFormRender("editSearchCust")
       }
@@ -147,7 +142,6 @@ let extension = {
           }
         }
       }
-      let ownHospital = this.getOption("own_hospital_cust_id");
       ownHospital.extra={
         render:this.getFormRender("editSearchHospital")
       }
@@ -173,6 +167,7 @@ let extension = {
         }
       }
 
+      //自製按鈕Save and Submit
       this.boxButtons.splice(1, 0,{
         name: 'Save and Submit',
         icon: 'el-icon-check',
@@ -184,6 +179,7 @@ let extension = {
         }
       })
 
+      //列表渲染一個欄位
       this.columns.push({
         title: '操作', width: 110, render: (h, { row, column, index }) => {
           return h(
@@ -279,6 +275,7 @@ let extension = {
         });
       });
     },
+
     //save and Submit
     saveSubmit(){
       this.$refs.form.validate((result) => {//校验必输字段
@@ -293,6 +290,7 @@ let extension = {
          return result;
        });*/
     },
+
     saveSubmitExecute(){
       let formData = this.editFormFields;
       let url = "api/View_wk_cust_main/addSubmit";
@@ -310,7 +308,8 @@ let extension = {
         }
       });
     },
-    //Back
+
+    //CallBack
     BackData(){
       let rows =  this.getSelectRows();
       var bidmast_dbids=[];
@@ -344,6 +343,7 @@ let extension = {
         });
       });
     },
+
     //选择客户Pick 回填字段
     handleCustomerSelected(flag,rows){
       if(flag=='editSearchHospital'){
@@ -365,24 +365,20 @@ let extension = {
         this.editFormFields['delivery_contact'] = rows[0].contact;
         this.editFormFields['delivery_tel_no'] = rows[0].tel_no;
         this.editFormFields['doh_type'] = rows[0].doh_type;
-
         this.editFormFields['doh_institute_no'] = rows[0].doh_institute_no;
         this.editFormFields['is_private'] = rows[0].is_private;
         this.editFormFields['owner'] = rows[0].owner;
-
         this.editFormFields['tax_id'] = rows[0].tax_id;
         this.editFormFields['email'] = rows[0].email;
         this.editFormFields['fax_no'] = rows[0].fax_no;
         this.editFormFields['own_hospital'] = rows[0].own_hospital;
         this.editFormFields['own_hospital_cust_id'] = rows[0].own_hospital_cust_id;
         this.pickEditFormHospital = rows[0].own_hospital_cust_name;
-
-         this.editFormFields['ctrl_drug_no'] = rows[0].ctrl_drug_no;
-         this.editFormFields['ctrl_drug_contact'] = rows[0].ctrl_drug_contact;
-         this.editFormFields['remarks'] = rows[0].remarks;
+        this.editFormFields['ctrl_drug_no'] = rows[0].ctrl_drug_no;
+        this.editFormFields['ctrl_drug_contact'] = rows[0].ctrl_drug_contact;
+        this.editFormFields['remarks'] = rows[0].remarks;
         this.pickEditFormCustomerName = rows[0].cust_name
       }
-
     },
     getPickName(searchType){
       if(searchType=="editSearchHospital"){
@@ -410,6 +406,27 @@ let extension = {
               },
               [h("i",{class:"el-icon-zoom-in"})],
               "View"
+          ),
+        ]);
+      };
+    },
+
+    //渲染 殼 View Copy
+    getCopyAddRenderText(){
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+          h(
+              "a",
+              {
+                props: {},
+
+                style: { "color":"grey","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px","pointer-events": "none"},
+                onClick: (e) => {
+
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "Copy"
           ),
         ]);
       };
@@ -494,6 +511,66 @@ let extension = {
         ]);
       };
     },
+
+    //渲染 copy地址
+    getCopyAddRender(searchType) {
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+          h(
+              "a",
+              {
+                props: {},
+
+                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                onClick: (e) => {
+                  debugger
+                  let comCity=this.getOption("cust_zip_id_city_name");
+                  let invoiceCity=this.getOption("invoice_zip_id_city_name");
+                  let comZipId=this.getOption("cust_zip_id");
+                  let invoiceZipId=this.getOption("invoice_zip_id");
+                  let deliveryZipId = this.getOption('delivery_zip_id');
+                  let apply_type = this.editFormFields.apply_type;
+                  if (searchType=='invoiceDeliver' ) {
+                    if (apply_type =='02'){
+                      if (this.pickEditFormCustomerName){
+                       this.editFormFields.invoice_name = this.pickEditFormCustomerName;
+                      }
+                    }else{
+                      if (this.editFormFields.cust_name){
+                        this.editFormFields.invoice_name = this.editFormFields.cust_name;
+                      }
+                  }
+                    debugger
+                    if (this.editFormFields.cust_city_name) {
+                      let custCity = this.editFormFields.cust_city_name;
+                      this.editFormFields.invoice_city_name = custCity;
+                      this.editFormFields.invoice_zip_id = '';
+                      this.getCityZoneData(custCity, invoiceZipId);
+                      this.editFormFields.delivery_city_name = custCity;
+                      this.editFormFields.delivery_zip_id = '';
+                      this.getCityZoneData(custCity, deliveryZipId);
+                    }
+                    if (this.editFormFields.cust_zip_id) {
+                      let custZip = this.editFormFields.cust_zip_id;
+                      this.editFormFields.invoice_zip_id = custZip;
+                      this.editFormFields.delivery_zip_id = custZip;
+                    }
+                    if (this.editFormFields.cust_address) {
+                      let custAdd = this.editFormFields.cust_address;
+                      this.editFormFields.invoice_address = custAdd;
+                      this.editFormFields.delivery_addr = custAdd;
+                    }
+                  }
+
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "Copy"
+          ),
+        ]);
+      };
+    },
+
     getOption(field) {
       let option;
       this.editFormOptions.forEach(x => {
@@ -585,6 +662,7 @@ let extension = {
       //看不懂就把输出看：console.log(this.editFormOptions)
       var apply_type  = this.editFormFields.apply_type;
       let custName = this.getOption("cust_name");
+      let invoiceName = this.getOption('invoice_name');
       //编辑表单，动态设置下拉框选项禁用状态或者隐藏显示
       this.editFormOptions.forEach((options) => {
         options.forEach((item) => {
@@ -633,6 +711,9 @@ debugger
       }
 
       if (this.currentAction == this.const.VIEW){
+        invoiceName.extra = {
+          render: this.getCopyAddRenderText()
+        }
         if (apply_type =='01') {//Add Customer時才渲染殼
           custName.extra = {
             render: this.getViewRenderText()
@@ -644,9 +725,13 @@ debugger
           }
         })
       }else{//其餘時候(New & Edit)放開
+        invoiceName.extra = {
+          render: this.getCopyAddRender('invoiceDeliver')
+        }
         if (apply_type =='01') {//Add Customer時才渲染
+          debugger
           custName.extra = {
-            render: this.getViewRender()
+            render: this.getViewRender("editSearchCust")
           }
         }
         this.boxButtons.forEach(x => {
