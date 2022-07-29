@@ -562,6 +562,7 @@ let extension = {
         }
       return true;
       }
+      return true;
     },
     updateBefore(formData) {
       let priceTableRowData="";
