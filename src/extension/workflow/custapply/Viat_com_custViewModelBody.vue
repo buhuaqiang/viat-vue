@@ -77,10 +77,10 @@
           icon="el-icon-plus"
           @click="addRow()"
           >Add Row</el-button
-        >
+        >  -->
         <el-button size="mini" icon="el-icon-close" @click="model = false"
           >Close</el-button
-        > -->
+        >
       </div>
     </template>
   </VolBox>
