@@ -60,13 +60,13 @@
     <!-- 设置弹出框的操作按钮 -->
     <template #footer>
       <div>
-        <el-button
+    <!--    <el-button
           size="mini"
           type="primary"
           icon="el-icon-plus"
           @click="addRow()"
           >Add Row</el-button
-        >
+        >   -->
         <el-button size="mini" icon="el-icon-close" @click="model = false"
           >Close</el-button
         >
