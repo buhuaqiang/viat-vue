@@ -527,9 +527,9 @@ let extension = {
         this.$Message.error("Please Input Bid Order List ")
         return  false;
       }
-
+      debugger;
       if(!this.checkOrlderList(orderTableRowData)){
-        return
+        return false
       }
 
       let detailData = [
@@ -560,6 +560,7 @@ let extension = {
           this.$Message.error(messageInfo);
           return false;
         }
+      return true;
       }
     },
     updateBefore(formData) {
@@ -577,7 +578,7 @@ let extension = {
         return  false;
       }
       if(!this.checkOrlderList(orderTableRowData)){
-        return
+        return false
       }
       //删除数据回传
       let delPriceTableRowData = this.$refs.modelBody.delPriceTableRowData;
