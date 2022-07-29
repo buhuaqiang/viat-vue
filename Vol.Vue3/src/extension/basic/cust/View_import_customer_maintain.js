@@ -340,7 +340,7 @@ debugger
           this.ignore();
         }
       })
-      this.boxOptions.labelWidth=235;
+      this.boxOptions.labelWidth=250;
       //显示查询全部字段
       this.setFiexdSearchForm(true);
       //设置查询表单的标签文字宽度
