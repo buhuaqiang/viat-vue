@@ -170,7 +170,7 @@ export default {
                     this.stretagyShow=true
                     this.strategyName=reslut.cont_stretagy_name
                     this.strategyDBID=reslut.contstret_dbid
-                    $parent.editFormFields['approved_date']=reslut.apploved_date
+                    $parent.editFormFields['approved_date']=reslut.approved_date
                 }else{
                     this.stretagyShow=false
                     this.strategyName=""

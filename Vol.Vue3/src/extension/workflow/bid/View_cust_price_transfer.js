@@ -744,6 +744,9 @@ let extension = {
             render:this.getSearchRender("formCustomer")
           }
         }
+        this.getEditOption("start_date").disabled=false;
+        this.getEditOption("end_date").disabled=false;
+
         //this.editFormFields['add_group']='N'
         /*this.getEditOption("add_group").disabled=false
         //this.editFormFields['add_group']='N'
