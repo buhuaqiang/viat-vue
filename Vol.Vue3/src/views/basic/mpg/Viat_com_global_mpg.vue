@@ -38,8 +38,8 @@
                                {"dataKey":"LocalTA","data":[],"title":"Ta","field":"ta","type":"select"}],
                               [{"dataKey":"IMT_Type","data":[],"title":"IMT Type","field":"imt_type","type":"select"}],
                               [{"title":"HFM Description","field":"remarks","colSize":8}]]);
-            const searchFormFields = ref({"global_mpg":"","bu_id":"","mpg_name":"","ta":"","status":"","imt_type":""});
-            const searchFormOptions = ref([[{"title":"Global Mpg ID","field":"global_mpg","type":"like"},{"dataKey":"Bu","data":[],"title":"Bu ID","field":"bu_id","type":"select"}],[{"title":"Global Mpg Name","field":"mpg_name","type":"like"},{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}],[{"dataKey":"LocalTA","data":[],"title":"Ta","field":"ta","type":"select"},{"dataKey":"IMT_Type","data":[],"title":"IMT Type","field":"imt_type","type":"select"}]]);
+            const searchFormFields = ref({"global_mpg":"","bu_id":"","mpg_name":"","category":"","ta":"","imt_type":"","status":""});
+            const searchFormOptions = ref([[{"title":"Global Mpg ID","field":"global_mpg","type":"like"},{"dataKey":"Bu","data":[],"title":"Bu ID","field":"bu_id","type":"select"}],[{"title":"Global Mpg Name","field":"mpg_name","type":"like"},{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}],[{"dataKey":"LocalTA","data":[],"title":"Ta","field":"ta","type":"select"},{"dataKey":"IMT_Type","data":[],"title":"IMT Type","field":"imt_type","type":"select"}],[{"dataKey":"Category","data":[],"title":"Category","field":"category","type":"select"}]]);
             const columns = ref([{field:'globalmpg_dbid',title:'PKID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
                        {field:'entity',title:'公司別',type:'string',width:110,hidden:true,align:'left'},
                        {field:'division',title:'所屬事業單位,01:PH;03:AH;05:CH;06:NU',type:'string',width:110,hidden:true,align:'left'},
