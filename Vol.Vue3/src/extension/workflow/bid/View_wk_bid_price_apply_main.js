@@ -896,16 +896,17 @@ let extension = {
         this.getFormOption("cust_id").disabled=true;
         this.getFormOption("group_id").disabled=true;
         this.getFormOption("isgroup").disabled=true;
-        let cust_dbid = this.editFormFields.cust_dbid;
-        if(cust_dbid){
-          this.initCustomerGroup(cust_dbid);
-        }
       }else if(this.currentAction =='view'){
         this.boxButtons.forEach(x => {
           if (x.value == "Save&Submit") {
             x.hidden=true
           }
         })
+      }
+      //初使化 Customer In Group Info
+      let cust_dbid = this.editFormFields.cust_dbid;
+      if(cust_dbid){
+        this.initCustomerGroup(cust_dbid);
       }
       let apply_type = this.editFormFields.apply_type;
       if(apply_type=='03'){
