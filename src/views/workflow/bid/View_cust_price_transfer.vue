@@ -29,18 +29,21 @@
                 url: "/View_cust_price_transfer/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"bid_no":"","state":"","cust_id":"","group_id":"","add_group":[],"start_date":"","end_date":"","modified_date":"","created_date":"","pricegroup_dbid":""});
+            const editFormFields = ref({"bid_no":"","state":"","cust_id":"","group_id":"","add_group":[],"start_date":"","end_date":"","modified_date":"","created_date":"",
+                "pricegroup_dbid":"","cust_dbid":"","in_pricegroup_dbid":""});
             const editFormOptions = ref([[{"title":"Bid NO","field":"bid_no","disabled":true},
-                               {"dataKey":"transfer_status","data":[],"title":"Status","field":"state","type":"select"}],
+                               {"dataKey":"transfer_status","data":[],"title":"Status","field":"state","type":"select","disabled":true}],
                               [{"title":"Cust ID","field":"cust_id"},{"title":"Cust In Group","field":"cust_in_id","disabled":true}],
-                              [{"title":"Group ID","field":"group_id"},
-                                {"dataKey":"Status3","data":[],"title":"Group Import","field":"add_group","type":"radio"}
+                              [{"title":"Group ID","field":"group_id","disabled":true},
+                                {"data":[{key:'Y',value:''}],"title":"Group Import","field":"add_group","type":"checkbox"}
                                ],
-                              [{"title":"Start Date","field":"start_date","type":"date"},
-                               {"title":"End Date","field":"end_date","type":"date"}],
+                              [{"title":"Start Date","field":"start_date","type":"date","required":true},
+                               {"title":"End Date","field":"end_date","type":"date","required":true}],
                               [{"title":"Applied Date","field":"created_date","disabled":true,"type":"date"},
                                {"title":"Modified Date","field":"modified_date","disabled":true,"type":"date"}],
-                              [{"title":"","field":"pricegroup_dbid"}]]);
+                              [{"title":"Approved Date","field":"approved_date","disabled":true,"type":"date"},],
+                                [{"title":"","field":"pricegroup_dbid"},{"title":"","field":"cust_dbid"},{"title":"","field":"in_pricegroup_dbid"}]
+            ]);
             const searchFormFields = ref({"bid_no":"","state":"","modified_date":"","created_date":"","requestor_name":"","group_id":"","cust_id":"",
                 "pricegroup_dbid":"","cust_dbid":"","transfer_date":"","mpg_name":"","prod_id":"","prod_dbid":"","requestor":""});
             const searchFormOptions = ref([[{"title":"Bid NO","field":"bid_no","type":"like"},{"title":"Cust ID","field":"cust_id"}],

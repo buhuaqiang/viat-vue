@@ -11,6 +11,7 @@ import Viat_com_custModelBody from "../../basic/cust/Viat_com_custModelBody";
 import BathUpdateBidPriceTransfer from "./BathUpdateBidPriceTransfer";
 import confirmJoinGroup from "./confirmJoinGroup";
 import View_com_prod_pop_query from "../../basic/prod/View_com_prod_pop_query.vue";
+import commonPopForPriceTransfer from "./commonPopForPriceTransfer";
 
 let extension = {
   components: {
@@ -20,9 +21,10 @@ let extension = {
     gridFooter: Viat_com_custModelBody,
     //新建、编辑弹出框扩展组件
     modelHeader: confirmJoinGroup,
-    modelBody: PriceGroupModelBody,
+    modelBody: commonPopForPriceTransfer,
     modelFooter: BathUpdateBidPriceTransfer
   },
+  in_pricegroup_dbid:'',//客户申请时查询到的群组dbid
   cust_dbid:'',
   prod_dbid:'',
   isFirstValid:true,//是否是第一次校驗
@@ -146,7 +148,6 @@ let extension = {
         render:this.getSearchRender("searchCustomer")
       }
       cust_id.onKeyPress=($event)=>{
-
         if($event.keyCode==13){
           let  cust_id_v = this.searchFormFields['cust_id']
           if(cust_id_v) {
@@ -161,6 +162,31 @@ let extension = {
                 this.searchFormFields['cust_id']=''
                 this.searchFormFields['cust_dbid'] =""
                 this.pickCustomerName=''
+                return;
+              }
+            })
+          }
+        }
+      }
+
+      let form_cust_id=this.getEditOption("cust_id");
+      form_cust_id.onKeyPress=($event)=>{
+        if($event.keyCode==13){
+          let  cust_id_v = this.editFormFields['cust_id']
+          if(cust_id_v) {
+            this.http.get("api/Viat_com_cust/getCustByCustID?cust_id="+cust_id_v.replace(/\s/g,""),{} , "loading").then(reslut => {
+              if(reslut !=null){
+                this.editFormFields['cust_dbid'] =reslut.cust_dbid;
+                this.editFormFields['cust_id'] =reslut.cust_id ;
+                this.pickEditFormCustomerName=reslut.cust_name
+                this.initCustomerGroupInfo(reslut.cust_dbid);
+                return;
+              }else{
+                this.$message.error("Customer Id Is Not Exists.");
+                this.editFormFields['cust_id']=''
+                this.editFormFields['cust_dbid'] =""
+                this.editFormFields['cust_in_id']
+                this.pickEditFormCustomerName=''
                 return;
               }
             })
@@ -236,15 +262,15 @@ let extension = {
       }
       isGroupImport.onChange=(val, option)=>{
 
-        if(val=='N'){
-          this.editFormFields["group_id"]=""
-          this.editFormFields["pricegroup_dbid"]=""
-          this.pickEditFormPriceGroupName=""
-          this.joinGroupList=[]
-          this.getEditOption("cust_in_id").inputStyle="color:orange";
-        }else{
-          this.showGroupInfo()
+        if(val=='Y'){
+          //this.showGroupInfo()
           this.getEditOption("cust_in_id").inputStyle="";
+        }else{
+          // this.editFormFields["group_id"]=""
+          // this.editFormFields["pricegroup_dbid"]=""
+          //this.pickEditFormPriceGroupName=""
+          this.joinGroupList=[]
+          this.getEditOption("cust_in_id").inputStyle="border-color: red";
         }
       }
       /*isGroupImport.extra={
@@ -390,12 +416,17 @@ let extension = {
                   if(searchType=="searchPriceGroup"){
                     this.$refs.gridBody.openModel(true,searchType);
                   }
-                  if(searchType=="formPriceGroup"){
-                    this.$refs.modelBody.openModel(true,searchType);
-                  }
+
                   if(searchType=="searchProd"){
                     this.$refs.gridHeader.openModel(true,searchType);
                   }
+                  if(searchType=="formPriceGroup"){
+                    this.$refs.modelBody.openPriceGroup();
+                  }
+                  if(searchType=="formCustomer"){
+                    this.$refs.modelBody.openCustPop();
+                  }
+
                 }
               },
               [h("i",{class:"el-icon-zoom-in"})],
@@ -420,6 +451,11 @@ let extension = {
                     this.editFormFields["group_id"]=""
                     this.editFormFields["pricegroup_dbid"]=""
                     this.pickEditFormPriceGroupName=""
+                  }
+                  if(searchType=="formCustomer"){
+                    this.editFormFields["cust_id"]=""
+                    this.editFormFields["cust_dbid"]=""
+                    this.pickEditFormCustomerName=""
                   }
                   if(searchType=="searchProd"){
                     this.searchFormFields["prod_dbid"] = "";
@@ -492,6 +528,15 @@ let extension = {
       return true;
     },
     updateBefore(formData) {
+      debugger
+      if(formData.mainData.add_group=='Y'){
+        if(formData.mainData.cust_dbid){
+
+        }else{
+          this.$Message.error("Please input cust");
+          return false;
+        }
+      }
       let allProdDBIDS=[]//所有價格產品
       //编辑保存前formData为对象，包括明细表、删除行的Id
       let priceTableRowData = this.$refs.modelFooter.priceTableRowData;
@@ -580,8 +625,9 @@ let extension = {
         //第一次提交
         //調用接口校驗  allProdDBIDS
         //{"pricegroup_dbid":formData.mainData.pricegroup_dbid,"prod_dbid":allProdDBIDS}
-        if(allProdDBIDS.length>0 && formData.mainData.pricegroup_dbid && formData.mainData.add_group=='Y'){
-          this.http.get("api/View_cust_price_transfer/CustPriceDetailData?cust_dbid="+this.cust_dbid+"&pricegroup_dbid="+formData.mainData.pricegroup_dbid+"&prod_dbid="+allProdDBIDS,{} , "loading").then(reslut => {
+        if(allProdDBIDS.length>0 && formData.mainData.in_pricegroup_dbid && formData.mainData.add_group=='Y'){
+          //把客户所在群组dbid传入后台
+          this.http.get("api/View_cust_price_transfer/CustPriceDetailData?cust_dbid="+this.cust_dbid+"&pricegroup_dbid="+formData.mainData.in_pricegroup_dbid+"&prod_dbid="+allProdDBIDS,{} , "loading").then(reslut => {
             this.isFirstValid=false
             if(reslut!==null && reslut.length>0){
               //查詢當前群組內其他產品的單一價格列表
@@ -633,6 +679,26 @@ let extension = {
       return true;
     },
 
+    initCustomerGroupInfo(cust_dbid){
+      let cust_in_id=this.getEditOption("cust_in_id");
+      this.http.get("api/Viat_app_cust_group/getCustGroupIDAndANmeByCustDBID?cust_dbid="+cust_dbid,{} , "loading").then(reslut => {
+        debugger
+        if(reslut!==null){
+          cust_in_id.hidden=false
+          this.editFormFields['cust_in_id']=reslut.group_id+"   "+reslut.group_name
+          this.editFormFields['in_pricegroup_dbid']=reslut.pricegroup_dbid
+
+          if (this.currentAction==this.const.EDIT){
+            cust_in_id.inputStyle="border-color: red;"
+          }else{
+            cust_in_id.inputStyle=""
+          }
+        }else {
+          this.editFormFields['in_pricegroup_dbid']=""
+          cust_in_id.hidden=true
+        }
+      })
+    },
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
       //(1)判断是编辑还是新建操作： this.currentAction=='Add';
@@ -645,6 +711,9 @@ let extension = {
       //获取当前数据的产品和客户dbid
       this.prod_dbid=row.prod_dbid
       this.cust_dbid=row.cust_dbid
+      this.getEditOption("cust_dbid").hidden=true
+      this.getEditOption("in_pricegroup_dbid").hidden=true
+
 
       let form_cust_id=this.getEditOption("cust_id");
       form_cust_id.extra={
@@ -652,7 +721,7 @@ let extension = {
       }
 
       let form_group_id=this.getEditOption("group_id");
-      form_group_id.disabled=true
+      // form_group_id.disabled=true
       let form_group_dbid=this.getEditOption("pricegroup_dbid");
       form_group_dbid.hidden=true
       form_group_id.extra={
@@ -662,34 +731,27 @@ let extension = {
       let cust_in_id=this.getEditOption("cust_in_id");
       cust_in_id.hidden=true
       if(row.cust_dbid){
-        this.http.get("api/Viat_app_cust_group/getCustGroupIDAndANmeByCustDBID?cust_dbid="+row.cust_dbid,{} , "loading").then(reslut => {
-          if(reslut!==null){
-
-              cust_in_id.hidden=false
-              this.editFormFields['cust_in_id']=reslut.group_id+" "+reslut.group_name
-              if (this.currentAction==this.const.EDIT){
-                cust_in_id.inputStyle="color: orange;"
-              }else{
-                cust_in_id.inputStyle=""
-              }
-          }else {
-            cust_in_id.hidden=true
-          }
-        })
+        this.initCustomerGroupInfo(row.cust_dbid)
       }
 
 
       if (this.currentAction==this.const.EDIT){
         this.isFirstValid=true//
         this.joinGroupList=[]
-
-        this.getEditOption("add_group").disabled=false
+        //只有组申请时才可以更改客户
+        if(row.pricegroup_dbid){
+          form_cust_id.extra={
+            render:this.getSearchRender("formCustomer")
+          }
+        }
+        //this.editFormFields['add_group']='N'
+        /*this.getEditOption("add_group").disabled=false
         //this.editFormFields['add_group']='N'
         if(row.pricegroup_dbid){
           this.getEditOption("add_group").hidden=true
         }else{
           this.getEditOption("add_group").hidden=false
-        }
+        }*/
       }
       this.$nextTick(
           ()=>{
