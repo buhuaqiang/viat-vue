@@ -29,18 +29,20 @@
                 url: "/Viat_wk_contract_stretagy/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"cont_stretagy_id":"","cont_stretagy_name":"","amount":"","status":""});
-            const editFormOptions = ref([[{"title":"Stretagy ID","required":true,"field":"cont_stretagy_id"},
-                               {"title":"Stretagy Name","required":true,"field":"cont_stretagy_name"}],
-                              [{"title":"rang","required":true,"field":"amount","type":"decimal"},
-                               {"dataKey":"wf_status","data":[],"title":"Status","required":true,"field":"status","type":"select"}]]);
+            const editFormFields = ref({"cont_stretagy_type":"","cont_stretagy_id":"","cont_stretagy_name":"","amount":"","status":""});
+            const editFormOptions = ref([[{"dataKey":"entity","data":[],"title":"Stretagy Type","field":"cont_stretagy_type","required":true,"type":"select"},
+                               {"title":"Stretagy ID","field":"cont_stretagy_id","required":true,},
+                               {"title":"Stretagy Name","field":"cont_stretagy_name","required":true,}],
+                              [{"title":"Rang","required":true,"field":"amount","type":"decimal"},
+                               {"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select","required":true,}]]);
             const searchFormFields = ref({"cont_stretagy_id":"","cont_stretagy_name":""});
             const searchFormOptions = ref([[{"title":"Stretagy ID","field":"cont_stretagy_id"},{"title":"Stretagy Name","field":"cont_stretagy_name"}]]);
             const columns = ref([{field:'contstret_dbid',title:'PKID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
-                       {field:'cont_stretagy_id',title:'Stretagy ID',link:true,type:'string',width:110,require:true,align:'left',sort:true},
-                       {field:'cont_stretagy_name',title:'Stretagy Name',type:'string',width:120,require:true,align:'left'},
-                       {field:'amount',title:'rang',type:'decimal',width:110,require:true,align:'left'},
-                       {field:'status',title:'Status',type:'string',bind:{ key:'wf_status',data:[]},width:110,require:true,align:'left'},
+                       {field:'cont_stretagy_type',title:'Stretagy Type',link:true,type:'string',bind:{ key:'entity',data:[]},width:110,align:'left',sort:true},
+                       {field:'cont_stretagy_id',title:'Stretagy ID',type:'string',width:110,align:'left'},
+                       {field:'cont_stretagy_name',title:'Stretagy Name',type:'string',width:120,align:'left'},
+                       {field:'amount',title:'Rang',type:'decimal',width:110,require:true,align:'left'},
+                       {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'},
                        {field:'created_user',title:'建立用戶',type:'int',width:110,hidden:true,align:'left'},
                        {field:'created_username',title:'列created_username',type:'string',width:110,hidden:true,align:'left'},
                        {field:'created_client',title:'建立者的委託人',type:'int',width:110,hidden:true,align:'left'},

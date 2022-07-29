@@ -96,6 +96,7 @@ export default {
         {field:'net_price',title:'Net Price',type:'decimal',width:110,align:'right'},
         {field:'min_qty',title:'Min Qty',type:'int',width:110,align:'left'},
         {field:'prod_type',title:'Product Type',type:'string',width:110,align:'left'},
+        {field:'category',title:'Category',type:'string',width:110,align:'left'},
         {field:'contstretail_dbid',title:'列名contstretail_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
         {field:'modified_date',title:'列名modified_date',type:'datetime',width:110,hidden:true,align:'left',sort:true},
         {field:'modified_clientusername',title:'列名modified_clientusername',type:'string',width:110,hidden:true,align:'left'},

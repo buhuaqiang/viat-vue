@@ -74,14 +74,13 @@
           { field: "contstretail_dbid", title: "主键ID", type: "guid", width: 80, hidden: true },
           { field: "contstret_dbid", title: "外鍵ID", type: "guid", width: 80, hidden: true },
           { field: "prod_dbid", title: "外鍵ID", type: "guid", width: 80, hidden: true },
-
           {field:'prod_id',title:'Prod ID',type:'string',width:90,align:'left',sort:true},
           {field:'prod_ename',title:'Prod Name',type:'string',width:150,align:'left',sort:true},
           {field:'nhi_price',title:'NHI',type:'decimal',width:110,align:'left'},
           {field:'invoice_price',title:'Invoice Price',type:'decimal',width:110,edit: { type: "decimal" },align:'left'},
           {field:'net_price',title:'Net Price',type:'decimal',width:110,edit: { type: "decimal" },align:'left'},
           {field:'min_qty',title:'Mit Qty',type:'int',width:110,edit: { type: "number" },align:'left'},
-          {field:'prod_type',title:'Type',type:'string',width:110,align:'left'}
+          {field:'category',title:'Type',type:'string',width:110,align:'left'}
 
         ]
       };
@@ -155,7 +154,7 @@
               prod_id:row.prod_id,
               prod_dbid:row.prod_dbid,
               prod_ename:row.prod_ename,
-              prod_type:row.prod_type,
+              category:row.category,
               nhi_price:row.nhi_price,
               invoice_price:row.invoice_price,
               net_price:row.net_price,
