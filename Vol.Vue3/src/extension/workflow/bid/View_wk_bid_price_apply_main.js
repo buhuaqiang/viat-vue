@@ -684,9 +684,13 @@ let extension = {
         delKeys: null
       };
       if (this.currentAction==this.const.ADD){
-        this.addBefore(formData);
+        if(!this.addBefore(formData)){
+          return false
+        }
       }else{
-        this.updateBefore(formData);
+        if(!this.updateBefore(formData)){
+          return false;
+        }
       }
 
       let url = "api/View_wk_bid_price_apply_main/addSubmit";
