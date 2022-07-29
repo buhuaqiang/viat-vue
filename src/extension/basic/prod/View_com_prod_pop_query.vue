@@ -191,7 +191,7 @@
                     params.wheres.push({ name: "entity", value: this.entity});
                 }
                 if (this.prod_id) {
-                    params.wheres.push({ name: "prod_id", value: this.prod_id });
+                    params.wheres.push({ name: "prod_id", value: this.prod_id , displayType:'like'});
                 }
                 if (this.prod_ename) {
                     params.wheres.push({ name: "prod_ename", value: this.prod_ename , displayType:'like'});
