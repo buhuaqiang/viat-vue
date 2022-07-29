@@ -528,6 +528,10 @@ let extension = {
         return  false;
       }
 
+      if(!this.checkOrlderList(orderTableRowData)){
+        return
+      }
+
       let detailData = [
         {
           key: "priceTableRowData",
@@ -543,6 +547,21 @@ let extension = {
       //新建保存前formData为对象，包括明细表，可以给给表单设置值，自己输出看formData的值
       return true;
     },
+    checkOrlderList(orderTableRowData){
+      if(orderTableRowData.length>0){
+        let messageInfo=""
+        orderTableRowData.forEach(x => {
+          if(x.qty=="" ||x.qty<1){
+            messageInfo="Prodcut Id:["+x.prod_id +"] Min Qty mast>0";
+            return false;
+          }
+        })
+        if(messageInfo){
+          this.$Message.error(messageInfo);
+          return false;
+        }
+      }
+    },
     updateBefore(formData) {
       let priceTableRowData="";
       if(this.editFormFields.apply_type=='03'){
@@ -557,7 +576,9 @@ let extension = {
         this.$Message.error("Please Input Bid Order List ")
         return  false;
       }
-
+      if(!this.checkOrlderList(orderTableRowData)){
+        return
+      }
       //删除数据回传
       let delPriceTableRowData = this.$refs.modelBody.delPriceTableRowData;
 
