@@ -55,7 +55,7 @@
                                {"dataKey":"Status3","data":[],"title":"Is Controlled","field":"is_controll","type":"select"}],
                               [{"dataKey":"PublicPrivate","data":[],"title":"Public/Private","field":"is_private","type":"select"},
                                {"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}],
-                              [{"dataKey":"Status3","data":[],"title":"Is Hospital Owned Drug Store","required":true,"field":"own_by_hospital","type":"select"},
+                              [{"dataKey":"Status3","data":[],"title":"Is Hospital Owned Drug Store","field":"own_by_hospital","type":"select"},
                                {"title":"Medical Group","field":"med_group_cust_id","type":"text"}],
                               [{"title":"Own Hospital","field":"own_hospital_cust_id","type":"text"},
                                {"title":"Price Group","field":"delv_group_cust_id","type":"text"}],
@@ -69,6 +69,7 @@
             const searchFormOptions = ref([[{"dataKey":"import_source","data":[],"title":"Import Source","field":"source","type":"select"},{"title":"Customer","field":"cust_name","type":"like"},{"dataKey":"Process_Stats","data":[],"title":"Process Status","field":"state","type":"select"}]]);
             const columns = ref([{field:'territory_id',title:'Territory ID',type:'string',width:110,require:true,align:'left',sort:true},
                        {field:'emp_cname',title:'Name',type:'string',width:110,align:'left'},
+                       {field:'cust_id',title:'Customer Code',type:'string',width:120,align:'left'},
                        {field:'cust_name',title:'Customer',type:'string',width:120,require:true,align:'left'},
                        {field:'created_date',title:'Transfer Date',type:'datetime',width:110,align:'left',sort:true},
                        {field:'state',title:'Process Status',type:'string',bind:{ key:'Process_Stats',data:[]},width:110,align:'left'},

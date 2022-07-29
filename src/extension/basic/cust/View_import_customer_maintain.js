@@ -597,7 +597,7 @@ debugger
 
       if (this.currentAction ==this.const.EDIT){
         debugger
-
+        this.editFormFields.own_by_hospital='N';
         let comZipId = this.getOption("cust_zip_id");
         let invoiceZipId = this.getOption("invoice_zip_id");
         let cityName1 = this.editFormFields.cust_zip_id_city_name;
