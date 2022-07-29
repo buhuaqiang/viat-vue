@@ -461,11 +461,11 @@ export default {
       }
       if(this.formModel.min_qty){
         if(Number(this.formModel.min_qty)<=0){
-          this.$message.error("Min Qty can't less than zero.");
+          this.$message.error("Min Qty can't less than one.");
           return false;
         }
       }else {
-        this.$message.error("Min Qty can't be empty.");
+        this.$message.error("Min Qty can't less than one.");
         return false;
       }
 
