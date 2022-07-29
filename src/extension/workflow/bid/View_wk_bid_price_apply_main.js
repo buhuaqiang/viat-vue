@@ -806,7 +806,6 @@ let extension = {
     },
 
     modelOpenAfter(row) {
-      debugger;
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
       //(1)判断是编辑还是新建操作： this.currentAction=='Add';
       //(2)给弹出框设置默认值
