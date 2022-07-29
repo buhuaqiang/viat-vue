@@ -146,7 +146,7 @@ export default {
                     message: `${x.message}`,
                     dangerouslyUseHTMLString: true,
                     showCancelButton: true,
-                    confirmButtonText: 'confirm',
+                    confirmButtonText: 'OK',
                     cancelButtonText: 'Cancel'
                   }).then(() => {
                     this.http.post(x.url, x.data).then((d) =>
