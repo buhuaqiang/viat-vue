@@ -410,6 +410,50 @@ let extension = {
         ]);
       };
     },
+    //Pick 殼
+    getFormRenderText(sv){
+      return (h, { row, column, index }) => {
+        return h("div", { class:"el-input el-input--medium el-input--suffix" }, [
+          h(
+              "input",
+              {
+                class:"el-input__inner",
+                type:"text",
+                //id:searchType,
+                value:sv,
+                style:{width:"70%","background-color":"#f5f7fb"},
+                readonly:"true"
+              }
+          ),
+          h(
+              "a",
+              {
+                props: {},
+
+                style: { "color":"grey","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px","pointer-events": "none"},
+                onClick: (e) => {
+
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "Pick"
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"grey","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px","pointer-events": "none"},
+                onClick: (e) => {
+
+                }
+              },
+              [h("i",{class:"el-icon-zoom-out"})],
+              "Clean"
+          ),
+
+        ]);
+      };
+    },
 
     //渲染 殼 View Copy
     getCopyAddRenderText(){
@@ -661,6 +705,8 @@ let extension = {
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
       var apply_type  = this.editFormFields.apply_type;
+      let cust_id = this.getOption('cust_id');
+      let own_hospital = this.getOption('own_hospital_cust_id')
       let custName = this.getOption("cust_name");
       let invoiceName = this.getOption('invoice_name');
       //编辑表单，动态设置下拉框选项禁用状态或者隐藏显示
@@ -711,6 +757,12 @@ debugger
       }
 
       if (this.currentAction == this.const.VIEW){
+        cust_id.extra = {
+          render: this.getFormRenderText(row.cust_id)
+        }
+        own_hospital.extra = {
+          render: this.getFormRenderText(row.own_hospital_cust_id)
+        }
         invoiceName.extra = {
           render: this.getCopyAddRenderText()
         }
