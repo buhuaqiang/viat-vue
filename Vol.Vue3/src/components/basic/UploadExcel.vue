@@ -59,8 +59,12 @@
 </template>
 <script>
 //目前只支持单个Excel上传，其他功能开发中...
+import {ElMessageBox} from "element-plus";
+
+
 export default {
   components: {},
+
   props: {
     url: {
       type: String,
@@ -137,11 +141,13 @@ export default {
               (x) => {
                 if(x.code=="-2")
                 {
-                  this.$confirm(x.message, "Confirm", {
-                    confirmButtonText: "OK",
-                    cancelButtonText: "Cancel",
-                    type: "warning",
-                    center: true,
+                  ElMessageBox({
+                    title: 'confirm',
+                    message: `${x.message}`,
+                    dangerouslyUseHTMLString: true,
+                    showCancelButton: true,
+                    confirmButtonText: '确认',
+                    cancelButtonText: '取消'
                   }).then(() => {
                     this.http.post(x.url, x.data).then((d) =>
                     {
