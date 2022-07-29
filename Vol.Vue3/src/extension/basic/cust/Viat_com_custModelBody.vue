@@ -2,7 +2,7 @@
   <VolBox
     v-model="model"
     :lazy="true"
-    title="Pick Customer Data"
+    :title="popTitle"
     :height="600"
     :width="1252"
     :padding="15"
@@ -19,9 +19,9 @@
       />
       <el-input
               clearable
-              placeholder="Input Zip Name"
+              placeholder="Input City Name"
               style="width: 200px; padding-left: 5px"
-              v-model="searchForm.zip_name"
+              v-model="searchForm.city_name"
       />
       <el-input
               clearable
@@ -109,12 +109,14 @@ export default {
       model: false,
       single: true,
       returnType:"",
+      popTitle:"Pick Customer Data",
       flag:"",
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
       searchForm:{
         cust_name: "", //查询条件字段
         cust_id:"",
         zip_name: "",
+        city_name:"",
         channelValue:"",
         dohValue:"",
         territory_id:"",
@@ -227,6 +229,9 @@ export default {
       this.zip_name = "";
       this.dohValue = "";
 
+      this.searchForm={}
+
+      this.popTitle=this.popTitle+(single?"(Single)":"(Multiple)")
       this.returnType = returnType
       //打开弹出框时，加载table数据
       this.$nextTick(() => {
@@ -295,19 +300,22 @@ export default {
         });
       }
       if (this.searchForm.zip_name) {
-        params.wheres.push({ name: "cust_zip_name", value: this.searchForm.zip_name,displayType:'like' });
+        params.wheres.push({ name: "cust_zip_name", value: this.searchForm.zip_name.trim(),displayType:'like' });
+      }
+      if (this.searchForm.city_name) {
+        params.wheres.push({ name: "city_name", value: this.searchForm.city_name.trim(),displayType:'like' });
       }
       if (this.searchForm.territory_id) {
-        params.wheres.push({ name: "territory_id", value: this.searchForm.territory_id,displayType:'like' });
+        params.wheres.push({ name: "territory_id", value: this.searchForm.territory_id.trim(),displayType:'like' });
       }
       if (this.searchForm.cust_address) {
-        params.wheres.push({ name: "cust_address", value: this.searchForm.cust_address,displayType:'like' });
+        params.wheres.push({ name: "cust_address", value: this.searchForm.cust_address.trim(),displayType:'like' });
       }
       params.wheres.push({ name: "status", value: 'Y' });
       if(this.channelValue){
         params.wheres.push({ name: "channelValue", value: this.searchForm.channelValue });
       }
-      if(this.dohValue){
+      if(this.searchForm.dohValue){
         params.wheres.push({ name: "doh_type", value: this.searchForm.dohValue });
       }
       return true;
