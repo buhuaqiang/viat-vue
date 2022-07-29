@@ -82,7 +82,7 @@
                        {field:'modified_date',title:'modified_date',type:'datetime',width:110,align:'left',sort:true},
                        {field:'globalmpg_dbid2',title:'globalmpg_dbid2',type:'guid',width:110,align:'left'},
                        {field:'lmpg_mpg_id',title:'lmpg_mpg_id',type:'string',width:110,align:'left'},
-                        {field:'category',title:'category',type:'string',width:110,align:'left'}]);
+                        {field:'category',title:'Category',type:'string',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

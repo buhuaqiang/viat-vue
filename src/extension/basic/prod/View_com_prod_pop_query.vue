@@ -123,7 +123,7 @@
                     {field:'nhi_price',title:'NHI Price',type:'decimal',width:90,align:'left'},
                     {field:'pack_size',title:'Pack Size',type:'decimal',width:90,align:'left'},
                     {field:'prod_type',title:'Prod Type',type:'string',width:90,hidden:true,align:'left'},
-                    {field:'category',title:'category',type:'string',width:90,hidden:true,align:'left'},
+                    {field:'category',title:'Category',type:'string',width:90,hidden:true,align:'left'},
                     {field:'globalmpg_dbid',title:'globalmpg_dbid',type:'guid',width:110,hidden:true,align:'left'},
                     {field:'created_date',title:'created_date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
                     {field:'prod_dbid',title:'prod_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'}],
