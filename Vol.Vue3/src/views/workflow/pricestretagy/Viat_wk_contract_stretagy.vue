@@ -30,7 +30,7 @@
                 sortName: "created_date"
             });
             const editFormFields = ref({"cont_stretagy_type":"","cont_stretagy_id":"","cont_stretagy_name":"","amount":"","status":""});
-            const editFormOptions = ref([[{"dataKey":"entity","data":[],"title":"Stretagy Type","field":"cont_stretagy_type","required":true,"type":"select"},
+            const editFormOptions = ref([[{"dataKey":"Strategy_type","data":[],"title":"Stretagy Type","field":"cont_stretagy_type","required":true,"type":"select"},
                                {"title":"Stretagy ID","field":"cont_stretagy_id","required":true,},
                                {"title":"Stretagy Name","field":"cont_stretagy_name","required":true,}],
                               [{"title":"Rang","required":true,"field":"amount","type":"decimal"},
@@ -38,7 +38,7 @@
             const searchFormFields = ref({"cont_stretagy_id":"","cont_stretagy_name":""});
             const searchFormOptions = ref([[{"title":"Stretagy ID","field":"cont_stretagy_id"},{"title":"Stretagy Name","field":"cont_stretagy_name"}]]);
             const columns = ref([{field:'contstret_dbid',title:'PKID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
-                       {field:'cont_stretagy_type',title:'Stretagy Type',link:true,type:'string',bind:{ key:'entity',data:[]},width:110,align:'left',sort:true},
+                       {field:'cont_stretagy_type',title:'Stretagy Type',link:true,type:'string',bind:{ key:'Strategy_type',data:[]},width:110,align:'left',sort:true},
                        {field:'cont_stretagy_id',title:'Stretagy ID',type:'string',width:110,align:'left'},
                        {field:'cont_stretagy_name',title:'Stretagy Name',type:'string',width:120,align:'left'},
                        {field:'amount',title:'Rang',type:'decimal',width:110,require:true,align:'left'},

@@ -83,6 +83,13 @@ export default {
     },
 
     loadTableBefore(params) {
+      let path =this.$route.path;
+      if(path=="/View_wk_bid_price_apply_main"){//order申請時查詢個人訂單信息
+        let userInfo = this.$store.getters.getUserInfo();
+        let userId = userInfo.userId;
+        params.wheres.push({ name: "created_user", value: userId});
+      }
+
       //查询前，设置查询条件
       params.wheres.push({ name: "status", value: 'Y' });
       if(this.prod_id){
@@ -91,7 +98,7 @@ export default {
       if(this.cust_id){
         params.wheres.push({ name: "cust_id", value: this.cust_id });
       }
-      return true;
+      return false;
     },
   },
 };
