@@ -601,6 +601,14 @@ export default {
         //先要通過接口校驗
         this.http.post("api/View_cust_price/checkCustPriceData", { mainData: this.formModel }, true)
                 .then((x) => {
+                  //如果结束日期在当前日期之前,则把状态置为N
+                  let now=this.parseTime(new Date(),'{y}-{m}-{d}')
+                  let date1_unix=Date.parse(now)
+                  let date2_unix=Date.parse(this.formModel.end_date)
+                  let st='Y'
+                  if(date1_unix>date2_unix){
+                    st='N'
+                  }
                   let addData={
                     cust_id:this.formModel.cust_id,
                     cust_name:this.formModel.cust_name,
@@ -612,7 +620,7 @@ export default {
                     invoice_price:this.formModel.invoice_price,
                     net_price:this.formModel.net_price,
                     gross_price:this.formModel.gross_price,
-                    status:'Y',
+                    status:st,
                     min_qty:this.formModel.min_qty,
                     start_date:this.formModel.start_date,
                     end_date:this.formModel.end_date,
