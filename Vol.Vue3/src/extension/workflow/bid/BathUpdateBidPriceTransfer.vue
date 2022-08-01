@@ -5,7 +5,7 @@
       <div class=" view-header">
         <div class="desc-text" ><i class="el-icon-s-grid"></i>
           <span class="el-submenu__title">Bid Price Transfer</span>
-            <span class="el-tag el-tag--success" v-if="stretagyShow">Stretagy Name:{{this.strategyName}}</span>
+            <span class="el-tag el-tag--success" v-if="stretagyShow">Strategy Name:{{this.strategyName}}</span>
         </div>
       </div>
         <!-- vol-table配置的这些属性见VolTable组件api文件 -->
@@ -57,15 +57,18 @@
   </el-form>
 </div>
   <show-price ref="ShowPrice"></show-price>
+    <view_com_prod_pop_query ref="View_com_prod_pop_query" @onSelect="changeProduct"></view_com_prod_pop_query>
 </template>
 
 <script>
 import VolBox from "@/components/basic/VolBox.vue";
 import VolTable from "@/components/basic/VolTable.vue";
 import ShowPrice from "./showPrice";
+import View_com_prod_pop_query from "../../basic/prod/View_com_prod_pop_query.vue";
 
 export default {
   components: {
+      View_com_prod_pop_query,
     ShowPrice,
     VolBox: VolBox,
     VolTable: VolTable,
@@ -76,6 +79,7 @@ export default {
   data() {
     return {
       model: false,
+        currentOrderRow:{},
       bid_no:"",
         stretagyShow:false,
         strategyDBID:"",
@@ -114,6 +118,7 @@ export default {
         {field:'state',title:'Status',type:'string',bind:{ key:'transfer_status',data:[]},width:110,align:'left',edit: { type: "select",keep:true }},
         {field:'prod_id',title:'Product Id',type:'string',width:110,require:true,align:'left',readonly:true},
         {field:'prod_ename',title:'Product Name',type:'string',width:110,align:'left',readonly:true},
+          {field:'pick',title:'',type:'string',width:50,align:'center',readonly:true},
         {field:'qty',title:'Qty', edit: { type: "number" ,keep:true},width:110,require:true,align:'left'},
         {field:'oper',title:''},
       ],
@@ -125,7 +130,37 @@ export default {
 
   },
   methods: {
-
+    initProductRender(){
+        let _column = this.orderTableColumns.find(x => { return x.field == "pick" });
+        _column.render = (h, { row, column, index }) => {
+            return h("div", { style: {} },
+                [
+                    h("i", {
+                        class: ["el-icon-zoom-in"],
+                        style: {
+                            cursor: "pointer",
+                            "margin-right": "8px",
+                            color: "#409eff",
+                        },
+                        onClick: (e) => {
+                            this.currentOrderRow=row
+                            this.$refs.View_com_prod_pop_query.openModel(true,"prod","onSelect")
+                        },
+                    }),
+                ], row.Remark)
+        };
+    },
+      changeProduct(fieldName,rows){
+        debugger
+          if(rows.length!=1){
+              return this.$message.error("Please select a record first.");
+          }
+          //给当前行设置选中的产品值
+          this.currentOrderRow.prod_id = rows[0].prod_id;
+          this.currentOrderRow.prod_ename = rows[0].prod_ename;
+          this.currentOrderRow.prod_dbid = rows[0].prod_dbid;
+          this.model = false;
+      },
     openModel(param_bid_no) {
       this.ck=false
       let $parent;
@@ -146,6 +181,8 @@ export default {
         this.$refs.orderTable.load();
       }
 
+      //渲染订单产品弹框
+        this.initProductRender()
       //onInited方法设置从表编辑时实时计算值
       this.orderTableColumns.forEach(x => {
 
@@ -170,13 +207,13 @@ export default {
                     this.stretagyShow=true
                     this.strategyName=reslut.cont_stretagy_name
                     this.strategyDBID=reslut.contstret_dbid
-                    $parent.editFormFields['approved_date']=reslut.approved_date
+
                 }else{
                     this.stretagyShow=false
                     this.strategyName=""
                     this.strategyDBID=""
                 }
-
+                $parent.editFormFields['approved_date']=reslut.approved_date
                 this.remarks=reslut.remarks
 
             } else {
