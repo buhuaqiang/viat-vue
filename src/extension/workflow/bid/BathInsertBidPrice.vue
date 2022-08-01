@@ -132,7 +132,7 @@
           :index="true"
           @rowClick = "orderRowClick"
   ></vol-table>
-
+    <show-price ref="ShowPrice"></show-price>
     <price-recode ref="priceRecode"></price-recode>
     <view_com_prod_pop_query ref="View_com_prod_pop_query" @onSelect="onSelectPop"></view_com_prod_pop_query>
     <Viat_wk_cont_stretagy_detail_pickup ref="Viat_wk_cont_stretagy_detail_pickup" @onSelect="onSelectPriceStretagyPop"></Viat_wk_cont_stretagy_detail_pickup>
@@ -144,6 +144,8 @@ import VolTable from "@/components/basic/VolTable.vue";
 import View_com_prod_pop_query from "../../basic/prod/View_com_prod_pop_query.vue";
 import Viat_wk_cont_stretagy_detail_pickup from "../pricestretagy/Viat_wk_cont_stretagy_detail_pickup";
 import priceRecode from "./showPriceRecode";
+import ShowPrice from "./showPrice";
+
 import {defineAsyncComponent} from "vue";
 import {ElMessageBox} from "element-plus";
 import bidPriceDetailImport from "./BidPriceDetailImport";
@@ -155,6 +157,7 @@ export default {
     VolBox: VolBox,
     VolTable: VolTable,
     priceRecode: priceRecode,
+    ShowPrice,
   },
   data() {
     return {
@@ -165,6 +168,7 @@ export default {
       cont_stretagy_id:"",
       cont_stretagy_name:"",
       cust_dbid:"",
+      cust_id:"",
       edit_pricegroup_dbid:"",
       formModel:{
         bid_no:'',
@@ -224,7 +228,7 @@ export default {
         {field:'prod_id',title:'Product Id',type:'string',width:110,require:true,align:'left',readonly:true},
         {field:'prod_ename',title:'Product Name',type:'string',width:110,align:'left',readonly:true},
         {field:'qty',title:'Qty', edit: { type: "number" ,keep:true},width:110,require:true,align:'left'},
-
+        {field:'oper',title:''},
       ],
 
       pagination: {}, //分页配置，见voltable组件api
@@ -320,8 +324,29 @@ export default {
 
 
       })
+      this.orderTableColumns.forEach(x => {
+        if (x.field == 'oper') {
+          x.formatter = (row) => {//查询本人订单信息
+            return "<a style='cursor:pointer;color: #409eff'>Price</a>"
+          }
+          x.click = (row, column, event) => {
+            this.openPrice(row.prod_id);
+          };
+        }
+
+      })
 
     },
+    openPrice(prod_id){
+      let $parent;
+      //获取生成页面viewgrid的对象
+      this.$emit("parentCall", ($this) => {
+        $parent = $this;
+      });
+      this.cust_id = $parent.editFormFields.cust_id;
+      this.$refs.ShowPrice.openModel(true,this.cust_id,prod_id);
+    },
+
     openRecord(prod_dbid){
       this.$refs.priceRecode.openModel(true,this.cust_dbid,this.edit_pricegroup_dbid,prod_dbid);
     },
