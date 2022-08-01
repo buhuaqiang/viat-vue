@@ -734,11 +734,23 @@ let extension = {
       //新建保存前formData为对象，包括明细表，可以给给表单设置值，自己输出看formData的值
       return true;
     },
+    addAfter(x){
+      let cust_name=this.editFormFields.cust_name;
+      this.searchFormFields.cust_name=cust_name;
+      return true
+
+    },
     updateBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
 
       return true;
     },
+/*    updateAfter(x){
+      let cust_name=this.editFormFields.cust_name;
+      this.searchFormFields.cust_name=cust_name;
+      return true
+
+    },*/
     rowClick({ row, column, event }) {
       //查询界面点击行事件
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
