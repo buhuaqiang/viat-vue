@@ -640,6 +640,10 @@ let extension = {
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
+      let userInfo = this.$store.getters.getUserInfo();
+      let userId = userInfo.userId;
+      param.wheres.push({ name: "created_user", value: userId});
+
       let bid_no = this.searchFormFields['bid_no'];
       let cust_name = this.searchFormFields['cust_name'];
       if(bid_no!=""){//设置模糊查询
