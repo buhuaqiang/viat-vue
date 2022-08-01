@@ -28,7 +28,7 @@
         },
         data() {
             return {
-                url: "api/View_wk_bid_price_apply_main/import", //导入的路径
+                url: "api/View_wk_bid_price_apply_main/PriceTansferImport", //导入的路径
                 template: { //下载模板的配置
                     url: "api/View_wk_bid_price_apply_main/DownLoadTemplate",//下载模板的路径
                     fileName: "priceImportTemplate", //模板的文件名

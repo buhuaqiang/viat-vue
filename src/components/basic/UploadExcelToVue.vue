@@ -134,7 +134,9 @@ export default {
         return this.$Message.error("Please select a file");
       }
       var formData = new FormData();
-      formData.append("fileInput", this.file);
+      formData.append("files", this.file);
+      formData.append("cust_dbid","0");
+      formData.append("group_dbid","0");
       if (!this.importExcelBefore(formData)) {
         return;
       }
@@ -142,13 +144,10 @@ export default {
       this.http.post(_url, formData).then(
               (x) => {
                 debugger;
-                x.code='-2'
-                x.data=[{}]
                 if(x.code=='-2') {
                   this.loadingStatus = false;
-                  x.message="XXX  ID不存在";
                   this.resultClass = x.message ? "v-r-error":"v-r-success";
-                  this.message=" XXX  ID不存在"
+                  this.message= x.message
                 }
                 else {
                   this.loadingStatus = false;
