@@ -379,7 +379,12 @@ export default {
         let url = "api/View_wk_bid_price_apply_main/ProductPrice?pricegroup_dbid="+pricegroup_dbid+"&prod_dbid="+prod_dbid;
         this.http.get(url, {}, 'Get data....').then((x) => {
           if (!x) return;
-          this.formModel.net_price = x.net_price;
+          if(x.net_price==null){
+            this.formModel.net_price = "0";
+          }else{
+            this.formModel.net_price = x.net_price;
+          }
+
         });
       }
     },
