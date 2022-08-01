@@ -501,7 +501,6 @@ let extension = {
       //返回false，则不会执行查询
       let userInfo = this.$store.getters.getUserInfo();
       let userId = userInfo.userId;
-      debugger;
       param.wheres.push({ name: "created_user", value: userId});
 
       return true;
@@ -527,7 +526,6 @@ let extension = {
         this.$Message.error("Please Input Bid Order List ")
         return  false;
       }
-      debugger;
       if(!this.checkOrlderList(orderTableRowData)){
         return false
       }
@@ -825,9 +823,9 @@ let extension = {
       }
       const time_str=format.replace(/{([ymdhisa])+}/g,(result,key)=>{
         const value=formatObj[key]
-       /* if(key==='a'){
+        if(key==='a'){
           return['日','一','二','三','四','五','六'][value]
-        }*/
+        }
         return  value.toString().padStart(2,'0')
       })
       return time_str
@@ -886,7 +884,6 @@ let extension = {
         }
       })
       if (this.currentAction =='Add'){
-        debugger
         this.editFormFields.apply_type='03'
         this.editFormFields.isgroup = "0";
         this.getFormOption("cust_id").hidden=false;
