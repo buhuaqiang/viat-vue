@@ -5,7 +5,7 @@
       <div class=" view-header">
         <div class="desc-text" ><i class="el-icon-s-grid"></i>
           <span class="el-submenu__title">Bid Price Transfer</span>
-            <span class="el-tag el-tag--success" v-if="stretagyShow">Strategy Name:{{this.strategyName}}</span>
+            <span class="el-tag el-tag--success" v-show="stretagyShow" >Strategy Name:{{this.strategyName}}</span>
         </div>
       </div>
         <!-- vol-table配置的这些属性见VolTable组件api文件 -->
@@ -83,7 +83,7 @@ export default {
       bid_no:"",
         stretagyShow:false,
         strategyDBID:"",
-        strategyName:'test',//價格策略名稱
+        strategyName:"",//價格策略名稱
        remarks:"",//viat_wk_master.Remark
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
       formModel:{
@@ -127,7 +127,7 @@ export default {
     };
   },
   created() {
-
+        console.log(1,this.strategyName);
   },
   methods: {
     initProductRender(){
@@ -162,6 +162,7 @@ export default {
           this.model = false;
       },
     openModel(param_bid_no) {
+        console.log(2,this.strategyName);
       this.ck=false
       let $parent;
         this.formModel.price_note=""
@@ -215,12 +216,13 @@ export default {
                 }
                 $parent.editFormFields['approved_date']=reslut.approved_date
                 this.remarks=reslut.remarks
-
+                console.log(3,this.strategyName);
             } else {
                 this.stretagyShow=false
                 this.strategyName=""
                 this.remarks=""
                 this.strategyDBID=""
+                console.log(4,this.strategyName);
             }
         })
     },
