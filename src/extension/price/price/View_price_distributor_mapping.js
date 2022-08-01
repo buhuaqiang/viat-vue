@@ -39,7 +39,7 @@ let extension = {
       this.labelWidth = 180;
       //示例：设置修改新建、编辑弹出框字段标签的长度
       this.boxOptions.labelWidth = 180;
-      this.boxOptions.width=1500;
+      this.boxOptions.width = 1500;
       this.setFiexdSearchForm(true);
       this.load = false;
 
@@ -61,6 +61,20 @@ let extension = {
       e_price_channel.onChange = () => {
         this.editFormFields.pricegroups = [];
         this.editFormFields.custs = [];
+        if (this.editFormFields.prods.length === 1) {
+          let params = {
+            prod_id: this.editFormFields.prods[0],
+            price_channel: this.editFormFields.price_channel,
+            group_id: "",
+            cust_id: ""
+          }
+          let url = "api/View_price_distributor_mapping/PriceMapingData?prod_id=" + params.prod_id + "&price_channel=" + params.price_channel
+          this.http.get(url, {}, "loading").then(result => {
+            if (result != null && result[0]?.i_dist_id && result[0].i_dist_id !== null && result[0].i_dist_id !== "") {
+              this.editFormFields.i_dist_id = result[0].i_dist_id;
+            }
+          })
+        }
       }
 
       e_pricegroup_dbid.hidden = true
@@ -88,7 +102,7 @@ let extension = {
         text: "Pick",
         style: "color:#409eff;font-size: 12px;cursor: pointer;",
         click: item => {
-          this.$refs.gridBody.openModel(false,"searchProduct");
+          this.$refs.gridBody.openModel(false, "searchProduct");
         }
       }
 
@@ -354,6 +368,20 @@ let extension = {
         this.editFormFields.custs.data = selectrows;
         this.editFormFields.pricegroups = [];
         this.editFormFields.price_channel = "";
+        if (this.editFormFields.custs.length === 1) {
+          let params = {
+            prod_id: this.editFormFields.prods[0],
+            price_channel: "",
+            group_id: "",
+            cust_id: this.editFormFields.custs[0]
+          }
+          let url = "api/View_price_distributor_mapping/PriceMapingData?prod_id=" + params.prod_id + "&cust_id=" + params.cust_id;
+          this.http.get(url, {}, "loading").then(result => {
+            if (result != null && result[0]?.i_dist_id && result[0].i_dist_id !== null && result[0].i_dist_id !== "") {
+              this.editFormFields.i_dist_id = result[0].i_dist_id;
+            }
+          })
+        }
       } else {
         this.searchFormFields["cust_dbid"] = rows[0].cust_dbid;
         this.searchFormFields["cust_id"] = rows[0].cust_id;
@@ -371,13 +399,13 @@ let extension = {
         })
         this.editFormFields.prods.data = selectrows;
         this.model = false;
-      } else if(flag === "searchProduct") {
+      } else if (flag === "searchProduct") {
         rows.forEach(row => {
           selectrows.push({"key": row.prod_dbid, "value": row.prod_ename});
           this.searchFormFields.prods.push(row.prod_dbid)
         })
         this.getSearchOption("prods").data = selectrows;
-      }else {
+      } else {
         this.searchFormFields["prod_dbid"] = rows[0].prod_dbid;
         this.searchFormFields["prod_id"] = rows[0].prod_id;
         this.searchFormFields["prod_ename"] = rows[0].prod_ename;
@@ -397,6 +425,21 @@ let extension = {
         this.editFormFields.price_channel = "";
         this.editFormFields.custs = [];
         this.model = false;
+        if (this.editFormFields.pricegroups.length === 1) {
+          let params = {
+            prod_id: this.editFormFields.prods[0],
+            price_channel: "",
+            group_id: this.editFormFields.pricegroups[0],
+            cust_id: ""
+          }
+          let url = "api/View_price_distributor_mapping/PriceMapingData?prod_id=" + params.prod_id + "&group_id=" + params.group_id
+          this.http.get(url, {}, "loading").then(result => {
+            if (result != null && result[0]?.i_dist_id && result[0].i_dist_id !== null && result[0].i_dist_id !== "") {
+              console.log("result:" + JSON.stringify(result));
+              this.editFormFields.i_dist_id = result[0].i_dist_id;
+            }
+          })
+        }
       } else {
         this.searchFormFields["pricegroup_dbid"] = rows[0].pricegroup_dbid;
         this.searchFormFields["group_id"] = rows[0].group_id;
@@ -453,9 +496,9 @@ let extension = {
     addBefore(formData) {
       //新建保存前formData为对象，包括明细表，可以给给表单设置值，自己输出看formData的值
       console.log(JSON.stringify(formData.mainData));
-      if(formData.mainData.price_channel == "" &&
-        (formData.mainData.custs =="" || formData.mainData.custs.length == 0 ) &&
-        (formData.mainData.pricegroups == "" || formData.mainData.pricegroups.length ==0)){
+      if (formData.mainData.price_channel == "" &&
+        (formData.mainData.custs == "" || formData.mainData.custs.length == 0) &&
+        (formData.mainData.pricegroups == "" || formData.mainData.pricegroups.length == 0)) {
         this.$Message.error("Group Channel , Group , Customer need choose at least 1.");
         return false;
       }
@@ -501,7 +544,7 @@ let extension = {
           text: "Pick",
           style: "color:#409eff;font-size: 12px;cursor: pointer;",
           click: item => {
-            this.$refs.gridHeader.openModel(false,"editCustomerM");
+            this.$refs.gridHeader.openModel(false, "editCustomerM");
           }
         }
         this.getEditOption("prods").extra = {
@@ -509,7 +552,7 @@ let extension = {
           text: "Pick",
           style: "color:#409eff;font-size: 12px;cursor: pointer;",
           click: item => {
-            this.$refs.gridBody.openModel(false,"editProdM");
+            this.$refs.gridBody.openModel(false, "editProdM");
           }
         }
         this.getEditOption("pricegroups").extra = {
@@ -517,7 +560,7 @@ let extension = {
           text: "Pick",
           style: "color:#409eff;font-size: 12px;cursor: pointer;",
           click: item => {
-            this.$refs.gridFooter.openModel(false,"editGroupM");
+            this.$refs.gridFooter.openModel(false, "editGroupM");
           }
         }
       } else if (this.currentAction === this.const.EDIT) {
@@ -525,14 +568,14 @@ let extension = {
         this.editFormFields.prods = []
         this.editFormFields.pricegroups = ""
         this.editFormFields.custs = ""
-        if (this.editFormFields.prod_id !== ""){
+        if (this.editFormFields.prod_id !== "") {
           this.editFormFields.prods.push(this.editFormFields.prod_id)
         }
-        if (this.editFormFields.group_id !== ""){
+        if (this.editFormFields.group_id !== "") {
           this.editFormFields.pricegroups = []
           this.editFormFields.pricegroups.push(this.editFormFields.group_id)
         }
-        if (this.editFormFields.cust_id !== ""){
+        if (this.editFormFields.cust_id !== "") {
           this.editFormFields.custs = []
           this.editFormFields.custs.push(this.editFormFields.cust_id)
         }
