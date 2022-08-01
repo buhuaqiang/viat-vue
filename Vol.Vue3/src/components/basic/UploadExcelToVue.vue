@@ -97,12 +97,12 @@ export default {
       resultClass: "",
     };
   },
+
   methods: {
     clearMsg() {
       this.message = "";
     },
     reset() {
-      debugger;
       this.file = null;
       this.message = "";
       this.resultClass = "";
@@ -124,7 +124,6 @@ export default {
     },
 
     upload() {
-      debugger;
       let _url = this.url;
       if (!_url) {
         return this.$Message.error("没有配置好Url");
@@ -133,6 +132,13 @@ export default {
       if (!this.file) {
         return this.$Message.error("Please select a file");
       }
+      if (!this.importExcelBefore(formData)) {
+        return;
+      }
+      var formData = new FormData();
+      formData.append("files", this.file);
+      this.$emit("onUpload")
+      /*
       var formData = new FormData();
       formData.append("files", this.file);
       formData.append("cust_dbid","0");
@@ -157,7 +163,8 @@ export default {
               (error) => {
                 this.loadingStatus = false;
               }
-      );
+      );*/
+
     },
     dowloadTemplate() {
       let url = this.template.url;

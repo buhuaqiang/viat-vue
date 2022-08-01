@@ -136,7 +136,7 @@
     <price-recode ref="priceRecode"></price-recode>
     <view_com_prod_pop_query ref="View_com_prod_pop_query" @onSelect="onSelectPop"></view_com_prod_pop_query>
     <Viat_wk_cont_stretagy_detail_pickup ref="Viat_wk_cont_stretagy_detail_pickup" @onSelect="onSelectPriceStretagyPop"></Viat_wk_cont_stretagy_detail_pickup>
-    <bid-price-detail-import ref="bidPriceDetailImport"></bid-price-detail-import>
+    <bid-price-detail-import @onUploadCallBack="onUploadCallBack" ref="bidPriceDetailImport"></bid-price-detail-import>
 </template>
 <script>
 import VolBox from "@/components/basic/VolBox.vue";
@@ -352,15 +352,21 @@ export default {
     },
 
     doImport(){
-      this.$nextTick(
-              ()=> {
-                this.$refs.bidPriceDetailImport.openModel();
-              }
-      )
+      let rows = this.$refs.priceTable.rowData;
+      if(rows.length>0){
+        this.$Message.error("Please Delete All Price Date,Then Do Import");
+        return false;
+      }else{
+        this.$nextTick(
+                ()=> {
+                  this.$refs.bidPriceDetailImport.openModel(this.cust_dbid,this.edit_pricegroup_dbid);
+                }
+        )
+      }
+
     },
 
     caculator(){
-      debugger;
       let bid_price=this.formModel.bid_price;
       let nhi_price=this.formModel.nhi_price;
       let allowance = Math.abs(((nhi_price-bid_price)/bid_price*100).toFixed(2)); //FG
@@ -790,6 +796,29 @@ export default {
         this.$message.error("Product Price is already exist in draft.");
         return false;
       }
+    },
+
+    onUploadCallBack(rows){
+      rows.forEach(x=>{
+
+        let allowance = Math.abs(((x.nhi_price-x.bid_price)/x.bid_price*100).toFixed(2)); //FG
+        let discount = Math.abs(((x.nhi_price-x.bid_price)/x.nhi_price*100).toFixed(2)); // DIS
+        let addData={
+          prod_id:x.prod_id,
+          prod_ename:x.prod_ename,
+          prod_dbid:x.prod_dbid,
+          nhi_price:x.nhi_price,
+          invoice_price:x.invoice_price,
+          net_price:x.net_price,
+          status:'Y',
+          min_qty:x.min_qty,
+          bid_price:x.bid_price,
+          allowance:allowance,
+          discount:discount,
+        }
+        this.$refs.priceTable.rowData.push(addData);
+      })
+      this.$Message.success("Imported Success");
     },
 
     deletePriceRow(){
