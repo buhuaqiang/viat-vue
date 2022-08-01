@@ -34,14 +34,14 @@
                     fileName: "priceImportTemplate", //模板的文件名
                 },
                 model: false,
-                cust_dbid:"",
+                cust_id:"",
                 pricegroup_dbid:"",
             };
         },
         methods: {
-            openModel(cust_dbid,pricegroup_dbid) {
+            openModel(cust_id,pricegroup_dbid) {
                 this.model = true;
-                this.cust_dbid=cust_dbid
+                this.cust_id=cust_id
                 this.pricegroup_dbid=pricegroup_dbid;
                 this.$nextTick(
                     ()=> {
@@ -56,8 +56,8 @@
             uploadExtend() {
                 let formData = new FormData();
                 formData.append("files", this.$refs.uploadExcel.file);
-                formData.append("cust_dbid","0");
-                formData.append("group_dbid","0");
+                formData.append("cust_id",this.cust_id);
+                formData.append("group_dbid",this.pricegroup_dbid);
                 this.$refs.uploadExcel.loadingStatus = true;
                 this.http.post(this.url, formData).then(
                     (x) => {
