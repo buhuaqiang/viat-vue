@@ -369,9 +369,42 @@ export default {
       this.formModel.allowance=allowance;
     },
 
-
-
+    isOptional(val){//選擇產品時判斷客戶或者組是否存在
+      let $parent;
+      this.$emit("parentCall", ($this) => {
+        $parent = $this;
+      });
+      let cust_dbid = $parent.editFormFields.cust_dbid;
+      let pricegroup_dbid = $parent.editFormFields.pricegroup_dbid;
+      let isgroup = $parent.editFormFields.isgroup;
+      if(isgroup=='0'){//選擇客戶
+          if(cust_dbid){
+            if(val =="enter"){//輸入產品編號回車
+              this.enterProdKeyPress()
+            }else{//pick選擇產品
+              this.$refs.View_com_prod_pop_query.openModel(true,"prod_dbid","onSelect")
+            }
+          }else{
+            this.$Message.error("Customer can't be empty, Please select a customer");
+            return false;
+          }
+      }else{//選擇組
+        if(pricegroup_dbid){
+          if(val =="enter"){//輸入產品編號回車
+            this.enterProdKeyPress()
+          }else{//pick選擇產品
+            this.$refs.View_com_prod_pop_query.openModel(true,"prod_dbid","onSelect")
+          }
+        }else{
+          this.$Message.error("Group can't be empty,Please select a group");
+          return false;
+        }
+      }
+    },
     prodKeyPress(){
+      this.isOptional("enter");
+    },
+    enterProdKeyPress(){
       let  prod_id = this.formModel.prod_id
       if(prod_id) {
         this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id,{} , "loading").then(reslut => {
@@ -435,7 +468,8 @@ export default {
     },
 
     openProdModel(val){
-      this.$refs.View_com_prod_pop_query.openModel(true,"prod_dbid","onSelect")
+      this.isOptional("pick")
+      //this.$refs.View_com_prod_pop_query.openModel(true,"prod_dbid","onSelect")
     },
 
     openPriceStretageModel(val){
