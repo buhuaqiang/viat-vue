@@ -261,6 +261,7 @@ export default {
       this.cont_stretagy_id= $parent.editFormFields.cont_stretagy_id;
       this.cont_stretagy_name= $parent.editFormFields.cont_stretagy_name;
       this.cust_dbid = $parent.editFormFields.cust_dbid;
+      this.cust_id   = $parent.editFormFields.cust_id;
       this.edit_pricegroup_dbid = $parent.editFormFields.pricegroup_dbid;
       let apply_type = $parent.editFormFields.apply_type;
 
@@ -359,7 +360,7 @@ export default {
       }else{
         this.$nextTick(
                 ()=> {
-                  this.$refs.bidPriceDetailImport.openModel(this.cust_dbid,this.edit_pricegroup_dbid);
+                  this.$refs.bidPriceDetailImport.openModel(this.cust_id,this.edit_pricegroup_dbid);
                 }
         )
       }
