@@ -45,6 +45,14 @@
       </el-form>
       <el-button
               v-if="showButton"
+              type="success"
+              style="margin-left:10px"
+              size="medium"
+              icon="el-icon-upload2"
+              @click="doImport()"
+      >Import</el-button>
+      <el-button
+              v-if="showButton"
               type="primary"
         style="margin-left:10px"
         size="medium"
@@ -128,6 +136,7 @@
     <price-recode ref="priceRecode"></price-recode>
     <view_com_prod_pop_query ref="View_com_prod_pop_query" @onSelect="onSelectPop"></view_com_prod_pop_query>
     <Viat_wk_cont_stretagy_detail_pickup ref="Viat_wk_cont_stretagy_detail_pickup" @onSelect="onSelectPriceStretagyPop"></Viat_wk_cont_stretagy_detail_pickup>
+    <bid-price-detail-import ref="bidPriceDetailImport"></bid-price-detail-import>
 </template>
 <script>
 import VolBox from "@/components/basic/VolBox.vue";
@@ -135,9 +144,12 @@ import VolTable from "@/components/basic/VolTable.vue";
 import View_com_prod_pop_query from "../../basic/prod/View_com_prod_pop_query.vue";
 import Viat_wk_cont_stretagy_detail_pickup from "../pricestretagy/Viat_wk_cont_stretagy_detail_pickup";
 import priceRecode from "./showPriceRecode";
-
+import {defineAsyncComponent} from "vue";
+import {ElMessageBox} from "element-plus";
+import bidPriceDetailImport from "./BidPriceDetailImport";
 export default {
   components: {
+    bidPriceDetailImport:bidPriceDetailImport,
     Viat_wk_cont_stretagy_detail_pickup,
     View_com_prod_pop_query,
     VolBox: VolBox,
@@ -312,6 +324,14 @@ export default {
     },
     openRecord(prod_dbid){
       this.$refs.priceRecode.openModel(true,this.cust_dbid,this.edit_pricegroup_dbid,prod_dbid);
+    },
+
+    doImport(){
+      this.$nextTick(
+              ()=> {
+                this.$refs.bidPriceDetailImport.openModel();
+              }
+      )
     },
 
     caculator(){
