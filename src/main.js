@@ -36,9 +36,10 @@ app.use(store)
     .use(router)
     .use(viewgird)
     .use(OktaVue, { oktaAuth})
-    .mount('#app')
     .use(ElMessageBox)
-    .use(ElMessage);
+    .use(ElMessage)
+    .mount('#app')
+
 app.config.globalProperties.$Message = app.config.globalProperties.$message;
 
 
