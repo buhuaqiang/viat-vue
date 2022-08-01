@@ -45,7 +45,7 @@ let extension = {
       //显示所有查询字段
       this.setFiexdSearchForm(true)
       //表格设置为单选
-      this.single=true;
+      // this.single=true;
       //设置查询表单的标签文字宽度
       this.labelWidth=180;
       //设置编辑表单标签文字宽度
