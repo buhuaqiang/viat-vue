@@ -11,7 +11,7 @@
             :url="url"
             :template="template"
             :importExcelBefore="importExcelBefore"
-            @onUpload="onUpload"
+            @onUpload="uploadExtend"
     ></UploadExcel>
 </VolBox>
 </template>
@@ -34,17 +34,18 @@
                     fileName: "priceImportTemplate", //模板的文件名
                 },
                 model: false,
+                cust_dbid:"",
+                pricegroup_dbid:"",
             };
         },
         methods: {
-            openModel() {
-                debugger;
+            openModel(cust_dbid,pricegroup_dbid) {
                 this.model = true;
+                this.cust_dbid=cust_dbid
+                this.pricegroup_dbid=pricegroup_dbid;
                 this.$nextTick(
                     ()=> {
-                        this.$refs.uploadExcel.file = null;
-                        this.$refs.uploadExcel.message = "";
-                        this.$refs.uploadExcel.resultClass = "";
+                        this.$refs.uploadExcel.reset();
                     });
 
 
@@ -52,10 +53,32 @@
             importExcelBefore(formData) { //点击上传时，将其他参数提交到后台
                 return true;
             },
-
-            onUpload(x){
+            uploadExtend() {
+                let formData = new FormData();
+                formData.append("files", this.$refs.uploadExcel.file);
+                formData.append("cust_dbid","0");
+                formData.append("group_dbid","0");
+                this.$refs.uploadExcel.loadingStatus = true;
+                this.http.post(this.url, formData).then(
+                    (x) => {
+                        if(x.code=='-2') {
+                            this.$refs.uploadExcel.loadingStatus = false;
+                            this.$refs.uploadExcel.resultClass = x.message ? "v-r-error":"v-r-success";
+                            this.$refs.uploadExcel.message= x.message
+                        }
+                        else {
+                            this.$refs.uploadExcel.loadingStatus = false;
+                            this.onUploadCallBack(x);
+                        }
+                    },
+                    (error) => {
+                        this.$refs.uploadExcel.loadingStatus = false;
+                    }
+                );
+            },
+            onUploadCallBack(x){
                 this.model = false;
-                    alert(x);
+                this.$emit("onUploadCallBack",x)
             }
 
         },
