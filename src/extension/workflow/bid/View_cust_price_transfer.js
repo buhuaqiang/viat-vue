@@ -564,7 +564,7 @@ let extension = {
       }
       //table2數據回填到 formData
       let orderTableRowData = this.$refs.modelFooter.orderTableRowData;
-      let orderInvalidProd=[];//产品状态无效
+      /*let orderInvalidProd=[];//产品状态无效
       let notExistProd=[];//不存在价格产品price book
       let lessThanMinQty=[];//购买数量小于price book设定的最小数量
       //订单列表需要判断产品状态和产品价格状态以及最小数量
@@ -602,7 +602,7 @@ let extension = {
       if(lessThanMinQty.length>0){
         this.$Message.error("Order List  Product "+lessThanMinQty.join(",")+" ,Qty less than Min Qty ");
         return false;
-      }
+      }*/
       let detailData = [
         {
           key: "priceTableRowData",
@@ -736,6 +736,7 @@ let extension = {
 
 
       if (this.currentAction==this.const.EDIT){
+        this.getEditOption("add_group").disabled=false
         this.isFirstValid=true//
         this.joinGroupList=[]
         //只有组申请时才可以更改客户
@@ -743,6 +744,8 @@ let extension = {
           form_cust_id.extra={
             render:this.getSearchRender("formCustomer")
           }
+        }else{
+
         }
         this.getEditOption("start_date").disabled=false;
         this.getEditOption("end_date").disabled=false;
