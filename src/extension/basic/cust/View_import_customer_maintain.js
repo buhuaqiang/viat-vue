@@ -533,6 +533,14 @@ debugger
       //新建保存前formData为对象，包括明细表，可以给给表单设置值，自己输出看formData的值
       return true;
     },
+      //新增時在按完save按鈕 , 加入查詢條件 , 將剛剛新增好的數據查出來
+      updateAfter(x){
+        debugger
+          let cust_name=this.editFormFields.cust_name;
+          this.searchFormFields.cust_name=cust_name;
+          return true
+
+      },
     updateBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
       return true;
