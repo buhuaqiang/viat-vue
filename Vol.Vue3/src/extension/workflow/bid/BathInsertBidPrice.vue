@@ -817,8 +817,8 @@ export default {
     },
 
     onUploadCallBack(rows){
-      rows.forEach(x=>{
-
+      let _rows = rows.data;
+      _rows.forEach(x=>{
         let allowance = Math.abs(((x.nhi_price-x.bid_price)/x.bid_price*100).toFixed(2)); //FG
         let discount = Math.abs(((x.nhi_price-x.bid_price)/x.nhi_price*100).toFixed(2)); // DIS
         let addData={
