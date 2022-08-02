@@ -29,7 +29,7 @@
                 url: "/View_wk_bid_price_apply_main/",
                 sortName: "BID_NO"
             });
-            const editFormFields = ref({"bidmast_dbid":"","bid_no":"","contstret_dbid":"","cont_stretagy_id":"","cont_stretagy_name":"","apply_type":"","cust_id":"","group_id":"","cust_dbid":"","pricegroup_dbid":"","isgroup":"","bid_date":"","start_date":"","end_date":"","upload":"","remarks":""});
+            const editFormFields = ref({"bidmast_dbid":"","bid_no":"","contstret_dbid":"","cont_stretagy_id":"","cont_stretagy_name":"","apply_type":"","cust_id":"","cust_name":"","group_id":"","group_name":"","cust_dbid":"","pricegroup_dbid":"","isgroup":"","bid_date":"","start_date":"","end_date":"","upload":"","remarks":""});
             const editFormOptions = ref([[ {"dataKey":"ApprovalType","data":[],"title":"Apply Type","required":true,"field":"apply_type","type":"select"},
                 {"title":"Bid NO","field":"bid_no","type":"text",readonly:true},
                              {"title":"bidmast dbid","field":"bidmast_dbid",hidden:true},
