@@ -363,9 +363,11 @@ export default {
         this.$emit("parentCall", ($this) => {
             $parent = $this;
         });
+        debugger;
       this.cust_dbid = $parent.editFormFields.cust_dbid;
+      this.cust_id = $parent.editFormFields.cust_id;
       this.edit_pricegroup_dbid = $parent.editFormFields.pricegroup_dbid;
-      if(!this.cust_dbid && !this.pricegroup_dbid){
+      if(!this.cust_dbid && !this.edit_pricegroup_dbid){
         this.$Message.error("Please Select Customer Apply Option Value");
         return false;
       }
