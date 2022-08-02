@@ -68,6 +68,8 @@ let extension = {
       var editform_cust_id = this.getFormOption("cust_id");
       var editform_group_id = this.getFormOption("group_id");
       var isgroup = this.getFormOption("isgroup");
+      var cust_exists_group_id =  this.getFormOption("cust_exists_group_id");
+      var cust_exists_group_name =  this.getFormOption("cust_exists_group_name");
       isgroup.onChange = (val) => {
 
         if(val=='0'){
@@ -75,6 +77,8 @@ let extension = {
           editform_cust_id.required = true
           editform_group_id.hidden = true;
           editform_group_id.required = false
+          cust_exists_group_id.hidden = true;
+          cust_exists_group_name.hidden = true;
           this.editFormFields.pricegroup_dbid="";
           this.editFormFields.group_id="";
           this.pickEditFormPriceGroupName = "";
@@ -83,6 +87,8 @@ let extension = {
           editform_cust_id.required = false
           editform_group_id.hidden = false;
           editform_group_id.required = true
+          cust_exists_group_id.hidden = true;
+          cust_exists_group_name.hidden = true;
           this.editFormFields.cust_dbid="";
           this.editFormFields.cust_id="";
           this.editFormFields.cust_name="";
@@ -110,6 +116,13 @@ let extension = {
                 this.initCustomerGroup(reslut.cust_dbid);
                 return;
               }else{
+                this.editFormFields['cust_dbid'] ="";
+                this.editFormFields['cust_id'] ="" ;
+                this.pickEditFormCustomerName="";
+                this.editFormFields['cust_exists_group_id'] ="" ;
+                this.editFormFields['cust_exists_group_name'] ="" ;
+                cust_exists_group_id.hidden = true;
+                cust_exists_group_name.hidden = true;
                 this.$message.error("Customer Id Is Not Exists.");
                 return;
               }
@@ -791,6 +804,11 @@ let extension = {
     },
 
     initCustomerGroup(cust_dbid){
+      //切換客戶時先清空並隱藏
+      this.getFormOption("cust_exists_group_id").hidden=true;
+      this.getFormOption("cust_exists_group_name").hidden=true;
+      this.editFormFields.cust_exists_group_id = "";
+      this.editFormFields.cust_exists_group_name = "";
       let url = "api/Viat_app_cust_group/getCustGroupIDAndANmeByCustDBID?cust_dbid="+cust_dbid;
       this.http.get(url, {}, 'Get data....').then((x) => {
         if (!x) return ;
@@ -895,8 +913,12 @@ let extension = {
         this.editFormFields.isgroup = "0";
         this.getFormOption("cust_id").hidden=false;
         this.getFormOption("cust_id").required=true;
+        this.getFormOption("cust_id").disabled=false;
+        this.getFormOption("start_date").disabled=false;
+        this.getFormOption("remarks").disabled=false;
         this.getFormOption("apply_type").disabled=false
         this.getFormOption("isgroup").disabled=false;
+        this.getFormOption("upload").hidden=false;
         //this.getFormOption("cust_id").disabled=false;
         let dateStrs=this.parseTime(new Date(),'{y}-{m}-{d}')
         this.editFormFields.bid_date=dateStrs;
@@ -906,6 +928,9 @@ let extension = {
         this.getFormOption("cust_id").disabled=true;
         this.getFormOption("group_id").disabled=true;
         this.getFormOption("isgroup").disabled=true;
+        this.getFormOption("start_date").disabled=false;
+        this.getFormOption("remarks").disabled=false;
+        this.getFormOption("upload").hidden=false;
       }else if(this.currentAction =='view'){
         this.boxButtons.forEach(x => {
           if (x.value == "Save&Submit") {
