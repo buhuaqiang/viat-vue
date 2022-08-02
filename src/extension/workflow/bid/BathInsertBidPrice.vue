@@ -354,7 +354,7 @@ export default {
         $parent = $this;
       });
       this.cust_dbid = $parent.editFormFields.cust_dbid;
-      this.edit_pricegroup_dbid = $parent.editFormFields.edit_pricegroup_dbid;
+      this.edit_pricegroup_dbid = $parent.editFormFields.pricegroup_dbid;
       this.$refs.priceRecode.openModel(true,this.cust_dbid,this.edit_pricegroup_dbid,prod_dbid);
     },
 
@@ -744,9 +744,8 @@ export default {
 
       let message="";
       let pass=true;
-
       if(this.formModel.invoice_price<this.formModel.bid_price){
-        message="Invoice Price < Current Price,";
+        message="Invoice Price < Bid Price,";
         if(this.formModel.invoice_price>this.formModel.nhi_price){
           message+="Invoice Price >NHI Price,";
         }
