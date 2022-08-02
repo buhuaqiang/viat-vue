@@ -26,7 +26,7 @@
         ></vol-table>
 
       <el-form-item   label="Price Note:" style="padding-top:10px;width: 48%">
-        <el-input type="textarea" v-model="formModel.price_note"  ></el-input>
+        <el-input type="textarea" v-model="formModel.price_note"  :disabled="!isEdit"></el-input>
       </el-form-item>
       <el-form-item   label="Remarks" style="padding-top:10px;width: 48%">
           <el-input type="textarea" v-model="remarks"  disabled></el-input>
@@ -39,7 +39,7 @@
       <vol-table
               ref="orderTable"
               :loadKey="true"
-              :clickEdit="true"
+              :clickEdit="false"
               :columns="orderTableColumns"
               :pagination-hide="true"
               :single="false"
@@ -52,7 +52,7 @@
               @rowClick = "orderRowClick"
       ></vol-table>
     <el-form-item   label="Order Note:" style="padding-top:10px;width: 48%">
-      <el-input type="textarea" v-model="formModel.order_note"  ></el-input>
+      <el-input type="textarea" v-model="formModel.order_note"  :disabled="!isEdit"></el-input>
     </el-form-item>
   </el-form>
 </div>
@@ -79,6 +79,7 @@ export default {
   data() {
     return {
       model: false,
+        isEdit:true,//是否是编辑,控制列表输入框标识
         currentOrderRow:{},
       bid_no:"",
         stretagyShow:false,
@@ -119,7 +120,7 @@ export default {
         {field:'prod_id',title:'Product Id',type:'string',width:110,require:true,align:'left',readonly:true},
         {field:'prod_ename',title:'Product Name',type:'string',width:110,align:'left',readonly:true},
           {field:'pick',title:'',type:'string',width:50,align:'center',readonly:true},
-        {field:'qty',title:'Qty', edit: { type: "number" ,keep:true},width:110,require:true,align:'left'},
+        {field:'qty',title:'Qty', edit: { type: "number" ,keep:true},width:110,require:true,align:'right'},
         {field:'oper',title:''},
       ],
 
@@ -131,6 +132,7 @@ export default {
   methods: {
     initProductRender(){
         let _column = this.orderTableColumns.find(x => { return x.field == "pick" });
+        _column.hidden=!this.isEdit;
         _column.render = (h, { row, column, index }) => {
             return h("div", { style: {} },
                 [
@@ -159,6 +161,27 @@ export default {
           this.currentOrderRow.prod_dbid = rows[0].prod_dbid;
           this.model = false;
       },
+      //禁用页面编辑框
+      disabledEdit(){
+          let _column1 = this.orderTableColumns.find(x => { return x.field == "qty" });
+          let _column2= this.orderTableColumns.find(x => { return x.field == "state" });
+          let _column3= this.columns.find(x => { return x.field == "state" });
+          let _column4= this.columns.find(x => { return x.field == "invoice_price" });
+          let _column5= this.columns.find(x => { return x.field == "reserv_price" });
+          let _column6= this.columns.find(x => { return x.field == "min_qty" });
+
+          if(this.isEdit){
+
+          }else{
+              _column1.edit= null
+              _column2.edit= null
+              _column3.edit= null
+              _column4.edit= null
+              _column5.edit= null
+              _column6.edit= null
+          }
+
+      },
     openModel(param_bid_no) {
       this.ck=false
       let $parent;
@@ -169,7 +192,7 @@ export default {
         $parent = $this;
       });
       this.bid_no= param_bid_no
-
+      this.isEdit= ($parent.currentAction == "update")
       this.clear();
       //当前如果是新建重置两个表格数据
       if ($parent.currentAction == "Add") {
@@ -181,6 +204,8 @@ export default {
 
       //渲染订单产品弹框
         this.initProductRender()
+        //处理页面编辑框
+        this.disabledEdit()
       //onInited方法设置从表编辑时实时计算值
       this.orderTableColumns.forEach(x => {
 
