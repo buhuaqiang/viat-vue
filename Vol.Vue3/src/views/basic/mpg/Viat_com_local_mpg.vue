@@ -66,7 +66,6 @@
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,align:'left'},
                        {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,align:'left',sort:true},
                        {field:'ma_id',title:'助理代碼(預留欄位)',type:'string',width:110,align:'left'},
-                       {field:'dbid',title:'識別碼, PK, Identity',type:'int',width:80,require:true,align:'left'},
                        {field:'pm_id',title:'主管代碼(預留)',type:'string',width:110,align:'left'},
                        {field:'ma_name',title:'ma_name',type:'string',width:120,align:'left'},
                        {field:'medical_reviewer_id',title:'medical_reviewer_id',type:'string',width:110,align:'left'},
