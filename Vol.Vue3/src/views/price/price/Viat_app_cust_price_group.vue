@@ -36,7 +36,7 @@
                               [{"title":"Remarks","field":"remarks","type":"textarea"}],
                               [{"dataKey":"group_price_channel","data":[],"title":"Price Group Channel","field":"group_type","type":"select"}]]);
             const searchFormFields = ref({"group_id":"","group_name":"","status":""});
-            const searchFormOptions = ref([[{"title":"Group ID","field":"group_id"},{"title":"Group Name","field":"group_name","type":"like"},{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}]]);
+            const searchFormOptions = ref([[{"title":"Group ID","field":"group_id","type":"like"},{"title":"Group Name","field":"group_name","type":"like"},{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}]]);
             const columns = ref([{field:'pricegroup_dbid',title:'主鍵',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'entity',title:'公司別,舊版SUN_DB',type:'string',width:110,hidden:true,align:'left'},
                        {field:'division',title:'所屬事業單位,01:PH;03:AH;05:CH;06:NU',type:'string',width:110,hidden:true,align:'left'},
