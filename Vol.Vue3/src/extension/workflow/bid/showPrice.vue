@@ -46,7 +46,8 @@ export default {
       prod_id:"",
       fieldName:"",//編輯字段,用於回傳設置值
       formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields,ext-自定義擴展
-      url: "api/View_cust_price_detail/GetPriceDataForTransfer",//加载数据的接口GetPriceDataForTransfer
+      url1: "api/View_cust_price_detail/GetPriceDataForTransfer",//加载数据的接口GetPriceDataForTransfer
+      url2: "api/View_wk_bid_price_apply_main/GetPriceDataForApply",//加载数据的接口GetPriceDataForApply
       columns: [
         {field:'group_id',title:'Group ID',type:'string',width:110,require:true,align:'left',sort:true},
         {field:'group_name',title:'Group Name',type:'string',width:120,align:'left'},
@@ -71,6 +72,14 @@ export default {
       this.model = true;
       this.cust_id=cust_id
       this.prod_id=prod_id
+      let path =this.$route.path;
+      if(path=="/View_wk_bid_price_apply_main"){//從申請入口查詢
+        this.url = this.url2
+      }else{//從transfer入口查詢
+        this.url = this.url1
+      }
+
+
       //打开弹出框时，加载table数据
       this.$nextTick(() => {
         this.$refs.mytable.load();
@@ -89,7 +98,6 @@ export default {
         let userId = userInfo.userId;
         params.wheres.push({ name: "created_user", value: userId});
       }
-
       //查询前，设置查询条件
       params.wheres.push({ name: "status", value: 'Y' });
       if(this.prod_id){
