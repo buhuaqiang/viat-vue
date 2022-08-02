@@ -125,9 +125,9 @@
               this.fieldName=fieldName;
                 this.$emit("parentCall", ($parent) => {
                   if (path === '/View_com_local_mpg' && this.formType === 'f'){
-                    if (this.fieldName == 'medical_reviewe_id'){
-                      $parent.editFormFields['medical_reviewe_id'] = '';
-                      $parent.editFormFields['medical_reviewe_name'] = '';
+                    if (this.fieldName == 'medical_reviewer_id'){
+                      $parent.editFormFields['medical_reviewer_id'] = '';
+                      $parent.editFormFields['medical_reviewer_name'] = '';
                     }
                     if (this.fieldName == 'ma_id'){
                       $parent.editFormFields['ma_id'] = '';
@@ -136,6 +136,15 @@
                     if (this.fieldName == 'pm_id'){
                       $parent.editFormFields['pm_id'] = '';
                       $parent.editFormFields['supervisorUserName'] = '';
+                    }
+                  }else if (path === '/View_com_local_mpg' && this.formType === 's'){
+                    if (this.fieldName == 'ma_id'){
+                      $parent.searchFormFields['ma_id'] = '';
+                      $parent.searchFormFields['maUserName'] = '';
+                    }
+                    if (this.fieldName == 'pm_id'){
+                      $parent.searchFormFields['pm_id'] = '';
+                      $parent.searchFormFields['supervisorUserName'] = '';
                     }
                   }else{
                     if(this.formType=='f'){
@@ -165,11 +174,10 @@
                 //回写数据到表单
                 this.$emit("parentCall", ($parent) => {
                     //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
-                  console.log("JJS:" + JSON.stringify(selectrow[0]));
                   if (path === '/View_com_local_mpg' && this.formType === 'f'){
-                    if (this.fieldName === 'medical_reviewe_id'){
-                      $parent.editFormFields['medical_reviewe_id'] = selectrow[0].emp_id;
-                      $parent.editFormFields['medical_reviewe_name'] = selectrow[0].emp_ename;
+                    if (this.fieldName === 'medical_reviewer_id'){
+                      $parent.editFormFields['medical_reviewer_id'] = selectrow[0].emp_id;
+                      $parent.editFormFields['medical_reviewer_name'] = selectrow[0].emp_ename;
                     }
                     if (this.fieldName === 'ma_id'){
                       $parent.editFormFields['ma_id'] = selectrow[0].emp_id;
@@ -178,6 +186,15 @@
                     if (this.fieldName === 'pm_id'){
                       $parent.editFormFields['pm_id'] = selectrow[0].emp_id;
                       $parent.editFormFields['supervisorUserName'] = selectrow[0].emp_ename;
+                    }
+                  }else if (path === '/View_com_local_mpg' && this.formType === 's'){
+                    if (this.fieldName === 'ma_id'){
+                      $parent.searchFormFields['ma_id'] = selectrow[0].emp_id;
+                      $parent.searchFormFields['maUserName'] = selectrow[0].emp_ename;
+                    }
+                    if (this.fieldName === 'pm_id'){
+                      $parent.searchFormFields['pm_id'] = selectrow[0].emp_id;
+                      $parent.searchFormFields['supervisorUserName'] = selectrow[0].emp_ename;
                     }
                   }else if(this.formType==='f'){
                         $parent.editFormFields[this.fieldName] = selectrow[0].emp_dbid;
