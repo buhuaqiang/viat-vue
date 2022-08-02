@@ -75,11 +75,18 @@ let extension = {
           editform_cust_id.required = true
           editform_group_id.hidden = true;
           editform_group_id.required = false
+          this.editFormFields.pricegroup_dbid="";
+          this.editFormFields.group_id="";
+          this.pickEditFormPriceGroupName = "";
         }else if(val=='1'){
           editform_cust_id.hidden=true;
           editform_cust_id.required = false
           editform_group_id.hidden = false;
           editform_group_id.required = true
+          this.editFormFields.cust_dbid="";
+          this.editFormFields.cust_id="";
+          this.editFormFields.cust_name="";
+          this.pickEditFormCustomerName = "";
         }
 
       }
