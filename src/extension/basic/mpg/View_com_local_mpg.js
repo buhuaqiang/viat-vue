@@ -12,7 +12,7 @@ let extension = {
   components: {
     //查询界面扩展组件
     gridHeader: '',
-    gridBody: '',
+    gridBody: employPop,
     gridFooter: '',
     //新建、编辑弹出框扩展组件
     modelHeader: '',
@@ -27,6 +27,17 @@ let extension = {
       this.editFormOptions.forEach(x => {
         x.forEach(item => {
           if (item.field == field) {
+            option = item;
+          }
+        })
+      })
+      return option;
+    },
+    getSearchOption(field) {
+      let option;
+      this.searchFormOptions.forEach(x => {
+        x.forEach(item => {
+          if (item.field === field) {
             option = item;
           }
         })
@@ -59,13 +70,21 @@ let extension = {
       //設置初始不加載
       this.load=false;
 
-      this.getOption("medical_reviewe_id").hidden = true;
+      this.getOption("medical_reviewer_id").hidden = true;
       this.getOption("pm_id").hidden = true;
       this.getOption("ma_id").hidden = true;
+      this.getSearchOption("ma_id").hidden = true;
+      this.getSearchOption("pm_id").hidden = true;
+      this.getSearchOption("maUserName").extra = {
+        render:this.getSearchFormRender("ma_id","s")
+      }
+      this.getSearchOption("supervisorUserName").extra = {
+        render:this.getSearchFormRender("pm_id","s")
+      }
 
-      let medical_reviewe_name=this.getOption("medical_reviewe_name");
-      medical_reviewe_name.extra = {
-        render:this.getFormRender("medical_reviewe_id","f")
+      let medical_reviewer_name=this.getOption("medical_reviewer_name");
+      medical_reviewer_name.extra = {
+        render:this.getFormRender("medical_reviewer_id","f")
       }
       let maUserName=this.getOption("maUserName");
       maUserName.extra = {
@@ -76,6 +95,36 @@ let extension = {
         render:this.getFormRender("pm_id","f")
       }
 
+    },
+    getSearchFormRender(fieldName,formType) {//
+      return (h, { row, column, index }) => {
+        return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
+          h(
+            "a",
+            {
+              props: {},
+              style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
+              onClick: (e) => {
+                this.$refs.gridBody.open(fieldName,formType)
+              }
+            },
+            [h("i",{class:"el-icon-zoom-in"})],
+            "Select"
+          ),
+          h(
+            "a",
+            {
+              props: {},
+              style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+              onClick: (e) => {
+                this.$refs.gridBody.clearData(fieldName,formType)
+              }
+            },
+            [h("i",{class:"el-icon-zoom-out"})],
+            "Clean"
+          ),
+        ]);
+      };
     },
     getFormRender(fieldName,formType) {//
       return (h, { row, column, index }) => {
