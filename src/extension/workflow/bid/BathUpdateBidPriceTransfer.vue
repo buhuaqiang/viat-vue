@@ -171,7 +171,12 @@ export default {
           let _column6= this.columns.find(x => { return x.field == "min_qty" });
 
           if(this.isEdit){
-
+              _column1.edit= { type: "decimal" ,keep:true}
+              _column2.edit= { type: "decimal" ,keep:true}
+              _column3.edit= { type: "decimal" ,keep:true}
+              _column4.edit= { type: "decimal" ,keep:true}
+              _column5.edit= { type: "decimal" ,keep:true}
+              _column6.edit= { type: "decimal" ,keep:true}
           }else{
               _column1.edit= null
               _column2.edit= null

@@ -134,7 +134,7 @@ let buttons = [{
         icon: 'el-icon-turn-off',
         type:'danger',
         plain:true,
-        value: 'DetachAll',
+        value: 'detachAll',
         onClick: function () {
             this.detachAll();
         }
