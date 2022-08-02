@@ -349,10 +349,26 @@ export default {
     },
 
     openRecord(prod_dbid){
+      let $parent;
+      this.$emit("parentCall", ($this) => {
+        $parent = $this;
+      });
+      this.cust_dbid = $parent.editFormFields.cust_dbid;
+      this.edit_pricegroup_dbid = $parent.editFormFields.edit_pricegroup_dbid;
       this.$refs.priceRecode.openModel(true,this.cust_dbid,this.edit_pricegroup_dbid,prod_dbid);
     },
 
     doImport(){
+        let $parent;
+        this.$emit("parentCall", ($this) => {
+            $parent = $this;
+        });
+        this.cust_dbid = $parent.editFormFields.cust_dbid;
+        this.edit_pricegroup_dbid = $parent.editFormFields.edit_pricegroup_dbid;
+      if(!this.cust_dbid || !this.pricegroup_dbid){
+        this.$Message.error("Please Select Customer Apply Option Value");
+        return false;
+      }
       let rows = this.$refs.priceTable.rowData;
       if(rows.length>0){
         this.$Message.error("Please Delete All Price Date,Then Do Import");
