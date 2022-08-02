@@ -708,7 +708,8 @@ export default {
         this.$message.error("Invoice price can't be empty.");
         return false;
       }
-      if(this.formModel.net_price){
+      debugger
+      if(this.formModel.net_price || this.formModel.net_price==0){
         if(this.isDecimal(this.formModel.net_price) || this.isNumber(this.formModel.net_price)){
 
         }else{
