@@ -195,7 +195,7 @@ let extension = {
         this.searchFormFields["cust_dbid"] = rows[0].cust_dbid;
         this.searchFormFields["cust_id"] =rows[0].cust_id;
         this.pickCustomerName=rows[0].cust_name;
-        this.isExpfizer(rows[0].cust_id);
+        //this.isExpfizer(rows[0].cust_id);
       }else if(flag=='formCustomer'){
         this.editFormFields["cust_dbid"] = rows[0].cust_dbid;
         this.editFormFields["cust_id"] =rows[0].cust_id;
@@ -304,7 +304,7 @@ let extension = {
                 this.searchFormFields['cust_dbid'] =reslut.cust_dbid;
                 this.searchFormFields['cust_id'] =reslut.cust_id
                 this.pickCustomerName=reslut.cust_name
-                this.isExpfizer(reslut.cust_id)
+                //this.isExpfizer(reslut.cust_id)
                 return;
               }else{
                 this.$message.error("Customer Id Is Not Exists.");
@@ -405,11 +405,16 @@ let extension = {
     },
   //判断是否是经销商客户
     isExpfizer(cust_id){
-      this.http.get("api/View_cust_price_detail/IsExpfizer?cust_id="+cust_id,{} , "loading").then(reslut => {
-        let startDate=this.getColumns("gross_price");
-        startDate.hidden=!reslut
+      if(cust_id){
+        this.http.get("api/View_cust_price_detail/IsExpfizer?cust_id="+cust_id,{} , "loading").then(reslut => {
+          let startDate=this.getColumns("gross_price");
+          startDate.hidden=!reslut
 
-      })
+        })
+      }else{
+        this.getColumns("gross_price").hidden=true
+      }
+
     },
     parseTime(time,cFormat){
       const format=cFormat||'{y}-{m}-{d} {h}:{i}:{s}'
@@ -449,15 +454,6 @@ let extension = {
     },
     handleCustFormSelected(rows){
 
-      alert("check the cust is Expfizer ");
-      //alert("cust_dbid:"+rows[0].cust_dbid)
-
-      if(rows[0].cust_id=='CD15590180'){
-        this.getFormOption("gross_price").hidden=false;
-
-      }else{
-        this.getFormOption("gross_price").hidden=true;
-      }
 
     },
     invalidData(){
@@ -480,6 +476,15 @@ let extension = {
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
+      //
+      let cust=param.wheres.find(x => { return x.name == "cust_id" })
+      if(cust){
+        let cust_id=cust.value;
+        this.isExpfizer(cust_id);
+      }else{
+        this.getColumns("gross_price").hidden=true
+      }
+
       return true;
     },
     searchAfter(result) {
@@ -596,10 +601,7 @@ let extension = {
         this.pickEditFormProductName=row.prod_ename
 
       }else if (this.currentAction==this.const.VIEW){
-        if(row.gross_price){
-          this.getFormOption("gross_price").hidden=false;
-          this.getFormOption("gross_price").disabled=true;
-        }
+        this.getFormOption("gross_price").disabled=true;
       }
 
 
