@@ -30,12 +30,12 @@
                 sortName: "entity"
             });
             const editFormFields = ref({"globalmpg_dbid":"","mpg_id":"","mpg_name":"","category":"","bu_id":"","ta":"","supervisorUserName":"","maUserName":"","medical_reviewer_name":"","imt_type":"","status":"","medical_reviewer_id":"","pm_id":"","ma_id":""});
-            const editFormOptions = ref([[{"title":"Local Mpg ID","field":"mpg_id"},
+            const editFormOptions = ref([[{"title":"Local Mpg ID","required":true,"field":"mpg_id"},
                                {"dataKey":"GlobalMpgSelect","data":[],"title":"Global Mpg","field":"globalmpg_dbid","type":"select"}],
-                              [{"title":"Local Mpg Name","field":"mpg_name"},
+                              [{"title":"Local Mpg Name","required":true,"field":"mpg_name"},
                                {"dataKey":"LocalMpgCategory","data":[],"title":"Category","field":"category","type":"select"}],
                               [{"dataKey":"LocalBu","data":[],"title":"Bu ID","field":"bu_id","type":"select"},
-                               {"dataKey":"LocalTA","data":[],"title":"Ta","field":"ta","type":"select"}],
+                               {"dataKey":"LocalTA","data":[],"title":"Ta","required":true,"field":"ta","type":"select"}],
                               [{"title":"PM","field":"supervisorUserName","disabled":true,"colSize":6},
                                {"title":"Ma","field":"maUserName","disabled":true,"colSize":6}],
                               [{"dataKey":"IMT_Type","data":[],"title":"IMT Type","field":"imt_type","type":"select"},
@@ -45,15 +45,15 @@
                               [{"title":"","field":"pm_id"}],
                               [{"title":"","field":"ma_id"}]]);
             const searchFormFields = ref({"mpg_id":"","mpg_name":"","bu_id":"","category":"","ta":"","supervisorUserName":"","maUserName":"","status":"","imt_type":"","ma_id":"","pm_id":""});
-            const searchFormOptions = ref([[{"title":"Local Mpg ID","field":"mpg_id"},{"title":"Local Mpg Name","field":"mpg_name","type":"like"},{"dataKey":"LocalTA","data":[],"title":"Ta","field":"ta","type":"select"},{"dataKey":"LocalBu","data":[],"title":"Bu ID","field":"bu_id","type":"select"}],[{"dataKey":"LocalMpgCategory","data":[],"title":"Category","field":"category","type":"select"},{"dataKey":"IMT_Type","data":[],"title":"IMT Type","field":"imt_type","type":"select"},{"dataKey":"Status_YN","data":[],"title":"status","field":"status","type":"select"}],[{"title":"Ma","field":"maUserName","colSize":6},{"title":"PM","field":"supervisorUserName","colSize":6}],[{"title":"","field":"ma_id"},{"title":"","field":"pm_id"}]]);
+            const searchFormOptions = ref([[{"title":"Local Mpg ID","field":"mpg_id"},{"title":"Local Mpg Name","field":"mpg_name","type":"like"},{"dataKey":"LocalTA","data":[],"title":"Ta","field":"ta","type":"select"},{"dataKey":"LocalBu","data":[],"title":"Bu ID","field":"bu_id","type":"select"}],[{"dataKey":"LocalMpgCategory","data":[],"title":"Category","field":"category","type":"select"},{"dataKey":"IMT_Type","data":[],"title":"IMT Type","field":"imt_type","type":"select"},{"dataKey":"Status_YN","data":[],"title":"status","field":"status","type":"select"}],[{"title":"Ma","field":"maUserName"},{"title":"PM","field":"supervisorUserName"}],[{"title":"","field":"ma_id"},{"title":"","field":"pm_id"}]]);
             const columns = ref([{field:'localmpg_dbid',title:'localmpg_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'globalmpg_dbid',title:'Global Mpg',type:'guid',bind:{ key:'GlobalMpgSelect',data:[]},width:110,hidden:true,align:'left'},
                        {field:'entity',title:'Entity',type:'string',width:110,align:'left',sort:true},
-                       {field:'mpg_id',title:'Local Mpg ID',type:'string',link:true,width:110,align:'left'},
-                       {field:'mpg_name',title:'Local Mpg Name',type:'string',width:110,align:'left'},
+                       {field:'mpg_id',title:'Local Mpg ID',type:'string',link:true,width:110,require:true,align:'left'},
+                       {field:'mpg_name',title:'Local Mpg Name',type:'string',width:110,require:true,align:'left'},
                        {field:'bu_id',title:'Bu ID',type:'string',bind:{ key:'LocalBu',data:[]},width:110,align:'left'},
                        {field:'category',title:'Category',type:'string',bind:{ key:'LocalMpgCategory',data:[]},width:110,align:'left'},
-                       {field:'ta',title:'Ta',type:'string',bind:{ key:'LocalTA',data:[]},width:110,align:'left'},
+                       {field:'ta',title:'Ta',type:'string',bind:{ key:'LocalTA',data:[]},width:110,require:true,align:'left'},
                        {field:'supervisorUserName',title:'PM',type:'string',width:110,readonly:true,align:'left'},
                        {field:'maUserName',title:'Ma',type:'string',width:110,readonly:true,align:'left'},
                        {field:'medical_reviewer_name',title:'Medical Reviewer Name',type:'string',width:120,align:'left'},
