@@ -436,6 +436,10 @@ let viewgird = [
         path: '/allOrderTransfer',
         name: 'allOrderTransfer',
         component: () => import('@/views/workflow/bid/all_cust_order_transfer.vue')
+    }    ,{
+        path: '/Viat_sftp_import',
+        name: 'Viat_sftp_import',
+        component: () => import('@/views/dataentry/sftp/Viat_sftp_import.vue')
     }]
 
 
