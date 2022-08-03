@@ -7,16 +7,17 @@
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
 import  stretagyModelBody from "./Viat_wk_cont_stretagy_ModelBody";
+import contractStretagyImport from "./contractStretagyImport";
 let extension = {
   components: {
     //查询界面扩展组件
-    gridHeader: '',
+    gridHeader: contractStretagyImport,
     gridBody: '',
     gridFooter: '',
     //新建、编辑弹出框扩展组件
     modelHeader: '',
     modelBody: stretagyModelBody,
-    modelFooter: ''
+    modelFooter: '',
   },
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
@@ -43,6 +44,43 @@ let extension = {
       //显示查询全部字段
       this.setFiexdSearchForm(true);
       this.single=true;//设置单选
+
+      this.buttons.push({  //也可以用push或者splice方法来修改buttons数组
+        name: 'Import', //按钮名称
+        icon: 'el-icon-upload2', //按钮图标vue2版本见iview文档icon，vue3版本见element ui文档icon(注意不是element puls文档)
+        type: 'success', //按钮样式vue2版本见iview文档button，vue3版本见element ui文档button
+        value:'import',
+        onClick: function () {
+          this.doImport();
+        }
+      });
+    },
+    doImport(){
+      this.$refs.gridHeader.openModel();
+      /*let $parent;
+      this.$emit("parentCall", ($this) => {
+        $parent = $this;
+      });*/
+
+     /* this.cust_dbid = $parent.editFormFields.cust_dbid;
+      this.cust_id = $parent.editFormFields.cust_id;
+      this.edit_pricegroup_dbid = $parent.editFormFields.pricegroup_dbid;
+      if(!this.cust_dbid && !this.edit_pricegroup_dbid){
+        this.$Message.error("Please Select Customer Apply Option Value");
+        return false;
+      }
+      let rows = this.$refs.priceTable.rowData;
+      if(rows.length>0){
+        this.$Message.error("Please Delete All Price Date,Then Do Import");
+        return false;
+      }else{
+        this.$nextTick(
+            ()=> {
+              this.$refs.bidPriceDetailImport.openModel(this.cust_id,this.edit_pricegroup_dbid);
+            }
+        )
+      }*/
+
     },
     onInited() {
       //框架初始化配置后
@@ -89,6 +127,13 @@ let extension = {
       formData.detailData = detailData;
       return true;
     },
+
+   /* importExcelBefore(formData) {
+      //上传完成后处理
+      debugger
+      alert("111")
+    },*/
+
     rowClick({ row, column, event }) {
       //查询界面点击行事件
        this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
