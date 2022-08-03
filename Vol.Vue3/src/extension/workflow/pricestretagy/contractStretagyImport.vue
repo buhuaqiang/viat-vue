@@ -34,7 +34,7 @@
             return {
                 url: "api/Viat_wk_contract_stretagy/StretagyImport", //导入的路径
                 template: { //下载模板的配置
-                    url: "api/Viat_wk_contract_stretagy/DownLoadTemp",//下载模板的路径
+                    url: this.http.ipAddress+"api/Viat_wk_contract_stretagy/DownLoadTemp",//下载模板的路径
                     fileName: "stretagyImportTemplate", //模板的文件名
                 },
                 model: false,
