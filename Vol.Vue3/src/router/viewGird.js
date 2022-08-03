@@ -445,6 +445,10 @@ let viewgird = [
         path: '/Viat_sftp_export',
         name: 'Viat_sftp_export',
         component: () => import('@/views/dataentry/sftp/Viat_sftp_export.vue')
+    }    ,{
+        path: '/View_order_apply',
+        name: 'View_order_apply',
+        component: () => import('@/views/workflow/bid/View_order_apply.vue')
     }]
 
 
