@@ -442,6 +442,7 @@ let extension = {
                     this.searchFormFields["cust_dbid"] = "";
                     this.searchFormFields["cust_id"] = "";
                     this.pickCustomerName = "";
+
                   }if(searchType=="searchPriceGroup"){
                     this.searchFormFields["pricegroup_dbid"] = "";
                     this.searchFormFields["group_id"] = "";
@@ -627,7 +628,7 @@ let extension = {
         //{"pricegroup_dbid":formData.mainData.pricegroup_dbid,"prod_dbid":allProdDBIDS}
         if(allProdDBIDS.length>0 && formData.mainData.in_pricegroup_dbid && formData.mainData.add_group=='Y'){
           //把客户所在群组dbid传入后台
-          this.http.get("api/View_cust_price_transfer/CustPriceDetailData?cust_dbid="+this.cust_dbid+"&pricegroup_dbid="+formData.mainData.in_pricegroup_dbid+"&prod_dbid="+allProdDBIDS,{} , "loading").then(reslut => {
+          this.http.get("api/View_cust_price_transfer/CustPriceDetailData?cust_dbid="+formData.mainData.cust_dbid+"&pricegroup_dbid="+formData.mainData.in_pricegroup_dbid+"&prod_dbid="+allProdDBIDS,{} , "loading").then(reslut => {
             this.isFirstValid=false
             if(reslut!==null && reslut.length>0){
               //查詢當前群組內其他產品的單一價格列表
