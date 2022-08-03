@@ -42,6 +42,7 @@
                       suffix-icon="el-icon-date"
                       v-model="formModel.start_date"
                       type="date"
+                      @change="getNHIPrice"
                       placeholder="" >
               </el-date-picker>
             </el-form-item>
@@ -50,6 +51,7 @@
                       suffix-icon="el-icon-date"
                       v-model="formModel.end_date"
                       type="date"
+
                       placeholder="" >
               </el-date-picker>
             </el-form-item>
@@ -275,6 +277,7 @@ export default {
             if(this.nhiGroupFlag){
               this.formModel.nhi_id=reslut.nhi_id;
             }
+            this.getNHIPrice();
           }else {
             this.$message.error("Product Id Is Not Exists.");
             this.formModel.prod_id="";
@@ -347,6 +350,7 @@ export default {
           if(this.nhiGroupFlag){
             this.formModel.nhi_id=rows[0].nhi_id;
           }
+          this.getNHIPrice();
         }
 
     },
@@ -529,40 +533,13 @@ export default {
         });
       }
     },
-
-    priceCheck(){
-      if (this.formModel.invoice_price < this.formModel.net_price) {
-        let message="Invoice Price < Net Price,can't be saved.Please check."
-        if(this.formModel.invoice_price > this.formModel.nhi_price){
-          message+="Invoice Price > NHI Price."
-        }
-        return false;
-      }
-      else if ( this.formModel.invoice_price  >this.formModel.nhi_price) {
-        let message="Invoice Price > NHI Price,do you want to save data anyway?"
-        //
-      } else {
-
-      }
-    },
-    draftPriceCheck(){
-      if (this.formModel.invoice_price < this.formModel.net_price) {
-        let message="Invoice Price < Net Price,can't be saved.Please check."
-        if(this.formModel.invoice_price > this.formModel.formModel.nhi_price){
-          message+="Invoice Price > NHI Price."
-        }
-        return false;
-      }else if (this.formModel.invoice_price > this.formModel.formModel.nhi_price ||
-              (this.formModel.formModel.nhi_price != this.formModel.net_price && this.formModel.net_price == this.formModel.invoice_price)) {
-         let tmp_msg = "";
-        if (this.formModel.invoice_price > this.formModel.formModel.nhi_price)
-          tmp_msg += "Invoice Price > NHI Price. ";
-        if ((this.formModel.nhi_price != this.formModel.invoice_price && this.formModel.net_price == this.formModel.invoice_price))
-          tmp_msg += "Invoice Price ≠ NHI Price but Invoice Price = Net Price.";
-          tmp_msg +="Do you want to add?."
-
-      } else {
-
+//查询产品NHI价格,先从nhi价格群组找,找不到之后再去prod产品表找
+    getNHIPrice(){
+      if(this.formModel.prod_dbid && this.formModel.start_date){
+        let s=this.parseTime(this.formModel.start_date,'{y}-{m}-{d}')
+        this.http.post("api/View_cust_price/NhiPriceData?prod_dbid="+this.formModel.prod_dbid+"&start_date="+s,{} , "loading").then(reslut => {
+          this.formModel.nhi_price=reslut
+        })
       }
     },
 
