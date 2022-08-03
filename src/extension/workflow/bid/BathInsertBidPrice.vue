@@ -265,11 +265,18 @@ export default {
       this.edit_pricegroup_dbid = $parent.editFormFields.pricegroup_dbid;
       let apply_type = $parent.editFormFields.apply_type;
 
-      if(apply_type=='03'){
-        this.showPriceDiv = true;
-      }else if(apply_type=='04'){
+      let path =this.$route.path;
+      if(path=="/View_order_apply"){
         this.showPriceDiv = false;
+        this.$refs.orderTable.load();
+      }else{
+        if(apply_type=='03'){
+          this.showPriceDiv = true;
+        }else if(apply_type=='04'){
+          this.showPriceDiv = false;
+        }
       }
+
       this.$nextTick(()=>{
 
         if ($parent.currentAction == "Add") {
@@ -336,7 +343,7 @@ export default {
         }
 
       })
-
+      this.orderTableRowData = this.$refs.orderTable.rowData;
     },
     openPrice(prod_id){
       let $parent;
@@ -363,7 +370,6 @@ export default {
         this.$emit("parentCall", ($this) => {
             $parent = $this;
         });
-        debugger;
       this.cust_dbid = $parent.editFormFields.cust_dbid;
       this.cust_id = $parent.editFormFields.cust_id;
       this.edit_pricegroup_dbid = $parent.editFormFields.pricegroup_dbid;
@@ -399,10 +405,15 @@ export default {
       this.$emit("parentCall", ($this) => {
         $parent = $this;
       });
+
       let cust_dbid = $parent.editFormFields.cust_dbid;
       let pricegroup_dbid = $parent.editFormFields.pricegroup_dbid;
       let isgroup = $parent.editFormFields.isgroup;
-      if(isgroup=='0'){//選擇客戶
+      let startDate = $parent.editFormFields.start_date;
+      if(startDate==''){
+        this.$Message.error("Please enter startDate");
+      }else{
+        if(isgroup=='0'){//選擇客戶
           if(cust_dbid){
             if(val =="enter"){//輸入產品編號回車
               this.enterProdKeyPress()
@@ -413,18 +424,20 @@ export default {
             this.$Message.error("Customer can't be empty, Please select a customer");
             return false;
           }
-      }else{//選擇組
-        if(pricegroup_dbid){
-          if(val =="enter"){//輸入產品編號回車
-            this.enterProdKeyPress()
-          }else{//pick選擇產品
-            this.$refs.View_com_prod_pop_query.openModel(true,"prod_dbid","onSelect")
+        }else{//選擇組
+          if(pricegroup_dbid){
+            if(val =="enter"){//輸入產品編號回車
+              this.enterProdKeyPress()
+            }else{//pick選擇產品
+              this.$refs.View_com_prod_pop_query.openModel(true,"prod_dbid","onSelect")
+            }
+          }else{
+            this.$Message.error("Group can't be empty,Please select a group");
+            return false;
           }
-        }else{
-          this.$Message.error("Group can't be empty,Please select a group");
-          return false;
         }
       }
+
     },
     prodKeyPress(){
       this.isOptional("enter");
@@ -437,7 +450,9 @@ export default {
             this.formModel.prod_dbid=reslut.prod_dbid;
             this.formModel.prod_id=reslut.prod_id;
             this.formModel.prod_ename=reslut.prod_ename;
-            this.formModel.nhi_price=reslut.nhi_price;
+           // this.formModel.nhi_price=reslut.nhi_price;
+            this.getNHIPrice();
+            //this.formModel.invoice_price=this.formModel.nhi_price;
             this.formModel.prod_dbidname=reslut.prod_id + " " + reslut.prod_ename;
             this.initCurrentPrice(reslut.prod_dbid,reslut.prod_id);
           }else {
@@ -514,17 +529,19 @@ export default {
             return this.$message.error("Please select a record first.");
           }
           this.formModel.prod_dbid=rows[0].prod_dbid
-          this.formModel.nhi_price=rows[0].nhi_price;
+          //this.formModel.nhi_price=rows[0].nhi_price;
+          this.getNHIPrice();
           this.formModel.prod_id=rows[0].prod_id;
           this.formModel.prod_ename=rows[0].prod_ename;
           //invoice_price的默认值设为和nhi_price一样
-          this.formModel.invoice_price=rows[0].nhi_price;
+         // this.formModel.invoice_price=this.formModel.nhi_price;
           this.formModel.net_price='';
           this.formModel.bid_price='';
           this.formModel.reserv_price='';
           this.formModel.discount='';
           this.formModel.allowance='';
           this.initCurrentPrice(rows[0].prod_dbid,rows[0].prod_id);
+
         }else if(fieldName=='AddOrders'){
 
           //返回指定字段  prod_id,prod_ename,qty,amt
@@ -556,6 +573,17 @@ export default {
           })
         }
 
+    },
+
+    //查询产品NHI价格,先从nhi价格群组找,找不到之后再去prod产品表找
+    getNHIPrice(){
+      if(this.formModel.prod_dbid && this.formModel.start_date){
+        let s=this.parseTime(this.formModel.start_date,'{y}-{m}-{d}')
+        this.http.post("api/View_cust_price/NhiPriceData?prod_dbid="+this.formModel.prod_dbid+"&start_date="+s,{} , "loading").then(reslut => {
+          this.formModel.nhi_price=reslut
+          this.formModel.invoice_price = reslut
+        })
+      }
     },
 
     onSelectPriceStretagyPop(fieldName,rows){
@@ -618,6 +646,12 @@ export default {
         this.formModel.prod_id="";
         this.formModel.prod_dbid="";
         this.formModel.prod_ename="";
+        this.formModel.bid_price="";
+        this.formModel.net_price="";
+        this.formModel.invoice_price="";
+        this.formModel.nhi_price="";
+        this.formModel.discount="";
+        this.formModel.allowance=""
     },
     loadTableBefore1(param, callBack) {
       //获取当前编辑主键id值
@@ -708,7 +742,7 @@ export default {
         this.$message.error("Invoice price can't be empty.");
         return false;
       }
-      debugger
+
       if(this.formModel.net_price || this.formModel.net_price==0){
         if(this.isDecimal(this.formModel.net_price) || this.isNumber(this.formModel.net_price)){
 
