@@ -440,6 +440,11 @@ let viewgird = [
         path: '/Viat_sftp_import',
         name: 'Viat_sftp_import',
         component: () => import('@/views/dataentry/sftp/Viat_sftp_import.vue')
+    }
+        ,{
+        path: '/Viat_sftp_export',
+        name: 'Viat_sftp_export',
+        component: () => import('@/views/dataentry/sftp/Viat_sftp_export.vue')
     }]
 
 
