@@ -172,8 +172,8 @@ export default {
 
           if(this.isEdit){
               _column1.edit= { type: "decimal" ,keep:true}
-              _column2.edit= { type: "decimal" ,keep:true}
-              _column3.edit= { type: "decimal" ,keep:true}
+              _column2.edit=  { type: "select",keep:true }
+              _column3.edit=  { type: "select",keep:true }
               _column4.edit= { type: "decimal" ,keep:true}
               _column5.edit= { type: "decimal" ,keep:true}
               _column6.edit= { type: "decimal" ,keep:true}
