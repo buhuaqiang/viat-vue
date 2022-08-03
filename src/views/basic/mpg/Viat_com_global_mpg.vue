@@ -30,7 +30,7 @@
                 sortName: "created_date"
             });
             const editFormFields = ref({"bu_id":"","status":"","finance_mpg":"","category":"","remarks":"","global_mpg":"","mpg_name":""});
-            const editFormOptions = ref([[{"dataKey":"LocalBu","data":[],"title":"Bu ID","required":true,"field":"bu_id","type":"select"},
+            const editFormOptions = ref([[{"dataKey":"LocalBu","data":[],"title":"Bu ID","field":"bu_id","type":"select"},
                                {"dataKey":"Status_YN","data":[],"title":"Status","required":true,"field":"status","type":"select"}],
                               [{"dataKey":"GlobalMpgCategory","data":[],"title":"Category","field":"category","type":"select"},
                                {"title":"Finance mpg","field":"finance_mpg"}],
@@ -44,7 +44,7 @@
                        {field:'division',title:'所屬事業單位,01:PH;03:AH;05:CH;06:NU',type:'string',width:110,hidden:true,align:'left'},
                        {field:'global_mpg',title:'Mpg ID',type:'string',link:true,width:110,readonly:true,require:true,align:'left',sort:true},
                        {field:'financempg_dbid',title:'Finance Mpg PKID',type:'guid',width:110,hidden:true,align:'left'},
-                       {field:'bu_id',title:'Bu ID',type:'string',bind:{ key:'LocalBu',data:[]},width:110,require:true,align:'left'},
+                       {field:'bu_id',title:'Bu ID',type:'string',bind:{ key:'LocalBu',data:[]},width:110,align:'left'},
                        {field:'finance_mpg',title:'Finance mpg',type:'string',width:110,hidden:true,align:'left'},
                        {field:'mpg_name',title:'Mpg Name',type:'string',width:110,readonly:true,require:true,align:'left'},
                        {field:'category',title:'Category',type:'string',bind:{ key:'GlobalMpgCategory',data:[]},width:110,align:'left'},
