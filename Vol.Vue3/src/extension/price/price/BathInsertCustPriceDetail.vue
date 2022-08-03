@@ -16,17 +16,17 @@
             </el-form-item>
           </li>
           <li>
-            <el-form-item id="0" label="Cust:" style="width: 40%">
+            <el-form-item id="0" label="Cust:" style="width: 49%">
               <el-input v-model="formModel.cust_id" style="width:120px;" @keyup.enter="custKeyPress"></el-input>
-              <el-input v-model="formModel.cust_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+              <el-input v-model="formModel.cust_name" style="width:300px;padding-left: 2px" :disabled="true"></el-input>
               <el-input v-model="formModel.cust_dbid" type="hidden" style="width: 0px"></el-input>
               <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;
               <a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
 
             </el-form-item>
-            <el-form-item label="Product:" style="width: 40%">
+            <el-form-item label="Product:" style="width: 49%">
               <el-input v-model="formModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress"></el-input>
-              <el-input v-model="formModel.prod_ename" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+              <el-input v-model="formModel.prod_ename" style="width:300px;padding-left: 2px" :disabled="true"></el-input>
               <el-input v-model="formModel.prod_dbid"  type="hidden" style="width: 0px"></el-input>
               <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
 
@@ -38,6 +38,7 @@
                       suffix-icon="el-icon-date"
                       v-model="formModel.start_date"
                       type="date"
+                      @change="getNHIPrice"
                       placeholder="" >
               </el-date-picker>
             </el-form-item>
@@ -278,6 +279,7 @@ export default {
             this.formModel.prod_ename=reslut.prod_ename;
             this.formModel.nhi_price=reslut.nhi_price;
             this.getGrossPrice(reslut.prod_id)
+            this.getNHIPrice()
           }else {
             this.$message.error("Product Id Is Not Exists.");
             this.formModel.prod_id=''
@@ -356,7 +358,7 @@ export default {
           this.formModel.invoice_price='';
           this.formModel.net_price='';
           this.getGrossPrice(rows[0].prod_id)
-
+          this.getNHIPrice()
         }
 
     },
@@ -369,6 +371,16 @@ export default {
         })
       }
 
+    },
+
+    //查询产品NHI价格,先从nhi价格群组找,找不到之后再去prod产品表找
+    getNHIPrice(){
+      if(this.formModel.prod_dbid && this.formModel.start_date){
+        let s=this.parseTime(this.formModel.start_date,'{y}-{m}-{d}')
+        this.http.post("api/View_cust_price/NhiPriceData?prod_dbid="+this.formModel.prod_dbid+"&start_date="+s,{} , "loading").then(reslut => {
+          this.formModel.nhi_price=reslut
+        })
+      }
     },
     clearPop(val){
       if(val==0){
