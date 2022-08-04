@@ -3,9 +3,9 @@
     <div style="padding:20px 2px;">
       <el-form :inline="true"  label-width="100px"  :model="formModel">
 
-        <el-form-item  label="Group:" style="width: 35%;">
-          <el-input v-model="formModel.group_id" @keyup.enter="groupKeyPress" style="width:120px;" ></el-input>
-          <el-input v-model="formModel.group_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+        <el-form-item  label="Group:" style="width: 40%;">
+          <el-input clearable v-model="formModel.group_id" @keyup.enter="groupKeyPress" style="width:120px;" ></el-input>
+          <el-input v-model="formModel.group_name" style="width:300px;padding-left: 2px" :disabled="true"></el-input>
           <el-input v-model="formModel.pricegroup_dbid" type="hidden" style="width:0px;" :disabled="true"></el-input>
           <a @click="openPriceGroup(0)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0)"><i class="el-icon-zoom-out"></i>Clean</a>
 
@@ -18,9 +18,9 @@
                   placeholder="" >
           </el-date-picker>
         </el-form-item>
-        <el-form-item  label="Customer:" style="width: 35%;">
-          <el-input v-model="formModel.cust_id" @keyup.enter="custKeyPress" style="width:120px;" ></el-input>
-          <el-input v-model="formModel.cust_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+        <el-form-item  label="Customer:" style="width: 40%;">
+          <el-input clearable v-model="formModel.cust_id" @keyup.enter="custKeyPress" style="width:120px;" ></el-input>
+          <el-input v-model="formModel.cust_name" style="width:300px;padding-left: 2px" :disabled="true"></el-input>
           <el-input v-model="formModel.cust_dbid" type="hidden" style="width:0px;" :disabled="true"></el-input>
           <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
 
@@ -140,20 +140,20 @@ export default {
         {field:'prod_dbid',title:'Product ID',type:'string',width:90,require:true,align:'left', hidden: true},
         {field:'prod_id',title:'Product ID',type:'string',width:90,require:true,align:'left'},
         {field:'prod_ename',title:'Product Name',type:'string',width:130,align:'left'},
-        {field:'nhi_price',title:'NHI Price',type:'decimal',width:90,align:'left'},
-        {field:'invoice_price',title:'Invoice Price',type:'decimal',width:90,align:'left'},
-        {field:'net_price',title:'Net Price',type:'decimal',width:90,align:'left'},
-        {field:'min_qty',title:'Min Qty',type:'decimal',width:90,align:'left'},
+        {field:'nhi_price',title:'NHI Price',type:'decimal',width:90,align:'right'},
+        {field:'invoice_price',title:'Invoice Price',type:'decimal',width:90,align:'right'},
+        {field:'net_price',title:'Net Price',type:'decimal',width:90,align:'right'},
+        {field:'min_qty',title:'Min Qty',type:'decimal',width:90,align:'right'},
         {field:'state',title:'Status',type:'string',bind:{ key:'prod_status',data:[]},width:80,align:'left'},
         ],
       tableColumns2:[
         {field:'prod_dbid',title:'Product ID',type:'string',width:90,require:true,align:'left', hidden: true},
         {field:'prod_id',title:'Product ID',type:'string',width:90,require:true,align:'left'},
         {field:'prod_ename',title:'Product Name',type:'string',width:130,align:'left'},
-        {field:'nhi_price',title:'NHI Price',type:'decimal',width:90,align:'left'},
-        {field:'invoice_price',title:'Invoice Price',type:'decimal',width:90,align:'left'},
-        {field:'net_price',title:'Net Price',type:'decimal',width:90,align:'left'},
-        {field:'min_qty',title:'Min Qty',type:'decimal',width:90,align:'left'},
+        {field:'nhi_price',title:'NHI Price',type:'decimal',width:90,align:'right'},
+        {field:'invoice_price',title:'Invoice Price',type:'decimal',width:90,align:'right'},
+        {field:'net_price',title:'Net Price',type:'decimal',width:90,align:'right'},
+        {field:'min_qty',title:'Min Qty',type:'decimal',width:90,align:'right'},
       ],
       pagination: {}, //分页配置，见voltable组件api
     };
@@ -166,6 +166,11 @@ export default {
   },
   methods: {
     groupKeyPress(){
+
+      this.$refs.mytable.rowData=[];
+      this.selectedData=[];
+      this.custprice_dbids=[];
+
       let  group_id = this.formModel.group_id
       if(group_id) {
         this.http.get("api/Viat_app_cust_price_group/getPriceGroupByGroupID?group_id="+group_id,{} , "loading").then(reslut => {
@@ -213,7 +218,7 @@ export default {
     },
     allChoose(){
       let table1Data=this.$refs.mytable.rowData;
-      this.selectedData=[];//這一步是為了避免重複數據
+      //this.selectedData=[];//這一步是為了避免重複數據
       this.custprice_dbids=[];
       this.selectedData=table1Data;
       table1Data.forEach(x=>{
@@ -313,36 +318,52 @@ export default {
     },
 
     addRow() {
-      let rows =  this.$refs.table2.getSelected()
-      if (!rows || rows.length == 0) {
-        return this.$message.error("請選擇數據");
+      let isCheckPass=this.checkData();
+      if(isCheckPass){
+        let rows =  this.$refs.table2.getSelected()
+        if (!rows || rows.length == 0) {
+           this.$message.error("Please select a record first");
+          return;
+        }
+        let detailData = [
+          {
+            key: "selectedJoinRowData",
+            value: rows,
+          }]
+        this.http.post("api/View_cust_price/excuteCustomerJoinGroup", { mainData: this.formModel,detailData:detailData }, true)
+                .then((x) => {
+                  this.$Message.success("success");
+                  this.search();
+                });
       }
-      this.checkData();
-      this.formModel.rows=rows;
-      this.http.post("api/View_cust_price/excuteCustomerJoinGroup", { mainData: this.formModel }, true)
-              .then((x) => {
-                if (!x.status) {
-                  this.$Message.error(x.message);
-                  return;
-                }
-              });
     },
 
 
     checkData(){
       if(!this.formModel.pricegroup_dbid){
-        return this.$message.error("Please input Group.");
+         this.$message.error("Please input Group.");
+         return false
       }
       if(!this.formModel.cust_dbid){
-        return this.$message.error("Please input Customer.");
+         this.$message.error("Please input Customer.");
+        return false
       }
       if(!this.formModel.start_date){
-        return this.$message.error("Please input Start Date.");
+         this.$message.error("Please input Start Date.");
+        return false
       }
       if(!this.formModel.end_date){
-        return this.$message.error("Please input End Date.");
+         this.$message.error("Please input End Date.");
+        return false
+      }
+      let date1_unix=Date.parse(this.formModel.start_date)
+      let date2_unix=Date.parse(this.formModel.end_date)
+      if(date1_unix>date2_unix){
+        this.$message.error("Start date should <= end date");
+        return false;
       }
 
+      return true
     },
     //这里是从api查询后返回数据的方法
     loadTableAfter(row) {
@@ -362,7 +383,7 @@ export default {
     loadTableBefore(params) {
       //查询前，设置查询条件
       if(this.custprice_dbids.length>0){
-        params.wheres.push({ name: "custprice_dbids", value: this.custprice_dbids,displayType:'not in' });
+        params.wheres.push({ name: "custprice_dbids", value: this.custprice_dbids.join(","),displayType:'not in' });
       }
       if(this.formModel.cust_dbid){
         params.wheres.push({ name: "cust_dbid", value: this.formModel.cust_dbid });
@@ -406,7 +427,7 @@ export default {
   .box {
     margin: 10px 2px;
     border: 1px solid ;
-    height: 600px;
+    height: 590px;
     position: relative;
     overflow: hidden;
   }
