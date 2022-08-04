@@ -2,31 +2,44 @@
   <div  id="vol-main" >
     <div style="padding:20px 2px;">
       <el-form :inline="true"  label-width="150px" :model="formModel">
-        <el-form-item  label="Customer:" style="width: 35%;">
-          <el-input v-model="formModel.cust_id" @keyup.enter="custKeyPress" style="width:120px;" ></el-input>
-          <el-input v-model="formModel.cust_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
-          <el-input v-model="formModel.cust_dbid" type="hidden" style="width:0px;" :disabled="true"></el-input>
-          <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
+        <ul>
+          <li>
+            <el-form-item style="padding-left: 150px;">
+              <el-checkbox v-model="formModel.show_invalid"   label="Show Invalid products" key="1" size="small" style="padding-left: 10px"/>
+            </el-form-item>
+          </li>
+          <li>
+            <el-form-item  label="Customer:" style="width: 40%;">
+              <el-input v-model="formModel.cust_id" @keyup.enter="custKeyPress" style="width:120px;" ></el-input>
+              <el-input v-model="formModel.cust_name" style="width:300px;padding-left: 2px" :disabled="true"></el-input>
+              <el-input v-model="formModel.cust_dbid" type="hidden" style="width:0px;" :disabled="true"></el-input>
+              <a @click="openPriceGroup(1)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1)"><i class="el-icon-zoom-out"></i>Clean</a>
 
-        </el-form-item>
-        <el-form-item label="Detach Start Date:" style="width: 60%">
-          <el-date-picker
-                  suffix-icon="el-icon-date"
-                  v-model="formModel.detach_date"
-                  type="date"
-                  placeholder="" >
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item  label="Product:" style="width: 35%">
-          <el-input v-model="formModel.prod_id" @keyup.enter="prodKeyPress" style="width:120px;" ></el-input>
-          <el-input v-model="formModel.prod_ename" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
-          <el-input v-model="formModel.prod_dbid" type="hidden" style="width:0px;" :disabled="true"></el-input>
-          <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
+            </el-form-item>
+            <el-form-item label="Detach Start Date:" style="width: 40%">
+              <el-date-picker
+                      suffix-icon="el-icon-date"
+                      v-model="formModel.detach_date"
+                      type="date"
+                      placeholder="" >
+              </el-date-picker>
+            </el-form-item>
+          </li>
+          <li>
+            <el-form-item  label="Product:" style="width: 40%">
+              <el-input v-model="formModel.prod_id" @keyup.enter="prodKeyPress" style="width:120px;" ></el-input>
+              <el-input v-model="formModel.prod_ename" style="width:300px;padding-left: 2px" :disabled="true"></el-input>
+              <el-input v-model="formModel.prod_dbid" type="hidden" style="width:0px;" :disabled="true"></el-input>
+              <a @click="openPriceGroup(2)" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
 
-        </el-form-item>
-        <el-form-item label="Remark:" style="width: 60%">
-          <el-input type="textarea" v-model="formModel.remark" style="width:250px;"></el-input>
-        </el-form-item>
+            </el-form-item>
+            <el-form-item label="Remark:" style="width: 40%">
+              <el-input type="textarea" v-model="formModel.remark" style="width:250px;"></el-input>
+            </el-form-item>
+          </li>
+        </ul>
+
+
       </el-form>
       <el-button
         type="primary"
@@ -87,21 +100,22 @@ export default {
       model: false,
       tipsShow:false,
       formModel:{
+        show_invalid:false,
         detach_date:new Date()
       },
       defaultLoadPage: false, //第一次打开时不加载table数据，openDemo手动调用查询table数据
       fieldName:"",//編輯字段,用於回傳設置值
       formType:"f",//弹框打开的form类型,f-editFormFields  s-searchFormFields
-      url: "api/View_cust_price/getPriceGroupProducts",//加载数据的接口(需要重新寫)
+      url: "api/View_cust_price/getCustomerProducts",//加载数据的接口(需要重新寫)
       columns: [
-        {field:'custprice_dbid',title:'custprice_dbid',type:'string',width:90,require:true,align:'left', hidden: true},
+        {field:'custgroup_dbid',title:'custgroup_dbid',type:'string',width:90,require:true,align:'left', hidden: true},
         {field:'group_id',title:'Group ID',type:'string',width:90,require:true,align:'left'},
         {field:'group_name',title:'Group Name',type:'string',width:130,align:'left'},
         {field:'prod_id',title:'Product ID',type:'string',width:90,require:true,align:'left'},
         {field:'prod_ename',title:'Product Name',type:'string',width:130,align:'left'},
-        {field:'nhi_price',title:'NHI Price',type:'decimal',width:90,align:'left'},
-        {field:'invoice_price',title:'Invoice Price',type:'decimal',width:90,align:'left'},
-        {field:'net_price',title:'Net Price',type:'decimal',width:90,align:'left'},
+        {field:'nhi_price',title:'NHI Price',type:'decimal',width:90,align:'right'},
+        {field:'invoice_price',title:'Invoice Price',type:'decimal',width:90,align:'right'},
+        {field:'net_price',title:'Net Price',type:'decimal',width:90,align:'right'},
         {field:'start_date',title:'Start Date',type:'date',width:90,align:'left'},
         {field:'end_date',title:'End Date',type:'date',width:90,align:'left'},
         {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:80,align:'left'},
@@ -216,33 +230,83 @@ export default {
     },
 
     addRow() {
-      let rows =  this.$refs.mytable.getSelected()
-      if (!rows || rows.length == 0) {
-        return this.$message.error("Please select a record first.");
+      let checkPassed=this.checkData();
+      if(checkPassed){
+        let rows =  this.$refs.mytable.getSelected()
+        if (!rows || rows.length == 0) {
+          return this.$message.error("Please select a record first.");
+        }
+        let detachKeys=[]
+        rows.forEach(x => {
+          detachKeys.push(x.custgroup_dbid);
+        })
+        this.formModel.detachKeys=detachKeys.join(",")
+        this.http.post("api/View_cust_price/excuteCustomerDetachGroup", { mainData: this.formModel }, true)
+                .then((x) => {
+                  this.$Message.success("success");
+                  this.search();
+                });
       }
-      this.checkData();
-      this.formModel.rows=rows;
-      this.http.post("api/View_cust_price/excuteCustomerDetachGroup", { mainData: this.formModel }, true)
-              .then((x) => {
-                this.$Message.success("success");
-                if (!x.status) {
-                  this.$Message.error(x.message);
-                  return;
-                }
-              });
+
     },
 
 
     checkData(){
+      debugger
       if(!this.formModel.cust_dbid){
-        return this.$message.error("Please input Customer.");
+         this.$message.error("Please input Customer.");
+        return false
       }
-
       if(!this.formModel.detach_date){
-        return this.$message.error("Please input Detach Start Date.");
+         this.$message.error("Please input Detach Start Date.");
+        return false
       }
-
+      let now=this.parseTime(new Date(),'{y}-{m}-{d}')
+      let date1_unix=Date.parse(now)
+      let date2_unix=Date.parse(this.parseTime(this.formModel.detach_date,'{y}-{m}-{d}'))
+      if(date1_unix>date2_unix){
+        this.$message.error("Detach date must be greater than or equal to today");
+        return false;
+      }
+      return true
     },
+    parseTime(time,cFormat){
+      const format=cFormat||'{y}-{m}-{d} {h}:{i}:{s}'
+      let date
+      if(typeof time ==='object'){
+        date=time
+      }else {
+        if(typeof time ==='string'){
+          if((/^[0-9]+$/.test(time))){
+            time=parseInt(time)
+          }else{
+            time=time.replace(new RegExp(/-/gm),'/')
+          }
+        }
+        if((typeof time==='number') && (time.toString().length)===10){
+          time=time*1000
+        }
+        date=new Date(time)
+      }
+      const formatObj={
+        y:date.getFullYear(),
+        m:date.getMonth()+1,
+        d:date.getDate(),
+        h:date.getHours(),
+        i:date.getMinutes(),
+        s:date.getSeconds(),
+        a:date.getDay()
+      }
+      const time_str=format.replace(/{([ymdhisa])+}/g,(result,key)=>{
+        const value=formatObj[key]
+        if(key==='a'){
+          return['日','一','二','三','四','五','六'][value]
+        }
+        return  value.toString().padStart(2,'0')
+      })
+      return time_str
+    },
+
     //这里是从api查询后返回数据的方法
     loadTableAfter(row) {
       //   let url="";
@@ -257,13 +321,15 @@ export default {
 
     loadTableBefore(params) {
       //查询前，设置查询条件
-
       if(this.formModel.cust_dbid){
         params.wheres.push({ name: "cust_dbid", value: this.formModel.cust_dbid });
       }else{
         //return  this.$message.error("Please input Customer.");;
       }
 
+      if(this.formModel.show_invalid){
+        params.wheres.push({ name: "show_invalid", value: "1"});
+      }
       if(this.formModel.prod_dbid){
         params.wheres.push({ name: "prod_dbid", value: this.formModel.prod_dbid });
       }else{
@@ -277,6 +343,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+  li{
+    list-style:none;
+  }
   .a-pop {
     color:#0c83ff;border-bottom: 1px solid;margin-left: 9px;font-size:12px;text-decoration:none;cursor: pointer
   }
