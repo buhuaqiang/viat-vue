@@ -28,9 +28,9 @@
         },
         data() {
             return {
-                url: "api/View_wk_bid_price_apply_main/PriceTansferImport", //导入的路径
+                url: "api/View_wk_bid_price_apply_main/PriceTansferImport", //导入的路径 http.post有 拼 this.http.ipAddress 此處不加用 this.http.ipAddress
                 template: { //下载模板的配置
-                    url: "api/View_wk_bid_price_apply_main/DownLoadTemplate",//下载模板的路径
+                    url: this.http.ipAddress+"api/View_wk_bid_price_apply_main/DownLoadTemplate",//下载模板的路径  需要加上 this.http.ipAddress
                     fileName: "priceImportTemplate", //模板的文件名
                 },
                 model: false,
