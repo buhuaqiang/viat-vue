@@ -31,7 +31,6 @@
                 url: "api/Viat_wk_contract_stretagy/StretagyImport", //导入的路径
                 template: { //下载模板的配置
                     url: this.http.ipAddress+"api/Viat_wk_contract_stretagy/DownLoadTemplate",
-                    //url: this.http.ipAddress+"api/Viat_wk_contract_stretagy/DownLoadTemp",//下载模板的路径
                     fileName: "stretagyImportTemplate", //模板的文件名
                 },
                 model: false,
@@ -40,7 +39,7 @@
         methods: {
             openModel() {
                 this.model = true
-                /*this.$nextTick(
+               /* this.$nextTick(
                     ()=> {
                         this.$refs.uploadExcel.reset();
                     });*/
@@ -51,7 +50,6 @@
                 return true;
             },
             uploadExtend() {
-                debugger
                 let formData = new FormData();
                 formData.append("files", this.$refs.uploadExcel.file);
                 this.$refs.uploadExcel.loadingStatus = true;
@@ -71,10 +69,6 @@
                         this.$refs.uploadExcel.loadingStatus = false;
                     }
                 );
-            },
-            stretagyDowloadTemplate(){
-                alert(2)
-                let url = this.template.url;
             },
             onUploadCallBack(x){
                 this.model = false;
