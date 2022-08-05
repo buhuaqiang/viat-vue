@@ -43,6 +43,7 @@
                        {field:'min_qty',title:'最低數量',type:'int',width:110,align:'left'},
                        {field:'invoice_price',title:'發票價',type:'decimal',width:110,align:'left'},
                        {field:'net_price',title:'實售價',type:'decimal',width:110,align:'left'},
+                        {field:'isbelong',title:'Isbelong',type:'string',bind:{ key:'SunLocalPerform',data:[]},width:110,align:'left'},
                        {field:'created_user',title:'建立用戶',type:'int',width:110,align:'left'},
                        {field:'created_username',title:'列created_username',type:'string',width:110,align:'left'},
                        {field:'created_client',title:'建立者的委託人',type:'int',width:110,align:'left'},
