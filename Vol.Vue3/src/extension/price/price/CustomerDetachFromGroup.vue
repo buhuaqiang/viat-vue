@@ -61,7 +61,7 @@
       >Clean</el-button >
 
     </div>
-    <div class="view-header" v-show="tipsShow">Select all just only for this page. Note: "脫離Group後的新價為健保價"</div>
+    <!--<div class="view-header" v-show="tipsShow">Select all just only for this page. Note: "脫離Group後的新價為健保價"</div>-->
     <vol-table
             ref="mytable"
             title="table1"
@@ -244,7 +244,11 @@ export default {
         this.formModel.detachKeys=detachKeys.join(",")
         this.http.post("api/View_cust_price/excuteCustomerDetachGroup", { mainData: this.formModel }, true)
                 .then((x) => {
-                  this.$Message.success("success");
+                  if(x.status){
+                    this.$Message.success("Save Completed.");
+                  }else{
+                    this.$Message.error(x.message);
+                  }
                   this.search();
                 });
       }
