@@ -99,6 +99,15 @@ let extension = {
         this.$refs.gridFooter.$refs.tableList.load({ wheres: [{"name":"group_id","value":row.group_id}] })
       }
     },
+    async modelOpenBeforeAsync(row) {
+      if (this.currentAction==this.const.EDIT){
+        if(row.status=='N'){
+          this.$Message.error(" Invalid record can’t edit.");
+          return false;
+        }
+      }
+      return true;
+    },
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
       //(1)判断是编辑还是新建操作： this.currentAction=='Add';
@@ -106,6 +115,9 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+      if (this.currentAction==this.const.ADD){
+        this.editFormFields.status='Y';
+      }
     }
   }
 };
