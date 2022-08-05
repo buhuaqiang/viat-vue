@@ -95,6 +95,7 @@ export default {
         {field:'invoice_price',title:'Invoice Price',type:'decimal',width:110,align:'right'},
         {field:'net_price',title:'Net Price',type:'decimal',width:110,align:'right'},
         {field:'min_qty',title:'Min Qty',type:'int',width:110,align:'left'},
+        {field:'isbelong',title:'contract incl',type:'string',width:80,align:'left'},
         {field:'prod_type',title:'Product Type',type:'string',width:110,align:'left'},
         {field:'category',title:'Category',type:'string',width:110,align:'left'},
         {field:'contstretail_dbid',title:'列名contstretail_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},

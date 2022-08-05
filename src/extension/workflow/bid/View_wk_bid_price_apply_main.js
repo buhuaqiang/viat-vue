@@ -550,6 +550,17 @@ let extension = {
         return false
       }
 
+      //重複判斷  保存时判断prod是否重复
+      let PriceTableRowData = this.$refs.modelBody.getPriceTableRowData();
+      PriceTableRowData.forEach((item, index) => {
+        PriceTableRowData.forEach((item1,index1)=>{
+          if(index!=index1 && item.prod_id==item1.prod_id){
+            this.$message.error("Product Price is already exist in draft.");
+            return false;
+          }
+
+        })
+      })
       let detailData = [
         {
           key: "priceTableRowData",
@@ -624,7 +635,7 @@ let extension = {
         }
       ]
       formData.detailData = detailData;
-      return true;
+      return true
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
@@ -697,75 +708,90 @@ let extension = {
 
     },
     saveSubmitExecute(){
-      let formData = {
-        mainData: this.editFormFields,
-        detailData: null,
-        delKeys: null
-      };
-      if (this.currentAction==this.const.ADD){
-        if(!this.addBefore(formData)){
-          return false
-        }
-      }else{
-        if(!this.updateBefore(formData)){
-          return false;
-        }
-      }
+      //重複判斷  保存时判断prod是否重复
+      let PriceTableRowData = this.$refs.modelBody.getPriceTableRowData();
+      PriceTableRowData.forEach((item, index) => {
+        PriceTableRowData.forEach((item1,index1)=>{
+          if(index!=index1 && item.prod_id==item1.prod_id){
+            this.$message.error("Product Price is already exist in draft.");
+            return false;
+          }
 
-      let url = "api/View_wk_bid_price_apply_main/addSubmit";
+        })
+      })
 
-      let _currentIsAdd = this.currentAction == this.const.ADD;
-      this.http.post(url, formData, true).then((x) => {
-        //保存后
-        if (_currentIsAdd) {
-          if (!this.addAfter(x)) return;
-          //连续添加
-          if (this.continueAdd && x.status) {
-            this.$Message.success(x.message?x.message:"Saved successfully!");
-            //新建
-            this.currentAction = this.const.ADD;
-            this.currentRow = {};
-            this.resetAdd();
-            this.refresh();
+        let formData = {
+          mainData: this.editFormFields,
+          detailData: null,
+          delKeys: null
+        };
+        if (this.currentAction==this.const.ADD){
+          if(!this.addBefore(formData)){
+            return false
+          }
+        }else{
+          if(!this.updateBefore(formData)){
+            return false;
+          }
+        }
+
+        let url = "api/View_wk_bid_price_apply_main/addSubmit";
+
+        let _currentIsAdd = this.currentAction == this.const.ADD;
+        this.http.post(url, formData, true).then((x) => {
+          //保存后
+          if (_currentIsAdd) {
+            if (!this.addAfter(x)) return;
+            //连续添加
+            if (this.continueAdd && x.status) {
+              this.$Message.success(x.message?x.message:"Saved successfully!");
+              //新建
+              this.currentAction = this.const.ADD;
+              this.currentRow = {};
+              this.resetAdd();
+              this.refresh();
+              return;
+            }
+          } else {
+            if (!this.updateAfter(x)) return;
+          }
+          if (!x.status) return this.$error(x.message);
+          this.$Message.success(x.message?x.message:"Saved successfully!");
+          //如果保存成功后需要关闭编辑框，直接返回不处理后面
+          if (this.boxOptions.saveClose) {
+            this.boxModel = false;
+            //2020.12.27如果是编辑保存后不重置分页页数，刷新页面时还是显示当前页的数据
+            this.$refs.table.load(null, _currentIsAdd);
+            //this.refresh();
             return;
           }
-        } else {
-          if (!this.updateAfter(x)) return;
-        }
-        if (!x.status) return this.$error(x.message);
-        this.$Message.success(x.message?x.message:"Saved successfully!");
-        //如果保存成功后需要关闭编辑框，直接返回不处理后面
-        if (this.boxOptions.saveClose) {
-          this.boxModel = false;
-          //2020.12.27如果是编辑保存后不重置分页页数，刷新页面时还是显示当前页的数据
-          this.$refs.table.load(null, _currentIsAdd);
-          //this.refresh();
-          return;
-        }
-        let resultRow;
-        if (typeof x.data == 'string' && x.data != '') {
-          resultRow = JSON.parse(x.data);
-        } else {
-          resultRow = x.data;
-        }
-
-        if (this.currentAction == this.const.ADD) {
-          //  this.currentRow=x.data;
-          this.editFormFields[this.table.key] = '';
-          this.currentAction = this.const.EDIT;
-          this.currentRow = resultRow.data;
-        }
-        this.resetEditForm(resultRow.data);
-        // console.log(resultRow);
-        if (this.hasDetail) {
-          this.detailOptions.delKeys = [];
-          if (resultRow.list) {
-            this.$refs.detail.rowData.push(...resultRow.list);
+          let resultRow;
+          if (typeof x.data == 'string' && x.data != '') {
+            resultRow = JSON.parse(x.data);
+          } else {
+            resultRow = x.data;
           }
-        }
-        this.$refs.table.load(null, _currentIsAdd);
-        // this.refresh();
-      });
+
+          if (this.currentAction == this.const.ADD) {
+            //  this.currentRow=x.data;
+            this.editFormFields[this.table.key] = '';
+            this.currentAction = this.const.EDIT;
+            this.currentRow = resultRow.data;
+          }
+          this.resetEditForm(resultRow.data);
+          // console.log(resultRow);
+          if (this.hasDetail) {
+            this.detailOptions.delKeys = [];
+            if (resultRow.list) {
+              this.$refs.detail.rowData.push(...resultRow.list);
+            }
+          }
+          this.$refs.table.load(null, _currentIsAdd);
+          // this.refresh();
+        });
+
+
+
     },
 
 
@@ -812,6 +838,7 @@ let extension = {
       let url = "api/Viat_app_cust_group/getCustGroupIDAndANmeByCustDBID?cust_dbid="+cust_dbid;
       this.http.get(url, {}, 'Get data....').then((x) => {
         if (!x) return ;
+        debugger
         this.editFormFields.cust_exists_group_id=x.group_id;
         this.editFormFields.cust_exists_group_name=x.group_name;
         this.getFormOption("cust_exists_group_id").hidden=false;
