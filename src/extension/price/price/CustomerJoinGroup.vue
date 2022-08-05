@@ -117,6 +117,7 @@
 import VolTable from "@/components/basic/VolTable.vue";
 import PriceGroupModelBody from "./PriceGroupModelBody";
 import Viat_com_custModelBody from "../../basic/cust/Viat_com_custModelBody";
+
 export default {
   components: {
     Viat_com_custModelBody,
@@ -366,8 +367,46 @@ export default {
         this.$message.error("Start date should <= end date");
         return false;
       }
-
+      //设置提交日期格式
+      this.formModel.start_date=this.parseTime(this.formModel.start_date,'{y}-{m}-{d}')
+      this.formModel.end_date=this.parseTime(this.formModel.end_date,'{y}-{m}-{d}')
       return true
+    },
+    parseTime(time,cFormat){
+      const format=cFormat||'{y}-{m}-{d} {h}:{i}:{s}'
+      let date
+      if(typeof time ==='object'){
+        date=time
+      }else {
+        if(typeof time ==='string'){
+          if((/^[0-9]+$/.test(time))){
+            time=parseInt(time)
+          }else{
+            time=time.replace(new RegExp(/-/gm),'/')
+          }
+        }
+        if((typeof time==='number') && (time.toString().length)===10){
+          time=time*1000
+        }
+        date=new Date(time)
+      }
+      const formatObj={
+        y:date.getFullYear(),
+        m:date.getMonth()+1,
+        d:date.getDate(),
+        h:date.getHours(),
+        i:date.getMinutes(),
+        s:date.getSeconds(),
+        a:date.getDay()
+      }
+      const time_str=format.replace(/{([ymdhisa])+}/g,(result,key)=>{
+        const value=formatObj[key]
+        if(key==='a'){
+          return['日','一','二','三','四','五','六'][value]
+        }
+        return  value.toString().padStart(2,'0')
+      })
+      return time_str
     },
     //这里是从api查询后返回数据的方法
     loadTableAfter(row) {
