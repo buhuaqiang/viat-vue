@@ -39,12 +39,16 @@
                               [
                                {"dataKey":"enable","data":[],"title":"Status","required":true,"field":"Enable","type":"select"},
                                   {"title":"employee","field":"emp_dbidname"},{"title":"employee","field":"emp_dbidname1","hidden":true}
-                                 ],
+                               ],
+                               [
+                                {"dataKey":"SYS_USER_PROFESSION_TYPE","data":[],"title":"Profession Type","required":false,"field":"profession_type","type":"select"},
+                                {"dataKey":"SYS_USER_DEPUTY_ZONE","data":[],"title":"Deputy Zone","required":false,"field":"deputy_zone","type":"checkbox"},
+                               ],
                               /*[{"title":"注册时间","field":"CreateDate","disabled":true},
                                {"title":"创建人","field":"Creator","disabled":true}],*/
                               [{"title":"用戶識別碼","field":"emp_dbid",hidden:true}],
                               [{"title":"Remark","field":"Remark","colSize":12,"type":"textarea"}],
-                              [{"title":"HeadImage","required":true,"field":"HeadImageUrl","type":"img"}]]);
+                              [{"title":"HeadImage","required":false,"field":"HeadImageUrl","type":"img"}]]);
             const searchFormFields = ref({"UserName":"","Gender":"","DeptName":"","Role_Id":"","Token":"","AppType":[],"UserTrueName":"","CreateDate":"","IsRegregisterPhone":"","PhoneNo":"","Enable":"","LastLoginDate":"","Address":"","Email":""});
             const searchFormOptions = ref([[{"title":"User Account","field":"UserName"},
                /* {"dataKey":"gender","data":[],"title":"性别","field":"Gender","type":"select"},*/
@@ -77,6 +81,7 @@
                        {field:'Token',title:'Token',type:'string',width:180,hidden:true,align:'left'},
                        {field:'AppType',title:'AppType',type:'int',bind:{ key:'ut',data:[]},width:150,hidden:true,align:'left'},
                        {field:'UserTrueName',title:'User Name',type:'string',width:120,require:true,align:'left'},
+                       {field:'profession_type',title:'Profession Type',type:'string',bind:{ key:'SYS_USER_PROFESSION_TYPE',data:[]},width:120,require:false,align:'left'},
                        {field:'CreateDate',title:'CreateDate',type:'datetime',width:150,readonly:true,align:'left',sortable:true},
                        {field:'IsRegregisterPhone',title:'手机用户',type:'int',bind:{ key:'isphone',data:[]},width:120,hidden:true,align:'left'},
                        {field:'PhoneNo',title:'Phone',type:'string',width:150,hidden:true,require:true,align:'left'},
