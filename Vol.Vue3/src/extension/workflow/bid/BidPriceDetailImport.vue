@@ -1,7 +1,7 @@
 <template>
 <VolBox
         v-model="model"
-        title="弹出框标题"
+        title="PriceApply-Master-Import"
         :height="325"
         :width="600"
         lazy="false"
