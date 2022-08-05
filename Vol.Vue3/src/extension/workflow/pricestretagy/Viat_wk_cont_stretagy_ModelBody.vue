@@ -80,6 +80,7 @@
           {field:'invoice_price',title:'Invoice Price',type:'decimal',width:110,edit: { type: "decimal" },align:'left'},
           {field:'net_price',title:'Net Price',type:'decimal',width:110,edit: { type: "decimal" },align:'left'},
           {field:'min_qty',title:'Mit Qty',type:'int',width:110,edit: { type: "number" },align:'left'},
+          {field:'isbelong',title:'contract incl',type:'string',width:110,bind:{key:"SunLocalPerform",data:[]},edit: { type:"select"},align:'left'},
           {field:'category',title:'Type',type:'string',width:110,align:'left'}
 
         ]
@@ -158,7 +159,8 @@
               nhi_price:row.nhi_price,
               invoice_price:row.invoice_price,
               net_price:row.net_price,
-              min_qty:row.min_qty
+              min_qty:row.min_qty,
+              isbelong:'Y'
             }
           })
           //push的时候去除已经选择的产品   this.$refs.table2.rowData.push(..._rows);

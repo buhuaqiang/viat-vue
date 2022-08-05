@@ -39,6 +39,7 @@
                        {field:'net_price',title:'實售價',type:'decimal',width:110,hidden:true,align:'left'},
                        {field:'min_qty',title:'最低數量',type:'int',width:110,align:'left'},
                        {field:'inv_type',title:'類別',type:'string',width:110,align:'left'},
+                        {field:'isbelong',title:'是否屬合約品項',type:'string',width:110,align:'left'},
                        {field:'contstretail_dbid',title:'列名contstretail_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'contstret_dbid',title:'列名contstret_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'prod_dbid',title:'列名prod_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
