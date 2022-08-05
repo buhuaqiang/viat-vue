@@ -44,12 +44,12 @@ export default {
       wheres:{},
       pagination: {}, //分页配置，见voltable组件api
       //从生成的代码sellorder2.vue里面把明细配置复制过来就能用
-      columns:  [
-        {field:'cust_id',title:'Cust Id',type:'string',width:110,align:'left',sort:true},
-        {field:'cust_name',title:'Cust Name',type:'string',width:150,require:true,align:'left',sort:true},
-        {field:'custGroupStatus',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'},
-        {field:'status',title:'Cust Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'}
-        ]
+      columns:  [{field:'cust_dbid',title:'cust_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
+        {field:'cust_id',title:'Cust Id',type:'string',width:110,require:true,align:'left',sort:true},
+        {field:'cust_name',title:'Cust Name',type:'string',width:120,align:'left'},
+        {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'},
+        {field:'custStatus',title:'Cust Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'},
+        {field:'group_id',title:'Group Id',type:'string',width:110,hidden:true,align:'left'}]
     }
   }
 }

@@ -57,6 +57,8 @@ let extension = {
       this.labelWidth=180;
       //表格设置为单选
       this.single=true;
+      //設置初始不加載
+      this.load=false;
     },
     onInited() {
       this.height = this.height/2
@@ -86,7 +88,7 @@ let extension = {
       this.$refs.table.$refs.table.toggleRowSelection(row);
       if (this.$refs.gridFooter && this.$refs.gridFooter.$refs.tableList) {
         //load方法可参照voltable组件api文档
-        this.$refs.gridFooter.$refs.tableList.load({ wheres: [{"name":"priceGroudId","value":row.group_id}], sort: "cust_id" })
+        this.$refs.gridFooter.$refs.tableList.load({ wheres: [{"name":"group_id","value":row.group_id}] })
       }
     },
     modelOpenAfter(row) {
