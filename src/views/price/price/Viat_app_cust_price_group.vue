@@ -42,7 +42,7 @@
                        {field:'division',title:'所屬事業單位,01:PH;03:AH;05:CH;06:NU',type:'string',width:110,hidden:true,align:'left'},
                        {field:'group_id',title:'Group ID',type:'string',link:true,width:110,require:true,align:'left',sort:true},
                        {field:'group_name',title:'Group Name',type:'string',width:120,require:true,align:'left'},
-                       {field:'group_type',title:'Group Type',type:'string',bind:{ key:'doh_type',data:[]},width:110,align:'left'},
+                       {field:'group_type',title:'Price Group Channel',type:'string',bind:{ key:'group_price_channel',data:[]},width:110,align:'left'},
                        {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'},
                        {field:'created_user',title:'Created User',type:'int',width:110,hidden:true,align:'left'},
                        {field:'created_username',title:'created_username',type:'string',width:110,hidden:true,align:'left'},

@@ -219,6 +219,7 @@ export default {
       });
     },
     openModel(single,flag,returnType) {
+      this.popTitle="Pick Customer Data"
       // this.getChannel();
       this.getDoh();
       this.single=single;
@@ -268,6 +269,7 @@ export default {
           $parent.handleCustomerSelected(this.flag, rows);//自定義回調方法處理,在調用頁面聲明
         })
       }
+
 
       //关闭当前窗口
       this.model = false;

@@ -172,6 +172,7 @@ export default {
     resetForm(){
         this.formModel={
           detach_date:new Date(),
+          show_invalid:false,
         }
       this.$refs.mytable.rowData=[];
 
