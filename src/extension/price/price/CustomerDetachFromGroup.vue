@@ -61,7 +61,7 @@
       >Clean</el-button >
 
     </div>
-    <!--<div class="view-header" v-show="tipsShow">Select all just only for this page. Note: "脫離Group後的新價為健保價"</div>-->
+    <div class="view-header" v-show="tipsShow">Select all just only for this page. </div>
     <vol-table
             ref="mytable"
             title="table1"
