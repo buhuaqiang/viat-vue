@@ -269,10 +269,13 @@ export default {
       let now=this.parseTime(new Date(),'{y}-{m}-{d}')
       let date1_unix=Date.parse(now)
       let date2_unix=Date.parse(this.parseTime(this.formModel.detach_date,'{y}-{m}-{d}'))
+
       if(date1_unix>date2_unix){
         this.$message.error("Detach date must be greater than or equal to today");
         return false;
       }
+      //设置日期格式
+      this.formModel.detach_date=this.parseTime(this.formModel.detach_date,'{y}-{m}-{d}')
       return true
     },
     parseTime(time,cFormat){
