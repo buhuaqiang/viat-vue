@@ -320,7 +320,7 @@ export default {
     addRow() {
       let isCheckPass=this.checkData();
       if(isCheckPass){
-        let rows =  this.$refs.table2.getSelected()
+        let rows =  this.selectedData;//
         if (!rows || rows.length == 0) {
            this.$message.error("Please select a record first");
           return;
@@ -332,8 +332,12 @@ export default {
           }]
         this.http.post("api/View_cust_price/excuteCustomerJoinGroup", { mainData: this.formModel,detailData:detailData }, true)
                 .then((x) => {
-                  this.$Message.success("success");
-                  this.search();
+                  if(x.status){
+                    this.$Message.success("Save Completed.");
+                  }else{
+                    this.$Message.error(x.message);
+                  }
+                  this.cancelAll()
                 });
       }
     },
