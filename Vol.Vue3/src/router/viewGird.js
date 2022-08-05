@@ -449,6 +449,10 @@ let viewgird = [
         path: '/View_order_apply',
         name: 'View_order_apply',
         component: () => import('@/views/workflow/bid/View_order_apply.vue')
+    }    ,{
+        path: '/Viat_wk_approve_level_setting',
+        name: 'Viat_wk_approve_level_setting',
+        component: () => import('@/views/workflow/setting/Viat_wk_approve_level_setting.vue')
     }]
 
 
