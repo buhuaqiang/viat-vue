@@ -139,18 +139,19 @@ let extension = {
     },
     addBefore(formData) {
       //新建保存前formData为对象，包括明细表，可以给给表单设置值，自己输出看formData的值
-      debugger
+      // delete formData.mainData.pricing_manager_name//
       let creg = /^C[0-9]{1,}$/gi;
       let nreg = /^[0-9]{1,}$/g;
       if (creg.test(formData.mainData.group_id) || nreg.test(formData.mainData.group_id)) {
         this.$message.error("Group ID first letter can’t be 'C' + 'number'");
         return false;
       }
-
       return true;
     },
     updateBefore(formData) {
       //编辑保存前formData为对象，包括明细表、删除行的Id
+
+      // delete formData.mainData.pricing_manager_name
       return true;
     },
     rowClick({ row, column, event }) {
