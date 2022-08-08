@@ -57,7 +57,7 @@
                        {field:'modified_username',title:'modified_username',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_client',title:'最後修改者的委託人',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
-                        {field:'pricing_manager_name',title:'Pricing Field',type:'guid',width:110,align:'left'},
+                        {field:'pricing_manager_name',title:'Pricing Field',type:'string',width:110,align:'left'},
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:110,align:'left',sort:true},
 
                        {field:'remarks',title:'Remarks',type:'string',width:220,align:'left'}]);

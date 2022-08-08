@@ -217,15 +217,18 @@
                 this.$refs.empolyPop.$refs.table.toggleRowSelection(row);//单击行时选中当前行;
             },
             loadTableBefore(params) {
-                //查询前，设置查询条件
+                //查询前，设置查询条件  params.wheres.push({ name: "group_name", value: this.group_name,displayType:'like' });
                 if (this.emp_ename) {
-                    params.wheres = [{ name: "emp_ename", value: this.emp_ename }];
+                    params.wheres.push({ name: "emp_ename", value: this.emp_ename,displayType:'like' });
                 }
                 if (this.emp_id) {
-                    params.wheres = [{ name: "emp_id", value: this.emp_id }];
+                    params.wheres.push({ name: "emp_id", value: this.emp_id,displayType:'like' });
                 }
                 if (this.emp_cname) {
-                    params.wheres = [{ name: "emp_cname", value: this.emp_cname }];
+                    params.wheres.push({ name: "emp_cname", value: this.emp_cname,displayType:'like' });
+                }
+                if(this.fieldName=='pricing_field'){//價格群組頁面的彈框
+                    params.wheres.push({ name: "profession_type", value: 'PM' });
                 }
                 return true;
             },

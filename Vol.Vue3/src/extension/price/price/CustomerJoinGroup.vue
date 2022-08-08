@@ -58,7 +58,9 @@
       >Clean</el-button >
 
     </div>
+    <div class="view-header" >Select all just only for this page. </div>
     <div  class="box">
+
       <div class="left">
         <div class="header">Group Price</div>
         <vol-table
@@ -98,7 +100,7 @@
                   :loadKey="true"
                   :clickEdit="false"
                   :columns="tableColumns2"
-                  :pagination-hide="false"
+                  :pagination-hide="true"
                   :single="false"
                   :height="500"
                   :defaultLoadPage="false"
@@ -156,7 +158,7 @@ export default {
         {field:'net_price',title:'Net Price',type:'decimal',width:90,align:'right'},
         {field:'min_qty',title:'Min Qty',type:'decimal',width:90,align:'right'},
       ],
-      pagination: {}, //分页配置，见voltable组件api
+      pagination: {size :120}, //分页配置，见voltable组件api
     };
   },
   created() {
@@ -468,7 +470,7 @@ export default {
     padding-left: 10px;
   }
   .box {
-    margin: 10px 2px;
+    //margin: 10px 2px;
     border: 1px solid ;
     height: 590px;
     position: relative;
@@ -498,6 +500,14 @@ export default {
     width: 48%;
     height: 100%;
   }
-
+  .view-header{
+    background-color:#d0d0d0;
+    height: 30px;
+    color:red;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+  }
 
 </style>
