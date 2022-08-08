@@ -7,6 +7,7 @@
 *****************************************************************************************/
 //此js文件是用来自定义扩展业务代码，可以扩展一些自定义页面或者重新配置生成的代码
 import PriceGroupCustList from "./PriceGroupCustList";
+import sys_employ_pop from "../../system/Sys_User/sys_employ_pop";
 import {h, resolveComponent} from "vue";
 let extension = {
   components: {
@@ -30,12 +31,24 @@ let extension = {
     gridFooter: PriceGroupCustList,
     //新建、编辑弹出框扩展组件
     modelHeader: '',
-    modelBody: '',
+    modelBody: sys_employ_pop,
     modelFooter: ''
   },
   tableAction: '', //指定某张表的权限(这里填写表名,默认不用填写)
   buttons: { view: [], box: [], detail: [] }, //扩展的按钮
   methods: {
+    getFormOption(field) {
+      let option;
+      this.editFormOptions.forEach(x => {
+        x.forEach(item => {
+          if (item.field == field) {
+            option = item;
+          }
+        })
+      })
+      return option;
+    },
+
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
         //示例：在按钮的最前面添加一个按钮
@@ -59,6 +72,53 @@ let extension = {
       this.single=true;
       //設置初始不加載
       this.load=false;
+
+      //----------渲染 emp pick框
+      let emp_dbidname=this.getFormOption("pricing_manager_name");
+      emp_dbidname.extra = {
+        render:this.getFormRender("pricing_field","f")
+      }
+    },
+    handleEmpSelected(flag,rows){
+      if(flag=='pricing_field'){
+        this.editFormFields.pricing_field=rows[0].emp_dbid
+        this.editFormFields.pricing_manager_name=rows[0].emp_ename
+      }
+    },
+    getFormRender(fieldName,formType) {//
+      return (h, { row, column, index }) => {
+        return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
+                onClick: (e) => {
+                  this.$refs.modelBody.open(fieldName,formType)
+                }
+              },
+              [h("i",{class:"el-icon-zoom-in"})],
+              "Select"
+          ),
+          h(
+              "a",
+              {
+                props: {},
+                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
+                onClick: (e) => {
+                  if(fieldName=='pricing_field'){
+                    this.editFormFields.pricing_field=''
+                    this.editFormFields.pricing_manager_name=''
+                  }
+
+                }
+              },
+              [h("i",{class:"el-icon-zoom-out"})],
+              "Clean"
+          ),
+
+        ]);
+      };
     },
     onInited() {
       this.height = this.height/2
@@ -73,6 +133,7 @@ let extension = {
     },
     searchAfter(result) {
       //查询后，result返回的查询数据,可以在显示到表格前处理表格的值
+      this.$refs.gridFooter.clearDATA();
       return true;
     },
     addBefore(formData) {
@@ -96,7 +157,8 @@ let extension = {
       this.$refs.table.$refs.table.toggleRowSelection(row);
       if (this.$refs.gridFooter && this.$refs.gridFooter.$refs.tableList) {
         //load方法可参照voltable组件api文档
-        this.$refs.gridFooter.$refs.tableList.load({ wheres: [{"name":"group_id","value":row.group_id}] })
+
+        this.$refs.gridFooter.$refs.tableList.load({ wheres: [{"name":"group_id","value":row.group_id},{"name":"status","value":this.searchFormFields.status}] })
       }
     },
     async modelOpenBeforeAsync(row) {
