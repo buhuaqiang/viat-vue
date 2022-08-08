@@ -56,6 +56,28 @@ let extension = {
       })
         //示例：设置修改新建、编辑弹出框字段标签的长度
         // this.boxOptions.labelWidth = 150;
+      this.columns.push({
+        title: '操作', width: 165, render: (h, { row, column, index }) => {
+          return h(
+              "div",
+              { style: {} },
+              [
+                h(
+                    "a",
+                    {
+                      props: {},
+                      style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                      onClick: (e) => {
+                        this.$confirm('Do you want to download?', 'Confirm')
+                      }
+                    },
+                    [h("i",{class:"el-icon-zoom-in"})],
+                    "Download"
+                )
+              ]
+          );
+        }
+      })
     },
     onInited() {
       //框架初始化配置后
@@ -81,7 +103,7 @@ let extension = {
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
-      // this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
+      this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据

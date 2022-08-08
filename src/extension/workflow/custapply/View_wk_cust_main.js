@@ -528,7 +528,7 @@ let extension = {
               },
               [h("i",{class:"el-icon-zoom-in"})],
               "Pick"
-          ),
+        ),
           h(
               "a",
               {
