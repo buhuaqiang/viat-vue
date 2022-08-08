@@ -23,18 +23,18 @@ let extension = {
   methods: {
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
-        //示例：在按钮的最前面添加一个按钮
-        //   this.buttons.unshift({  //也可以用push或者splice方法来修改buttons数组
-        //     name: '按钮', //按钮名称
-        //     icon: 'el-icon-document', //按钮图标vue2版本见iview文档icon，vue3版本见element ui文档icon(注意不是element puls文档)
-        //     type: 'primary', //按钮样式vue2版本见iview文档button，vue3版本见element ui文档button
-        //     onClick: function () {
-        //       this.$Message.success('点击了按钮');
-        //     }
-        //   });
+      this.setFiexdSearchForm(true);
+      this.load = false;
 
-        //示例：设置修改新建、编辑弹出框字段标签的长度
-        // this.boxOptions.labelWidth = 150;
+      this.buttons.splice(1, 0, {
+        name: "Execute",
+        icon: 'md-refresh',
+        type: 'info',
+        onClick: function () {
+          this.$Message.info("之後串接後端API");
+        }
+      })
+
     },
     onInited() {
       //框架初始化配置后

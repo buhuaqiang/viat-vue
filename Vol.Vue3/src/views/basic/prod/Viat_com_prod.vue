@@ -29,7 +29,7 @@
                 url: "/Viat_com_prod/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"prod_id":"","license_no":"","license_name":"","safty_stock":"","state":"","status_sample":"","status_bid":"","status_stock_pfizer":"","status_stock_dist":"","default_dist_id":""});
+            const editFormFields = ref({"prod_id":"","license_no":"","license_name":"","safty_stock":"","state":"","status_sample":"","status_bid":"","status_stock_dist":"","default_dist_id":""});
             const editFormOptions = ref([[{"title":"產品id","required":true,"field":"prod_id"},
                                {"title":"許可證字號","field":"license_no"},
                                {"title":"許可證名稱","field":"license_name"},
@@ -37,7 +37,6 @@
                                {"title":"狀態","field":"state"},
                                {"title":"是否可申請樣品","field":"status_sample"},
                                {"title":"是否可申請議價決標單","field":"status_bid"},
-                               {"title":"輝瑞庫存狀態","field":"status_stock_pfizer"},
                                {"title":"經銷商庫存狀態","field":"status_stock_dist"},
                                {"title":"預設所屬經銷商","field":"default_dist_id"}]]);
             const searchFormFields = ref({});
@@ -66,12 +65,10 @@
                        {field:'license_no',title:'許可證字號',type:'string',width:110,align:'left'},
                        {field:'license_name',title:'許可證名稱',type:'string',width:110,align:'left'},
                        {field:'stock_market',title:'stock_market',type:'int',width:110,align:'left'},
-                       {field:'stock_pfizer',title:'stock_pfizer',type:'int',width:110,align:'left'},
                        {field:'safty_stock',title:'安全庫存量',type:'int',width:110,align:'left'},
                        {field:'state',title:'狀態',type:'string',width:110,align:'left'},
                        {field:'status_sample',title:'是否可申請樣品',type:'string',width:110,align:'left'},
                        {field:'status_bid',title:'是否可申請議價決標單',type:'string',width:110,align:'left'},
-                       {field:'status_stock_pfizer',title:'輝瑞庫存狀態',type:'string',width:110,align:'left'},
                        {field:'status_stock_dist',title:'經銷商庫存狀態',type:'string',width:110,align:'left'},
                        {field:'default_dist_id',title:'預設所屬經銷商',type:'string',width:110,align:'left'},
                        {field:'prod_short_name',title:'產品簡稱',type:'string',width:110,align:'left'},
@@ -88,7 +85,10 @@
                        {field:'created_username',title:'建立用戶賬號',type:'string',width:110,align:'left'},
                        {field:'created_clientusername',title:'建立者的委託人賬號',type:'string',width:110,align:'left'},
                        {field:'modified_username',title:'最後修改用戶賬號',type:'string',width:110,align:'left'},
-                       {field:'modified_clientusername',title:'最後修改的委託人賬號',type:'string',width:110,align:'left'}]);
+                       {field:'modified_clientusername',title:'最後修改的委託人賬號',type:'string',width:110,align:'left'},
+                       {field:'stock_viat',title:'Pfizer 庫存量',type:'int',width:80,align:'left'},
+                       {field:'status_stock_viat',title:'輝瑞庫存狀態,Y: 是; N: 否',type:'string',width:110,align:'left'},
+                       {field:'storage_condition',title:'storage_condition',type:'string',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

@@ -76,7 +76,7 @@ export default {
       default: () => {
         return {
           url: "", //模板下载路径，如果没有模板路径，则不显示下载模板功能
-          fileName: "未定义文件名", //下载模板的文件名
+          fileName: "未定義文件名", //下载模板的文件名
         };
       },
     },
@@ -126,7 +126,7 @@ export default {
     upload() {
       let _url = this.url;
       if (!_url) {
-        return this.$Message.error("没有配置好Url");
+        return this.$Message.error("沒有配置好Url");
       }
 
       if (!this.file) {
@@ -183,7 +183,7 @@ export default {
       xmlResquest.onload = function (oEvent) {
         $_vue.loadingStatus = false;
         if (xmlResquest.response.type == "application/json") {
-          return $_vue.message.error("未找到下载文件");
+          return $_vue.message.error("未找到下載文件");
         }
         let content = xmlResquest.response;
         elink.download = fileName;
