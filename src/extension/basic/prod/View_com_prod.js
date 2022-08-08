@@ -139,7 +139,7 @@ let extension = {
         this.getOption("pack_size_pri").disabled=true;
         this.getOption("nhi_price").disabled=true;
         this.getOption("division").disabled=true;
-        this.getOption("status_stock_pfizer").disabled=true;
+        this.getOption("status_stock_viat").disabled=true;
       }
       if(path=="/View_com_prod_main" && this.currentAction=='Add'){
         this.getOption("prod_id").disabled=false;

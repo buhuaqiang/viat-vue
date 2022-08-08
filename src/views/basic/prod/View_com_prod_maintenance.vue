@@ -29,7 +29,7 @@
                 url: "/View_com_prod_maintenance/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"entity":"","prod_id":"","prod_sname":"","prod_ename":"","unit_stock":"","unit_sale":"","lmpg_mpg_id":"","global_mpg":"","nhi_id":"","default_dist_id":"","pack_size":"","pack_size_pri":"","nhi_price":"","division":"","prod_short_name":"","license_no":"","license_name":"","prod_form":"","prod_strength":"","is_ctrl_drug":"","prod_packed":"","safty_stock":"","state":"","status_sample":"","status_bid":"","status_stock_pfizer":"","status_stock_dist":""});
+            const editFormFields = ref({"entity":"","prod_id":"","prod_sname":"","prod_ename":"","unit_stock":"","unit_sale":"","lmpg_mpg_id":"","global_mpg":"","nhi_id":"","default_dist_id":"","pack_size":"","pack_size_pri":"","nhi_price":"","division":"","prod_short_name":"","license_no":"","license_name":"","prod_form":"","prod_strength":"","is_ctrl_drug":"","prod_packed":"","safty_stock":"","state":"","status_sample":"","status_bid":"","status_stock_viat":"","status_stock_dist":""});
             const editFormOptions = ref([[{"dataKey":"entity","data":[],"title":"Entity","field":"entity","disabled":true},
                                {"title":"Product ID","field":"prod_id","disabled":true}],
                               [{"title":"Product Name(Chinese)","field":"prod_sname","disabled":true},
@@ -58,7 +58,7 @@
                                {"dataKey":"prod_status","data":[],"title":"Status","field":"state","type":"select"}],
                               [{"dataKey":"SunLocalPerform","data":[],"title":"Samples Prohibited","field":"status_sample","type":"select","disabled":true},
                                {"dataKey":"SunLocalPerform","data":[],"title":"Bids Prohibited","field":"status_bid","type":"select"}],*/
-                              [{"dataKey":"SunLocalPerform","data":[],"title":"No Stock(Viatris)","field":"status_stock_pfizer","disabled":true,"type":"radio"},
+                              [{"dataKey":"SunLocalPerform","data":[],"title":"No Stock(Viatris)","field":"status_stock_viat","disabled":true,"type":"radio"},
                                {"dataKey":"SunLocalPerform","data":[],"title":"No Stock(Dist)","field":"status_stock_dist","type":"radio","disabled":true}]]);
             const searchFormFields = ref({"entity":"","division":"","localmpg_dbid":"","global_mpg":"","prod_id":"","prod_sname":"","prod_ename":"","inv_type":"","state":""});
             //const searchFormOptions = ref([[{"dataKey":"entity","data":[],"title":"Entity","field":"entity","type":"select"},{"dataKey":"division","data":[],"title":"Division","field":"division","type":"select"}],[{"title":"Item Description(Chinese)","field":"prod_sname","type":"like"},{"title":"Item Description(English)","field":"prod_ename","type":"like"}],[{"title":"Item Code","field":"prod_id","type":"like"},{"dataKey":"prod_status","data":[],"title":"Status","field":"state","type":"select"}],[{"dataKey":"sales_mpg","data":[],"title":"Sales MPG","field":"lmpg_mpg_id","type":"select"},{"dataKey":"finance_mpg","data":[],"title":"Finance MPG","field":"global_mpg","type":"select"}],[{"dataKey":"inv_type","data":[],"title":"Inv Type","field":"inv_type","type":"select"}]]);
@@ -86,12 +86,12 @@
                        {field:'license_no',title:'License Product No',type:'string',width:110,hidden:true,align:'left'},
                        {field:'license_name',title:'License Product Name',type:'string',width:110,hidden:true,align:'left'},
                        {field:'stock_market',title:'列名stock_market',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'stock_pfizer',title:'列名stock_pfizer',type:'int',width:110,hidden:true,align:'left'},
+                       {field:'status_viat',title:'列名status_viat',type:'int',width:110,hidden:true,align:'left'},
                        {field:'safty_stock',title:'Sample Safty Stock',type:'int',width:110,hidden:true,align:'left'},
                        {field:'state',title:'Status',type:'string',bind:{ key:'prod_status',data:[]},width:80,align:'left'},
                        {field:'status_sample',title:'Samples Prohibited',type:'string',bind:{ key:'SunLocalPerform',data:[]},width:110,hidden:true,align:'left'},
                        {field:'status_bid',title:'Bid Allowed',type:'string',bind:{ key:'SunLocalPerform',data:[]},width:80,align:'left'},
-                       {field:'status_stock_pfizer',title:'No Stock(Viatris)',type:'string',bind:{ key:'SunLocalPerform',data:[]},width:110,hidden:true,readonly:true,align:'left'},
+                       {field:'status_stock_viat',title:'No Stock(Viatris)',type:'string',bind:{ key:'SunLocalPerform',data:[]},width:110,hidden:true,readonly:true,align:'left'},
                        {field:'status_stock_dist',title:'No Stock(Dist)',type:'string',bind:{ key:'SunLocalPerform',data:[]},width:110,hidden:true,align:'left'},
                        {field:'default_dist_id',title:'Default Distributor',type:'string',bind:{ key:'distributor',data:[]},width:110,hidden:true,align:'left'},
                        {field:'prod_short_name',title:'Product Short Name',type:'string',width:110,hidden:true,align:'left'},
