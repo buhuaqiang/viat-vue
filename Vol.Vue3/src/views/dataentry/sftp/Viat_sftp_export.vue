@@ -22,7 +22,7 @@
     export default defineComponent({
         setup() {
             const table = ref({
-                key: 'sftp_dbid',
+                key: 'sftp_ex_dbid',
                 footer: "Foots",
                 cnName: 'Viat_sftp_export',
                 name: 'sftp/Viat_sftp_export',
@@ -39,7 +39,7 @@
                        {field:'file_name',title:'File Name',type:'string',width:220,align:'left',sort:true},
                        {field:'modified_date',title:'Update Date',type:'datetime',width:110,align:'left',sort:true},
                        {field:'file_size',title:'Size',type:'decimal',width:110,align:'left'},
-                       {field:'sftp_dbid',title:'sftp_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'}]);
+                       {field:'sftp_ex_dbid',title:'sftp_ex_dbid',type:'guid',width:110,require:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
