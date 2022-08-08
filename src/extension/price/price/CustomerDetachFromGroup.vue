@@ -61,7 +61,7 @@
       >Clean</el-button >
 
     </div>
-    <div class="view-header" v-show="tipsShow">Select all just only for this page. </div>
+    <div class="view-header" >Select all just only for this page. </div>
     <vol-table
             ref="mytable"
             title="table1"
@@ -121,7 +121,7 @@ export default {
         {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:80,align:'left'},
         ],
 
-      pagination: {}, //分页配置，见voltable组件api
+      pagination: {size:120}, //分页配置，见voltable组件api
     };
   },
   created() {
