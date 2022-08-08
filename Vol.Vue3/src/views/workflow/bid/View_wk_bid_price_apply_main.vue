@@ -29,7 +29,7 @@
                 url: "/View_wk_bid_price_apply_main/",
                 sortName: "BID_NO"
             });
-            const editFormFields = ref({"bidmast_dbid":"","bid_no":"","contstret_dbid":"","cont_stretagy_id":"","cont_stretagy_name":"","apply_type":"","cust_id":"","cust_name":"","group_id":"","group_name":"","cust_dbid":"","pricegroup_dbid":"","isgroup":"","bid_date":"","start_date":"","end_date":"","upload":"","remarks":"","cust_exists_group_id":"","cust_exists_group_name":""});
+            const editFormFields = ref({"bidmast_dbid":"","bid_no":"","contstret_dbid":"","cont_stretagy_id":"","cont_stretagy_name":"","apply_type":"","cust_id":"","cust_name":"","group_id":"","group_name":"","cust_dbid":"","pricegroup_dbid":"","isgroup":"","bid_date":"","start_date":"","end_date":"","upload":"","remarks":"","cust_exists_group_id":"","cust_exists_group_name":"","territory_id":""});
             const editFormOptions = ref([[ {"dataKey":"ApprovalType","data":[],"title":"Apply Type","required":true,"field":"apply_type","type":"select"},
                 {"title":"Bid NO","field":"bid_no","type":"text",readonly:true},
                              {"title":"bidmast dbid","field":"bidmast_dbid",hidden:true},
@@ -42,10 +42,10 @@
                                { title: "Customer Name", field: "cust_name", align: "left",hidden: true},
                                {"title":"Group DBID","field":"pricegroup_dbid","type":"text",hidden:true},
                                {"title":"Group ID","field":"group_id","type":"text"},
-                               { title: "Group Name", field: "group_name", align: "left",hidden: true},],
+                               { title: "Group Name", field: "group_name", align: "left",hidden: true}],
                               [{"title":"Customer In Group ID ","field":"cust_exists_group_id","type":"input",readonly: true,hidden: true},
                                {"title":"Customer In Group Name","field":"cust_exists_group_name","type":"input",readonly: true,hidden: true}],
-                              [{"title":"Bid Date","required":true,"field":"bid_date","type":"date",readonly: true}],
+                              [{"title":"Bid Date","required":true,"field":"bid_date","type":"date",readonly: true},{"dataKey":"Territory","data":[],"title":"Territory Code","field":"territory_id","type":"select"}],
                               [{"title":"Start Date","required":true,"field":"start_date","type":"date"},
                                {"title":"End Date","required":true,"field":"end_date","type":"date"}],
                               [{"title":"Attachments","field":"upload","type":"file"}],
@@ -80,6 +80,7 @@
                        {field:'created_client',title:'建立者的委託人',type:'int',width:80,hidden:true,align:'left'},
                        {field:'created_user',title:'建立用戶',type:'int',width:80,hidden:true,align:'left'},
                        {field:'approval_user',title:'當前審批人ID',type:'int',width:80,hidden:true,align:'left'},
+
                        {field:'upload',title:'Attachments',type:'file',width:220,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'最後修改者的委託人',type:'string',width:110,hidden:true,align:'left'},
                        {field:'remarks',title:'Remark',type:'string',width:110,align:'left',hidden:true},

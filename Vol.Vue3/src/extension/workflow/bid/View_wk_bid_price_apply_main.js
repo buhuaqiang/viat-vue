@@ -87,6 +87,7 @@ let extension = {
           editform_cust_id.required = false
           editform_group_id.hidden = false;
           editform_group_id.required = true
+          editform_group_id.disabled = false;
           cust_exists_group_id.hidden = true;
           cust_exists_group_name.hidden = true;
           this.editFormFields.cust_dbid="";
@@ -890,6 +891,30 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+      this.getFormOption("territory_id").data=[];
+      let deputys = [];
+      let deputy = {};
+      let url = "api/View_wk_bid_price_apply_main/SysUserData";
+      this.http.post(url, {}, true).then((result) => {
+        let professionType = result.profession_type;
+        let deputyZone = result.deputy_zone;
+        if(professionType=='SA'){
+          this.getFormOption("territory_id").required=true;
+          deputy = deputyZone.split(",")
+          for(let i=0;i<deputy.length;i++){
+            deputys.push({
+              key:deputy[i],
+              value:deputy[i]
+            })
+          }
+        }else{
+          this.getFormOption("territory_id").hidden=true;
+          this.getFormOption("territory_id").required=false;
+        }
+
+        this.getFormOption("territory_id").data = deputys;
+
+      });
 
       var editform_cust_id = this.getFormOption("cust_id");
       var editform_group_id = this.getFormOption("group_id");
