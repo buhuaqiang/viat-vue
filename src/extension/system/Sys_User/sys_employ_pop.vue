@@ -124,6 +124,7 @@
               let path =this.$route.path;
               this.fieldName=fieldName;
                 this.$emit("parentCall", ($parent) => {
+
                   if (path === '/View_com_local_mpg' && this.formType === 'f'){
                     if (this.fieldName == 'medical_reviewer_id'){
                       $parent.editFormFields['medical_reviewer_id'] = '';
@@ -155,6 +156,7 @@
                       $parent.searchFormFields[fieldName+'name'] ='';
                     }
                   }
+
                 })
             },
 
@@ -201,6 +203,7 @@
                         $parent.editFormFields[this.fieldName+'name'] =selectrow[0].emp_ename;
                         $parent.editFormFields.UserTrueName = selectrow[0].emp_ename;
                     }
+                    $parent.handleEmpSelected(this.fieldName,selectrow);
                 });
                 this.model=false;
             },

@@ -27,6 +27,9 @@ export default {
     VolTable
   },
   methods: {
+    clearDATA(){
+      this.$refs.tableList.rowData=[]
+    },
     loadBefore (params, callback) {
       //解決分頁參數傳遞問題
       if(params.wheres && params.wheres.length>0){

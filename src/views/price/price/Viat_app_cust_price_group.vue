@@ -34,11 +34,12 @@
                               [{"title":"Group Name","required":true,"field":"group_name"}],
                               [{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}],
                               [{"dataKey":"group_price_channel","data":[],"title":"Group Price Channel","field":"group_type","type":"select"}],
-                              [{"title":"Gov/Private","field":"cust_type"}],
-                              [{"title":"Pricing Field","field":"pricing_field"}],
+                              [{"title":"Gov/Private","field":"cust_type","dataKey":"price_group_cust_type","data":[],"type":"select"}],
+                              [{"title":"Pricing Field","field":"pricing_field",hidden:true}],
+                                [{"title":"Pricing Field","field":"pricing_manager_name"}],
                               [{"title":"Remarks","field":"remarks","type":"textarea"}]]);
             const searchFormFields = ref({"group_id":"","group_name":"","status":""});
-            const searchFormOptions = ref([[{"title":"Group ID","field":"group_id"},{"title":"Group Name","field":"group_name","type":"like"},{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}]]);
+            const searchFormOptions = ref([[{"title":"Group ID","field":"group_id","type":"like"},{"title":"Group Name","field":"group_name","type":"like"},{"dataKey":"Status_YN","data":[],"title":"Status","field":"status","type":"select"}]]);
             const columns = ref([{field:'pricegroup_dbid',title:'主鍵',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'entity',title:'公司別,舊版SUN_DB',type:'string',width:110,hidden:true,align:'left'},
                        {field:'division',title:'所屬事業單位,01:PH;03:AH;05:CH;06:NU',type:'string',width:110,hidden:true,align:'left'},
@@ -46,7 +47,7 @@
                        {field:'group_name',title:'Group Name',type:'string',width:120,require:true,align:'left'},
                        {field:'group_type',title:'Group Price Channel',type:'string',bind:{ key:'group_price_channel',data:[]},width:110,align:'left'},
                        {field:'status',title:'Status',type:'string',bind:{ key:'Status_YN',data:[]},width:110,align:'left'},
-                       {field:'cust_type',title:'Gov/Private',type:'string',width:110,align:'left'},
+                       {field:'cust_type',title:'Gov/Private',type:'string',bind:{ key:'price_group_cust_type',data:[]},width:110,align:'left'},
                        {field:'created_user',title:'Created User',type:'int',width:110,hidden:true,align:'left'},
                        {field:'created_username',title:'created_username',type:'string',width:110,hidden:true,align:'left'},
                        {field:'created_client',title:'建立者的委託人',type:'int',width:110,hidden:true,align:'left'},
@@ -56,7 +57,7 @@
                        {field:'modified_username',title:'modified_username',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_client',title:'最後修改者的委託人',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
-                        {field:'pricing_field',title:'Pricing Field',type:'guid',width:110,align:'left'},
+                        {field:'pricing_manager_name',title:'Pricing Field',type:'guid',width:110,align:'left'},
                        {field:'modified_date',title:'Modified Date',type:'datetime',width:110,align:'left',sort:true},
 
                        {field:'remarks',title:'Remarks',type:'string',width:220,align:'left'}]);
