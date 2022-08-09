@@ -9,15 +9,15 @@
   </div>
     <div style="padding-bottom: 10px;padding-left:45px;">
       <el-form :inline="true" label-position="right" label-width="110px" :model="formModel">
-        <el-form-item label="Product:" style="width: 50%" v-show="!this.isView"   >
-          <el-input v-model="formModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress" :disabled="this.isView"></el-input>
+        <el-form-item label="Product:" style="width: 50%" v-show="!isView"   >
+          <el-input v-model="formModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress" :disabled="isView"></el-input>
           <el-input v-model="formModel.prod_ename" style="width:300px;padding-left: 2px" :disabled="true"></el-input>
           <el-input v-model="formModel.prod_dbid"  type="hidden" style="width: 0px"></el-input>
           <a @click="openProdModel()" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
         </el-form-item>
 
-        <el-form-item label="Product:" style="width: 50%" v-show="this.isView"  >
-          <el-input v-model="formModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress" :disabled="this.isView"></el-input>
+        <el-form-item label="Product:" style="width: 50%" v-show="isView"  >
+          <el-input v-model="formModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress" :disabled="isView"></el-input>
           <el-input v-model="formModel.prod_ename" style="width:300px;padding-left: 2px" :disabled="true"></el-input>
           <el-input v-model="formModel.prod_dbid"  type="hidden" style="width: 0px"></el-input>
           <a class="a-view-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-view-clear"><i class="el-icon-zoom-out"></i>Clean</a>
@@ -28,17 +28,17 @@
           <el-input v-model="formModel.nhi_price" style="width:200px;" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item   label="Invoice Price:" style="width: 50%">
-          <el-input v-model="formModel.invoice_price" style="width:200px;" :disabled="this.isView"></el-input>
+          <el-input v-model="formModel.invoice_price" style="width:200px;" :disabled="isView"></el-input>
         </el-form-item>
 
         <el-form-item   label="Current Price:" style="width: 35%">
           <el-input v-model="formModel.net_price" style="width:200px;" :disabled="true" ></el-input>
         </el-form-item>
         <el-form-item   label="Bid Price:" style="width: 50%">
-          <el-input v-model="formModel.bid_price" style="width:200px;" @change="caculator()" :disabled="this.isView"></el-input>
+          <el-input v-model="formModel.bid_price" style="width:200px;" @change="caculator()" :disabled="isView"></el-input>
         </el-form-item>
         <el-form-item   label="Min Qty:" style="width: 35%">
-          <el-input-number v-model="formModel.min_qty"  style="width:200px;" :disabled="this.isView"></el-input-number>
+          <el-input-number v-model="formModel.min_qty"  style="width:200px;" :disabled="isView"></el-input-number>
         </el-form-item>
         <el-form-item   label="DIS%:" style="width: 50%">
           <el-input v-model="formModel.discount" style="width:200px;" :disabled="true"></el-input>
