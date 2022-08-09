@@ -580,9 +580,8 @@ let extension = {
       let priceTableRowData="";
       if(this.editFormFields.apply_type=='03'){
         priceTableRowData= this.$refs.modelBody.getPriceTableRowData();
-        //重複判斷  保存时判断prod是否重复
-        PriceTableRowData.forEach((item, index) => {
-          PriceTableRowData.forEach((item1,index1)=>{
+        priceTableRowData.forEach((item, index) => {
+          priceTableRowData.forEach((item1,index1)=>{
             if(index!=index1 && item.prod_id==item1.prod_id){
               this.$message.error("Product Price is already exist in draft.");
               return false;
@@ -604,6 +603,18 @@ let extension = {
         return false
       }
 
+      //重複判斷  保存时判断prod是否重复
+      /*let PriceTableRowData = this.$refs.modelBody.getPriceTableRowData();
+      PriceTableRowData.forEach((item, index) => {
+        PriceTableRowData.forEach((item1,index1)=>{
+          if(index!=index1 && item.prod_id==item1.prod_id){
+            this.$message.error("Product Price is already exist in draft.");
+            return false;
+          }
+
+        })
+      })
+*/
 
       let detailData = [
         {
@@ -962,7 +973,7 @@ let extension = {
       this.http.post(url, {}, true).then((result) => {
         let professionType = result.profession_type;
         let deputyZone = result.deputy_zone;
-        if(professionType=='SA'){
+        if(professionType=='SA' || professionType=='FF'){
           this.getFormOption("territory_id").required=true;
           this.getFormOption("territory_id").hidden=false;
           deputy = deputyZone.split(",")
