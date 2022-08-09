@@ -29,7 +29,7 @@
                 url: "/View_order_apply/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"bid_no":"","apply_type":"","cust_id":"","isgroup":"","bid_date":"","cust_exists_group_id":"","cust_exists_group_name":"","group_id":""});
+            const editFormFields = ref({"bid_no":"","apply_type":"","cust_id":"","isgroup":"","bid_date":"","cust_exists_group_id":"","cust_exists_group_name":"","group_id":"","remarks":"","cust_name":""});
             const editFormOptions = ref([[{"dataKey":"ApprovalType","data":[],"title":"Apply Type","required":true,"field":"apply_type","type":"select"},
                 {"title":"Bid NO","field":"bid_no","type":"text",readonly:true},
                 {"title":"bidmast dbid","field":"bidmast_dbid",hidden:true},
@@ -50,10 +50,10 @@
                     {"title":"End Date","required":true,"field":"end_date","type":"date"}],
                 [{"title":"Attachments","field":"upload","type":"file"}],
                 [{"title":"Remark","field":"remarks","type":"textarea"}]]);
-            const searchFormFields = ref({"bid_no":"","start_date":"","status":"","cust_id":""});
-            const searchFormOptions = ref([[{"title":"Bid No","field":"bid_no","type":"like"},{"title":"Cust Id","field":"cust_id"}],[{"title":"Start Date","field":"start_date","type":"date"},{"dataKey":"ApprovalStatus","data":[],"title":"Status","field":"status","type":"select"}]]);
+            const searchFormFields = ref({"bid_no":"","start_date":"","status":"","cust_id":"","cust_dbid":""});
+            const searchFormOptions = ref([[{"title":"Bid No","field":"bid_no","type":"like"},{"title":"Cust Id","field":"cust_id"}],[{"title":"Start Date","field":"start_date","type":"date"},{"dataKey":"ApprovalStatus","data":[],"title":"Status","field":"status","type":"select"}],[{"title":"","field":"cust_dbid"}]]);
             const columns = ref([{field:'bidmast_dbid',title:'列名bidmast_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
-                       {field:'bid_no',title:'Bid No',type:'string',width:110,align:'left',sort:true,link: true},
+                       {field:'bid_no',title:'Bid No',type:'string',width:110,align:'left',sort:true},
                 {field:'status',title:'Status',type:'string',bind:{ key:'ApprovalStatus',data:[]},width:110,align:'left'},
                 {field:'apply_type',title:'Apply Type',type:'string',bind:{ key:'ApprovalType',data:[]},width:110,require:true,align:'left'},
                 {field:'cust_id',title:'Cust Id',type:'string',width:110,align:'left'},

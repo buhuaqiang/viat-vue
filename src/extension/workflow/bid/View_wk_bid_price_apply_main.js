@@ -580,6 +580,16 @@ let extension = {
       let priceTableRowData="";
       if(this.editFormFields.apply_type=='03'){
         priceTableRowData= this.$refs.modelBody.getPriceTableRowData();
+        //重複判斷  保存时判断prod是否重复
+        PriceTableRowData.forEach((item, index) => {
+          PriceTableRowData.forEach((item1,index1)=>{
+            if(index!=index1 && item.prod_id==item1.prod_id){
+              this.$message.error("Product Price is already exist in draft.");
+              return false;
+            }
+
+          })
+        })
       }
 
       let orderTableRowData = this.$refs.modelBody.getOrderTableRowData();
@@ -594,17 +604,7 @@ let extension = {
         return false
       }
 
-      //重複判斷  保存时判断prod是否重复
-      let PriceTableRowData = this.$refs.modelBody.getPriceTableRowData();
-      PriceTableRowData.forEach((item, index) => {
-        PriceTableRowData.forEach((item1,index1)=>{
-          if(index!=index1 && item.prod_id==item1.prod_id){
-            this.$message.error("Product Price is already exist in draft.");
-            return false;
-          }
 
-        })
-      })
       let detailData = [
         {
           key: "priceTableRowData",
@@ -882,7 +882,6 @@ let extension = {
       let url = "api/Viat_app_cust_group/getCustGroupIDAndANmeByCustDBID?cust_dbid="+cust_dbid;
       this.http.get(url, {}, 'Get data....').then((x) => {
         if (!x) return ;
-        debugger
         this.editFormFields.cust_exists_group_id=x.group_id;
         this.editFormFields.cust_exists_group_name=x.group_name;
         this.getFormOption("cust_exists_group_id").hidden=false;
@@ -965,6 +964,7 @@ let extension = {
         let deputyZone = result.deputy_zone;
         if(professionType=='SA'){
           this.getFormOption("territory_id").required=true;
+          this.getFormOption("territory_id").hidden=false;
           deputy = deputyZone.split(",")
           for(let i=0;i<deputy.length;i++){
             deputys.push({
@@ -1036,6 +1036,7 @@ let extension = {
         this.getFormOption("apply_type").disabled=false
         this.getFormOption("isgroup").disabled=false;
         this.getFormOption("upload").hidden=false;
+        this.getFormOption("territory_id").disabled=false;
         //this.getFormOption("cust_id").disabled=false;
         let dateStrs=this.parseTime(new Date(),'{y}-{m}-{d}')
         this.editFormFields.bid_date=dateStrs;
@@ -1048,6 +1049,7 @@ let extension = {
         this.getFormOption("start_date").disabled=false;
         this.getFormOption("remarks").disabled=false;
         this.getFormOption("upload").hidden=false;
+        this.getFormOption("territory_id").disabled=false;
       }else if(this.currentAction =='view'){
         this.boxButtons.forEach(x => {
           if (x.value == "Save&Submit") {

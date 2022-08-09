@@ -285,12 +285,13 @@ export default {
       }
 
       this.$nextTick(()=>{
-
         if ($parent.currentAction == "Add") {
           this.clearTableDetail();
         } else {
-          if(apply_type=='03'){
-            this.$refs.priceTable.load();
+          if(path!="/View_order_apply"){
+            if(apply_type=='03'){
+              this.$refs.priceTable.load();
+            }
           }
           this.$refs.orderTable.load();
         }
