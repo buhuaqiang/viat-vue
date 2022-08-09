@@ -453,6 +453,10 @@ let viewgird = [
         path: '/Viat_wk_approve_level_setting',
         name: 'Viat_wk_approve_level_setting',
         component: () => import('@/views/workflow/setting/Viat_wk_approve_level_setting.vue')
+    }    ,{
+        path: '/Viat_app_power_contract',
+        name: 'Viat_app_power_contract',
+        component: () => import('@/views/contract/contract/Viat_app_power_contract.vue')
     }]
 
 
