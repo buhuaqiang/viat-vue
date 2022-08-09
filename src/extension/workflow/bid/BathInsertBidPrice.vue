@@ -9,31 +9,36 @@
   </div>
     <div style="padding-bottom: 10px;padding-left:45px;">
       <el-form :inline="true" label-position="right" label-width="110px" :model="formModel">
-
-
-        <el-form-item label="Product:" style="width: 50%">
-          <el-input v-model="formModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress"></el-input>
+        <el-form-item label="Product:" style="width: 50%" v-show="!this.isView"   >
+          <el-input v-model="formModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress" :disabled="this.isView"></el-input>
           <el-input v-model="formModel.prod_ename" style="width:300px;padding-left: 2px" :disabled="true"></el-input>
           <el-input v-model="formModel.prod_dbid"  type="hidden" style="width: 0px"></el-input>
           <a @click="openProdModel()" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(2)"><i class="el-icon-zoom-out"></i>Clean</a>
-
         </el-form-item>
+
+        <el-form-item label="Product:" style="width: 50%" v-show="this.isView"  >
+          <el-input v-model="formModel.prod_id" style="width:120px;" @keyup.enter="prodKeyPress" :disabled="this.isView"></el-input>
+          <el-input v-model="formModel.prod_ename" style="width:300px;padding-left: 2px" :disabled="true"></el-input>
+          <el-input v-model="formModel.prod_dbid"  type="hidden" style="width: 0px"></el-input>
+          <a class="a-view-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-view-clear"><i class="el-icon-zoom-out"></i>Clean</a>
+        </el-form-item>
+
 
         <el-form-item   label="NHI Price:" style="width: 35%">
           <el-input v-model="formModel.nhi_price" style="width:200px;" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item   label="Invoice Price:" style="width: 50%">
-          <el-input v-model="formModel.invoice_price" style="width:200px;" ></el-input>
+          <el-input v-model="formModel.invoice_price" style="width:200px;" :disabled="this.isView"></el-input>
         </el-form-item>
 
         <el-form-item   label="Current Price:" style="width: 35%">
           <el-input v-model="formModel.net_price" style="width:200px;" :disabled="true" ></el-input>
         </el-form-item>
         <el-form-item   label="Bid Price:" style="width: 50%">
-          <el-input v-model="formModel.bid_price" style="width:200px;" @change="caculator()"></el-input>
+          <el-input v-model="formModel.bid_price" style="width:200px;" @change="caculator()" :disabled="this.isView"></el-input>
         </el-form-item>
         <el-form-item   label="Min Qty:" style="width: 35%">
-          <el-input-number v-model="formModel.min_qty"  style="width:200px;" ></el-input-number>
+          <el-input-number v-model="formModel.min_qty"  style="width:200px;" :disabled="this.isView"></el-input-number>
         </el-form-item>
         <el-form-item   label="DIS%:" style="width: 50%">
           <el-input v-model="formModel.discount" style="width:200px;" :disabled="true"></el-input>
@@ -163,6 +168,7 @@ export default {
     return {
       model: false,
       showButton:true,
+      isView:false,//判斷是否是查看
       bidmast_dbid:"",
       contstret_dbid:"",
       cont_stretagy_id:"",
@@ -214,8 +220,8 @@ export default {
         {field:'invoice_price',title:'Invoice Price',edit: { type: "number",keep:true },width:100,require:true,align:'right'},
         {field:'net_price',title:'Current Price',type:'decimal',disabled:true,width:100,require:true,align:'right'},
         {field:'bid_price',title:'Bid Price',edit: { type: "number" ,keep:true},width:100,require:true,align:'right'},
-        {field:'min_qty',title:'Min Qty',edit: { type: "number",keep:true },width:80,require:true,align:'left'},
-        {field:'isbelong',title:'contract incl',type:'string',width:110,bind:{key:"SunLocalPerform",data:[]},edit: { type:"select"},align:'left'},
+        {field:'min_qty',title:'Min Qty',edit: { type: "number",keep:true },width:80,require:true,align:'left',disabled:true},
+        {field:'isbelong',title:'contract incl',type:'string',width:110,bind:{key:"SunLocalPerform",data:[]},edit: { type:"select" ,keep:true},align:'left'},
         {field:'discount',title:'DIS%',type:'decimal',width:50,align:'left'},
         {field:'allowance',title:'FG%',type:'decimal',width:50,align:'left'},
         {field:'reserv_price',title:'Reser Price',edit: { type: "number",keep:true },hidden:true,width:100,align:'right'},
@@ -229,7 +235,7 @@ export default {
         {field:'prod_id',title:'Product Id',type:'string',width:110,require:true,align:'left',readonly:true},
         {field:'prod_ename',title:'Product Name',type:'string',width:110,align:'left',readonly:true},
         {field:'qty',title:'Qty', edit: { type: "number" ,keep:true},width:110,require:true,align:'left'},
-        {field:'oper',title:''},
+        //{field:'oper',title:''},
       ],
 
       pagination: {}, //分页配置，见voltable组件api
@@ -290,63 +296,106 @@ export default {
         }
         if($parent.currentAction =='view'){
           this.showButton = false;
+          //查看時調整樣式
+          this.isView=true;
         }else{
           this.showButton = true;
+          this.isView=false;
         }
       });
 
       //onInited方法设置从表编辑时实时计算值
       this.columns.forEach(x => {
-        //設定可編輯狀態打開，不用雙擊
-        if (x.field == 'allowance') {
-          //将eidt设置为null不开启编辑
-          x.edit = null;
-          x.formatter = (row) => {
-            let bid_price=row.bid_price;
-            let nhi_price=row.nhi_price;
-            let allowance = Math.abs(((nhi_price-bid_price)/bid_price*100).toFixed(2));
-            row.allowance=allowance
-            return allowance
+        if($parent.currentAction =='view'){
+          if(x.field=='invoice_price'){
+            x.edit = null;
           }
-        }
-        if (x.field == 'discount') {
-          //将eidt设置为null不开启编辑
-          x.edit = null;
-          x.formatter = (row) => {
-            let bid_price=row.bid_price;
-            let nhi_price=row.nhi_price;
-            let discount = Math.abs(((nhi_price-bid_price)/nhi_price*100).toFixed(2));
-            row.discount=discount
-            return discount;
+          if(x.field=='bid_price'){
+            x.edit = null;
           }
-        }
+          if(x.field=='min_qty'){
+            x.edit = null;
+          }
+          if(x.field=='isbelong'){
+            x.edit = null;
+          }
+          if(x.field=='prod_id'){
+            x.edit = null;
+          }
+        }else{
+          if(x.field=='invoice_price'){
+            x.edit = { type: "number",keep:true };
+          }
+          if(x.field=='bid_price'){
+            x.edit = { type: "number" ,keep:true};
+          }
+          if(x.field=='min_qty'){
+            x.edit = { type: "number",keep:true };
+          }
+          if(x.field=='isbelong'){
+            x.edit = { type:"select" ,keep:true};
+          }
+          //設定可編輯狀態打開，不用雙擊
+          if (x.field == 'allowance') {
+            //将eidt设置为null不开启编辑
+            x.edit = null;
+            x.formatter = (row) => {
+              let bid_price=row.bid_price;
+              let nhi_price=row.nhi_price;
+              let allowance = Math.abs(((nhi_price-bid_price)/bid_price*100).toFixed(2));
+              row.allowance=allowance
+              return allowance
+            }
+          }
+          if (x.field == 'discount') {
+            //将eidt设置为null不开启编辑
+            x.edit = null;
+            x.formatter = (row) => {
+              let bid_price=row.bid_price;
+              let nhi_price=row.nhi_price;
+              let discount = Math.abs(((nhi_price-bid_price)/nhi_price*100).toFixed(2));
+              row.discount=discount
+              return discount;
+            }
+          }
 
-        if (x.field == 'view') {//查看近一年的记录
-          //将eidt设置为null不开启编辑
-          x.formatter = (row) => {
-            return "<a style='cursor:pointer;color: #409eff'>view</a>"
+          if (x.field == 'view') {//查看近一年的记录
+            //将eidt设置为null不开启编辑
+            x.formatter = (row) => {
+              return "<a style='cursor:pointer;color: #409eff'>view</a>"
+            }
+            x.click = (row, column, event) => {
+              this.openRecord(row.prod_dbid);
+            };
           }
-          x.click = (row, column, event) => {
-            this.openRecord(row.prod_dbid);
-          };
+
         }
 
 
       })
       this.orderTableColumns.forEach(x => {
-        if (x.field == 'oper') {
+        if($parent.currentAction =='view') {
+          if (x.field == 'qty') {
+            x.edit = null;
+          }
+        }else{
+          if (x.field == 'qty') {
+            x.edit = { type: "number" ,keep:true};
+          }
+        }
+        /*if (x.field == 'oper') {
           x.formatter = (row) => {//查询本人订单信息
             return "<a style='cursor:pointer;color: #409eff'>Price</a>"
           }
           x.click = (row, column, event) => {
             this.openPrice(row.prod_id);
           };
-        }
+        }*/
 
       })
       this.orderTableRowData = this.$refs.orderTable.rowData;
     },
-    openPrice(prod_id){
+    /*openPrice(prod_id){
       let $parent;
       //获取生成页面viewgrid的对象
       this.$emit("parentCall", ($this) => {
@@ -354,7 +403,7 @@ export default {
       });
       this.cust_id = $parent.editFormFields.cust_id;
       this.$refs.ShowPrice.openModel(true,this.cust_id,prod_id);
-    },
+    },*/
 
     openRecord(prod_dbid){
       let $parent;
@@ -440,7 +489,7 @@ export default {
       }
 
     },
-    prodKeyPress(){
+    prodKeyPress(){//輸入編號回顯產品信息
       this.isOptional("enter");
     },
     enterProdKeyPress(){
@@ -508,7 +557,7 @@ export default {
       }
     },
 
-    openProdModel(val){
+    openProdModel(val){//打開pick框選擇產品
       this.isOptional("pick")
       //this.$refs.View_com_prod_pop_query.openModel(true,"prod_dbid","onSelect")
     },
@@ -954,9 +1003,16 @@ export default {
   .a-pop {
     color:#0c83ff;border-bottom: 1px solid;margin-left: 9px;font-size:12px;text-decoration:none;cursor: pointer
   }
+  .a-view-pop {
+    color:grey;border-bottom: 1px solid;margin-left: 9px;font-size:12px;text-decoration:none;cursor: pointer
+  }
   .a-clear{
     font-size:12px;text-decoration:none;color:red;border-bottom: 1px solid;margin-left: 9px;text-decoration:none;cursor: pointer
   }
+  .a-view-clear{
+    font-size:12px;text-decoration:none;color:grey;border-bottom: 1px solid;margin-left: 9px;text-decoration:none;cursor: pointer
+  }
+
 
   .el-form-item {
     margin-bottom: 10px;
