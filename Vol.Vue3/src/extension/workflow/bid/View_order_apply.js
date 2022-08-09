@@ -46,6 +46,8 @@ let extension = {
       this.load=false;
 
 
+      let cust_dbid=this.getSearchOption("cust_dbid");
+      cust_dbid.hidden=true
       //查詢條件快捷回填
       let searchCust_Id=this.getSearchOption("cust_id");
       var editform_cust_id = this.getFormOption("cust_id");
@@ -213,7 +215,7 @@ let extension = {
               "a",
               {
                 props: {},
-                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                style: { "color":"grey","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
                   if(searchType=="editFormSearchCustomer"){
                    // this.$refs.gridFooter.openModel(true,searchType);
@@ -230,7 +232,7 @@ let extension = {
               "a",
               {
                 props: {},
-                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                style: { "color":"grey","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
                 onClick: (e) => {
                   /*if(searchType=="editFormSearchCustomer"){
                     this.editFormFields['cust_dbid'] = "";
@@ -316,6 +318,14 @@ let extension = {
         return this.pickEditFormPriceGroupName
       }
 
+    },
+    //选择客户Pick 回填字段
+    handleCustomerSelected(flag,rows){
+      if(flag=="searchCustomer") {
+        this.searchFormFields["cust_dbid"] = rows[0].cust_dbid;
+        this.searchFormFields["cust_id"] = rows[0].cust_id;
+        this.pickCustomerName = rows[0].cust_name;
+      }
     },
     getSearchOption(field){
       let option;
@@ -474,16 +484,11 @@ let extension = {
         this.initCustomerGroup(cust_dbid);
       }
       let apply_type = this.editFormFields.apply_type;
-      if(apply_type=='03'){
-        this.getFormOption("start_date").hidden=false;
-        this.getFormOption("end_date").hidden=false;
-        this.getFormOption("start_date").required=true;
-        this.getFormOption("end_date").required=true;
-      }else if(apply_type=='04'){
-        this.getFormOption("start_date").hidden=true;
-        this.getFormOption("end_date").hidden=true;
-        this.getFormOption("start_date").required=false;
-        this.getFormOption("end_date").required=false;
+      this.getFormOption("start_date").hidden=true;
+      this.getFormOption("end_date").hidden=true;
+      this.getFormOption("start_date").required=false;
+      this.getFormOption("end_date").required=false;
+      if(apply_type=='04'){
         this.editFormFields.isgroup = "0";
         this.getFormOption("isgroup").disabled=true;
         this.getFormOption("cust_id").hidden=false;
