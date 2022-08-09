@@ -2,65 +2,75 @@
   <div  id="vol-main" >
     <div style="padding:20px 2px;">
       <el-form :inline="true"  label-width="200px" :model="formModel">
-        <el-form-item label="Type:" style="width: 100%">
-          <el-radio-group v-model="formModel.selectType" >
-            <el-radio :label="0" @change="hideType(0)">Cust</el-radio>
-            <el-radio :label="1" @change="hideType(1)">Group</el-radio>
-          </el-radio-group>
-        </el-form-item>
+        <ul>
+          <li>
+            <el-form-item label="Type:" style="width: 100%">
+              <el-radio-group v-model="formModel.selectType" >
+                <el-radio :label="0" @change="hideType(0)">Cust</el-radio>
+                <el-radio :label="1" @change="hideType(1)">Group</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </li>
+          <li>
+            <el-form-item v-show="custShowFlag" label="Original Customer ID:" style="width: 40%">
+              <el-input v-model="formModel.org_cust_id" @keyup.enter="custKeyPress(0)" style="width:120px;" ></el-input>
+              <el-input v-model="formModel.org_cust_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+              <el-input v-model="formModel.org_cust_dbid" type="hidden"  style="width:0px;line-height: 0px;"></el-input>
+              <a @click="openPriceGroup(0,'org_cust_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0,'org_cust_dbid')"><i class="el-icon-zoom-out"></i>Clean</a>
 
-        <el-form-item v-show="custShowFlag" label="Original Customer ID:" style="width: 40%">
-          <el-input v-model="formModel.org_cust_id" @keyup.enter="custKeyPress(0)" style="width:120px;" ></el-input>
-          <el-input v-model="formModel.org_cust_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
-          <el-input v-model="formModel.org_cust_dbid" type="hidden"  style="width:0px;line-height: 0px;"></el-input>
-          <a @click="openPriceGroup(0,'org_cust_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0,'org_cust_dbid')"><i class="el-icon-zoom-out"></i>Clean</a>
+            </el-form-item>
 
-        </el-form-item>
+            <el-form-item v-show="custShowFlag" label="Copy to New Customer ID:" style="width: 40%">
+              <el-input v-model="formModel.new_cust_id" @keyup.enter="custKeyPress(1)" style="width:120px;" ></el-input>
+              <el-input v-model="formModel.new_cust_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+              <el-input v-model="formModel.new_cust_dbid" type="hidden" style="width:0px;line-height: 0px;"></el-input>
+              <a @click="openPriceGroup(0,'new_cust_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0,'new_cust_dbid')"><i class="el-icon-zoom-out"></i>Clean</a>
 
-        <el-form-item v-show="custShowFlag" label="Copy to New Customer ID:" style="width: 40%">
-          <el-input v-model="formModel.new_cust_id" @keyup.enter="custKeyPress(1)" style="width:120px;" ></el-input>
-          <el-input v-model="formModel.new_cust_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
-          <el-input v-model="formModel.new_cust_dbid" type="hidden" style="width:0px;line-height: 0px;"></el-input>
-          <a @click="openPriceGroup(0,'new_cust_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(0,'new_cust_dbid')"><i class="el-icon-zoom-out"></i>Clean</a>
+            </el-form-item>
+          </li>
+          <li>
+            <el-form-item v-show="groupShowFlag" label="Original Group ID:" style="width: 40%">
+              <el-input v-model="formModel.org_group_id" @keyup.enter="groupKeyPress(0)" style="width:120px;" ></el-input>
+              <el-input v-model="formModel.org_group_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+              <el-input v-model="formModel.org_pricegroup_dbid" type="hidden" style="width:0px;" :disabled="true"></el-input>
+              <a @click="openPriceGroup(1,'org_pricegroup_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1,'org_pricegroup_dbid')"><i class="el-icon-zoom-out"></i>Clean</a>
 
-        </el-form-item>
+            </el-form-item>
 
-        <el-form-item v-show="groupShowFlag" label="Original Group ID:" style="width: 40%">
-          <el-input v-model="formModel.org_group_id" @keyup.enter="groupKeyPress(0)" style="width:120px;" ></el-input>
-          <el-input v-model="formModel.org_group_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
-          <el-input v-model="formModel.org_pricegroup_dbid" type="hidden" style="width:0px;" :disabled="true"></el-input>
-          <a @click="openPriceGroup(1,'org_pricegroup_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1,'org_pricegroup_dbid')"><i class="el-icon-zoom-out"></i>Clean</a>
+            <el-form-item v-show="groupShowFlag" label="Copy to New Group ID:" style="width: 40%">
+              <el-input v-model="formModel.new_group_id" @keyup.enter="groupKeyPress(1)" style="width:120px;" ></el-input>
+              <el-input v-model="formModel.new_group_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
+              <el-input v-model="formModel.new_pricegroup_dbid" type="hidden" style="width:0px;" :disabled="true"></el-input>
+              <a @click="openPriceGroup(1,'new_pricegroup_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1,'new_pricegroup_dbid')"><i class="el-icon-zoom-out"></i>Clean</a>
 
-        </el-form-item>
+            </el-form-item>
+          </li>
+          <li>
+            <el-form-item label="Start Date:" style="width: 35%">
+              <el-date-picker
+                      suffix-icon="el-icon-date"
+                      v-model="formModel.start_date"
+                      type="date"
+                      placeholder="" >
+              </el-date-picker>
+            </el-form-item>
 
-        <el-form-item v-show="groupShowFlag" label="Copy to New Group ID:" style="width: 40%">
-          <el-input v-model="formModel.new_group_id" @keyup.enter="groupKeyPress(1)" style="width:120px;" ></el-input>
-          <el-input v-model="formModel.new_group_name" style="width:200px;padding-left: 2px" :disabled="true"></el-input>
-          <el-input v-model="formModel.new_pricegroup_dbid" type="hidden" style="width:0px;" :disabled="true"></el-input>
-          <a @click="openPriceGroup(1,'new_pricegroup_dbid')" class="a-pop"><i class="el-icon-zoom-in"></i>Pick</a>&nbsp;<a class="a-clear" @click="clearPop(1,'new_pricegroup_dbid')"><i class="el-icon-zoom-out"></i>Clean</a>
+            <el-form-item label="End Date:" style="width: 35%">
+              <el-date-picker
+                      suffix-icon="el-icon-date"
+                      v-model="formModel.end_date"
+                      type="date"
+                      placeholder="" >
+              </el-date-picker>
+            </el-form-item>
+          </li>
+          <li>
+            <el-form-item label="Remark:" style="width: 60%">
+              <el-input type="textarea" v-model="formModel.remark" style="width:250px;"></el-input>
+            </el-form-item>
+          </li>
+        </ul>
 
-        </el-form-item>
-
-        <el-form-item label="Start Date:" style="width: 35%">
-          <el-date-picker
-                  suffix-icon="el-icon-date"
-                  v-model="formModel.start_date"
-                  type="date"
-                  placeholder="" >
-          </el-date-picker>
-        </el-form-item>
-
-        <el-form-item label="End Date:" style="width: 35%">
-          <el-date-picker
-                  suffix-icon="el-icon-date"
-                  v-model="formModel.end_date"
-                  type="date"
-                  placeholder="" >
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="Remark:" style="width: 60%">
-          <el-input type="textarea" v-model="formModel.remark" style="width:250px;"></el-input>
-        </el-form-item>
       </el-form>
       <el-button
         type="primary"
@@ -93,7 +103,7 @@
                 :columns="columns"
                 :tableData="[]"
                 :pagination="pagination"
-                :pagination-hide="true"
+                :pagination-hide="false"
                 :height="500"
                 :url="url"
                 :index="true"
@@ -123,7 +133,7 @@
                   :loadKey="true"
                   :clickEdit="false"
                   :columns="tableColumns2"
-                  :pagination-hide="false"
+                  :pagination-hide="true"
                   :single="false"
                   :height="500"
                   :defaultLoadPage="false"
@@ -516,6 +526,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+  li{
+    list-style:none;
+  }
   .a-pop {
     color:#0c83ff;border-bottom: 1px solid;margin-left: 9px;font-size:12px;text-decoration:none;cursor: pointer
   }

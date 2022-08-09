@@ -74,6 +74,7 @@ let extension = {
       //設置初始不加載
       this.load=false;
 
+      this.searchFormFields['status']='Y'
       //----------渲染 emp pick框
       let emp_dbidname=this.getFormOption("pricing_manager_name");
       emp_dbidname.extra = {
