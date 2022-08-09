@@ -370,6 +370,8 @@ export default {
       }
       let formData = {
         mainData: {"distId": this.dist_id, "type":this.type , "transferDate":this.trans_date},
+        detailData: null,
+        delKeys:null
       }
       // let cmd = {"Type":types, "Dist":distIds, "transDate":transfDate}
       this.$confirm('Do you want to upload?', 'Confirm', {
