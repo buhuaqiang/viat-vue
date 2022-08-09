@@ -98,11 +98,11 @@ let extension = {
 
       }
       editform_cust_id.extra = {
-        render:this.getFormRender("editFormSearchCustomer")
+        render:this.getFormRender("editFormSearchCustomer","")
       }
 
       editform_group_id.extra={
-        render:this.getFormRender("editFormSearchPriceGroup")
+        render:this.getFormRender("editFormSearchPriceGroup","")
       }
       //編輯框快捷回填customer和pricegroup
       editform_cust_id.onKeyPress=($event)=>{
@@ -322,60 +322,103 @@ let extension = {
      * @param pageType c-cust,pg-pricegroup
      * @returns {function(*, {row: *, column: *, index: *}): *}
      */
-    getFormRender(searchType) {//
-      return (h, { row, column, index }) => {
-        return h("div", { class:"el-input el-input--medium el-input--suffix"}, [
-          h(
-              "input",
-              {
-                class:"el-input__inner",
-                type:"text",
-                style:{width:"65%","background-color":"#f5f7fb"},
-                readonly:"true",
-                value:this.getPickName(searchType)
-              }
-          ),
-          h(
-              "a",
-              {
-                props: {},
-                style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
-                onClick: (e) => {
-                  if(searchType=="editFormSearchCustomer"){
-                    this.$refs.gridFooter.openModel(true,searchType);
-                  }
-                  if(searchType=="editFormSearchPriceGroup"){
-                    this.$refs.gridBody.openModel(true,searchType);
-                  }
+    getFormRender(searchType,flage) {//flage新增參數區分view與add、edit
+      if(flage=="view"){//查看時修改顯示樣式
+        return (h, { row, column, index }) => {
+          return h("div", { class:"el-input el-input--medium el-input--suffix"}, [
+            h(
+                "input",
+                {
+                  class:"el-input__inner",
+                  type:"text",
+                  style:{width:"65%","background-color":"#f5f7fb"},
+                  readonly:"true",
+                  value:this.getPickName(searchType)
                 }
-              },
-              [h("i",{class:"el-icon-zoom-in"})],
-              "Pick"
-          ),
-          h(
-              "a",
-              {
-                props: {},
-                style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
-                onClick: (e) => {
-                  if(searchType=="editFormSearchCustomer"){
-                    this.editFormFields['cust_dbid'] = "";
-                    this.editFormFields['cust_id'] = "";
-                    this.pickEditFormCustomerName="";
-                  }
-                  if(searchType=="editFormSearchPriceGroup"){
-                    this.editFormFields['pricegroup_dbid'] = "";
-                    this.editFormFields['group_id'] = "";
-                    this.pickEditFormPriceGroupName="";
-                  }
-                }
-              },
-              [h("i",{class:"el-icon-zoom-out"})],
-              "Clean"
-          ),
+            ),
+            ,h(
+                "a",
+                {
+                  props: {},
+                  style: { "color":"grey","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                  onClick: (e) => {
 
-        ]);
-      };
+                  }
+                },
+                [h("i",{class:"el-icon-zoom-in"})],
+                "Pick"
+            ),
+            h(
+                "a",
+                {
+                  props: {},
+                  style: { "color":"grey","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                  onClick: (e) => {
+
+                  }
+                },
+                [h("i",{class:"el-icon-zoom-out"})],
+                "Clean"
+            ),
+
+          ]);
+        };
+      }else{
+        return (h, { row, column, index }) => {
+          return h("div", { class:"el-input el-input--medium el-input--suffix"}, [
+            h(
+                "input",
+                {
+                  class:"el-input__inner",
+                  type:"text",
+                  style:{width:"65%","background-color":"#f5f7fb"},
+                  readonly:"true",
+                  value:this.getPickName(searchType)
+                }
+            ),
+            h(
+                "a",
+                {
+                  props: {},
+                  style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                  onClick: (e) => {
+                    if(searchType=="editFormSearchCustomer"){
+                      this.$refs.gridFooter.openModel(true,searchType);
+                    }
+                    if(searchType=="editFormSearchPriceGroup"){
+                      this.$refs.gridBody.openModel(true,searchType);
+                    }
+                  }
+                },
+                [h("i",{class:"el-icon-zoom-in"})],
+                "Pick"
+            ),
+            h(
+                "a",
+                {
+                  props: {},
+                  style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none","cursor":"pointer","font-size": "12px"},
+                  onClick: (e) => {
+                    if(searchType=="editFormSearchCustomer"){
+                      this.editFormFields['cust_dbid'] = "";
+                      this.editFormFields['cust_id'] = "";
+                      this.pickEditFormCustomerName="";
+                    }
+                    if(searchType=="editFormSearchPriceGroup"){
+                      this.editFormFields['pricegroup_dbid'] = "";
+                      this.editFormFields['group_id'] = "";
+                      this.pickEditFormPriceGroupName="";
+                    }
+                  }
+                },
+                [h("i",{class:"el-icon-zoom-out"})],
+                "Clean"
+            ),
+
+          ]);
+        };
+      }
+
     },
 
     /**
@@ -891,6 +934,28 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+      var editform_cust_id = this.getFormOption("cust_id");
+      var editform_group_id = this.getFormOption("group_id");
+      if(this.currentAction=="view"){//查看時調整顯示樣式
+        editform_cust_id.extra = {
+          render:this.getFormRender("editFormSearchCustomer","view")
+        }
+        editform_group_id.extra={
+          render:this.getFormRender("editFormSearchPriceGroup","view")
+        }
+      }else{
+        editform_cust_id.extra = {
+          render:this.getFormRender("editFormSearchCustomer","")
+        }
+        editform_group_id.extra={
+          render:this.getFormRender("editFormSearchPriceGroup","")
+        }
+      }
+
+
+
+
+
       this.getFormOption("territory_id").data=[];
       let deputys = [];
       let deputy = {};
