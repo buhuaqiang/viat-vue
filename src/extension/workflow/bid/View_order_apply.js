@@ -44,6 +44,7 @@ let extension = {
       this.boxOptions.labelWidth=150;
       this.setFiexdSearchForm(true);
       this.load=false;
+      this.single=true;
 
 
       let cust_dbid=this.getSearchOption("cust_dbid");
