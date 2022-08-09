@@ -358,23 +358,19 @@ export default {
     },*/
     execute() {
       debugger
-      let cmd = [];
-      if (this.type){
-        let types = this.type;
-        cmd.push({"type":types});
-      }else{
-        this.$message.error("Warninig ! Please select a type!");
-        return false;
-      }
-      if (this.trans_date) {
-        let transfDate = this.trans_date;
-        cmd.push({"transferDate":transfDate})
-      }
-      if (this.dist_id) {
-        let distIds = this.dist_id;
-        cmd.push({"distId":distIds})
-      }
 
+      if (!this.type){
+        this.$message.error("Warninig ! Please select a type!");
+      }
+      if (!this.trans_date) {
+        this.$message.error("Warninig ! Please select a Date!");
+      }
+      if (!this.dist_id) {
+        this.$message.error("Warninig ! Please select a Distributor!");
+      }
+      let formData = {
+        mainData: {"distId": this.dist_id, "type":this.type , "transferDate":this.trans_date},
+      }
       // let cmd = {"Type":types, "Dist":distIds, "transDate":transfDate}
       this.$confirm('Do you want to upload?', 'Confirm', {
         confirmButtonText: 'confirm',
@@ -382,9 +378,10 @@ export default {
         type: 'Confirm',
         center: true
       }).then(()=> {
-        alert('需要後台接口')
-        let url = "api/View_wk_cust_main/Submit";
-        this.http.post(url, cmd, 'Wait...').then((x) => {
+        this.$message.info("Wait1...")
+        let url = "api/Viat_sftp_export/Execute";
+        this.http.post(url, formData, 'Wait...').then((x) => {
+        this.$message.info("Wait2...")
         if (!x.status) return this.$Message.error(x.message);
         this.$Message.success("Complete.")
         this.refresh();
