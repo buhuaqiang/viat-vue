@@ -29,8 +29,8 @@
                 url: "/Viat_com_local_mpg/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"globalmpg_dbid":"","mpg_id":"","mpg_name":"","category":"","bu_id":"","ta":"","status":"","imt_type":"","pm_id":"","ma_id":"","medical_reviewer_id":"","medical_reviewer_name":""});
-            const editFormOptions = ref([[{"title":"Mpg代碼","field":"mpg_id","disabled":true},
+            const editFormFields = ref({"globalmpg_dbid":"","mpg_id":"","mpg_name":"","category":"","bu_id":"","ta":"","status":"","imt_type":"","pm_id":"","ma_id":"","medical_reviewer_id":""});
+            const editFormOptions = ref([[{"title":"Mpg代碼","required":true,"field":"mpg_id","disabled":true},
                                {"dataKey":"GlobalMpgSelect","data":[],"title":"PKID","field":"globalmpg_dbid","type":"select"}],
                               [{"title":"Mpg名稱","field":"mpg_name"},
                                {"dataKey":"LocalMpgCategory","data":[],"title":"category","field":"category","type":"select"}],
@@ -40,14 +40,13 @@
                               [{"title":"IMT Type","field":"imt_type"}],
                               [{"title":"主管代碼(預留)","field":"pm_id"}],
                               [{"title":"助理代碼(預留欄位)","field":"ma_id"}],
-                              [{"title":"","field":"medical_reviewer_id"},
-                               {"title":"","field":"medical_reviewer_name"}]]);
+                              [{"title":"","field":"medical_reviewer_id"}]]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([]);
             const columns = ref([{field:'localmpg_dbid',title:'ID',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
                        {field:'globalmpg_dbid',title:'PKID',type:'guid',bind:{ key:'GlobalMpgSelect',data:[]},width:110,align:'left',sort:true},
                        {field:'entity',title:'公司別',type:'string',width:110,align:'left'},
-                       {field:'mpg_id',title:'Mpg代碼',type:'string',link:true,width:110,readonly:true,align:'left'},
+                       {field:'mpg_id',title:'Mpg代碼',type:'string',link:true,width:110,readonly:true,require:true,align:'left'},
                        {field:'mpg_name',title:'Mpg名稱',type:'string',width:110,align:'left'},
                        {field:'category',title:'category',type:'string',bind:{ key:'LocalMpgCategory',data:[]},width:110,align:'left'},
                        {field:'bu_id',title:'Bu',type:'string',bind:{ key:'LocalBu',data:[]},width:110,align:'left'},
@@ -67,10 +66,9 @@
                        {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,align:'left',sort:true},
                        {field:'ma_id',title:'助理代碼(預留欄位)',type:'string',width:110,align:'left'},
                        {field:'pm_id',title:'主管代碼(預留)',type:'string',width:110,align:'left'},
-                       {field:'ma_name',title:'ma_name',type:'string',width:120,align:'left'},
                        {field:'medical_reviewer_id',title:'medical_reviewer_id',type:'string',width:110,align:'left'},
-                       {field:'medical_reviewer_name',title:'medical_reviewer_name',type:'string',width:120,align:'left'},
-                       {field:'imt_type',title:'IMT Type',type:'string',width:110,align:'left'}]);
+                       {field:'imt_type',title:'IMT Type',type:'string',width:110,align:'left'},
+                       {field:'old_mpg_id',title:'old_mpg_id',type:'string',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
