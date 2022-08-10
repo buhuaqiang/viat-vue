@@ -578,17 +578,32 @@ let extension = {
       //選擇客戶List table1
       this.editFormFields.contstret_dbid = this.$refs.modelBody.contstret_dbid;
       let priceTableRowData="";
+      let isRepeat = false;
       if(this.editFormFields.apply_type=='03'){
+        //重複判斷  保存时判断prod是否重复
         priceTableRowData= this.$refs.modelBody.getPriceTableRowData();
-        priceTableRowData.forEach((item, index) => {
+        for(let i=0;i<priceTableRowData.length;i++){
+          for(let j=0;j<priceTableRowData.length;j++){
+            if(i!=j && priceTableRowData[i].prod_id==priceTableRowData[j].prod_id){
+              this.$message.error("The selected product is duplicate, please reselect.");
+              isRepeat = true;
+              break;
+            }
+          }
+          if(isRepeat) break;
+        }
+        if(isRepeat) return false;
+
+      /*  priceTableRowData.forEach((item, index) => {
           priceTableRowData.forEach((item1,index1)=>{
+            debugger
             if(index!=index1 && item.prod_id==item1.prod_id){
               this.$message.error("Product Price is already exist in draft.");
               return false;
             }
 
           })
-        })
+        })*/
       }
 
       let orderTableRowData = this.$refs.modelBody.getOrderTableRowData();
@@ -602,19 +617,6 @@ let extension = {
       if(!this.checkOrlderList(orderTableRowData)){
         return false
       }
-
-      //重複判斷  保存时判断prod是否重复
-      /*let PriceTableRowData = this.$refs.modelBody.getPriceTableRowData();
-      PriceTableRowData.forEach((item, index) => {
-        PriceTableRowData.forEach((item1,index1)=>{
-          if(index!=index1 && item.prod_id==item1.prod_id){
-            this.$message.error("Product Price is already exist in draft.");
-            return false;
-          }
-
-        })
-      })
-*/
 
       let detailData = [
         {
@@ -763,18 +765,6 @@ let extension = {
 
     },
     saveSubmitExecute(){
-      //重複判斷  保存时判断prod是否重复
-      let PriceTableRowData = this.$refs.modelBody.getPriceTableRowData();
-      PriceTableRowData.forEach((item, index) => {
-        PriceTableRowData.forEach((item1,index1)=>{
-          if(index!=index1 && item.prod_id==item1.prod_id){
-            this.$message.error("Product Price is already exist in draft.");
-            return false;
-          }
-
-        })
-      })
-
         let formData = {
           mainData: this.editFormFields,
           detailData: null,
@@ -791,7 +781,6 @@ let extension = {
         }
 
         let url = "api/View_wk_bid_price_apply_main/addSubmit";
-
         let _currentIsAdd = this.currentAction == this.const.ADD;
         this.http.post(url, formData, true).then((x) => {
           //保存后
