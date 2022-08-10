@@ -76,23 +76,23 @@ let extension = {
       this.getSearchOption("ma_id").hidden = true;
       this.getSearchOption("pm_id").hidden = true;
       this.getSearchOption("maUserName").extra = {
-        render:this.getSearchFormRender("ma_id","s")
+        render:this.getSearchFormRender("ma_id1","s")
       }
       this.getSearchOption("supervisorUserName").extra = {
-        render:this.getSearchFormRender("pm_id","s")
+        render:this.getSearchFormRender("pm_id1","s")
       }
 
       let medical_reviewer_name=this.getOption("medical_reviewer_name");
       medical_reviewer_name.extra = {
-        render:this.getFormRender("medical_reviewer_id","f")
+        render:this.getSearchFormRender("medical_reviewer_id","f")
       }
       let maUserName=this.getOption("maUserName");
       maUserName.extra = {
-        render:this.getFormRender("ma_id","f")
+        render:this.getSearchFormRender("ma_id","f")
       }
       let supervisorUserName=this.getOption("supervisorUserName");
       supervisorUserName.extra = {
-        render:this.getFormRender("pm_id","f")
+        render:this.getSearchFormRender("pm_id","f")
       }
 
     },
@@ -105,7 +105,11 @@ let extension = {
               props: {},
               style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
               onClick: (e) => {
-                this.$refs.gridBody.open(fieldName,formType)
+                if(formType=='s'){
+                  this.$refs.gridBody.open(fieldName,formType)
+                }else if(formType=='f'){
+                  this.$refs.modelBody.open(fieldName,formType)
+                }
               }
             },
             [h("i",{class:"el-icon-zoom-in"})],
@@ -117,7 +121,30 @@ let extension = {
               props: {},
               style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
               onClick: (e) => {
-                this.$refs.gridBody.clearData(fieldName,formType)
+                if(formType=='f'){
+                  if (fieldName == 'medical_reviewer_id'){
+                    this.editFormFields['medical_reviewer_id'] = '';
+                    this.editFormFields['medical_reviewer_name'] = '';
+                  }
+                  if (fieldName == 'ma_id'){
+                    this.editFormFields['ma_id'] = '';
+                    this.editFormFields['maUserName'] = '';
+                  }
+                  if (fieldName == 'pm_id'){
+                    this.editFormFields['pm_id'] = '';
+                    this.editFormFields['supervisorUserName'] = '';
+                  }
+                }else if(formType=='s'){
+                  if (fieldName == 'ma_id1'){
+                    this.searchFormFields['ma_id'] = '';
+                    this.searchFormFields['maUserName'] = '';
+                  }
+                  if (fieldName == 'pm_id1'){
+                    this.searchFormFields['pm_id'] = '';
+                    this.searchFormFields['supervisorUserName'] = '';
+                  }
+                }
+
               }
             },
             [h("i",{class:"el-icon-zoom-out"})],
@@ -126,35 +153,30 @@ let extension = {
         ]);
       };
     },
-    getFormRender(fieldName,formType) {//
-      return (h, { row, column, index }) => {
-        return h("div", { style: { color: '#0c83ff', 'font-size': '12px', cursor: 'pointer',"text-decoration": "none"} }, [
-          h(
-            "a",
-            {
-              props: {},
-              style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
-              onClick: (e) => {
-                this.$refs.modelBody.open(fieldName,formType)
-              }
-            },
-            [h("i",{class:"el-icon-zoom-in"})],
-            "Select"
-          ),
-          h(
-            "a",
-            {
-              props: {},
-              style: { "color":"red","margin-left": "9px", "border-bottom": "1px solid", "text-decoration": "none"},
-              onClick: (e) => {
-                this.$refs.modelBody.clearData(fieldName,formType)
-              }
-            },
-            [h("i",{class:"el-icon-zoom-out"})],
-            "Clean"
-          ),
-        ]);
-      };
+    //選擇員工後
+    handleEmpSelected(fieldName,selectrow){
+      if (fieldName === 'medical_reviewer_id'){
+        this.editFormFields['medical_reviewer_id'] = selectrow[0].emp_id;
+        this.editFormFields['medical_reviewer_name'] = selectrow[0].emp_ename;
+      }
+      if (fieldName === 'ma_id'){
+        this.editFormFields['ma_id'] = selectrow[0].emp_id;
+        this.editFormFields['maUserName'] = selectrow[0].emp_ename;
+      }
+      if (fieldName === 'pm_id'){
+        this.editFormFields['pm_id'] = selectrow[0].emp_id;
+        this.editFormFields['supervisorUserName'] = selectrow[0].emp_ename;
+      }
+
+      if (fieldName === 'ma_id1'){
+        this.searchFormFields['ma_id'] = selectrow[0].emp_id;
+        this.searchFormFields['maUserName'] = selectrow[0].emp_ename;
+      }
+      if (fieldName === 'pm_id1'){
+        this.searchFormFields['pm_id'] = selectrow[0].emp_id;
+        this.searchFormFields['supervisorUserName'] = selectrow[0].emp_ename;
+      }
+
     },
     onInited() {
       //框架初始化配置后
