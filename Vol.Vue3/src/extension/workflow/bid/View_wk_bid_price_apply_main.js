@@ -951,11 +951,9 @@ let extension = {
         }
       }
 
-
-
-
-
       this.getFormOption("territory_id").data=[];
+      let userInfo = this.$store.getters.getUserInfo();
+      let territoryId = userInfo.territoryId;
       let deputys = [];
       let deputy = {};
       let url = "api/View_wk_bid_price_apply_main/SysUserData";
@@ -965,13 +963,16 @@ let extension = {
         if(professionType=='SA' || professionType=='FF'){
           this.getFormOption("territory_id").required=true;
           this.getFormOption("territory_id").hidden=false;
-          deputy = deputyZone.split(",")
-          for(let i=0;i<deputy.length;i++){
-            deputys.push({
-              key:deputy[i],
-              value:deputy[i]
-            })
+          if(deputyZone!=""){
+            deputy = deputyZone.split(",")
+            for(let i=0;i<deputy.length;i++){
+              deputys.push({
+                key:deputy[i],
+                value:deputy[i]
+              })
+            }
           }
+          deputys.push({ key:territoryId,value:territoryId})
         }else{
           this.getFormOption("territory_id").hidden=true;
           this.getFormOption("territory_id").required=false;
