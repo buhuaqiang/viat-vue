@@ -869,7 +869,6 @@ export default {
       //重複判斷 group+prod 判斷
       let index=this.$refs.priceTable.rowData.findIndex((f) =>  f.prod_dbid==this.formModel.prod_dbid);
       if(index<0){
-
         let addData={
           prod_id:this.formModel.prod_id,
           prod_ename:this.formModel.prod_ename,
@@ -916,7 +915,6 @@ export default {
           nhi_price:x.nhi_price,
           invoice_price:x.invoice_price,
           net_price:x.net_price,
-          isbelong:x.isbelong,
           status:'Y',
           isbelong:'Y',
           min_qty:x.min_qty,
