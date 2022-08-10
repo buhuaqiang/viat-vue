@@ -29,7 +29,7 @@
                 url: "/Viat_app_hp_contract/",
                 sortName: "contract_no"
             });
-            const editFormFields = ref({"entity":"","division":"","contract_no":"","pricegroup_dbid":"","start_date":"","end_date":"","allw_type":"","est_months":"","accrue_amt":"","contract_term":"","state":"","o_contract_no":""});
+            const editFormFields = ref({"entity":"","division":"","contract_no":"","pricegroup_dbid":"","start_date":"","end_date":"","allw_type":"","est_months":"","accrue_amt":"","contract_term":"","state":"","o_contract_no":"","bu_id":""});
             const editFormOptions = ref([[{"title":"公司別,舊版SUN_DB","field":"entity"},
                                {"title":"所屬事業單位,01:PH;03:AH;05:CH;06:NU","field":"division"},
                                {"title":"主鍵","field":"pricegroup_dbid"},
@@ -41,6 +41,7 @@
                                {"title":"合約條款","field":"contract_term"},
                                {"title":"合約狀態,Y:Valid;N:Invalid;C:Over period still active;A:Not Achieve","field":"state"},
                                {"title":"LocalAddon Contractno","field":"o_contract_no","type":"number"},
+                               {"title":"Bu","field":"bu_id"},
                                {"title":"合約號碼(案號)","required":true,"field":"contract_no"}]]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([]);
@@ -66,7 +67,10 @@
                        {field:'modified_username',title:'modified_username',type:'string',width:110,align:'left'},
                        {field:'modified_client',title:'最後修改者的委託人',type:'int',width:110,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,align:'left'},
-                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,align:'left',sort:true}]);
+                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,align:'left',sort:true},
+                       {field:'accrue_price',title:'accrue_price',type:'decimal',width:110,hidden:true,align:'left'},
+                       {field:'accrue_start_date',title:'accrue_start_date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
+                       {field:'bu_id',title:'Bu',type:'string',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
