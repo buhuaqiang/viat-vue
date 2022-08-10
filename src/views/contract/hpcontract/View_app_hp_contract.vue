@@ -29,7 +29,7 @@
                 url: "/View_app_hp_contract/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"contract_no":"","start_date":"","end_date":"","costomer_type":"","pricegroup_dbidname":"","group_id":"","pricegroup_dbid":"","group_name":"","allw_type":"","accrue_amt":"","state":"","contract_term":""});
+            const editFormFields = ref({"contract_no":"","start_date":"","end_date":"","costomer_type":"","pricegroup_dbidname":"","group_id":"","pricegroup_dbid":"","group_name":"","allw_type":"","accrue_amt":"","state":"","contract_term":"","bu_id":""});
             const editFormOptions = ref([[{"title":"Contract No","field":"contract_no","disabled":true}],
                               [{"title":"Effective Date","required":true,"field":"start_date","type":"date"},
                                {"title":"End Date","required":true,"field":"end_date","type":"date"}],
@@ -38,9 +38,10 @@
                               [{"dataKey":"Allowance_type","data":[],"title":"Allowance Type","required":true,"field":"allw_type","type":"select"},
                                   {"dataKey":"Contract_State","data":[],"title":"Contract Status","field":"state","type":"select","disabled":true}],
                               [{"title":"Accrue Amount","required":true,"field":"accrue_amt","type":"decimal"},{"title":"Contract Term","field":"contract_term","type":"textarea"}],
+                              [{dataKey:"LocalBu","data":[],title:"Bu ID",field:"bu_id",type:"select"}],
                               ]);
-            const searchFormFields = ref({"contract_no":"","pricegroup_dbid":"","start_date":"","end_date":"","state":"","cust_dbid2":"","cf_prod_dbid":"","cf_prod_dbidname":"","pu_prod_dbid":"","cf_prod_id":"","pu_prod_id":""});
-            const searchFormOptions = ref([[{"title":"Contract No","field":"contract_no","colSize":6},{"title":"Effective Date","field":"start_date","type":"date","colSize":3},{"title":"","field":"end_date","type":"date","colSize":2}],[{"title":"GroupId","field":"group_id","colSize":6},{"title":"","field":"pricegroup_dbid","hidden":true},{"title":"Customer","field":"cust_id","colSize":6},{"title":"","field":"cust_dbid2","hidden":true}],[{"title":"Contract Product","field":"pu_prod_id","colSize":6},{"title":"","field":"pu_prod_dbid","hidden":true},{"title":"FG Product","field":"cf_prod_id","colSize":6},{"title":"","field":"cf_prod_dbid","hidden":true}],[{"dataKey":"Contract_State","data":[],"title":"Contract Status","field":"state","type":"select","colSize":6}]]);
+            const searchFormFields = ref({"contract_no":"","pricegroup_dbid":"","bu_id":"","start_date":"","end_date":"","state":"","cust_dbid2":"","cf_prod_dbid":"","cf_prod_dbidname":"","pu_prod_dbid":"","cf_prod_id":"","pu_prod_id":""});
+            const searchFormOptions = ref([[{"title":"Contract No","field":"contract_no","colSize":6},{"title":"Effective Date","field":"start_date","type":"date","colSize":3},{"title":"","field":"end_date","type":"date","colSize":2}],[{"title":"GroupId","field":"group_id","colSize":6},{"title":"","field":"pricegroup_dbid","hidden":true},{"title":"Customer","field":"cust_id","colSize":6},{"title":"","field":"cust_dbid2","hidden":true}],[{"title":"Contract Product","field":"pu_prod_id","colSize":6},{"title":"","field":"pu_prod_dbid","hidden":true},{"title":"FG Product","field":"cf_prod_id","colSize":6},{"title":"","field":"cf_prod_dbid","hidden":true}],[{"dataKey":"Contract_State","data":[],"title":"Contract Status","field":"state","type":"select","colSize":6},{dataKey:"LocalBu",data:[],title:"Bu ID",field:"bu_id",type:"select"}]]);
             const columns = ref([{field:'hpcont_dbid',title:'列名hpcont_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'entity',title:'列名entity',type:'string',width:110,hidden:true,align:'left'},
                        {field:'division',title:'列名division',type:'string',width:110,hidden:true,align:'left'},
@@ -52,6 +53,7 @@
                        {field:'g_cust_name',title:'CustName',type:'string',width:110,align:'left'},
                        {field:'prod_id',title:'FG Product Code',type:'string',width:110,align:'left'},
                        {field:'prod_ename',title:'FG Product Name',type:'string',width:110,align:'left'},
+                       {field:'bu_id',title:'Bu',type:'string',width:110,align:'left'},
                        {field:'start_date',title:'Effective Date',type:'datetime',width:110,require:true,align:'left',sort:true},
                        {field:'end_date',title:'End Date',type:'datetime',width:110,require:true,align:'left',sort:true},
                        {field:'accrue_amt',title:'Accrue Amount(Per Month)',type:'decimal',width:110,require:true,align:'left'},
