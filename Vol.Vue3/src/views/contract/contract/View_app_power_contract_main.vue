@@ -48,6 +48,7 @@ export default defineComponent({
       close_date: "",
       allw_type: "",
       state: "",
+      bu_id:""
     });
     const editFormOptions = ref([
       [
@@ -75,6 +76,7 @@ export default defineComponent({
 
         { title: "End Date", required: true,field: "end_date", type: "date" },
         { title: "Close Date" , field: "close_date", type: "date" },
+        {dataKey:"LocalBu","data":[],title:"Bu ID",field:"bu_id",type:"select"}
       ],
       [
         {
@@ -122,6 +124,7 @@ export default defineComponent({
       close_date: "",
       state: "",
       pricegroup_dbid: "",
+      bu_id:""
     });
     const searchFormOptions = ref([
       [
@@ -159,6 +162,9 @@ export default defineComponent({
         { title: "Group", field: "group_id" },
         { title: "", field: "pricegroup_dbid",hidden: true },
       ],
+        [
+          {dataKey:"LocalBu",data:[],title:"Bu ID",field:"bu_id",type:"select"}
+        ]
 
     ]);
     const columns = ref([
@@ -473,6 +479,13 @@ export default defineComponent({
         hidden: true,
         align: "left",
       },
+      {
+        field:'bu_id',
+        title:'Bu ID',
+        type:'string',
+        bind:{ key:'LocalBu',data:[]},
+        width:110,
+        align:'left'},
     ]);
     const detail = ref({
       cnName: "#detailCnName",
