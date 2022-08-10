@@ -73,8 +73,12 @@ let extension = {
       this.getOption("medical_reviewer_id").hidden = true;
       this.getOption("pm_id").hidden = true;
       this.getOption("ma_id").hidden = true;
+      this.getSearchOption("medical_reviewer_id").hidden = true;
       this.getSearchOption("ma_id").hidden = true;
       this.getSearchOption("pm_id").hidden = true;
+      this.getSearchOption("medical_reviewer_name").extra = {
+        render:this.getSearchFormRender("medical_reviewer_id1","s")
+      }
       this.getSearchOption("maUserName").extra = {
         render:this.getSearchFormRender("ma_id1","s")
       }
@@ -135,6 +139,10 @@ let extension = {
                     this.editFormFields['supervisorUserName'] = '';
                   }
                 }else if(formType=='s'){
+                  if (fieldName == 'medical_reviewer_id1'){
+                    this.searchFormFields['medical_reviewer_id'] = '';
+                    this.searchFormFields['medical_reviewer_name'] = '';
+                  }
                   if (fieldName == 'ma_id1'){
                     this.searchFormFields['ma_id'] = '';
                     this.searchFormFields['maUserName'] = '';
@@ -168,6 +176,10 @@ let extension = {
         this.editFormFields['supervisorUserName'] = selectrow[0].emp_ename;
       }
 
+      if (fieldName === 'medical_reviewer_id1'){
+        this.searchFormFields['medical_reviewer_id'] = selectrow[0].emp_id;
+        this.searchFormFields['medical_reviewer_name'] = selectrow[0].emp_ename;
+      }
       if (fieldName === 'ma_id1'){
         this.searchFormFields['ma_id'] = selectrow[0].emp_id;
         this.searchFormFields['maUserName'] = selectrow[0].emp_ename;

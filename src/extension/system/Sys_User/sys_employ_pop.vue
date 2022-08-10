@@ -139,13 +139,17 @@
                       $parent.editFormFields['supervisorUserName'] = '';
                     }
                   }else if (path === '/View_com_local_mpg' && this.formType === 's'){
-                    if (this.fieldName == 'ma_id'){
+                    if (this.fieldName == 'ma_id1'){
                       $parent.searchFormFields['ma_id'] = '';
                       $parent.searchFormFields['maUserName'] = '';
                     }
-                    if (this.fieldName == 'pm_id'){
+                    if (this.fieldName == 'pm_id1'){
                       $parent.searchFormFields['pm_id'] = '';
                       $parent.searchFormFields['supervisorUserName'] = '';
+                    }
+                    if (this.fieldName == 'medical_reviewer_id1'){
+                      $parent.searchFormFields['medical_reviewer_id'] = '';
+                      $parent.searchFormFields['medical_reviewer_name'] = '';
                     }
                   }else{
                     if(this.formType=='f'){
