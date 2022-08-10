@@ -918,6 +918,7 @@ export default {
           net_price:x.net_price,
           isbelong:x.isbelong,
           status:'Y',
+          isbelong:'Y',
           min_qty:x.min_qty,
           bid_price:x.bid_price,
           allowance:allowance,
