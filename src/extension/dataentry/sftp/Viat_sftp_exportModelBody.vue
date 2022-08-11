@@ -22,6 +22,7 @@
         <el-date-picker
                 v-model="trans_date"
                 type="date"
+                value-format="YYYY-MM-DD"
                 placeholder="選擇日期">
         </el-date-picker>
       </div>
@@ -152,28 +153,7 @@ export default {
   data() {
     return {
       model: false,
-      pickerOptions1: {
-        shortcuts: [{
-          text: '今天',
-          onClick(picker) {
-            picker.$emit('pick', new Date());
-          }
-        }, {
-          text: '昨天',
-          onClick(picker) {
-            const date = new Date();
-            date.setTime(date.getTime() - 3600 * 1000 * 24);
-            picker.$emit('pick', date);
-          }
-        }, {
-          text: '一周前',
-          onClick(picker) {
-            const date = new Date();
-            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-            picker.$emit('pick', date);
-          }
-        }]
-      },
+
       trans_date: '',
       single: true,
       returnType:"",
@@ -360,13 +340,13 @@ export default {
       debugger
 
       if (!this.type){
-        this.$message.error("Warninig ! Please select a type!");
+        return this.$message.error("Warninig ! Please select a type!");
       }
       if (!this.trans_date) {
-        this.$message.error("Warninig ! Please select a Date!");
+        return this.$message.error("Warninig ! Please select a Date!");
       }
       if (!this.dist_id) {
-        this.$message.error("Warninig ! Please select a Distributor!");
+        return this.$message.error("Warninig ! Please select a Distributor!");
       }
       let formData = {
         mainData: {"distId": this.dist_id, "type":this.type , "transferDate":this.trans_date},
@@ -380,13 +360,13 @@ export default {
         type: 'Confirm',
         center: true
       }).then(()=> {
-        this.$message.info("Wait1...")
+        this.$message.info("Wait...")
         let url = "api/Viat_sftp_export/Execute";
         this.http.post(url, formData, 'Wait...').then((x) => {
         this.$message.info("Wait2...")
         if (!x.status) return this.$Message.error(x.message);
         this.$Message.success("Complete.")
-        this.refresh();
+        // this.refresh();
         })
       })
     },
