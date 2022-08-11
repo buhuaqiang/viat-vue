@@ -38,12 +38,13 @@
                                ],
                               [
                                {"dataKey":"enable","data":[],"title":"Status","required":true,"field":"Enable","type":"select"},
-                                  {"title":"employee","field":"emp_dbidname"},{"title":"employee","field":"emp_dbidname1","hidden":true}
+                                  {"title":"employee","field":"emp_dbidname","required":true},{"title":"employee","field":"emp_dbidname1","hidden":true}
                                ],
                                [
                                 {"dataKey":"SYS_USER_PROFESSION_TYPE","data":[],"title":"Profession Type","required":false,"field":"profession_type","type":"select"},
-                                {"dataKey":"SYS_USER_DEPUTY_ZONE","data":[],"title":"Deputy Zone","required":false,"field":"deputy_zone","type":"checkbox"},
+
                                ],
+                [{"dataKey":"VIAT_ORG_LEVEL_DETAIL","data":[],"title":"SA Deputy Zone","required":false,"field":"deputy_zone_sa","type":"cascader"}, {"dataKey":"SYS_USER_DEPUTY_ZONE","data":[],"title":"Sales Deputy Zone","required":false,"field":"deputy_zone","type":"selectList"},],
                               /*[{"title":"注册时间","field":"CreateDate","disabled":true},
                                {"title":"创建人","field":"Creator","disabled":true}],*/
                               [{"title":"用戶識別碼","field":"emp_dbid",hidden:true}],
