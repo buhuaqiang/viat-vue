@@ -42,6 +42,22 @@ let extension = {
       this.single=true;
       //設置初始不加載
       this.load=false;
+      this.searchFormOptions.forEach(x => {
+        x.forEach(item => {
+          if (item.field == "start_date") {
+            //设置单个日期查询
+            item.range = false;
+            //设置查询类型(默认为datetime)
+            item.type = "date";
+          }
+          if (item.field == "end_date") {
+            //设置单个日期查询
+            item.range = false;
+            //设置查询类型(默认为datetime)
+            item.type = "date";
+          }
+        })
+      })
       //自製按鈕Save and Submit
       this.buttons.splice(2, 0,{
         name: 'Execute',
