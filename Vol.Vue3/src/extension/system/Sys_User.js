@@ -14,6 +14,7 @@ let extension = {
     },
     text: "Can only see all accounts under the current role",
     buttons: [], //扩展的按钮
+    territoryId:"",//當前用戶區域
     methods: { //事件扩展
         onInit() {
             this.boxOptions.height = 530;
@@ -56,6 +57,65 @@ let extension = {
             emp_dbidname.extra = {
                 render:this.getFormRender("emp_dbid","f")
             }
+
+            var profession_type =  this.getFormOption("profession_type");
+            var deputy_zone_sa =  this.getFormOption("deputy_zone_sa");
+            var deputy_zone_ff =  this.getFormOption("deputy_zone");
+
+            profession_type.onChange = (val) => {
+                this.editFormFields.deputy_zone="";
+                this.editFormFields.deputy_zone_sa="";
+                if(val=='SA'){
+                    deputy_zone_sa.hidden=false;
+                    deputy_zone_ff.hidden=true;
+                }else if(val=='FF'){
+                    deputy_zone_sa.hidden=true;
+                    deputy_zone_ff.hidden=false;
+                }else{
+                    deputy_zone_sa.hidden=true;
+                    deputy_zone_ff.hidden=true;
+                }
+
+            }
+
+
+
+        },
+        handleEmpSelected(flag,rows){
+                this.editFormFields.emp_dbid=rows[0].emp_dbid
+                this.editFormFields.emp_dbidname=rows[0].emp_ename
+            debugger;
+            this.getUserZone(rows[0].emp_dbid)
+
+        },
+        getUserZone(emp_dbid){
+            let url = "api/Sys_User/GetLevelDetail?emp_dbid="+emp_dbid;
+            this.http.get(url, {}, 'Get data....').then((x) => {
+                if (!x) return ;
+                this.territoryId = x.territory_id
+            });
+        },
+        getFormOption (field) {
+            let option;
+            this.editFormOptions.forEach(x => {
+                x.forEach(item => {
+                    if (item.field == field) {
+                        option = item;
+                    }
+                })
+            })
+            return option;
+        },
+        getFormOptionByDataKey (dataKey) {
+            let option;
+            this.editFormOptions.forEach(x => {
+                x.forEach(item => {
+                    if (item.dataKey == dataKey) {
+                        option = item;
+                    }
+                })
+            })
+            return option;
         },
         onInited() { },
 
@@ -146,6 +206,48 @@ let extension = {
                 this.getOption("emp_dbidname1").hidden=true;
                 this.getOption("emp_dbidname").hidden=false;
             }
+
+            let emp_dbid=  this.editFormFields.emp_dbid
+            var profession_type = this.editFormFields.profession_type;
+            var deputy_zone_sa =  this.getFormOption("deputy_zone_sa");
+            var deputy_zone_ff =  this.getFormOption("deputy_zone");
+
+
+            if(profession_type=='SA'){
+                deputy_zone_sa.hidden=false;
+                deputy_zone_ff.hidden=true;
+            }else if(profession_type=='FF'){
+                deputy_zone_sa.hidden=true;
+                deputy_zone_ff.hidden=false;
+            }else{
+                deputy_zone_sa.hidden=true;
+                deputy_zone_ff.hidden=true;
+            }
+
+            this.getUserZone(emp_dbid)
+            this.territoryId = "DA1".substr(0,2)
+            debugger;
+            //编辑表单，动态设置下拉框选项禁用状态或者隐藏显示
+            this.editFormOptions.forEach((options) => {
+                options.forEach((item) => {
+                    if (item.field == 'deputy_zone') {
+                        let selectData= [];
+                        item.data.forEach((kv) => {
+                            //根据字典的值判断
+                            if (kv.key.indexOf(this.territoryId)==-1) {
+                                 //kv.disabled = true; //设置选项禁用
+                                console.log(kv.key+"  hidden");
+                                //kv.hidden = true; //设置选项隐藏
+                            }else{
+                                selectData.push(kv)
+                            }
+                        });
+                        item.data=selectData;
+                    }
+                });
+            });
+
+
         }
 
 
