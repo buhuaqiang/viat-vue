@@ -101,18 +101,18 @@ let extension = {
           }
         }
       }
-      let search_pu_prod_id=this.getSearch("pu_prod_id");
+      let search_pu_prod_id=this.getSearch("p_prod_id");
       search_pu_prod_id.extra = {
         render:this.getSearchRender("searchPuProd")
       }
       search_pu_prod_id.onKeyPress=($event)=>{
         if($event.keyCode == 13){
-          let  prod_id = this.searchFormFields['pu_prod_id']
+          let  prod_id = this.searchFormFields['p_prod_id']
           if(prod_id) {
             this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id.replace(/\s/g,""),{} , "loading").then(reslut => {
               if(reslut !=null){
-                this.searchFormFields['pu_prod_dbid'] =reslut.prod_dbid;
-                this.searchFormFields['pu_prod_id'] =reslut.prod_id ;
+                this.searchFormFields['p_prod_dbid'] =reslut.prod_dbid;
+                this.searchFormFields['p_prod_id'] =reslut.prod_id ;
                 this.pickPuProdName=reslut.prod_ename;
                 return;
               }else{
@@ -123,18 +123,18 @@ let extension = {
           }
         }
       }
-      let search_cf_prod_id=this.getSearch("cf_prod_id");
+      let search_cf_prod_id=this.getSearch("f_prod_id");
       search_cf_prod_id.extra = {
         render:this.getSearchRender("searchFuProd")
       }
       search_cf_prod_id.onKeyPress=($event)=>{
         if($event.keyCode == 13){
-          let  prod_id = this.searchFormFields['cf_prod_id']
+          let  prod_id = this.searchFormFields['f_prod_id']
           if(prod_id) {
             this.http.get("api/Viat_com_prod/getProdByProdID?prod_id="+prod_id.replace(/\s/g,""),{} , "loading").then(reslut => {
               if(reslut !=null){
-                this.searchFormFields['cf_prod_dbid'] =reslut.prod_dbid;
-                this.searchFormFields['cf_prod_id'] =reslut.prod_id ;
+                this.searchFormFields['f_prod_dbid'] =reslut.prod_dbid;
+                this.searchFormFields['f_prod_id'] =reslut.prod_id ;
                 this.pickFuProdName=reslut.prod_ename;
                 return;
               }else{
@@ -188,22 +188,22 @@ let extension = {
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
       //单日期查询
-      this.searchFormOptions.forEach(x => {
-        x.forEach(item => {
-          if (item.field == "start_date") {
-            //设置单个日期查询
-            item.range = false;
-            //设置查询类型(默认为datetime)
-            item.type = "date";
-          }
-          if (item.field == "end_date") {
-            //设置单个日期查询
-            item.range = false;
-            //设置查询类型(默认为datetime)
-            item.type = "date";
-          }
+        this.searchFormOptions.forEach(x => {
+            x.forEach(item => {
+                if (item.field == "start_date") {
+                    //设置单个日期查询
+                    item.range = false;
+                    //设置查询类型(默认为datetime)
+                    item.type = "date";
+                }
+                if (item.field == "end_date") {
+                    //设置单个日期查询
+                    item.range = false;
+                    //设置查询类型(默认为datetime)
+                    item.type = "date";
+                }
+            })
         })
-      })
     },
     getColumnsOption (field) {
       let option;
@@ -297,13 +297,13 @@ debugger
                     this.pickPriceGroupName = "";
                   }
                   if(searchType=="searchFuProd"){
-                    this.searchFormFields["cf_prod_dbid"] = "";
-                    this.searchFormFields["cf_prod_id"] = "";
+                    this.searchFormFields["f_prod_dbid"] = "";
+                    this.searchFormFields["f_prod_id"] = "";
                     this.pickFuProdName = "";
                   }
                   if(searchType=="searchPuProd"){
-                    this.searchFormFields["pu_prod_dbid"] = "";
-                    this.searchFormFields["pu_prod_id"] = "";
+                    this.searchFormFields["p_prod_dbid"] = "";
+                    this.searchFormFields["p_prod_id"] = "";
                     this.pickPuProdName = "";
                   }
                 }
@@ -351,10 +351,10 @@ debugger
                     if(fieldName=="cust_dbid"){
                       this.$refs.gridBody.CustomersModelBody(fieldName)
                     }
-                    if(fieldName=="cp_prod_dbid"){
+                    if(fieldName=="p_prod_dbid"){
                       this.$refs.gridBody.prodModelBody(fieldName)
                     }
-                    if(fieldName=="cf_prod_dbid"){
+                    if(fieldName=="f_prod_dbid"){
                       this.$refs.gridBody.prodModelBody(fieldName)
                     }
                   }
@@ -374,10 +374,10 @@ debugger
                     if(fieldName=="cust_dbid"){
                       this.$refs.gridBody.clearData(fieldName,formType)
                     }
-                    if(fieldName=="cp_prod_dbid"){
+                    if(fieldName=="p_prod_dbid"){
                       this.$refs.gridBody.clearData(fieldName,formType)
                     }
-                    if(fieldName=="cf_prod_dbid"){
+                    if(fieldName=="f_prod_dbid"){
                       this.$refs.gridBody.clearData(fieldName,formType)
                     }
                   }
