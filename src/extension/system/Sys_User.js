@@ -15,6 +15,7 @@ let extension = {
     text: "Can only see all accounts under the current role",
     buttons: [], //扩展的按钮
     territoryId:"",//當前用戶區域
+    deputy_zone_selectList:"",
     methods: { //事件扩展
         onInit() {
             this.boxOptions.height = 530;
@@ -82,17 +83,43 @@ let extension = {
 
         },
         handleEmpSelected(flag,rows){
-                this.editFormFields.emp_dbid=rows[0].emp_dbid
-                this.editFormFields.emp_dbidname=rows[0].emp_ename
-            debugger;
+            this.editFormFields.emp_dbid=rows[0].emp_dbid
+            this.editFormFields.emp_dbidname=rows[0].emp_ename
+            this.editFormFields.UserTrueName = rows[0].emp_ename
             this.getUserZone(rows[0].emp_dbid)
 
         },
         getUserZone(emp_dbid){
             let url = "api/Sys_User/GetLevelDetail?emp_dbid="+emp_dbid;
             this.http.get(url, {}, 'Get data....').then((x) => {
-                if (!x) return ;
-                this.territoryId = x.territory_id
+                if (!x) return;
+                debugger;
+                let territoryId_substr = "";
+                if (x.length > 0) {
+                    this.territoryId = x[0].org_Id
+                    territoryId_substr = this.territoryId.substr(0, 2)
+                }
+
+                //编辑表单，动态设置下拉框选项禁用状态或者隐藏显示
+                this.editFormOptions.forEach((options) => {
+                    options.forEach((item) => {
+                        if (item.field == 'deputy_zone') {
+                            item.data.forEach((kv) => {
+                                //根据字典的值判断
+                                if (kv.key.indexOf(territoryId_substr)==-1) {
+                                    //kv.disabled = true; //设置选项禁用
+                                    console.log(kv.key+"  hidden = true");
+                                    kv.hidden = true; //设置选项隐藏
+                                }else{
+                                    console.log(kv.key+"  hidden = false");
+                                    kv.hidden = false; //设置选项隐藏
+                                }
+                            });
+                        }
+                    });
+                });
+
+
             });
         },
         getFormOption (field) {
@@ -117,7 +144,10 @@ let extension = {
             })
             return option;
         },
-        onInited() { },
+        onInited() {
+
+        }
+        ,
 
         getFormRender(fieldName,formType) {//
             return (h, { row, column, index }) => {
@@ -193,6 +223,15 @@ let extension = {
                 }
             })
 
+
+            if(!this.deputy_zone_selectList){
+                this.deputy_zone_selectList = JSON.parse(JSON.stringify(this.getFormOption("deputy_zone").data))
+            }else{
+                this.getFormOption("deputy_zone").data=    this.deputy_zone_selectList;
+            }
+
+            let emp_dbid=  this.editFormFields.emp_dbid
+
             this.editFormFields.emp_dbidname =this.editFormFields.UserTrueName;
             this.editFormFields.emp_dbidname1 =this.editFormFields.UserTrueName;
             if(this.currentAction=='update'){
@@ -200,6 +239,7 @@ let extension = {
                 this.getOption("emp_dbidname1").disabled=true;
                 this.getOption("emp_dbidname1").hidden=false;
                 this.getOption("emp_dbidname").hidden=true;
+                this.getUserZone(emp_dbid)
             }else{
                 this.getOption("Gender").disabled=false;
                 //this.getOption("emp_dbidname").disabled=false;
@@ -207,7 +247,7 @@ let extension = {
                 this.getOption("emp_dbidname").hidden=false;
             }
 
-            let emp_dbid=  this.editFormFields.emp_dbid
+
             var profession_type = this.editFormFields.profession_type;
             var deputy_zone_sa =  this.getFormOption("deputy_zone_sa");
             var deputy_zone_ff =  this.getFormOption("deputy_zone");
@@ -224,8 +264,7 @@ let extension = {
                 deputy_zone_ff.hidden=true;
             }
 
-            this.getUserZone(emp_dbid)
-            this.territoryId = "DA1".substr(0,2)
+            /*this.territoryId = "DA1".substr(0,2)
             debugger;
             //编辑表单，动态设置下拉框选项禁用状态或者隐藏显示
             this.editFormOptions.forEach((options) => {
@@ -245,7 +284,7 @@ let extension = {
                         item.data=selectData;
                     }
                 });
-            });
+            });*/
 
 
         }

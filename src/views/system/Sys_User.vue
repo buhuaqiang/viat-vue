@@ -29,7 +29,7 @@
                 url: "/Sys_User/",
                 sortName: "User_Id"
             });
-            const editFormFields = ref({"UserName":"","UserTrueName":"","Role_Id":"","IsRegregisterPhone":"","Gender":"","Enable":"","CreateDate":"","Creator":"","Remark":"","HeadImageUrl":"","emp_dbidname":"","emp_dbidname1":"","emp_dbid":""});
+            const editFormFields = ref({"UserName":"","UserTrueName":"","Role_Id":"","IsRegregisterPhone":"","Gender":"","Enable":"","CreateDate":"","Creator":"","Remark":"","HeadImageUrl":"","UserTrueName":"","emp_dbidname":"","emp_dbidname1":"","emp_dbid":""});
             const editFormOptions = ref([[{"title":"user account","required":true,"field":"UserName","disabled":true},
                                {"title":"User Name","required":true,"field":"UserTrueName","type":"text","disabled":true}],
                               [{"dataKey":"roles","data":[],"title":"Role","required":true,"field":"Role_Id","type":"select"},
