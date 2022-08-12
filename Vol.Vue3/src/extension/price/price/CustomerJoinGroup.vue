@@ -323,7 +323,7 @@ export default {
         this.$message.error("Please input Group.");
         return false;
       }
-      this.$refs.mytable.load();
+      //this.$refs.mytable.load();
       console.log("search end")
     },
 
