@@ -64,7 +64,7 @@ export default {
     //如果要获取页面的参数请使用 this.$emit("parentCall",见下面的使用方法
     //shareTable查询显示
 
-    modelOpen() {
+    modelOpen(row) {
       let $parent;
       //获取生成页面viewgrid的对象
       this.$emit("parentCall", ($this) => {
@@ -72,10 +72,18 @@ export default {
       });
       $parent.boxOptions.height=900;
       $parent.boxOptions.width=1500;
-      this.hpcont_dbid = $parent.editFormFields.hpcont_dbid;
+      //this.hpcont_dbid = $parent.editFormFields.hpcont_dbid;
+      this.hpcont_dbid = row.hpcont_dbid;
+      this.$store.getters.data().accrue_amount = 0;
+      this.$store.getters.data().reverse_amount = 0;
+      this.$store.getters.data().adjustment_amount = 0;
+      this.$store.getters.data().hpcont_dbid = "";
       if(this.hpcont_dbid){
         this.$store.getters.data().hpcont_dbid=this.hpcont_dbid;
         //執行查詢
+        this.$store.getters.data().accrue_amount = row.C1;
+        this.$store.getters.data().reverse_amount = row.C2;
+        this.$store.getters.data().adjustment_amount = row.C3;
         this.$refs.allowanceSharing.$refs.grid.search();
         this.$refs.allowanceReverse.$refs.grid.search();
         this.$refs.allowanceAdjustment.$refs.grid.search();

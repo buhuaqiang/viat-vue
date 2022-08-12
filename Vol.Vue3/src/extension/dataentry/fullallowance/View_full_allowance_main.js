@@ -417,7 +417,7 @@ debugger
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
-      this.$refs.modelBody.modelOpen();
+      this.$refs.modelBody.modelOpen(row);
     }
   }
 };
