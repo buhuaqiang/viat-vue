@@ -12,7 +12,7 @@ import {h, resolveComponent} from "vue";
 let extension = {
   components: {
     //查询界面扩展组件
-    gridHeader: '',
+    gridHeader: sys_employ_pop,
     gridBody: {
       render() {
         return [
@@ -48,7 +48,17 @@ let extension = {
       })
       return option;
     },
-
+    getSearchOption(field) {
+      let option;
+      this.searchFormOptions.forEach(x => {
+        x.forEach(item => {
+          if (item.field == field) {
+            option = item;
+          }
+        })
+      })
+      return option;
+    },
      //下面这些方法可以保留也可以删除
     onInit() {  //框架初始化配置前，
         //示例：在按钮的最前面添加一个按钮
@@ -76,6 +86,11 @@ let extension = {
 
       this.searchFormFields['status']='Y'
       //----------渲染 emp pick框
+      let Semp_dbidname=this.getSearchOption("pricing_manager_name");
+      Semp_dbidname.extra = {
+        render:this.getFormRender("pricing_field_s","s")
+      }
+
       let emp_dbidname=this.getFormOption("pricing_manager_name");
       emp_dbidname.extra = {
         render:this.getFormRender("pricing_field","f")
@@ -85,6 +100,9 @@ let extension = {
       if(flag=='pricing_field'){
         this.editFormFields.pricing_field=rows[0].emp_dbid
         this.editFormFields.pricing_manager_name=rows[0].emp_ename
+      }else if(flag=='pricing_field_s'){
+        this.searchFormFields.pricing_field=rows[0].emp_dbid
+        this.searchFormFields.pricing_manager_name=rows[0].emp_ename
       }
     },
     getFormRender(fieldName,formType) {//
@@ -96,7 +114,12 @@ let extension = {
                 props: {},
                 style: { "color":"","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none"},
                 onClick: (e) => {
-                  this.$refs.modelBody.open(fieldName,formType)
+                  if(formType=='s'){
+                    this.$refs.gridHeader.open(fieldName,formType)
+                  }else if(formType=='f'){
+                    this.$refs.modelBody.open(fieldName,formType)
+                  }
+
                 }
               },
               [h("i",{class:"el-icon-zoom-in"})],
@@ -111,7 +134,11 @@ let extension = {
                   if(fieldName=='pricing_field'){
                     this.editFormFields.pricing_field=''
                     this.editFormFields.pricing_manager_name=''
+                  }else if(fieldName=='pricing_field_s'){
+                    this.searchFormFields.pricing_field=''
+                    this.searchFormFields.pricing_manager_name=''
                   }
+
 
                 }
               },
