@@ -42,22 +42,7 @@ let extension = {
       this.single=true;
       //設置初始不加載
       this.load=false;
-      this.searchFormOptions.forEach(x => {
-        x.forEach(item => {
-          if (item.field == "start_date") {
-            //设置单个日期查询
-            item.range = false;
-            //设置查询类型(默认为datetime)
-            item.type = "date";
-          }
-          if (item.field == "end_date") {
-            //设置单个日期查询
-            item.range = false;
-            //设置查询类型(默认为datetime)
-            item.type = "date";
-          }
-        })
-      })
+
       //自製按鈕Save and Submit
       this.buttons.splice(2, 0,{
         name: 'Execute',
@@ -85,6 +70,7 @@ let extension = {
                       style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
                       onClick: (e) => {
                         this.$confirm('Do you want to download?', 'Confirm')
+
                       }
                     },
                     [h("i",{class:"el-icon-zoom-in"})],
@@ -99,6 +85,17 @@ let extension = {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
+      this.searchFormOptions.forEach(x => {
+        x.forEach(item => {
+          if (item.field == "transfer_date") {
+            //设置单个日期查询
+            item.range = false;
+            //设置查询类型(默认为datetime)
+            item.type = "date";
+          }
+
+        })
+      })
     },
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
