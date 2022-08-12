@@ -331,8 +331,12 @@ let extension = {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
         let hpcont_dbid = this.$store.getters.data().hpcont_dbid;
-        param.wheres.push({name:"hpcont_dbid",value:hpcont_dbid})
-      return true;
+        if(hpcont_dbid=="" ||  hpcont_dbid==undefined){//初始化第一次进来没参数不查询
+            return false
+        }else{
+            param.wheres.push({name:"hpcont_dbid",value:hpcont_dbid})
+            return true;
+        }
     },
     searchAfter(result) {
       //查询后，result返回的查询数据,可以在显示到表格前处理表格的值

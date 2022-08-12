@@ -22,7 +22,7 @@
     export default defineComponent({
         setup() {
             const table = ref({
-                key: 'hpallw_dbid',
+                key: 'cust_dbid',
                 footer: "Foots",
                 cnName: '',
                 name: 'fullallowance/View_full_allowance_summary',
@@ -33,40 +33,13 @@
             const editFormOptions = ref([]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([]);
-            const columns = ref([{field:'Type_Desc',title:'Type Desc',type:'string',width:110,require:true,align:'left',sort:true},
-                       {field:'cust_id',title:'Customer Id',type:'string',width:110,align:'left'},
+            const columns = ref([{field:'action_type',title:'Tepy Desc',type:'string',width:110,require:true,align:'left',sort:true},
+                       {field:'cust_id',title:'Customer ID',type:'string',width:110,require:true,align:'left'},
                        {field:'cust_name',title:'Customer',type:'string',width:120,align:'left'},
-                       {field:'prod_id',title:'Product ID',type:'string',width:110,align:'left'},
+                       {field:'prod_id',title:'Product ID',type:'string',width:110,require:true,align:'left'},
                        {field:'prod_ename',title:'Product',type:'string',width:110,align:'left'},
-                       {field:'hpallw_dbid',title:'列名hpallw_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
-                       {field:'amount',title:'Amount(W/T)',type:'decimal',width:110,align:'left'},
-                       {field:'entity',title:'列名entity',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'division',title:'列名division',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'action_type',title:'列名action_type',type:'string',width:110,hidden:true,require:true,align:'left'},
-                       {field:'allw_type',title:'列名allw_type',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'year',title:'列名year',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'period',title:'列名period',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'hpcont_dbid',title:'列名hpcont_dbid',type:'guid',width:110,hidden:true,align:'left'},
-                       {field:'prod_dbid',title:'列名prod_dbid',type:'guid',width:110,hidden:true,align:'left'},
-                       {field:'cust_dbid',title:'列名cust_dbid',type:'guid',width:110,hidden:true,align:'left'},
-                       {field:'dist_id',title:'列名dist_id',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'invoice_date',title:'列名invoice_date',type:'datetime',width:110,hidden:true,align:'left',sort:true},
-                       {field:'invoice_no',title:'列名invoice_no',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'trans_date',title:'列名trans_date',type:'datetime',width:110,hidden:true,require:true,align:'left',sort:true},
-                       {field:'qty',title:'列名qty',type:'decimal',width:110,hidden:true,align:'left'},
-                       {field:'remarks',title:'列名remarks',type:'string',width:220,hidden:true,align:'left'},
-                       {field:'status',title:'列名status',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'o_contract_no',title:'列名o_contract_no',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'created_user',title:'列名created_user',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'created_username',title:'列名created_username',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'created_client',title:'列名created_client',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'created_clientusername',title:'列名created_clientusername',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'created_date',title:'列名created_date',type:'datetime',width:110,hidden:true,align:'left',sort:true},
-                       {field:'modified_user',title:'列名modified_user',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'modified_username',title:'列名modified_username',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'modified_client',title:'列名modified_client',type:'int',width:110,hidden:true,align:'left'},
-                       {field:'modified_clientusername',title:'列名modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'modified_date',title:'列名modified_date',type:'datetime',width:110,hidden:true,align:'left',sort:true}]);
+                       {field:'amount',title:'Amount W/T',type:'decimal',width:110,align:'right'},
+                       {field:'cust_dbid',title:'cust_dbid',type:'guid',width:110,require:true,hidden:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

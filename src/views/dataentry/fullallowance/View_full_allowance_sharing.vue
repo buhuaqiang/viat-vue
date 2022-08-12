@@ -10,6 +10,8 @@
                :detail="detail"
                :editFormFields="editFormFields"
                :editFormOptions="editFormOptions"
+               :searchFormFields="searchFormFields"
+               :searchFormOptions="searchFormOptions"
                :table="table"
                :extend="extend">
     </view-grid>
@@ -20,28 +22,28 @@
     export default defineComponent({
         setup() {
             const table = ref({
-                key: 'hpallw_dbid',
+                key: 'prod_dbid',
                 footer: "Foots",
-                cnName: '',
+                cnName: 'Full Allowance Sharing',
                 name: 'fullallowance/View_full_allowance_sharing',
                 url: "/View_full_allowance_sharing/",
                 sortName: "cust_id"
             });
             const editFormFields = ref({});
             const editFormOptions = ref([]);
-            const columns = ref([{field:'K1',title:'K1',type:'guid',width:110,hidden:true,align:'left'},
-                       {field:'K2',title:'K2',type:'guid',width:110,hidden:true,align:'left'},
-                       {field:'A1',title:'A1',type:'decimal',width:110,hidden:true,align:'left'},
-                       {field:'hpallw_dbid',title:'hpallw_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
-                       {field:'cust_id',title:'Customer ID',type:'string',width:110,align:'left',sort:true},
+            const searchFormFields = ref({});
+            const searchFormOptions = ref([]);
+            const columns = ref([{field:'cust_id',title:'Customer ID',type:'string',width:110,align:'left',sort:true},
                        {field:'cust_name',title:'Customer',type:'string',width:120,align:'left'},
-                       {field:'status',title:'status',type:'string',width:110,hidden:true,align:'left'},
                        {field:'prod_id',title:'Product ID',type:'string',width:110,align:'left'},
                        {field:'prod_ename',title:'Product',type:'string',width:110,align:'left'},
+                       {field:'amount',title:'Sharing amount',type:'decimal',width:110,align:'right'},
+                       {field:'percent',title:'Sharing %',type:'decimal',width:110,align:'right'},
                        {field:'state',title:'state',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'amount',title:'Sharing amount',type:'decimal',width:110,align:'left'},
-                       {field:'percent',title:'Sharing %',type:'decimal',width:110,align:'left'},
-                       {field:'hpcont_dbid',title:'hpcont_dbid',type:'guid',width:110,hidden:true,align:'left'}]);
+                       {field:'status',title:'status',type:'string',width:110,hidden:true,align:'left'},
+                       {field:'A1',title:'A1',type:'decimal',width:110,hidden:true,align:'left'},
+                       {field:'prod_dbid',title:'prod_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
+                       {field:'cust_dbid',title:'cust_dbid',type:'guid',width:110,hidden:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
@@ -54,14 +56,11 @@
                 extend,
                 editFormFields,
                 editFormOptions,
+                searchFormFields,
+                searchFormOptions,
                 columns,
                 detail,
             };
         },
     });
 </script>
-<style lang="less" scoped>
-.desc-text{
-    display: none!important;
-}
-</style>
