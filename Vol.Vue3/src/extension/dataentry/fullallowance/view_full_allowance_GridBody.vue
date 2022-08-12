@@ -37,11 +37,11 @@
                 this.$refs.CustomersModelBody.signal = true;
             },
             puProdModelBody(fieldName){
-                this.$refs.prodModelBody.openModel(true,"pu_prod_dbid","onSelect");
+                this.$refs.prodModelBody.openModel(true,"p_prod_dbid","onSelect");
                 this.$refs.prodModelBody.signal = true;
             },
             fuProdModelBody(fieldName){
-                this.$refs.prodModelBody.openModel(true,"cf_prod_dbid","onSelect");
+                this.$refs.prodModelBody.openModel(true,"f_prod_dbid","onSelect");
                 this.$refs.prodModelBody.signal = true;
             },
             onSelectByPriceGroup(fieldName,rows){
@@ -57,24 +57,24 @@
                 this.$emit("parentCall", ($parent) => {
                     //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的)
                     // $parent.handlePriceGroupSelected("searchPriceGroup",rows);
-                    $parent.searchFormFields["cust_dbid2"] = rows[0].cust_dbid;
+                    $parent.searchFormFields["cust_dbid"] = rows[0].cust_dbid;
                     $parent.searchFormFields["cust_id"] =rows[0].cust_id;
                     $parent.pickCustomerName=rows[0].cust_name;
                 });
             },
             onSelectByProdPop(fieldName,rows){
-                if(fieldName=='pu_prod_dbid'){
+                if(fieldName=='p_prod_dbid'){
                     this.$emit("parentCall", ($parent) => {
                         //将选择的数据合并到表单中(注意框架生成的代码都是大写，后台自己写的接口是小写的
-                        $parent.searchFormFields["pu_prod_dbid"] = rows[0].prod_dbid;
-                        $parent.searchFormFields["pu_prod_id"] =rows[0].prod_id;
+                        $parent.searchFormFields["p_prod_dbid"] = rows[0].prod_dbid;
+                        $parent.searchFormFields["p_prod_id"] =rows[0].prod_id;
                         $parent.pickPuProdName=rows[0].prod_ename;
                     });
                 }
-                if(fieldName=='cf_prod_dbid'){
+                if(fieldName=='f_prod_dbid'){
                     this.$emit("parentCall", ($parent) => {
-                        $parent.searchFormFields["cf_prod_dbid"] = rows[0].prod_dbid;
-                        $parent.searchFormFields["cf_prod_id"] =rows[0].prod_id;
+                        $parent.searchFormFields["f_prod_dbid"] = rows[0].prod_dbid;
+                        $parent.searchFormFields["f_prod_id"] =rows[0].prod_id;
                         $parent.pickFuProdName=rows[0].prod_ename;
                     });
                 }

@@ -34,9 +34,9 @@
                 [ { "title": "Remark", "field": "contract_term", type: "textarea","readonly":"true"}],
                 [{"title":"Contract No","field":"contract_no",hidden:true}],[{"title":"Contract No","field":"contract_no",hidden:true}]]);
             const searchFormFields = ref({"contract_no":"","start_date":"","end_date":"","state":"","pricegroup_dbid":"","group_id":"","cust_dbid":"","cust_id":"","p_prod_id":"","p_prod_dbid":"","f_prod_id":"","f_prod_dbid":""});
-            const searchFormOptions = ref([[{"title":"Contract No","field":"contract_no","type":"like","colSize":6},{"title":"Effective Date","field":"start_date","type":"date","colSize":3},{"title":"","field":"end_date","type":"date","colSize":2}],[{"title":"Group","field":"group_id","colSize":6},{"title":"Customer","field":"cust_id","colSize":6}],[{"title":"Contract Product","field":"p_prod_id","colSize":6},{"title":"FG Product","field":"f_prod_id","colSize":6}],[{"dataKey":"Contract_State","data":[],"title":"Contract Status","field":"state","type":"select","colSize":6}]]);
+            const searchFormOptions = ref([[{"title":"Contract No","field":"contract_no","type":"like","colSize":6},{"title":"Effective Date","field":"start_date","type":"date","colSize":3},{"title":"","field":"end_date","type":"date","colSize":2}],[{"title":"Group","field":"group_id","colSize":6},{ "title": "", "field": "pricegroup_dbid","hidden":"true"},{"title":"Customer","field":"cust_id","colSize":6},{ "title": "cust_dbid", "field": "cust_dbid",hidden:true}],[{"title":"Contract Product","field":"p_prod_id","colSize":6},{ "title": "", "field": "p_prod_dbid",hidden:true},{"title":"FG Product","field":"f_prod_id","colSize":6},{ "title": "", "field": "f_prod_dbid",hidden:true}],[{"dataKey":"Contract_State","data":[],"title":"Contract Status","field":"state","type":"select","colSize":6}]]);
             const columns = ref([{field:'hpcont_dbid',title:'列名hpcont_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
-                        {field:'contract_no',title:'Contract No',type:'string',width:110,require:true,align:'left',sort:true},
+                        {field:'contract_no',title:'Contract No',type:'string',width:110,require:true,align:'left',link:true,sort:true},
                         {field:'group_id',title:'GroupId',type:'string',width:110,align:'left'},
                         {field:'group_name',title:'GroupName',type:'string',width:120,align:'left'},
                         {field:'cust_id',title:'CustId',type:'string',width:110,align:'left'},
@@ -62,8 +62,8 @@
                        {field:'bu_id',title:'列名bu_id',type:'string',width:110,hidden:true,align:'left'},
                        {field:'cust_dbid',title:'列名cust_dbid',type:'guid',width:110,hidden:true,align:'left'},
                        {field:'prod_dbid',title:'列名prod_dbid',type:'guid',width:110,hidden:true,align:'left'},
-                       {field:'p_prod_dbid',title:'列名p_prod_dbid',type:'',width:80,hidden:true,align:'left'},
-                       {field:'f_prod_dbid',title:'列名f_prod_dbid',type:'string',width:80,hidden:true,align:'left'},
+                       {field:'p_prod_dbid',title:'列名p_prod_dbid',type:'guid',width:80,hidden:true,align:'left'},
+                       {field:'f_prod_dbid',title:'列名f_prod_dbid',type:'guid',width:80,hidden:true,align:'left'},
                        {field:'modified_username',title:'列名modified_username',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_client',title:'列名modified_client',type:'int',width:80,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'列名modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
