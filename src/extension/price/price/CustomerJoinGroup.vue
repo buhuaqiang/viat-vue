@@ -419,6 +419,7 @@ export default {
     },
     //这里是从api查询后返回数据的方法
     loadTableAfter(row) {
+      console.log("load after")
       //   let url="";
       // this.http.get(url, params, true).then((result) => {
       //     this.da
@@ -448,7 +449,7 @@ export default {
       }else{
 
       }
-
+      console.log("search params ",params)
 
       return true;
     },
