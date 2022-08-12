@@ -236,15 +236,20 @@ export default {
       if(rows.length==0){
         return this.$message.error("Please select a record first.");
       }
+      console.log("start",new Date())
       rows.forEach(x=>{
-        debugger
+        console.log(1)
         let dbids = this.custprice_dbids.find((f) => f == x.custprice_dbid);
+        console.log(2)
         if(!dbids){
           this.selectedData.push(x);
           this.custprice_dbids.push(x.custprice_dbid)
         }
-
+        console.log(3)
+        console.log("-------------------")
       })
+      console.log("end",new Date())
+
       //重新加載查詢表的數據
       this.search();
     },
