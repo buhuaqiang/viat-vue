@@ -243,7 +243,9 @@ export default {
         console.log(2)
         if(!dbids){
           this.selectedData.push(x);
+          console.log("selected",this.selectedData)
           this.custprice_dbids.push(x.custprice_dbid)
+          console.log("dbids",this.custprice_dbids)
         }
         console.log(3)
         console.log("-------------------")
