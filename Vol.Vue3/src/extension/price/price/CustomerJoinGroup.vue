@@ -251,7 +251,7 @@ export default {
       console.log("end",new Date())
 
       //重新加載查詢表的數據
-      this.search();
+      //this.search();
     },
     cancelSelected(){
       let rows= this.$refs.table2.getSelected()
@@ -323,7 +323,7 @@ export default {
         this.$message.error("Please input Group.");
         return false;
       }
-      //this.$refs.mytable.load();
+      this.$refs.mytable.load();
       console.log("search end")
     },
 
