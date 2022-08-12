@@ -315,6 +315,7 @@ export default {
 
 
     search() {
+      console.log("search")
       //点击搜索
       if(this.formModel.pricegroup_dbid){
 
@@ -323,6 +324,7 @@ export default {
         return false;
       }
       this.$refs.mytable.load();
+      console.log("search end")
     },
 
     addRow() {
