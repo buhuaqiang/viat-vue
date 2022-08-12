@@ -237,7 +237,7 @@
                 if (this.emp_cname) {
                     params.wheres.push({ name: "emp_cname", value: this.emp_cname,displayType:'like' });
                 }
-                if(this.fieldName=='pricing_field' ){//價格群組頁面的彈框
+                if(this.fieldName=='pricing_field' ||this.fieldName=='pricing_field_s' ){//價格群組頁面的彈框
                     params.wheres.push({ name: "profession_type", value: 'PM' });
                 }
                 return true;
