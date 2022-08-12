@@ -231,29 +231,28 @@ export default {
       this.search();
     },
     selected(){
-
       let rows= this.$refs.mytable.getSelected()
       if(rows.length==0){
         return this.$message.error("Please select a record first.");
       }
-      console.log("start",new Date())
       rows.forEach(x=>{
-        console.log(1)
-        let dbids = this.custprice_dbids.find((f) => f == x.custprice_dbid);
-        console.log(2)
-        if(!dbids){
-          this.selectedData.push(x);
-          console.log("selected",this.selectedData)
-          this.custprice_dbids.push(x.custprice_dbid)
-          console.log("dbids",this.custprice_dbids)
+        let data={
+          "custprice_dbid":x.custprice_dbid,
+          "pricegroup_dbid":x.pricegroup_dbid,
+          "prod_dbid":x.prod_dbid,
+          "prod_id":x.prod_id,
+          "prod_ename":x.prod_ename,
+          "nhi_price":x.nhi_price,
+          "invoice_price":x.invoice_price,
+          "net_price":x.net_price,
+          "min_qty":x.min_qty,
+          "status":"Y"
         }
-        console.log(3)
-        console.log("-------------------")
+        this.selectedData.push(data);
+        this.custprice_dbids.push(x.custprice_dbid)
       })
-      console.log("end",new Date())
-
       //重新加載查詢表的數據
-      //this.search();
+      this.search();
     },
     cancelSelected(){
       let rows= this.$refs.table2.getSelected()
