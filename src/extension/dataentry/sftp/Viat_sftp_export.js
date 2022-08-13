@@ -69,7 +69,35 @@ let extension = {
                       props: {},
                       style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
                       onClick: (e) => {
-                        this.$confirm('Do you want to download?', 'Confirm')
+                        // this.$confirm('Do you want to download?', 'Confirm')
+                        debugger
+
+                        // if (!this.searchFormFields.filename){
+                        //   return this.$message.error("Warninig ! Please select a type!");
+                        // }
+
+                        let fileName = row.file_name;
+                        let formData = {
+                          mainData: {"filename": fileName},
+                          detailData: null,
+                          delKeys:null
+                        }
+                        // let cmd = {"Type":types, "Dist":distIds, "transDate":transfDate}
+                        this.$confirm('Do you want to download?', 'Confirm', {
+                          confirmButtonText: 'confirm',
+                          cancelButtonText: 'Cancel',
+                          type: 'Confirm',
+                          center: true
+                        }).then(()=> {
+                          this.$message.info("Wait...")
+                          let url = "api/Viat_sftp_export/ExecuteRow";
+                          this.http.post(url, formData, 'Wait...').then((x) => {
+
+                            if (!x.status) return this.$Message.error(x.message);
+                            this.$Message.success("Complete.")
+                            // this.refresh();
+                          })
+                        })
 
                       }
                     },
@@ -80,6 +108,8 @@ let extension = {
           );
         }
       })
+
+
     },
     onInited() {
       //框架初始化配置后
@@ -104,7 +134,8 @@ let extension = {
     },
     searchAfter(result) {
       //查询后，result返回的查询数据,可以在显示到表格前处理表格的值
-      return true;
+      return result;
+
     },
     addBefore(formData) {
       //新建保存前formData为对象，包括明细表，可以给给表单设置值，自己输出看formData的值
@@ -116,6 +147,7 @@ let extension = {
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
+      debugger
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
     modelOpenAfter(row) {
