@@ -960,7 +960,11 @@ let extension = {
       this.http.post(url, {}, true).then((result) => {
         let professionType = result.profession_type;
         let deputyZone = result.deputy_zone;
-        if(professionType=='SA' || professionType=='FF'){
+        let deputyZoneSa = result.deputy_zone_sa;
+        if(deputyZoneSa!="" && deputyZoneSa!=null) {
+          deputyZoneSa = deputyZoneSa.replace("TT","").replace("T","");
+        }
+        if(professionType=='FF'){
           this.getFormOption("territory_id").required=true;
           this.getFormOption("territory_id").hidden=false;
           if(deputyZone!=""){
@@ -973,7 +977,14 @@ let extension = {
             }
           }
           deputys.push({ key:territoryId,value:territoryId})
-        }else{
+        }
+        /*else if(professionType=='SA'){
+          this.http.post("api/View_wk_bid_price_apply_main/", deputyZoneSa, true).then((result) => {
+
+          })
+
+        }*/
+        else{
           this.getFormOption("territory_id").hidden=true;
           this.getFormOption("territory_id").required=false;
         }
@@ -1033,6 +1044,7 @@ let extension = {
         this.getFormOption("cust_id").required=true;
         this.getFormOption("cust_id").disabled=false;
         this.getFormOption("start_date").disabled=false;
+        this.getFormOption("end_date").disabled=false;
         this.getFormOption("remarks").disabled=false;
         this.getFormOption("apply_type").disabled=false
         this.getFormOption("isgroup").disabled=false;
@@ -1048,6 +1060,7 @@ let extension = {
         this.getFormOption("group_id").disabled=true;
         this.getFormOption("isgroup").disabled=true;
         this.getFormOption("start_date").disabled=false;
+        this.getFormOption("end_date").disabled=false;
         this.getFormOption("remarks").disabled=false;
         this.getFormOption("upload").hidden=false;
         this.getFormOption("territory_id").disabled=false;
