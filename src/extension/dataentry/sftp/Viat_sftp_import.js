@@ -28,10 +28,45 @@ let extension = {
 
       this.buttons.splice(1, 0, {
         name: "Execute",
-        icon: 'md-refresh',
-        type: 'info',
+        icon: 'el-icon-check',
+        type: 'danger',
         onClick: function () {
           this.$Message.info("之後串接後端API");
+          let url = "api/Viat_sftp_import/doImportCSVFromSftp"
+          let formData = {
+            DistId:"9",
+            FileNames:["sales_3_20220707191938.csv"]
+          }
+          this.http.post(url, formData, "loading...").then(result => {
+            if (result != null ) {
+              this.$message.info("Wait...")
+              console.log("result:" + JSON.stringify(result));
+            }
+          })
+        }
+      })
+
+      this.buttons.splice(2, 0, {
+        name: "Import",
+        icon: 'md-arrow-round-up',
+        type: 'danger',
+        onClick: function () {
+          this.$Message.info("UPLOAD");
+          this.$confirm('Do you want to upload?', 'Confirm', {
+            confirmButtonText: 'confirm',
+            cancelButtonText: 'Cancel',
+            type: 'Confirm',
+            center: true
+          }).then(()=> {
+            this.$message.info("Wait...")
+            let url = "api/Viat_sftp_export/Execute";
+            this.http.post(url, formData, 'Wait...').then((x) => {
+              this.$message.info("Wait2...")
+              if (!x.status) return this.$Message.error(x.message);
+              this.$Message.success("Complete.")
+              // this.refresh();
+            })
+          })
         }
       })
 
@@ -48,6 +83,7 @@ let extension = {
     },
     searchAfter(result) {
       //查询后，result返回的查询数据,可以在显示到表格前处理表格的值
+      console.log("result:" + JSON.stringify(result));
       return true;
     },
     addBefore(formData) {

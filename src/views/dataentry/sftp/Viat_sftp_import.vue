@@ -34,7 +34,7 @@
             const searchFormFields = ref({"dist_id":"","source":""});
             const searchFormOptions = ref([[{"dataKey":"distributor_Drop","data":[],"title":"Distributor","field":"dist_id","type":"select"},{"dataKey":"SFTP_Import_Source","data":[],"title":"Source","field":"source","type":"select"}]]);
             const columns = ref([{field:'sftp_dbid',title:'sftp_dbid',type:'guid',width:110,hidden:true,readonly:true,require:true,align:'left'},
-                       {field:'file_name',title:'File Name',type:'string',width:220,align:'left',sort:true},
+                       {field:'file_name',title:'File Name',type:'string',width:160,align:'left',sort:true},
                        {field:'file_path',title:'File Path',type:'string',width:220,align:'left'},
                        {field:'upload_date',title:'Update Date',type:'datetime',width:110,align:'left',sort:true}]);
             const detail = ref({
