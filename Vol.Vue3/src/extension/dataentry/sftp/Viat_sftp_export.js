@@ -70,7 +70,7 @@ let extension = {
                       style: { "color":"#409eff","border-bottom": "1px solid","margin-left": "9px" ,"text-decoration": "none","cursor":"pointer","font-size": "12px"},
                       onClick: (e) => {
                         // this.$confirm('Do you want to download?', 'Confirm')
-                        debugger
+                        //debugger
 
                         // if (!this.searchFormFields.filename){
                         //   return this.$message.error("Warninig ! Please select a type!");
@@ -90,10 +90,24 @@ let extension = {
                           center: true
                         }).then(()=> {
                           this.$message.info("Wait...")
-                          let url = "api/Viat_sftp_export/ExecuteRow";
-                          this.http.post(url, formData, 'Wait...').then((x) => {
-
-                            if (!x.status) return this.$Message.error(x.message);
+                          let url = "api/Viat_sftp_export/ExecuteRow?file_name="+fileName;
+                          this.http.get(url,  { responseType: 'blob' }).then((response) => {
+                            console.log(response);
+                            let blob = new Blob(['\uFEFF' + response]);
+                            // 针对于 IE 浏览器的处理, 因部分 IE 浏览器不支持 createObjectURL
+                            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                              window.navigator.msSaveOrOpenBlob(blob, response.fileName);
+                            } else {
+                              var downloadElement = document.createElement("a");
+                              var href = window.URL.createObjectURL(blob); // 创建下载的链接
+                              downloadElement.href = href;
+                              downloadElement.download = fileName; // 下载后文件名
+                              document.body.appendChild(downloadElement);
+                              downloadElement.click(); // 点击下载
+                              document.body.removeChild(downloadElement); // 下载完成移除元素
+                              window.URL.revokeObjectURL(href); // 释放掉 blob 对象
+                            }
+                            //if (!x.status) return this.$Message.error(x.message);
                             this.$Message.success("Complete.")
                             // this.refresh();
                           })
@@ -108,8 +122,6 @@ let extension = {
           );
         }
       })
-
-
     },
     onInited() {
       //框架初始化配置后
@@ -147,7 +159,7 @@ let extension = {
     },
     rowClick({ row, column, event }) {
       //查询界面点击行事件
-      debugger
+      //debugger
       this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
     modelOpenAfter(row) {
