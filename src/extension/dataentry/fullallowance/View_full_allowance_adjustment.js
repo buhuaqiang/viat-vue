@@ -110,12 +110,31 @@ let extension = {
                 }
             }
         }
+
+        let modified_date=this.getColumnsOption("modified_date");
+        modified_date.formatter = (row) => {
+            //对单元格的数据格式化处理
+            if (!row.modified_date) {
+                return;
+            }
+            return row.modified_date.substr(0,10);
+        }
     },
     onInited() {
       //框架初始化配置后
       //如果要配置明细表,在此方法操作
       //this.detailOptions.columns.forEach(column=>{ });
     },
+      //獲取顯示欄字段
+      getColumnsOption (field) {
+          let option;
+          this.columns.forEach(x => {
+              if (x.field == field) {
+                  option = x;
+              }
+          })
+          return option;
+      },
       getFormOption (field) {
           let option;
           this.editFormOptions.forEach(x => {
@@ -144,7 +163,7 @@ let extension = {
                 type:"text",
                 style:{width:"40%"},
                 disabled:"true",
-                value:this.extend.sum1
+                value:this.getSum1()
               }
           ),
           h(
@@ -239,9 +258,13 @@ let extension = {
           this.editFormFields["prod_id"] =rows[0].prod_id;
           this.pickEditFormProductName=rows[0].prod_ename;
       },
+      getSum1(){
+          return  this.extend.sum1 =  this.$store.getters.data().adjustment_amount;
+      },
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
+        this.getSum1();
         let hpcont_dbid = this.$store.getters.data().hpcont_dbid;
         if(hpcont_dbid=="" ||  hpcont_dbid==undefined){//初始化第一次进来没参数不查询
             return false
@@ -266,6 +289,43 @@ let extension = {
       //查询界面点击行事件
        this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
+      //格式化日期时间
+      parseTime(time,cFormat){
+          const format=cFormat||'{y}-{m}-{d} {h}:{i}:{s}'
+          let date
+          if(typeof time ==='object'){
+              date=time
+          }else {
+              if(typeof time ==='string'){
+                  if((/^[0-9]+$/.test(time))){
+                      time=parseInt(time)
+                  }else{
+                      time=time.replace(new RegExp(/-/gm),'/')
+                  }
+              }
+              if((typeof time==='number') && (time.toString().length)===10){
+                  time=time*1000
+              }
+              date=new Date(time)
+          }
+          const formatObj={
+              y:date.getFullYear(),
+              m:date.getMonth()+1,
+              d:date.getDate(),
+              h:date.getHours(),
+              i:date.getMinutes(),
+              s:date.getSeconds(),
+              a:date.getDay()
+          }
+          const time_str=format.replace(/{([ymdhisa])+}/g,(result,key)=>{
+              const value=formatObj[key]
+              if(key==='a'){
+                  return['日','一','二','三','四','五','六'][value]
+              }
+              return  value.toString().padStart(2,'0')
+          })
+          return time_str
+      },
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
       //(1)判断是编辑还是新建操作： this.currentAction=='Add';
@@ -278,6 +338,8 @@ let extension = {
             this.pickEditFormCustomerName = ""
             this.pickEditFormProductName = ""
             this.editFormFields.hpcont_dbid=hpcont_dbid;
+            let dateStrs=this.parseTime(new Date(),'{y}-{m}-{d}')
+            this.editFormFields.trans_date=dateStrs;
         }else{
             this.pickEditFormCustomerName = row.cust_name
             this.pickEditFormProductName = row.prod_ename

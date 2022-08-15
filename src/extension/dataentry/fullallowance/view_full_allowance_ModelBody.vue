@@ -70,7 +70,7 @@ export default {
       this.$emit("parentCall", ($this) => {
         $parent = $this;
       });
-      $parent.boxOptions.height=900;
+      $parent.boxOptions.height=800;
       $parent.boxOptions.width=1500;
       //this.hpcont_dbid = $parent.editFormFields.hpcont_dbid;
       this.hpcont_dbid = row.hpcont_dbid;
@@ -81,9 +81,9 @@ export default {
       if(this.hpcont_dbid){
         this.$store.getters.data().hpcont_dbid=this.hpcont_dbid;
         //執行查詢
-        this.$store.getters.data().accrue_amount = row.C1;
-        this.$store.getters.data().reverse_amount = row.C2;
-        this.$store.getters.data().adjustment_amount = row.C3;
+        this.$store.getters.data().accrue_amount = row.C1==null?0:row.C1;
+        this.$store.getters.data().reverse_amount = row.C2==null?0:row.C2;
+        this.$store.getters.data().adjustment_amount = row.C3==null?0:row.C3;
         this.$refs.allowanceSharing.$refs.grid.search();
         this.$refs.allowanceReverse.$refs.grid.search();
         this.$refs.allowanceAdjustment.$refs.grid.search();

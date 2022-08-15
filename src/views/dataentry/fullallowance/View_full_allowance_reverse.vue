@@ -29,22 +29,24 @@
                 url: "/View_full_allowance_reverse/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"cust_id":"","prod_id":"","trans_date":"","invoice_no":"","qty":"","amount":"","remarks":""});
-            const editFormOptions = ref([[{"title":"Customer ID","required":true,"field":"cust_id"}],
-                              [{"title":"Product ID","required":true,"field":"prod_id"},
-                               {"title":"TransDate","required":true,"field":"trans_date","type":"date"}],
-                              [{"title":"Invoice No","field":"invoice_no"}],
+            const editFormFields = ref({"cust_id":"","cust_dbid":"","prod_id":"","prod_dbid":"","trans_date":"","invoice_no":"","qty":"","amount":"","remarks":"","action_type":"","invoice_date":""});
+            const editFormOptions = ref([[{"title":"Customer ID","required":true,"field":"cust_id"},{"title":"","field":"cust_dbid",hidden:true}, {"title":"TransDate","required":true,"field":"trans_date","type":"date"}],
+                              [{"title":"Product ID","required":true,"field":"prod_id"},{"title":"","field":"prod_dbid",hidden:true},
+                                  {"title":"Invoice No","field":"invoice_no","required":true}],
+                              //[{"title":"Invoice No","field":"invoice_no"}],
                               [{"title":"Qty","field":"qty","type":"decimal"}],
-                              [{"title":"Amount","field":"amount","type":"decimal"}],
-                              [{"title":"Remarks","field":"remarks"}]]);
+                              [{"title":"Amount","field":"amount","required":true,"type":"decimal"},{"title":"Remarks","field":"remarks","type":"textarea"}],
+                              //[{"title":"Remarks","field":"remarks"}]
+            ]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([]);
             const columns = ref([{field:'cust_id',title:'Customer ID',type:'string',width:110,require:true,align:'left',sort:true},
                        {field:'cust_name',title:'Customer',type:'string',width:120,align:'left'},
                        {field:'prod_id',title:'Product ID',type:'string',width:110,require:true,align:'left'},
                        {field:'prod_ename',title:'Product',type:'string',width:110,align:'left'},
-                       {field:'amount',title:'Amount',type:'decimal',width:110,align:'right'},
+                       {field:'amount',title:'Amount W/T',type:'decimal',width:110,align:'right'},
                        {field:'qty',title:'Qty',type:'decimal',width:110,align:'left'},
+                       {field:'',title:'ASP(W/T)',type:'decimal',width:110,align:'right'},
                        {field:'invoice_date',title:'Invoice Date',type:'datetime',width:110,align:'left',sort:true},
                        {field:'invoice_no',title:'Invoice No',type:'string',width:110,align:'left'},
                        {field:'remarks',title:'Remarks',type:'string',width:220,align:'left'},
@@ -52,7 +54,7 @@
                        {field:'modified_date',title:'Modify Date',type:'datetime',width:150,align:'left',sort:true},
                        {field:'entity',title:'列名entity',type:'string',width:110,hidden:true,align:'left'},
                        {field:'division',title:'列名division',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'action_type',title:'列名action_type',type:'string',width:110,hidden:true,require:true,align:'left'},
+                       {field:'action_type',title:'列名action_type',type:'string',width:110,hidden:true,align:'left'},
                        {field:'allw_type',title:'列名allw_type',type:'int',width:110,hidden:true,align:'left'},
                        {field:'year',title:'列名year',type:'int',width:110,hidden:true,align:'left'},
                        {field:'period',title:'列名period',type:'int',width:110,hidden:true,align:'left'},

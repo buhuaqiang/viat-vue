@@ -78,7 +78,8 @@
                        {field:'prod_id',title:'Product Id',type:'string',width:110,align:'left'},
                        {field:'prod_ename',title:'Product Name',type:'string',width:110,align:'left'},
                        {field:'cust_id',title:'Customer Id',type:'string',width:110,align:'left'},
-                       {field:'cust_name1',title:'Customer Name',type:'string',width:120,align:'left'}]);
+                       {field:'cust_name1',title:'Customer Name',type:'string',width:120,align:'left'},
+                       {field:'unit_price',title:'unit_price',type:'decimal',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

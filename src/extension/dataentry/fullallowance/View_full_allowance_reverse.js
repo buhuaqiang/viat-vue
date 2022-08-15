@@ -68,9 +68,26 @@ let extension = {
         this.extend.extra= {
         render:this.getSUMRender("")
       }
-      this.extend.sum1=10000;
+      this.extend.sum1=0;
       this.extend.sum2=20000;
 
+        //日期格式化 formatter
+        let invoice_date=this.getColumnsOption("invoice_date");
+        invoice_date.formatter = (row) => {
+            //对单元格的数据格式化处理
+            if (!row.invoice_date) {
+                return;
+            }
+            return row.invoice_date.substr(0,10);
+        }
+        let modified_date=this.getColumnsOption("modified_date");
+        modified_date.formatter = (row) => {
+            //对单元格的数据格式化处理
+            if (!row.modified_date) {
+                return;
+            }
+            return row.modified_date.substr(0,10);
+        }
         //编辑页面
         let editform_cust_id=this.getFormOption("cust_id");
         editform_cust_id.extra = {
@@ -140,6 +157,16 @@ let extension = {
         }*/
 
     },
+        //獲取顯示欄字段
+        getColumnsOption (field) {
+            let option;
+            this.columns.forEach(x => {
+                if (x.field == field) {
+                    option = x;
+                }
+            })
+            return option;
+        },
 
       getSUMRender() {//
           return (h, { row, column, index }) => {
@@ -158,7 +185,7 @@ let extension = {
                           type:"text",
                           style:{width:"40%"},
                           disabled:"true",
-                          value:this.extend.sum1
+                          value:this.getSum1()
                       }
                   ),
                   h(
@@ -307,6 +334,7 @@ let extension = {
     },
     handleInvoiceSelected(flag,rows){
         this.editFormFields["invoice_no"] =rows[0].invoice_no;
+        this.editFormFields["invoice_date"] =rows[0].trans_date;
     },
     getFormOption (field) {
         let option;
@@ -327,9 +355,13 @@ let extension = {
     /*  this.boxButtons.push("Update");
       this.boxButtons.push("Add");*/
     },
+    getSum1(){
+         return  this.extend.sum1 =  this.$store.getters.data().reverse_amount;
+    },
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
+        this.getSum1()
         let hpcont_dbid = this.$store.getters.data().hpcont_dbid;
         if(hpcont_dbid=="" ||  hpcont_dbid==undefined){//初始化第一次进来没参数不查询
             return false
@@ -354,6 +386,43 @@ let extension = {
       //查询界面点击行事件
        this.$refs.table.$refs.table.toggleRowSelection(row); //单击行时选中当前行;
     },
+        //格式化日期时间
+        parseTime(time,cFormat){
+            const format=cFormat||'{y}-{m}-{d} {h}:{i}:{s}'
+            let date
+            if(typeof time ==='object'){
+                date=time
+            }else {
+                if(typeof time ==='string'){
+                    if((/^[0-9]+$/.test(time))){
+                        time=parseInt(time)
+                    }else{
+                        time=time.replace(new RegExp(/-/gm),'/')
+                    }
+                }
+                if((typeof time==='number') && (time.toString().length)===10){
+                    time=time*1000
+                }
+                date=new Date(time)
+            }
+            const formatObj={
+                y:date.getFullYear(),
+                m:date.getMonth()+1,
+                d:date.getDate(),
+                h:date.getHours(),
+                i:date.getMinutes(),
+                s:date.getSeconds(),
+                a:date.getDay()
+            }
+            const time_str=format.replace(/{([ymdhisa])+}/g,(result,key)=>{
+                const value=formatObj[key]
+                if(key==='a'){
+                    return['日','一','二','三','四','五','六'][value]
+                }
+                return  value.toString().padStart(2,'0')
+            })
+            return time_str
+        },
     modelOpenAfter(row) {
       //点击编辑、新建按钮弹出框后，可以在此处写逻辑，如，从后台获取数据
       //(1)判断是编辑还是新建操作： this.currentAction=='Add';
@@ -361,6 +430,11 @@ let extension = {
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+        if(this.currentAction=='Add'){
+            let dateStrs=this.parseTime(new Date(),'{y}-{m}-{d}')
+            this.editFormFields.trans_date=dateStrs;
+        }
+
         let hpcont_dbid = this.$store.getters.data().hpcont_dbid;
         this.editFormFields.hpcont_dbid=hpcont_dbid;
         this.pickEditFormCustomerName = row.cust_name;

@@ -37,6 +37,7 @@
                        {field:'cust_name',title:'Customer',type:'string',width:120,align:'left'},
                        {field:'prod_id',title:'Product ID',type:'string',width:110,align:'left'},
                        {field:'prod_ename',title:'Product',type:'string',width:110,align:'left'},
+                        {field:'',title:'Sharing Amount W/T',type:'decimal',width:110,align:'right'},
                        {field:'amount',title:'Sharing amount',type:'decimal',width:110,align:'right'},
                        {field:'percent',title:'Sharing %',type:'decimal',width:110,align:'right'},
                        {field:'state',title:'state',type:'string',width:110,hidden:true,align:'left'},

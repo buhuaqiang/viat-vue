@@ -103,7 +103,7 @@ let extension = {
                 type:"text",
                 style:{width:"40%"},
                 disabled:"true",
-                value:this.extend.sum1
+                value:this.getSum1()
               }
           ),
             h(
@@ -136,8 +136,11 @@ let extension = {
       //this.detailOptions.columns.forEach(column=>{ });
 
     },
+    getSum1(){
+       return  this.extend.sum1 =  this.$store.getters.data().accrue_amount;
+    },
     searchBefore(param) {
-        this.extend.sum1= this.$store.getters.data().accrue_amount;
+        this.getSum1()
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
         let hpcont_dbid = this.$store.getters.data().hpcont_dbid;
