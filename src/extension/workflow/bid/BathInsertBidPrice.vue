@@ -359,20 +359,16 @@ export default {
               return discount;
             }
           }
-
-          if (x.field == 'view') {//查看近一年的记录
-            //将eidt设置为null不开启编辑
-            x.formatter = (row) => {
-              return "<a style='cursor:pointer;color: #409eff'>view</a>"
-            }
-            x.click = (row, column, event) => {
-              this.openRecord(row.prod_dbid);
-            };
-          }
-
         }
-
-
+        if (x.field == 'view') {//查看近一年的记录
+          //将eidt设置为null不开启编辑
+          x.formatter = (row) => {
+            return "<a style='cursor:pointer;color: #409eff'>view</a>"
+          }
+          x.click = (row, column, event) => {
+            this.openRecord(row.prod_dbid);
+          };
+        }
       })
       this.orderTableColumns.forEach(x => {
         if($parent.currentAction =='view') {
