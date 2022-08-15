@@ -29,11 +29,11 @@
                 url: "/View_full_allowance_adjustment/",
                 sortName: "created_date"
             });
-            const editFormFields = ref({"cust_id":"","trans_date":"","prod_id":"","amount":"","remarks":""});
-            const editFormOptions = ref([[{"title":"Customer ID ","required":true,"field":"cust_id"}],
-                              [{"title":"列名trans_date","required":true,"field":"trans_date"}],
-                              [{"title":"Product ID","required":true,"field":"prod_id"}],
-                              [{"title":"Amount W/T","field":"amount","type":"decimal"}],
+            const editFormFields = ref({"cust_id":"","cust_dbid":"","trans_date":"","prod_id":"","prod_dbid":"","amount":"","remarks":"","action_type":""});
+            const editFormOptions = ref([[{"title":"Customer","required":true,"field":"cust_id"},{"title":"","field":"cust_dbid",hidden:true},{"title":"TransDate","required":true,"field":"trans_date","type":"date"}],
+                              //[{"title":"TransDate","required":true,"field":"trans_date"}],
+                              [{"title":"Product","required":true,"field":"prod_id"},{"title":"","field":"prod_dbid",hidden:true},{"title":"Amount","field":"amount","type":"decimal"}],
+                             // [{"title":"Amount","field":"amount","type":"decimal"}],
                               [{"title":"Remarks","field":"remarks","type":"textarea"}]]);
             const searchFormFields = ref({});
             const searchFormOptions = ref([]);

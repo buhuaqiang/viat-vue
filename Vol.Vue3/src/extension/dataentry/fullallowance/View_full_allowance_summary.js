@@ -79,7 +79,7 @@ let extension = {
                 type:"text",
                 style:{width:"40%"},
                 disabled:"true",
-                value:this.extend.sum1
+                value:this.getSum1()
               }
           ),
           h(
@@ -102,9 +102,13 @@ let extension = {
         ]);
       };
     },
+      getSum1(){
+          return  this.extend.sum1 =  this.$store.getters.data().accrue_amount+ this.$store.getters.data().reverse_amount+ this.$store.getters.data().adjustment_amount;
+      },
     searchBefore(param) {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
+        this.getSum1();
         let hpcont_dbid = this.$store.getters.data().hpcont_dbid;
         if(hpcont_dbid=="" ||  hpcont_dbid==undefined){//初始化第一次进来没参数不查询
             return false

@@ -236,7 +236,7 @@ let extension = {
         return this.$message.error("請選擇一條數據");
       }
       let contract_no=_rows[0].contract_no
-debugger
+
       this.$tabs.open({
         text: "Share Table",
         path: url,
@@ -417,6 +417,10 @@ debugger
       //(3)this.editFormFields.字段='xxx';
       //如果需要给下拉框设置默认值，请遍历this.editFormOptions找到字段配置对应data属性的key值
       //看不懂就把输出看：console.log(this.editFormOptions)
+        let saveBtn = this.boxButtons.find((x) => x.value == 'save');
+        if(saveBtn){
+            saveBtn.hidden=true;
+        }
       this.$refs.modelBody.modelOpen(row);
     }
   }
