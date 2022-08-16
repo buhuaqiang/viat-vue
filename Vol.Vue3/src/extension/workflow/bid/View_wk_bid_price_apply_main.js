@@ -950,7 +950,6 @@ let extension = {
           render:this.getFormRender("editFormSearchPriceGroup","")
         }
       }
-
       this.getFormOption("territory_id").data=[];
       let userInfo = this.$store.getters.getUserInfo();
       let territoryId = userInfo.territoryId;
@@ -960,14 +959,15 @@ let extension = {
       this.http.post(url, {}, true).then((result) => {
         let professionType = result.profession_type;
         let deputyZone = result.deputy_zone;
-        let deputyZoneSa = result.deputy_zone_sa;
-        if(deputyZoneSa!="" && deputyZoneSa!=null) {
-          deputyZoneSa = deputyZoneSa.replace("TT","").replace("T","");
+        let org_id = result.deputy_zone_sa;
+        if(org_id!="" && org_id!=null) {//解析deputy_zone_sa，作为模糊查询的条件
+          org_id = org_id.replace("TT","").replace("T","");
         }
-        if(professionType=='FF'){
+        if(professionType=='FF'){//为FF时取deputy_zone字段为选项
           this.getFormOption("territory_id").required=true;
           this.getFormOption("territory_id").hidden=false;
           if(deputyZone!=""){
+            ///解析deputy_zone作为选项
             deputy = deputyZone.split(",")
             for(let i=0;i<deputy.length;i++){
               deputys.push({
@@ -976,14 +976,22 @@ let extension = {
               })
             }
           }
+          //将自身的territoryId添加到选项中
+          deputys.push({ key:territoryId,value:territoryId})
+        }else if(professionType=='SA'){//为SA时取deputy_zone_sa字段为选项
+          this.getFormOption("territory_id").required=true;
+          this.getFormOption("territory_id").hidden=false;
+          //查询org_id下的所有子项
+          this.http.get("api/View_wk_bid_price_apply_main/LevelDetailData?org_id="+org_id).then((result) => {
+            result.forEach(x =>{
+              deputys.push({
+                key:x.org_Id,
+                value:x.org_Id
+              })
+            })
+          })
           deputys.push({ key:territoryId,value:territoryId})
         }
-        /*else if(professionType=='SA'){
-          this.http.post("api/View_wk_bid_price_apply_main/", deputyZoneSa, true).then((result) => {
-
-          })
-
-        }*/
         else{
           this.getFormOption("territory_id").hidden=true;
           this.getFormOption("territory_id").required=false;
