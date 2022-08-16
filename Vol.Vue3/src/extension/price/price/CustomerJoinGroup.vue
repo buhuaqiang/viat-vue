@@ -43,7 +43,7 @@
         style="margin-left:10px"
         size="medium"
         icon="el-icon-zoom-in"
-        @click="search"
+        @click="inquireQuery"
         >Inquire</el-button
       >
       <el-button
@@ -219,6 +219,13 @@ export default {
       this.custprice_dbids=[];
 
     },
+
+    inquireQuery(){
+      this.selectedData=[];
+      this.custprice_dbids=[];
+      this.search();
+
+    },
     allChoose(){
       let table1Data=this.$refs.mytable.rowData;
       //this.selectedData=[];//這一步是為了避免重複數據
@@ -316,7 +323,7 @@ export default {
 
 
     search() {
-      console.log("search")
+      debugger
       //点击搜索
       if(this.formModel.pricegroup_dbid){
 
@@ -325,7 +332,8 @@ export default {
         return false;
       }
       this.$refs.mytable.load();
-      console.log("search end")
+
+
     },
 
     addRow() {
