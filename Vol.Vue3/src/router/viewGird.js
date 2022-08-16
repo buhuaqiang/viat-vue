@@ -454,10 +454,15 @@ let viewgird = [
         name: 'Viat_wk_approve_level_setting',
         component: () => import('@/views/workflow/setting/Viat_wk_approve_level_setting.vue')
     }        ,{
+        path: '/View_wk_need_approve_main',
+        name: 'View_wk_need_approve_main',
+        component: () => import('@/views/workflow/approve/View_wk_need_approve_main.vue')
+    }        ,{
         path: '/View_full_allowance_sharing',
         name: 'View_full_allowance_sharing',
         component: () => import('@/views/dataentry/fullallowance/View_full_allowance_sharing.vue')
     }]
+
 
 
 export default viewgird
