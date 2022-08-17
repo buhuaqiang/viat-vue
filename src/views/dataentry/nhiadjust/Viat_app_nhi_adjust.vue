@@ -24,7 +24,7 @@
             const table = ref({
                 key: 'nhiadjust_dbid',
                 footer: "Foots",
-                cnName: '健保價調整主表二',
+                cnName: 'NHI Adjust Detail Table',
                 name: 'nhiadjust/Viat_app_nhi_adjust',
                 url: "/Viat_app_nhi_adjust/",
                 sortName: "created_date"
@@ -54,7 +54,9 @@
                        {field:'modified_username',title:'modified_username',type:'string',width:110,hidden:true,align:'left'},
                        {field:'modified_client',title:'最後修改者的委託人',type:'int',width:110,hidden:true,align:'left'},
                        {field:'modified_clientusername',title:'modified_clientusername',type:'string',width:110,hidden:true,align:'left'},
-                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,hidden:true,align:'left',sort:true}]);
+                       {field:'modified_date',title:'最後修改時間',type:'datetime',width:110,hidden:true,align:'left',sort:true},
+                       {field:'dbid',title:'識別碼, PK, Identity',type:'int',width:80,require:true,align:'left'},
+                       {field:'apply_allow',title:'apply_allow',type:'string',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

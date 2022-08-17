@@ -39,7 +39,7 @@
                        {field:'file_name',title:'File Name',type:'string',width:220,align:'left',sort:true},
                        {field:'modified_date',title:'Update Date',type:'datetime',width:110,align:'left',sort:true},
                        {field:'file_size',title:'Size',type:'decimal',width:110,align:'left'},
-                       {field:'sftp_ex_dbid',title:'sftp_ex_dbid',type:'guid',width:110,require:true,align:'left'}]);
+                       {field:'sftp_ex_dbid',title:'sftp_ex_dbid',type:'guid',width:110,require:true,hidden:true,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",

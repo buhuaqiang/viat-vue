@@ -47,7 +47,8 @@
                        {field:'created_date',title:'created_date',type:'datetime',width:150,hidden:true,align:'left',sort:true},
                        {field:'nhiadjust_dbid',title:'nhiadjust_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'prod_dbid',title:'Product',type:'guid',width:110,hidden:true,align:'left'},
-                       {field:'nhiadjustm_dbid',title:'m主鍵',type:'guid',width:110,hidden:true,align:'left'}]);
+                       {field:'nhiadjustm_dbid',title:'m主鍵',type:'guid',width:110,hidden:true,align:'left'},
+                       {field:'apply_allow',title:'Apply Allowance',type:'string',width:110,align:'left'}]);
             const detail = ref({
                 cnName: "#detailCnName",
                 table: "#detailTable",
