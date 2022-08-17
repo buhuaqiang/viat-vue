@@ -118,6 +118,9 @@ let extension = {
       //设置查询表单的标签文字宽度
       this.labelWidth=180;
 
+      let proddbid = this.getSearchOption('prod_dbid');
+      proddbid.hidden=true;
+
       //搜尋product彈窗
       let search_Prod_id=this.getSearchOption("prod_id");
       search_Prod_id.extra={
