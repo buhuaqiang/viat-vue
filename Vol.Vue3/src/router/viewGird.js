@@ -461,6 +461,10 @@ let viewgird = [
         path: '/View_full_allowance_sharing',
         name: 'View_full_allowance_sharing',
         component: () => import('@/views/dataentry/fullallowance/View_full_allowance_sharing.vue')
+    }    ,{
+        path: '/View_invoice_finder',
+        name: 'View_invoice_finder',
+        component: () => import('@/views/dataprocessing/invoicefinder/View_invoice_finder.vue')
     }]
 
 
