@@ -466,7 +466,7 @@ let extension = {
       //界面查询前,可以给param.wheres添加查询参数
       //返回false，则不会执行查询
 
-      if(this.startDate!=null) {
+      /*if(this.startDate!=null) {
         for (var i = 0; i < param.wheres.length; i++) {
           if (param.wheres[i].name == 'start_date') {
             param.wheres[i].displayType = "thanorequal" //>=
@@ -475,7 +475,7 @@ let extension = {
             param.wheres[i].displayType = "lessorequal" //<=
           }
         }
-      }
+      }*/
 
 
       return true;
