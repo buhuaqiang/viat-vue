@@ -352,7 +352,7 @@ export default {
         $parent.boxOptions.width=1200;
         this.showFlag = true;
         //如果是编辑，添加两个表格的数据
-        this.clear();
+        //this.clear();
         this.$refs.table1.load();
         this.$refs.table2.load();
         this.$refs.table3.load();
@@ -444,7 +444,6 @@ export default {
 
     //从后台加载从表1数据后
     loadTableAfter1(data, callBack) {
-
       //数据加载后，赋给对像，用于编辑用
       this.table1RowData = data;
       this.delTable1RowData=[];
