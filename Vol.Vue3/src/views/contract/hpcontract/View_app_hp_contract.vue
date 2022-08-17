@@ -40,8 +40,8 @@
                               [{"title":"Accrue Amount","required":true,"field":"accrue_amt","type":"decimal"},{"title":"Contract Term","field":"contract_term","type":"textarea"}],
                               [{dataKey:"LocalBu","data":[],title:"Bu ID",field:"bu_id",type:"select"}],
                               ]);
-            const searchFormFields = ref({"contract_no":"","pricegroup_dbid":"","bu_id":"","start_date":"","end_date":"","state":"","cust_dbid2":"","cf_prod_dbid":"","cf_prod_dbidname":"","pu_prod_dbid":"","cf_prod_id":"","pu_prod_id":""});
-            const searchFormOptions = ref([[{"title":"Contract No","field":"contract_no","colSize":6},{"title":"Effective Date","field":"start_date","type":"date","colSize":3},{"title":"","field":"end_date","type":"date","colSize":2}],[{"title":"GroupId","field":"group_id","colSize":6},{"title":"","field":"pricegroup_dbid","hidden":true},{"title":"Customer","field":"cust_id","colSize":6},{"title":"","field":"cust_dbid2","hidden":true}],[{"title":"Contract Product","field":"pu_prod_id","colSize":6},{"title":"","field":"pu_prod_dbid","hidden":true},{"title":"FG Product","field":"cf_prod_id","colSize":6},{"title":"","field":"cf_prod_dbid","hidden":true}],[{"dataKey":"Contract_State","data":[],"title":"Contract Status","field":"state","type":"select","colSize":6},{dataKey:"LocalBu",data:[],title:"Bu ID",field:"bu_id",type:"select"}]]);
+            const searchFormFields = ref({"contract_no":"","pricegroup_dbid":"","bu_id":"","start_date":"","end_date":"","state":"","cust_dbid":"","cf_prod_dbid":"","cf_prod_dbidname":"","pu_prod_dbid":"","cf_prod_id":"","pu_prod_id":""});
+            const searchFormOptions = ref([[{"title":"Contract No","field":"contract_no","colSize":6},{"title":"Effective Date","field":"start_date","type":"date","colSize":3},{"title":"","field":"end_date","type":"date","colSize":2}],[{"title":"GroupId","field":"group_id","colSize":6},{"title":"","field":"pricegroup_dbid","hidden":true},{"title":"Customer","field":"cust_id","colSize":6},{"title":"","field":"cust_dbid","hidden":true}],[{"title":"Contract Product","field":"pu_prod_id","colSize":6},{"title":"","field":"pu_prod_dbid","hidden":true},{"title":"FG Product","field":"cf_prod_id","colSize":6},{"title":"","field":"cf_prod_dbid","hidden":true}],[{"dataKey":"Contract_State","data":[],"title":"Contract Status","field":"state","type":"select","colSize":6},{dataKey:"LocalBu",data:[],title:"Bu ID",field:"bu_id",type:"select"}]]);
             const columns = ref([{field:'hpcont_dbid',title:'列名hpcont_dbid',type:'guid',width:110,hidden:true,require:true,align:'left'},
                        {field:'entity',title:'列名entity',type:'string',width:110,hidden:true,align:'left'},
                        {field:'division',title:'列名division',type:'string',width:110,hidden:true,align:'left'},
@@ -49,8 +49,8 @@
                        {field:'contract_no',title:'Contract No',"link":true,type:'string',width:90,align:'left'},
                        {field:'group_id',title:'GroupId',type:'string',width:90,align:'left'},
                        {field:'group_name',title:'GroupName',type:'string',width:120,align:'left'},
-                       {field:'g_cust_id',title:'CustID',type:'string',width:90,align:'left'},
-                       {field:'g_cust_name',title:'CustName',type:'string',width:110,align:'left'},
+                       {field:'cust_id',title:'CustID',type:'string',width:90,align:'left'},
+                       {field:'cust_name',title:'CustName',type:'string',width:110,align:'left'},
                        {field:'prod_id',title:'FG Product Code',type:'string',width:110,align:'left'},
                        {field:'prod_ename',title:'FG Product Name',type:'string',width:110,align:'left'},
                        {field:'bu_id',title:'Bu',type:'string',width:110,align:'left'},
