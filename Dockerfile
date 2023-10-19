@@ -9,7 +9,7 @@ COPY ./* ./
 # 安装应用程序的依赖
 RUN npm install --force
 
-RUN npm run build:dev
+RUN npm run build
 
 
 FROM nginx
